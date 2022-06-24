@@ -651,16 +651,20 @@ OpponentDisplay.prototype.hideBubble = function () {
     this.bubble.hide();
 }
 
-OpponentDisplay.prototype.clearCustomPose = function () {
+OpponentDisplay.prototype.cleanupCustomPose = function () {
     if (this.pose instanceof Pose) {
         this.pose.setWillChangeHints(false);
     }
-
-    this.imageArea.children('.custom-pose').remove();
+    
     if (this.animCallbackID) {
         window.cancelAnimationFrame(this.animCallbackID);
         this.animCallbackID = undefined;
     }
+}
+
+OpponentDisplay.prototype.clearCustomPose = function () {
+    this.cleanupCustomPose();
+    this.imageArea.children('.custom-pose').remove();
 }
 
 OpponentDisplay.prototype.clearSimplePose = function () {
@@ -688,15 +692,33 @@ OpponentDisplay.prototype.drawPose = function (pose) {
             return;
         }
 
-        if (typeof(this.pose) === 'string') {
-            // clear out previously shown simple poses
-            this.clearSimplePose();
-        } else if (this.pose instanceof Pose) {
-            // Remove any previously shown custom poses too
-            this.clearCustomPose();
-        }
+        $(pose.container).prependTo(this.imageArea);
 
-        this.imageArea.prepend(pose.container);
+        if (typeof(this.pose) === 'string') {
+            /* Clear out previously-shown hidden poses.
+             * The new pose has already been added to the DOM, so it should *start* to be drawn to screen with the next repaint.
+             * We then call rAF twice here to ensure that the old pose is only cleared during the repaint *after* that.
+             * 
+             * The whole point of this is to prevent flickering, by ensuring that *something* is being drawn to screen with each repaint.
+             */
+            window.requestAnimationFrame(() => {
+                window.requestAnimationFrame(() => {
+                    this.clearSimplePose();
+                });
+            });
+        } else if (this.pose instanceof Pose) {
+            var prevPose = this.pose;
+
+            // Cleanup the old custom pose.
+            this.cleanupCustomPose();
+
+            /* See above comment for why we use rAF twice here. */
+            window.requestAnimationFrame(() => {
+                window.requestAnimationFrame(() => {
+                    $(prevPose.container).remove();
+                });
+            });
+        }
 
         if (pose.needsAnimationLoop()) {
             pose.setWillChangeHints(true);
@@ -768,7 +790,8 @@ OpponentDisplay.prototype.updateImage = function(player) {
         var key = chosenState.image.split(':', 2)[1].replace('#', player.stage);
         var poseDef = player.poses[key];
         if (poseDef) {
-            const pose = new Pose(poseDef, this, () => { this.drawPose(pose) })
+            const pose = new Pose(poseDef, this, () => { this.drawPose(pose) });
+            this.drawPose(pose);
         } else {
             this.clearPose();
         }
@@ -795,11 +818,11 @@ OpponentDisplay.prototype.update = function(player) {
 
     var chosenState = player.chosenState;
     
+    /* update image */
+    this.updateImage(player);
+
     /* update dialogue */
     this.updateText(player);
-    
-    /* update image */
-    this.updateImage(player);    
     
     /* update label */
     this.label.html(player.label.initCap());
