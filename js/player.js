@@ -493,6 +493,7 @@ function Opponent (id, metaFiles, status, releaseNumber, highlightStatus) {
     this.alt_costume = null;
     this.default_costume = null;
     this.poses = {};
+    this.imageCache = {};
     this.labelOverridden = this.intelligenceOverridden = false;
     this.pendingCollectiblePopups = [];
     this.repeatLog = {};
@@ -1412,10 +1413,11 @@ Player.prototype.getImagesForStage = function (stage) {
      */
     Object.keys(poseSet).forEach(function (poseName) {
         if (poseName.startsWith('custom:')) {
-            var key = poseName.split(':', 2)[1];
+            var actualStage = (stage > -1) ? stage : 0;
+            var key = poseName.split(':', 2)[1].replace('#', actualStage);
             var pose = advPoses[key];
-            if (pose) pose.getUsedImages().forEach(function (img) {
-                imageSet[img.replace('#', stage)] = true;
+            if (pose) pose.getUsedImages(actualStage).forEach(function (img) {
+                imageSet[img.replace('#', actualStage)] = true;
             });
         } else {
             imageSet[folder + poseName] = true;
@@ -1426,6 +1428,19 @@ Player.prototype.getImagesForStage = function (stage) {
 };
 
 Player.prototype.preloadStageImages = function (stage) {
-    this.getImagesForStage(stage)
-        .forEach(function(fn) { new Image().src = fn; }, this );
+    var cacheAttachElem = document.getElementById("image-cache-elements");
+    if (!cacheAttachElem) {
+        cacheAttachElem = document.createElement("div");
+        $(cacheAttachElem).attr("id", "image-cache-elements").css({ "opacity": 0, "pointer-events": "none" }).prependTo(document.body);
+    }
+
+    this.getImagesForStage(stage).forEach(function(fn) {
+        /* Keep references to the Image elements around so they don't get GC'd. */
+        if (!this.imageCache[fn]) {
+            var img = new Image();
+            img.src = fn;
+            this.imageCache[fn] = img;
+            $(img).css({ "opacity": 0 }).appendTo(cacheAttachElem);
+        }
+    }, this );
 };
