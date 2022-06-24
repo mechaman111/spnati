@@ -40,8 +40,11 @@ function PoseSprite(id, src, onload, pose, args) {
         if (!this.width) this.width = this.img.naturalWidth;
         
         onload(this);
-        // this.draw();
     }.bind(this);
+    this.img.src = this.prevSrc = getActualSpriteSrc(this.src, this.pose.player);
+    
+    this.pivot.appendChild(this.img);
+    
     if (this.alpha === undefined) {
         this.alpha = 100;
     }
@@ -53,8 +56,6 @@ function PoseSprite(id, src, onload, pose, args) {
     }
     
     $(this.vehicle).css("z-index", this.z);
-
-    this.img.src = this.prevSrc = getActualSpriteSrc(this.src, this.pose.player);
 }
 
 function getActualSpriteSrc (src, player, stage) {
@@ -136,8 +137,6 @@ PoseSprite.prototype.draw = function() {
     $(this.pivot).css({
       "transform": "rotate(" + this.rotation + "deg) scale(" + this.scalex + ", " + this.scaley + ") skew(" + this.skewx + "deg, " + this.skewy + "deg)",
     });
-
-    this.pivot.appendChild(this.img);
 }
 
 PoseSprite.prototype.setWillChangeHints = function (enabled) {
@@ -253,7 +252,7 @@ PoseAnimation.prototype.updateSprite = function (fromFrame, toFrame, t, idx) {
 }
 
 
-function Pose(poseDef, display) {
+function Pose(poseDef, display, onLoadCallback) {
     this.id = poseDef.id;
     this.player = poseDef.player;
     this.display = display;
@@ -262,7 +261,7 @@ function Pose(poseDef, display) {
     this.loaded_sprites = {};
     this.animations = [];
     this.loaded = false;
-    this.onLoadComplete = null;
+    this.onLoadComplete = onLoadCallback;
     this.lastUpdateTS = null;
     this.active = false;
     this.baseHeight = poseDef.baseHeight || 1400;
@@ -664,21 +663,6 @@ OpponentDisplay.prototype.clearCustomPose = function () {
     }
 }
 
-OpponentDisplay.prototype.clearPrevCustomPoses = function () {
-    if (this.pose instanceof Pose) {
-        this.pose.setWillChangeHints(false);
-    }
-
-    const customPoses = this.imageArea.children('.custom-pose');
-    for(let i = 1; i < customPoses.length; i++) {
-        customPoses[i].remove();
-    }
-    if (this.animCallbackID) {
-        window.cancelAnimationFrame(this.animCallbackID);
-        this.animCallbackID = undefined;
-    }
-}
-
 OpponentDisplay.prototype.clearSimplePose = function () {
     this.simpleImage.hide();
 }
@@ -697,23 +681,22 @@ OpponentDisplay.prototype.drawPose = function (pose) {
         }
         this.simpleImage.attr('src', pose).show();
     } else if (pose instanceof Pose) {
-
         if(pose.loaded) {
             pose.draw();
         } else {
             pose.onLoadComplete = () => this.drawPose(pose);
             return;
         }
-        
-        this.imageArea.prepend(pose.container);
 
         if (typeof(this.pose) === 'string') {
             // clear out previously shown simple poses
             this.clearSimplePose();
         } else if (this.pose instanceof Pose) {
             // Remove any previously shown custom poses too
-            this.clearPrevCustomPoses();
-        }   
+            this.clearCustomPose();
+        }
+
+        this.imageArea.prepend(pose.container);
 
         if (pose.needsAnimationLoop()) {
             pose.setWillChangeHints(true);
@@ -785,7 +768,7 @@ OpponentDisplay.prototype.updateImage = function(player) {
         var key = chosenState.image.split(':', 2)[1].replace('#', player.stage);
         var poseDef = player.poses[key];
         if (poseDef) {
-            this.drawPose(new Pose(poseDef, this));
+            const pose = new Pose(poseDef, this, () => { this.drawPose(pose) })
         } else {
             this.clearPose();
         }
