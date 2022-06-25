@@ -712,6 +712,8 @@ OpponentDisplay.prototype.drawPose = function (pose) {
             // Cleanup the old custom pose.
             this.cleanupCustomPose();
 
+            $(prevPose.container).css({ "position": "absolute" });
+
             /* See above comment for why we use rAF twice here. */
             window.requestAnimationFrame(() => {
                 window.requestAnimationFrame(() => {
