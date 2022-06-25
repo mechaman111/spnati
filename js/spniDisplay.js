@@ -40,7 +40,6 @@ function PoseSprite(id, src, onload, pose, args) {
         if (!this.width) this.width = this.img.naturalWidth;
         
         onload(this);
-        this.draw();
     }.bind(this);
     this.img.src = this.prevSrc = getActualSpriteSrc(this.src, this.pose.player);
     
@@ -253,7 +252,7 @@ PoseAnimation.prototype.updateSprite = function (fromFrame, toFrame, t, idx) {
 }
 
 
-function Pose(poseDef, display) {
+function Pose(poseDef, display, onLoadCallback) {
     this.id = poseDef.id;
     this.player = poseDef.player;
     this.display = display;
@@ -262,7 +261,7 @@ function Pose(poseDef, display) {
     this.loaded_sprites = {};
     this.animations = [];
     this.loaded = false;
-    this.onLoadComplete = null;
+    this.onLoadComplete = onLoadCallback;
     this.lastUpdateTS = null;
     this.active = false;
     this.baseHeight = poseDef.baseHeight || 1400;
@@ -652,16 +651,20 @@ OpponentDisplay.prototype.hideBubble = function () {
     this.bubble.hide();
 }
 
-OpponentDisplay.prototype.clearCustomPose = function () {
+OpponentDisplay.prototype.cleanupCustomPose = function () {
     if (this.pose instanceof Pose) {
         this.pose.setWillChangeHints(false);
     }
-
-    this.imageArea.children('.custom-pose').remove();
+    
     if (this.animCallbackID) {
         window.cancelAnimationFrame(this.animCallbackID);
         this.animCallbackID = undefined;
     }
+}
+
+OpponentDisplay.prototype.clearCustomPose = function () {
+    this.cleanupCustomPose();
+    this.imageArea.children('.custom-pose').remove();
 }
 
 OpponentDisplay.prototype.clearSimplePose = function () {
@@ -682,16 +685,43 @@ OpponentDisplay.prototype.drawPose = function (pose) {
         }
         this.simpleImage.attr('src', pose).show();
     } else if (pose instanceof Pose) {
-        if (typeof(this.pose) === 'string') {
-            // clear out previously shown simple poses
-            this.clearSimplePose();
-        } else if (this.pose instanceof Pose) {
-            // Remove any previously shown custom poses too
-            this.clearCustomPose();
+        if(pose.loaded) {
+            pose.draw();
+        } else {
+            pose.onLoadComplete = () => this.drawPose(pose);
+            return;
         }
-        
-        this.imageArea.prepend(pose.container);
-        pose.draw();
+
+        $(pose.container).prependTo(this.imageArea);
+
+        function executeRemove (fn) {
+            /* For Firefox/Gecko, we need to wait a frame before removing old poses, to prevent flickering.
+             * We can do this by calling requestAnimationFrame twice.
+             * Other browsers don't have this problem, so we can just call fn directly.
+             */
+            if (navigator.userAgent.search(/Gecko\/\S+/i) >= 0) {
+                window.requestAnimationFrame(() => {
+                    window.requestAnimationFrame(() => {
+                        fn();
+                    });
+                });
+            } else {
+                fn();
+            }
+        }
+
+        if (typeof(this.pose) === 'string') {
+            executeRemove(this.clearSimplePose.bind(this));
+        } else if (this.pose instanceof Pose) {
+            var prevPose = this.pose;
+            this.cleanupCustomPose();
+
+            /* Shouldn't have any effect for non-Gecko browsers, since we're removing it immediately afterwards */
+            $(prevPose.container).css({ "position": "absolute" });
+
+            executeRemove(() => $(prevPose.container).remove());
+        }
+
         if (pose.needsAnimationLoop()) {
             pose.setWillChangeHints(true);
             this.animCallbackID = window.requestAnimationFrame(this.loop.bind(this));
@@ -762,7 +792,8 @@ OpponentDisplay.prototype.updateImage = function(player) {
         var key = chosenState.image.split(':', 2)[1].replace('#', player.stage);
         var poseDef = player.poses[key];
         if (poseDef) {
-            this.drawPose(new Pose(poseDef, this));
+            const pose = new Pose(poseDef, this, () => { this.drawPose(pose) });
+            this.drawPose(pose);
         } else {
             this.clearPose();
         }
@@ -789,11 +820,11 @@ OpponentDisplay.prototype.update = function(player) {
 
     var chosenState = player.chosenState;
     
+    /* update image */
+    this.updateImage(player);
+
     /* update dialogue */
     this.updateText(player);
-    
-    /* update image */
-    this.updateImage(player);    
     
     /* update label */
     this.label.html(player.label.initCap());
