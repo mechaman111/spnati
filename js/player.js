@@ -1412,10 +1412,11 @@ Player.prototype.getImagesForStage = function (stage) {
      */
     Object.keys(poseSet).forEach(function (poseName) {
         if (poseName.startsWith('custom:')) {
-            var key = poseName.split(':', 2)[1];
+            var actualStage = (stage > -1) ? stage : 0;
+            var key = poseName.split(':', 2)[1].replace('#', actualStage);
             var pose = advPoses[key];
-            if (pose) pose.getUsedImages().forEach(function (img) {
-                imageSet[img.replace('#', stage)] = true;
+            if (pose) pose.getUsedImages(actualStage).forEach(function (img) {
+                imageSet[img.replace('#', actualStage)] = true;
             });
         } else {
             imageSet[folder + poseName] = true;
@@ -1425,7 +1426,17 @@ Player.prototype.getImagesForStage = function (stage) {
     return Object.keys(imageSet);
 };
 
+/**
+ * Preload all images referenced by this character's dialogue for a given stage.
+ * @param {number} stage 
+ * @returns {Promise<Array<HTMLImageElement>>}
+ */
 Player.prototype.preloadStageImages = function (stage) {
-    this.getImagesForStage(stage)
-        .forEach(function(fn) { new Image().src = fn; }, this );
+    return Promise.all(this.getImagesForStage(stage).map(function (fn) {
+        return new Promise(function (resolve, reject) {
+            var img = new Image();
+            img.addEventListener('load', function() { resolve(img); });
+            img.src = fn;
+        });
+    }));
 };

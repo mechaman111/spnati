@@ -410,7 +410,7 @@ function playerMustStrip (player) {
             [[(players[player].gender == eGender.MALE ? MALE_MUST_MASTURBATE : FEMALE_MUST_MASTURBATE), OPPONENT_LOST]]
         );
         
-        players[player].preloadStageImages(players[player].stage + 1);
+        players[player].preloadStageImages(players[player].stage + 2);
     }
     
     return clothing.length;
@@ -433,7 +433,7 @@ function prepareToStripPlayer (player) {
         dialogueTrigger.push(OPPONENT_STRIPPING);
 
         updateAllBehaviours(player, PLAYER_STRIPPING, [dialogueTrigger]);
-        players[player].preloadStageImages(players[player].stage + 1);
+        players[player].preloadStageImages(players[player].stage + 2);
     }
 }
 
