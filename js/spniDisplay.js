@@ -694,32 +694,32 @@ OpponentDisplay.prototype.drawPose = function (pose) {
 
         $(pose.container).prependTo(this.imageArea);
 
-        if (typeof(this.pose) === 'string') {
-            /* Clear out previously-shown hidden poses.
-             * The new pose has already been added to the DOM, so it should *start* to be drawn to screen with the next repaint.
-             * We then call rAF twice here to ensure that the old pose is only cleared during the repaint *after* that.
-             * 
-             * The whole point of this is to prevent flickering, by ensuring that *something* is being drawn to screen with each repaint.
+        function executeRemove (fn) {
+            /* For Firefox/Gecko, we need to wait a frame before removing old poses, to prevent flickering.
+             * We can do this by calling requestAnimationFrame twice.
+             * Other browsers don't have this problem, so we can just call fn directly.
              */
-            window.requestAnimationFrame(() => {
+            if (navigator.userAgent.search(/Gecko\/\S+/i) >= 0) {
                 window.requestAnimationFrame(() => {
-                    this.clearSimplePose();
+                    window.requestAnimationFrame(() => {
+                        fn();
+                    });
                 });
-            });
+            } else {
+                fn();
+            }
+        }
+
+        if (typeof(this.pose) === 'string') {
+            executeRemove(this.clearSimplePose.bind(this));
         } else if (this.pose instanceof Pose) {
             var prevPose = this.pose;
-
-            // Cleanup the old custom pose.
             this.cleanupCustomPose();
 
+            /* Shouldn't have any effect for non-Gecko browsers, since we're removing it immediately afterwards */
             $(prevPose.container).css({ "position": "absolute" });
 
-            /* See above comment for why we use rAF twice here. */
-            window.requestAnimationFrame(() => {
-                window.requestAnimationFrame(() => {
-                    $(prevPose.container).remove();
-                });
-            });
+            executeRemove(() => $(prevPose.container).remove());
         }
 
         if (pose.needsAnimationLoop()) {
