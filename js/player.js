@@ -1428,19 +1428,12 @@ Player.prototype.getImagesForStage = function (stage) {
 };
 
 Player.prototype.preloadStageImages = function (stage) {
-    var cacheAttachElem = document.getElementById("image-cache-elements");
-    if (!cacheAttachElem) {
-        cacheAttachElem = document.createElement("div");
-        $(cacheAttachElem).attr("id", "image-cache-elements").css({ "opacity": 0, "pointer-events": "none" }).prependTo(document.body);
-    }
-
     this.getImagesForStage(stage).forEach(function(fn) {
         /* Keep references to the Image elements around so they don't get GC'd. */
         if (!this.imageCache[fn]) {
             var img = new Image();
             img.src = fn;
             this.imageCache[fn] = img;
-            $(img).css({ "opacity": 0 }).appendTo(cacheAttachElem);
         }
     }, this );
 };
