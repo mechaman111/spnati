@@ -1396,8 +1396,15 @@ function advanceSelectScreen () {
         if (player.id !== 'human') {
             playedCharacters.push(player.id);
         }
+    });
 
-        player.preloadStageImages(0);
+    /* Preload stage 0 for all characters before preloading stage 1. */
+    Promise.all(players.map(function (pl) {
+        return pl.preloadStageImages(0);
+    })).then(function () {
+        return Promise.all(players.map(function (pl) {
+            return pl.preloadStageImages(1);
+        }));
     });
 
     save.savePlayedCharacterSet(playedCharacters);

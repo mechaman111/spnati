@@ -187,7 +187,6 @@ function tickForfeitTimers () {
                 timeoutID = window.setTimeout(function(){ allowProgression(eGamePhase.END_FORFEIT); }, ORGASM_DELAY);
                 globalSavedTableVisibility = tableVisible;
                 if (AUTO_FADE) forceTableVisibility(false);
-                players[i].preloadStageImages(players[i].stage + 1);
             }
             return true;
         }
