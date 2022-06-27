@@ -1198,6 +1198,26 @@ function expandPlayerVariable(split_fn, args, player, self, target, bindings) {
         return Math.abs(player.slot - other.slot);
     case 'slot':
         return player.slot;
+    case 'compatible':
+    case 'attracted':
+        if (player.hasTag("bisexual")) return true;
+        var other = (!args ? self : findVariablePlayer(args, self, target, bindings));
+        if (player.hasTag('straight')) {
+            return player.gender !== other.gender;
+        }
+        if (player.gender == eGender.MALE && player.hasTag('gay')) {
+            return other.gender === eGender.MALE;
+        }
+        if (player.gender == eGender.FEMALE && player.hasTag('lesbian')) {
+            return other.gender === eGender.FEMALE;
+        }
+        if (player.hasTag('bi-curious')) {
+            return fn == 'compatible' || player.gender !== other.gender
+        }
+        if (player.hasTag('reverse_bi-curious')) {
+            return fn == 'compatible' || player.gender === other.gender
+        }
+        return undefined;
     case 'collectible':
         var collectibleID = split_fn[1];
         if (collectibleID) {

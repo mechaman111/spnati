@@ -92,9 +92,10 @@ Four special player IDs exist:
 | ------------ | ---------------------------------------------- |
 | (none)       | Using only `~character_id~`, `~target~`, or `~self~` returns the name of the referenced player, or a nickname if one has been specified for that character. |
 | `.id`        | The ID (folder name) of the referenced player. Can be useful to store in a marker.   |
-| `.position`  | The position, `left` or `right` (from the perspective of the human player, not the characters) of the player relative to the subject character. The human player is considered to be to `across` from all characters. `~self.position~` resolves to simply `self`. |
-| `.distance` | How many slots away this character is from the subject character. `1` indicates the characters are adjacent. |
+| `.position(other)`  | The position, `left` or `right` (from the perspective of the human player, not the characters) of the player relative to `other`, defaulting to the subject character. The human player is considered to be to `across` from all characters. `~self.position~` resolves to simply `self`. |
+| `.distance(other)` | How many slots away this player is from `other`, defaulting to the subject character. `1` indicates the characters are adjacent. |
 | `.slot`      | The slot number of the player, from 0 (the human player) to 5. |
+| `.attracted(other)`, `.compatible(other)` | Helps checking all relevant sexual orientation tags in one go. `.attracted()` only tests for predominant sexual attraction to `other`'s gender (defaulting to the subject character), whereas `compatible()` returns `true` also if the player is curious. If the player has no sexual orientation tag at all, `undefined` is returned. So, for example, if the subject character is female, `~target.compatible~ != false` yields the same result as checking that the target is male and not gay, OR female and not straight.
 | `.collectible`, `.marker`, `.targetmarker` | Lets you access collectible and marker data of a different character. See the corresponding general variable descriptions above for details. |
 | `.tag.tag_name` | `true` if the player has the tag `tag_name`, `false` otherwise. |
 | `.costume`      | The ID of the player's alternate costume/skin, or `default` if no alternate costume is worn. |
