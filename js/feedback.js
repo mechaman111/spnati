@@ -528,7 +528,6 @@ function collectBaseUsageInfo(type) {
         'commit': VERSION_COMMIT,
         'type': type,
         'session': sessionID,
-        'userAgent': navigator.userAgent,
         'origin': getReportedOrigin(),
         'table': {},
         'tags': humanPlayer.tags,
