@@ -474,10 +474,33 @@ function sentryInit() {
 }
 
 function collectBaseUsageInfo(type) {
+    var table = {};
+
+    for (let i = 1; i < 5; i++) {
+        if (players[i]) {
+            table[i] = players[i].id;
+        }
+    }
+
+    return {
+        'date': (new Date()).toISOString(),
+        'commit': VERSION_COMMIT,
+        'type': type,
+        'session': sessionID,
+        'userAgent': navigator.userAgent,
+        'table': table,
+    };
+}
+
+function collectCommonUsageInfo(type) {
+    var report = collectBaseUsageInfo(type);
+
     var playerInfo = {
         'tags': humanPlayer.tags,
         'clothing': save.selectedClothing().map(function (c) { return c.id; }),
         'played_characters': save.getPlayedCharacterSet(),
+        'stage': players[0].stage,
+        'outOrder': players[0].outOrder
     };
 
     var unlockedCollectibles = {};
@@ -517,7 +540,10 @@ function collectBaseUsageInfo(type) {
     for (let i = 1; i < 5; i++) {
         if (players[i]) {
             let oppInfo = {
-                'id': players[i].id
+                'stage': players[i].stage,
+                'seenDialogue': 0,
+                'outOrder': players[i].outOrder,
+                'costume': players[i].selected_costume
             };
 
             var markers = {}
@@ -525,28 +551,71 @@ function collectBaseUsageInfo(type) {
             Object.assign(markers, save.allPersistentMarkers(players[i]));
         
             oppInfo.markers = markers;
-            oppInfo.costume = players[i].selected_costume;
+            if (players[i].repeatLog) oppInfo.seenDialogue = Object.keys(players[i].repeatLog).length;
 
             table[i] = players[i].id;
             tableInfo[i] = oppInfo;
         }
     }
 
-    var report = {
-        'date': (new Date()).toISOString(),
-        'commit': VERSION_COMMIT,
-        'type': type,
-        'session': sessionID,
-        'origin': getReportedOrigin(),
-        'table': table,
-        'player': playerInfo,
-        'tableInfo': tableInfo,
-        'ui': {
-            'theme': UI_THEME,
-            'minimal': MINIMAL_UI,
-            'background': activeBackground.id,
-        }
+    report["player"] = playerInfo;
+    report["tableInfo"] = tableInfo;
+    report["ui"] = {
+        'theme': UI_THEME,
+        'minimal': MINIMAL_UI,
+        'background': activeBackground.id,
     };
+
+    return report;
+}
+
+function collectInterruptedGameInfo (reason) {
+    /* Data for this type of event may be sent via Navigator.sendBeacon,
+     * so we need to minimize the amount of data we send.
+     * Chromium on Windows 10, for example, limits payload size to 65536 bytes (64KiB).
+     */
+    var report = collectBaseUsageInfo("interrupted_game");
+    var tableInfo = {};
+
+    report.player = {
+        'stage': players[0].stage,
+        'outOrder': players[0].outOrder
+    };
+
+    for (let i = 1; i < 5; i++) {
+        if (players[i]) {
+            tableInfo[i] = {
+                'stage': players[i].stage,
+                'seenDialogue': 0,
+                'outOrder': players[i].outOrder,
+                'costume': players[i].selected_costume
+            };
+
+            if (players[i].repeatLog) {
+                tableInfo[i].seenDialogue = Object.keys(players[i].repeatLog).length;
+            }
+        }
+    }
+
+    var gameState = {
+        'currentRound': currentRound,
+        'currentTurn': currentTurn,
+        'previousLoser': previousLoser,
+        'recentLoser': recentLoser,
+        'rollback': inRollback()
+    };
+    if (gamePhase) {
+        if (inRollback()) {
+            gameState.gamePhase = rolledBackGamePhase[0];
+        } else {
+            gameState.gamePhase = gamePhase[0];
+        }
+    }
+
+    report["tableInfo"] = tableInfo;
+    report["gameState"] = gameState;
+    report["game"] = gameID;
+    report["reason"] = reason;
 
     return report;
 }
@@ -571,7 +640,7 @@ function recordStartGameEvent() {
         level: 'info'
     });
 
-    var report = collectBaseUsageInfo('start_game');
+    var report = collectCommonUsageInfo('start_game');
     report.game = gameID;
     return sendUsageReport(report);
 }
@@ -588,10 +657,32 @@ function recordEndGameEvent(winner) {
         level: 'info'
     });
 
-    var report = collectBaseUsageInfo('end_game');
+    var report = collectCommonUsageInfo('end_game');
     report.game = gameID;
     report.winner = winner;
+    report.rounds = currentRound;
     return sendUsageReport(report);
+}
+
+/**
+ * Log a game in progress that's been interrupted, for example because the player navigated to another page.
+ * @param {boolean} isPageUnload If true, this event is being sent just before a page unload.
+ */
+function recordInterruptedGameEvent(isPageUnload) {
+    var report = collectInterruptedGameInfo(isPageUnload ? "page-unload" : "return-to-title");
+
+    if (isPageUnload) {
+        /* It'd be better to use fetch() with the keepalive option here, but that doesn't work on all browsers, particularly Firefox.
+         * Instead use synchronous XHR. This will delay page unload, but we don't really have many other options.
+         * (navigator.sendBeacon tends to get blocked.)
+         */
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", USAGE_TRACKING_ENDPOINT, false);
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.send(JSON.stringify(report));
+    } else {
+        sendUsageReport(report);
+    }
 }
 
 /**
@@ -610,7 +701,7 @@ function recordEpilogueEvent(gallery, epilogue) {
     Sentry.setTag("epilogue_gallery", gallery);
     Sentry.setTag("screen", "epilogue");
 
-    var report = collectBaseUsageInfo(gallery ? 'gallery' : 'epilogue');
+    var report = collectCommonUsageInfo(gallery ? 'gallery' : 'epilogue');
     if (gallery) {
         delete report.table;
     } else {

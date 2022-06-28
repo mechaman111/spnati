@@ -262,6 +262,12 @@ function initialSetup () {
         }
     });
 
+    window.addEventListener("unload", function () {
+        if ((document.visibilityState === "hidden") && inGame && !gameOver) {
+            recordInterruptedGameEvent(true);
+        }
+    });
+
     $('[data-toggle="tooltip"]').tooltip({ delay: { show: 200 } });
 }
 
@@ -589,6 +595,10 @@ function restartGame () {
     Sentry.setTag("epilogue_player", undefined);
     Sentry.setTag("epilogue", undefined);
     Sentry.setTag("epilogue_gallery", undefined);
+
+    if (!gameOver) {
+        recordInterruptedGameEvent(false);
+    }
 
     clearTimeout(timeoutID); // No error if undefined or no longer valid
     timeoutID = autoForfeitTimeoutID = undefined;
