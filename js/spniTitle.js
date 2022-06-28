@@ -419,6 +419,8 @@ var playerTagOptions = {
             { value: 'straight' },
             { value: 'bi-curious' },
             { value: 'bisexual' },
+            { value: 'reverse_bi-curious', gender: 'male', text: 'Male-leaning bi-curious ' },
+            { value: 'reverse_bi-curious', gender: 'female', text: 'Female-leaning bi-curious' },
             { value: 'gay', gender: 'male' },
             { value: 'lesbian', gender: 'female' },
         ]
