@@ -8,7 +8,6 @@ var FEEDBACK_ROUTE = "https://spnati.faraway-vision.io/usage/feedback";
 
 $bugReportModal = $('#bug-report-modal');
 $feedbackReportModal = $('#feedback-report-modal');
-$usageTrackingModal = $('#usage-reporting-modal');
 
 function getReportedOrigin () {
     var origin = window.location.origin;
@@ -149,12 +148,10 @@ function logError(err, message, fileName, lineNum) {
 
     jsErrors.push(errData);
 
-    if (USAGE_TRACKING) {
-        var report = compileBaseErrorReport('Automatically generated after Javascript error.', 'auto');
+    var report = compileBaseErrorReport('Automatically generated after Javascript error.', 'auto');
         
-        // swallow errors here so we don't call this function recursively
-        return postJSON(BUG_REPORTING_ENDPOINT, report).catch(function() {});
-    }
+    // swallow errors here so we don't call this function recursively
+    return postJSON(BUG_REPORTING_ENDPOINT, report).catch(function() {});
 }
 
 /** Helper function for manually logging / capturing errors. */
@@ -401,26 +398,6 @@ function closeFeedbackReportModal() {
 $feedbackReportModal.on('shown.bs.modal', function () {
     $('#feedback-report-character').focus();
 });
-
-/*
- * Show the usage tracking consent modal.
- */
-
-function showUsageTrackingModal() {
-    $usageTrackingModal.modal('show');
-}
-
-function enableUsageTracking() {
-    USAGE_TRACKING = true;
-    save.saveUsageTracking();
-    enableSentry();
-}
-
-function disableUsageTracking() {
-    USAGE_TRACKING = false;
-    save.saveUsageTracking();
-    disableSentry();
-}
 
 function sentryInit() {
     if (!SENTRY_INITIALIZED) {

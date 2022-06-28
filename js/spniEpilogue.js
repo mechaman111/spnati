@@ -1024,10 +1024,7 @@ function doEpilogue() {
         }
     });
 
-    if (USAGE_TRACKING) {
-        recordEpilogueEvent(false, chosenEpilogue);
-    }
-
+    recordEpilogueEvent(false, chosenEpilogue);
     loadEpilogue(chosenEpilogue);
 
     screenTransition($gameScreen, $epilogueScreen);

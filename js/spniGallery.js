@@ -680,10 +680,7 @@ function doEpilogueFromGallery(){
                 }
             });
         
-            if (USAGE_TRACKING) {
-                recordEpilogueEvent(true, epilogue);
-            }
-        
+            recordEpilogueEvent(true, epilogue);
             loadEpilogue(epilogue, null, true); //initialise buttons and text boxes
             screenTransition($galleryScreen, $epilogueScreen);
             $galleryStartButton.attr('disabled', false);

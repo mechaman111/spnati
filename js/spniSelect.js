@@ -1386,11 +1386,8 @@ function advanceSelectScreen () {
     console.log("Starting game...");
 
     gameID = generateRandomID();
-
-    if (USAGE_TRACKING) {
-        recordStartGameEvent();
-    }
-
+    recordStartGameEvent();
+    
     var playedCharacters = save.getPlayedCharacterSet();
     players.forEach(function(player) {
         if (player.id !== 'human') {

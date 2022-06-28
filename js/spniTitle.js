@@ -848,15 +848,11 @@ function validateTitleScreen () {
     if (SENTRY_INITIALIZED) Sentry.setTag("screen", "select-main");
     screenTransition($titleScreen, $selectScreen);
 
-    if (USAGE_TRACKING === undefined) {
-        showUsageTrackingModal();
-    } else {
-        updateAnnouncementDropdown();
-        showAnnouncements();
+    updateAnnouncementDropdown();
+    showAnnouncements();
 
-        if (curResortEvent && !curResortEvent.resort.checkCharacterThreshold()) {
-            curResortEvent.resort.setFlag(false);
-        }
+    if (curResortEvent && !curResortEvent.resort.checkCharacterThreshold()) {
+        curResortEvent.resort.setFlag(false);
     }
 }
 

@@ -640,9 +640,7 @@ function endRound () {
 
     /* if there is only one player left, end the game */
     if (inGame <= 1) {
-        if (USAGE_TRACKING) {
-            recordEndGameEvent(players[lastPlayer].id);
-        }
+        recordEndGameEvent(players[lastPlayer].id);
         
         console.log("The game has ended!");
         saveTranscriptMessage('<b>' + players[lastPlayer].label.escapeHTML() + "</b> won Strip Poker Night at the Inventory!");

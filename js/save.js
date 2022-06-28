@@ -226,10 +226,6 @@ Save.prototype.convertCookie = function() {
             this.setItem("endings", data.endings);
         }
 
-        if (data.askedUsageTracking) {
-            this.setItem("usageTracking", data.usageTracking);
-        }
-
         Cookies.remove('save');
     }
 };
@@ -357,25 +353,7 @@ Save.prototype.loadOptions = function(){
         useGroupBackgrounds = true;
     }
 
-    var usageTracking = this.getItem("usageTracking", true);
-    if (typeof(usageTracking) === 'boolean') {
-        USAGE_TRACKING = usageTracking;
-    } else if (typeof(usageTracking) === 'string') {
-        USAGE_TRACKING = (usageTracking == 'yes');
-        this.setItem("usageTracking", USAGE_TRACKING); // Convert old value to a proper boolean.
-    } else {
-        USAGE_TRACKING = undefined;
-    }
-
-    /* If we couldn't find a usage tracking option, keep Sentry error logging
-     * enabled by default until we show the usage tracking modal.
-     */
-    if (USAGE_TRACKING === false) {
-        disableSentry();
-    } else {
-        enableSentry();
-    }
-
+    enableSentry();
     var gender = this.getItem("gender", true);
     if (gender) {
         humanPlayer.gender = gender;
@@ -406,12 +384,6 @@ Save.prototype.loadOptionsBackground = function (settings) {
 
     return optionsBackground.activateBackground();
 }
-
-Save.prototype.saveUsageTracking = function() {
-    if (USAGE_TRACKING !== undefined) {
-        this.setItem("usageTracking", USAGE_TRACKING);
-    }
-};
 
 Save.prototype.saveOptions = function() {
     var options = {

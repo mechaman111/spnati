@@ -136,16 +136,11 @@ if (!window.monika) window.monika = (function (root) {
     function reportException(prefix, e) {
         console.log("[Monika] Exception swallowed " + prefix + ": ");
 
-        if (USAGE_TRACKING && SENTRY_INITIALIZED) {
-            Sentry.withScope(function (scope) {
-                scope.setTag("monika-error", true);
-                scope.setExtra("where", prefix);
-                captureError(e);
-            });
-            return;
-        }
-
-        captureError(e);
+        Sentry.withScope(function (scope) {
+            scope.setTag("monika-error", true);
+            scope.setExtra("where", prefix);
+            captureError(e);
+        });
     }
     exports.reportException = reportException;
 
