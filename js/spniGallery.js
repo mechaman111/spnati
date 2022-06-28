@@ -146,8 +146,8 @@ function Collectible(xmlElem, player) {
     }
 }
 
-Collectible.prototype.isUnlocked = function () {
-    if (COLLECTIBLES_UNLOCKED) return true;
+Collectible.prototype.isUnlocked = function (ignoreUnlockAllOption) {
+    if (COLLECTIBLES_UNLOCKED && !ignoreUnlockAllOption) return true;
     
     var curCounter = save.getCollectibleCounter(this);
     if (this.counter) {

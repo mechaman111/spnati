@@ -474,23 +474,79 @@ function sentryInit() {
 }
 
 function collectBaseUsageInfo(type) {
+    var playerInfo = {
+        'tags': humanPlayer.tags,
+        'clothing': save.selectedClothing().map(function (c) { return c.id; }),
+        'played_characters': save.getPlayedCharacterSet(),
+    };
+
+    var unlockedCollectibles = {};
+    var unlockedEpilogues = {};
+    loadedOpponents.forEach(function (opp) {
+        if (opp.collectibles) {
+            let unlocked = opp.collectibles.flatMap(function (c) {
+                return c.isUnlocked(true) ? [c.id] : [];
+            });
+
+            if (unlocked.length > 0) unlockedCollectibles[opp.id] = unlocked;
+        }
+
+        if (opp.endings) {
+            let unlocked = opp.endings.map(function () {
+                /* jQuery's .map actually works like filter-map: returning null/undefined means that no item is inserted into the set. */
+                var rawTitle = $(this).html();
+                if (save.hasEnding(opp.id, rawTitle)) return rawTitle;
+            }).get();
+
+            if (unlocked.length > 0) unlockedEpilogues[opp.id] = unlocked;
+        }
+    });
+
+    var unlockedGeneralCollectibles = generalCollectibles.flatMap(function (c) {
+        return c.isUnlocked(true) ? [c.id] : [];
+    });
+
+    if (unlockedGeneralCollectibles.length > 0) unlockedCollectibles["__general"] = unlockedGeneralCollectibles;
+
+    playerInfo['collectibles'] = unlockedCollectibles;
+    playerInfo['epilogues'] = unlockedEpilogues;
+
+    var table = {};
+    var tableInfo = {};
+
+    for (let i = 1; i < 5; i++) {
+        if (players[i]) {
+            let oppInfo = {
+                'id': players[i].id
+            };
+
+            var markers = {}
+            if (players[i].markers) Object.assign(markers, players[i].markers);
+            Object.assign(markers, save.allPersistentMarkers(players[i]));
+        
+            oppInfo.markers = markers;
+            oppInfo.costume = players[i].selected_costume;
+
+            table[i] = players[i].id;
+            tableInfo[i] = oppInfo;
+        }
+    }
+
     var report = {
         'date': (new Date()).toISOString(),
         'commit': VERSION_COMMIT,
         'type': type,
         'session': sessionID,
         'origin': getReportedOrigin(),
-        'table': {},
-        'tags': humanPlayer.tags,
-        'uiTheme': UI_THEME,
-    };
-
-
-    for (let i=1;i<5;i++) {
-        if (players[i]) {
-            report.table[i] = players[i].id;
+        'table': table,
+        'player': playerInfo,
+        'tableInfo': tableInfo,
+        'ui': {
+            'theme': UI_THEME,
+            'minimal': MINIMAL_UI,
+            'background': activeBackground.id,
         }
-    }
+    };
 
     return report;
 }

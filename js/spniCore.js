@@ -1122,6 +1122,35 @@ if (!Object.entries) {
     };
 }
 
+if (!Array.prototype.flat) {
+    /**
+     * 
+     * @param {Array} arr 
+     * @param {number} depth 
+     * @returns {Array}
+     */
+    function flatDeep (arr, depth) {
+        if (depth > 0) {
+            return arr.reduce(function (acc, val) {
+                return acc.concat(Array.isArray(val) ? flatDeep(val, depth - 1) : val);
+            }, []);
+        } else {
+            return arr.slice();
+        }
+    }
+
+    Array.prototype.flat = function (depth) {
+        return flatDeep(this, depth || 1);
+    }
+}
+
+
+if (!Array.prototype.flatMap) {
+    Array.prototype.flatMap = function (callbackFn, thisArg) {
+        return this.map(callbackFn, thisArg).flat(1);
+    }
+}
+
 /************************************************************
  * Counts the number of elements that evaluate as true, or,
  * if a function is provided, passes the test implemented by it.

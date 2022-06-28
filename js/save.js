@@ -138,6 +138,15 @@ Save.prototype.removeItem = function (key) {
     }
 }
 
+/**
+ * Get all keys stored in localStorage.
+ * 
+ * @returns {string[]}
+ */
+Save.prototype.keys = function () {
+    return Object.keys(this.storageCache);
+}
+
 /** Serializes the save storage into a base64-encoded JSON string */
 Save.prototype.serializeStorage = function () {
     return Base64.encode(JSON.stringify(this.storageCache));
@@ -597,6 +606,31 @@ Save.prototype.getPersistentMarker = function (player, name) {
  */
 Save.prototype.setPersistentMarker = function (player, name, value) {
     this.setItem('marker.' + player.id + '.' + name, value);
+}
+
+/**
+ * Get the values of all set persistent markers stored for a player.
+ * 
+ * @param {Player} player 
+ * @returns {Object<string, string | number>}
+ */
+Save.prototype.allPersistentMarkers = function (player) {
+    var prefix = 'marker.' + player.id;
+    return this.keys().flatMap(function (key) {
+        if (!key.startsWith(prefix)) return [];
+        
+        var name = key.substring(prefix);
+        var val = this.getItem(key, true);
+
+        if (val) {
+            return [[name, val]];
+        } else {
+            return [];
+        }
+    }, this).reduce(function (acc, pair) {
+        acc[pair[0]] = pair[1];
+        return acc;
+    }, {});
 }
 
 /**
