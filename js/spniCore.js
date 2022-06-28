@@ -16,7 +16,6 @@ var COLLECTIBLES_UNLOCKED = false;
 var CARD_DECKS_ENABLED = false;
 var ALT_COSTUMES_ENABLED = true;
 var DEFAULT_COSTUME_SETS = new Set();
-var SENTRY_INITIALIZED = false;
 var BASE_FONT_SIZE = 14;
 var BASE_SCREEN_WIDTH = 100;
 var UI_FONT_WEIGHT = 500;
@@ -213,7 +212,7 @@ function initialSetup () {
         updateAnnouncementDropdown();
     });
 
-    if (SENTRY_INITIALIZED) Sentry.setTag("screen", "warning");
+    Sentry.setTag("screen", "warning");
 
     /* show the title screen */
     $titleScreen.show();
@@ -276,7 +275,7 @@ function loadVersionInfo () {
         var versionElem = versionInfo.children('current');
         CURRENT_VERSION = versionElem.attr('version');
 
-        if (SENTRY_INITIALIZED) Sentry.setTag("game_version", CURRENT_VERSION);
+        Sentry.setTag("game_version", CURRENT_VERSION);
         
         var displayedVersion = 'v' + CURRENT_VERSION;
 
@@ -524,7 +523,7 @@ function enterTitleScreen() {
     $titleContainer.show();
     $('.title-candy').show();
     $('#title-start-button').focus();
-    if (SENTRY_INITIALIZED) Sentry.setTag("screen", "title");
+    Sentry.setTag("screen", "title");
 }
 
 /************************************************************
@@ -580,18 +579,16 @@ function resetPlayers () {
  * Restarts the game.
  ************************************************************/
 function restartGame () {
-    if (SENTRY_INITIALIZED) {
-        Sentry.addBreadcrumb({
-            category: 'ui',
-            message: 'Returning to title screen.',
-            level: 'info'
-        });
+    Sentry.addBreadcrumb({
+        category: 'ui',
+        message: 'Returning to title screen.',
+        level: 'info'
+    });
 
-        Sentry.setTag("screen", "title");
-        Sentry.setTag("epilogue_player", undefined);
-        Sentry.setTag("epilogue", undefined);
-        Sentry.setTag("epilogue_gallery", undefined);
-    }
+    Sentry.setTag("screen", "title");
+    Sentry.setTag("epilogue_player", undefined);
+    Sentry.setTag("epilogue", undefined);
+    Sentry.setTag("epilogue_gallery", undefined);
 
     clearTimeout(timeoutID); // No error if undefined or no longer valid
     timeoutID = autoForfeitTimeoutID = undefined;
@@ -609,9 +606,7 @@ function restartGame () {
     inGame = false;
     autoAdvancePaused = false;
 
-    if (SENTRY_INITIALIZED) {
-        Sentry.setTag("in_game", false);
-    }
+    Sentry.setTag("in_game", false);
 
     /* trigger screen refreshes */
     updateSelectionVisuals();
@@ -1027,13 +1022,11 @@ function showImportModal() {
     $('#import-progress').click(function() {
         var code = $("#export-code").val();
 
-        if (SENTRY_INITIALIZED) {
-            Sentry.addBreadcrumb({
-                category: 'ui',
-                message: 'Loading save code...',
-                level: 'info'
-            });
-        }
+        Sentry.addBreadcrumb({
+            category: 'ui',
+            message: 'Loading save code...',
+            level: 'info'
+        });
 
         if (save.deserializeStorage(code)) {
             $ioModal.modal('hide');

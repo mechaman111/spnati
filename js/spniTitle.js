@@ -845,7 +845,7 @@ function validateTitleScreen () {
     updateAllBehaviours(null, null, SELECTED);
     updateSelectionVisuals();
 
-    if (SENTRY_INITIALIZED) Sentry.setTag("screen", "select-main");
+    Sentry.setTag("screen", "select-main");
     screenTransition($titleScreen, $selectScreen);
 
     updateAnnouncementDropdown();

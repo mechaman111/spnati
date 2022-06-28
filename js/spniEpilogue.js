@@ -955,13 +955,11 @@ function selectEpilogue(epNumber) {
  * Show the modal for the player to choose an Epilogue, or restart the game.
  ************************************************************/
 function doEpilogueModal() {
-    if (SENTRY_INITIALIZED) {
-        Sentry.addBreadcrumb({
-            category: 'ui',
-            message: 'Showing epilogue modal.',
-            level: 'info'
-        });
-    }
+    Sentry.addBreadcrumb({
+        category: 'ui',
+        message: 'Showing epilogue modal.',
+        level: 'info'
+    });
 
     clearEpilogueList(); //remove any already loaded epilogues
     chosenEpilogue = null; //reset any currently-chosen epilogue
@@ -1063,13 +1061,12 @@ function loadEpilogue(epilogue, loadToScene, fromGallery) {
 function moveEpilogueForward(showRestartModalAtEnd) {
     if (epiloguePlayer && epiloguePlayer.loaded) {
         if (epiloguePlayer.hasMoreDirectives()) {
-            if (SENTRY_INITIALIZED) {
-                Sentry.addBreadcrumb({
-                    category: 'epilogue',
-                    message: 'Advancing epilogue from scene ' + epiloguePlayer.sceneIndex + ', directive' + epiloguePlayer.directiveIndex,
-                    level: 'info'
-                });
-            }
+            Sentry.addBreadcrumb({
+                category: 'epilogue',
+                message: 'Advancing epilogue from scene ' + epiloguePlayer.sceneIndex + ', directive' + epiloguePlayer.directiveIndex,
+                level: 'info'
+            });
+
             epiloguePlayer.advanceDirective();
             updateEpilogueButtons();
         } else if (showRestartModalAtEnd) {
@@ -1080,13 +1077,11 @@ function moveEpilogueForward(showRestartModalAtEnd) {
 
 function moveEpilogueBack() {
     if (epiloguePlayer && epiloguePlayer.loaded && epiloguePlayer.hasPreviousDirectives()) {
-        if (SENTRY_INITIALIZED) {
-            Sentry.addBreadcrumb({
-                category: 'epilogue',
-                message: 'Reverting epilogue from scene ' + epiloguePlayer.sceneIndex + ', directive' + epiloguePlayer.directiveIndex,
-                level: 'info'
-            });
-        }
+        Sentry.addBreadcrumb({
+            category: 'epilogue',
+            message: 'Reverting epilogue from scene ' + epiloguePlayer.sceneIndex + ', directive' + epiloguePlayer.directiveIndex,
+            level: 'info'
+        });
 
         epiloguePlayer.revertDirective();
         updateEpilogueButtons();

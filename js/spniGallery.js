@@ -308,7 +308,7 @@ var playerCollectibles = {}; /* Indexed by player ID. */
 var currentDeckDisplay = null;
 
 function goToEpiloguesScreen() {
-    if (SENTRY_INITIALIZED) Sentry.setTag("screen", "gallery-epilogues");
+    Sentry.setTag("screen", "gallery-epilogues");
 
     $galleryEndingsScreen.show();
     $galleryCollectiblesScreen.hide();
@@ -319,7 +319,7 @@ function goToEpiloguesScreen() {
 }
 
 function goToCollectiblesScreen() {
-    if (SENTRY_INITIALIZED) Sentry.setTag("screen", "gallery-collectibles");
+    Sentry.setTag("screen", "gallery-collectibles");
 
     $galleryCollectiblesScreen.show();
     $galleryEndingsScreen.hide();
@@ -331,7 +331,7 @@ function goToCollectiblesScreen() {
 }
 
 function goToCardsScreen() {
-    if (SENTRY_INITIALIZED) Sentry.setTag("screen", "gallery-decks");
+    Sentry.setTag("screen", "gallery-decks");
 
     if (!currentDeckDisplay) {
         currentDeckDisplay = new CardDeckDisplay(CARD_IMAGE_SETS[DEFAULT_CARD_DECK]);
@@ -388,7 +388,7 @@ function loadGalleryScreen(){
 }
 
 function backGalleryScreen(){
-    if (SENTRY_INITIALIZED) Sentry.setTag("screen", "title");
+    Sentry.setTag("screen", "title");
     screenTransition($galleryScreen, $titleScreen);
 }
 

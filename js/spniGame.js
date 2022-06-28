@@ -349,14 +349,12 @@ function startDealPhase () {
     currentRound++;
     saveTranscriptMessage("Starting round "+(currentRound+1)+"...");
 
-    if (SENTRY_INITIALIZED) {
-        Sentry.addBreadcrumb({
-            category: 'game',
-            message: 'Starting round '+(currentRound+1)+'...',
-            level: 'info'
-        });
-    }
-    
+    Sentry.addBreadcrumb({
+        category: 'game',
+        message: 'Starting round '+(currentRound+1)+'...',
+        level: 'info'
+    });
+
     /* dealing cards */
     dealLock = getNumPlayersInStage(STATUS_ALIVE) * CARDS_PER_HAND;
     for (var i = 0; i < players.length; i++) {
@@ -546,13 +544,11 @@ function completeRevealPhase () {
     recentWinner = sortedPlayers[sortedPlayers.length-1].slot;
 
     console.log("Player "+recentLoser+" is the loser.");
-    if (SENTRY_INITIALIZED) {
-        Sentry.addBreadcrumb({
-            category: 'game',
-            message: players[recentLoser].id+' lost the round',
-            level: 'info'
-        });
-    }
+    Sentry.addBreadcrumb({
+        category: 'game',
+        message: players[recentLoser].id+' lost the round',
+        level: 'info'
+    });
 
     // update loss history
     if (recentLoser == previousLoser) {
@@ -646,13 +642,11 @@ function endRound () {
         saveTranscriptMessage('<b>' + players[lastPlayer].label.escapeHTML() + "</b> won Strip Poker Night at the Inventory!");
         gameOver = true;
 
-        if (SENTRY_INITIALIZED) {
-            Sentry.addBreadcrumb({
-                category: 'game',
-                message: 'Game ended with '+players[lastPlayer].id+' winning.',
-                level: 'info'
-            });
-        }
+        Sentry.addBreadcrumb({
+            category: 'game',
+            message: 'Game ended with '+players[lastPlayer].id+' winning.',
+            level: 'info'
+        });
 
         for (var i = 0; i < players.length; i++) {
             if (HUMAN_PLAYER == i) {
@@ -878,14 +872,12 @@ RollbackPoint.prototype.load = function () {
         $mainButton.attr('disabled', false);
     }
 
-    if (SENTRY_INITIALIZED) {
-        Sentry.addBreadcrumb({
-            category: 'ui',
-            message: 'Entering rollback.',
-            level: 'info'
-        });
-    }
-    
+    Sentry.addBreadcrumb({
+        category: 'ui',
+        message: 'Entering rollback.',
+        level: 'info'
+    });
+
     currentRound = this.currentRound;
     currentTurn = this.currentTurn;
     previousLoser = this.previousLoser;
@@ -915,14 +907,12 @@ function inRollback() {
 function exitRollback() {
     if (!inRollback()) return;
 
-    if (SENTRY_INITIALIZED) {
-        Sentry.addBreadcrumb({
-            category: 'ui',
-            message: 'Exiting rollback.',
-            level: 'info'
-        });
-    }
-    
+    Sentry.addBreadcrumb({
+        category: 'ui',
+        message: 'Exiting rollback.',
+        level: 'info'
+    });
+
     returnRollbackPoint.load();
     var prevPhase = returnRollbackPoint.gamePhase;
     returnRollbackPoint = null;

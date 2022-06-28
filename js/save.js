@@ -83,7 +83,7 @@ Save.prototype.getItem = function (key, acceptBareString) {
             return serialized;
         } else {
             console.error("Failed to parse saved data for '"+key+"': ", ex);
-            if (SENTRY_INITIALIZED) Sentry.captureException(ex);
+            Sentry.captureException(ex);
         }
     }
 }
@@ -107,7 +107,7 @@ Save.prototype.setItem = function (key, value) {
         serialized = JSON.stringify(value);
     } catch (ex) {
         console.error("Failed to serialize saved data for '"+key+"': ", ex);
-        if (SENTRY_INITIALIZED) Sentry.captureException(ex);
+        Sentry.captureException(ex);
         return;
     }
 
@@ -117,7 +117,7 @@ Save.prototype.setItem = function (key, value) {
         localStorage.setItem(this.prefix + key, serialized);
     } catch (ex) {
         console.error("Failed to save data '"+key+"' to localStorage: ", ex);
-        if (SENTRY_INITIALIZED) Sentry.captureException(ex);
+        Sentry.captureException(ex);
     }
 }
 
@@ -134,7 +134,7 @@ Save.prototype.removeItem = function (key) {
         localStorage.removeItem(this.prefix + key);
     } catch (ex) {
         console.error("Failed to remove data '"+key+"' from localStorage: ", ex);
-        if (SENTRY_INITIALIZED) Sentry.captureException(ex);
+        Sentry.captureException(ex);
     }
 }
 
@@ -178,7 +178,7 @@ Save.prototype.deserializeStorage = function (code) {
         }.bind(this));
     } catch (ex) {
         console.error('Failed to write save code data to localStorage: ', ex);
-        if (SENTRY_INITIALIZED) Sentry.captureException(ex);
+        Sentry.captureException(ex);
     }
 
     this.load();
@@ -236,7 +236,7 @@ Save.prototype.loadLocalStorage = function () {
         len = localStorage.length;
     } catch (ex) {
         console.error("Failed to read localStorage length: ", ex);
-        if (SENTRY_INITIALIZED) Sentry.captureException(ex);
+        Sentry.captureException(ex);
         return;
     }
 
@@ -251,7 +251,7 @@ Save.prototype.loadLocalStorage = function () {
             this.storageCache[suffix] = localStorage.getItem(key);
         } catch (ex) {
             console.error("Failed to load save data from localStorage: ", ex);
-            if (SENTRY_INITIALIZED) Sentry.captureException(ex);
+            Sentry.captureException(ex);
         }
     }
 }
@@ -353,7 +353,6 @@ Save.prototype.loadOptions = function(){
         useGroupBackgrounds = true;
     }
 
-    enableSentry();
     var gender = this.getItem("gender", true);
     if (gender) {
         humanPlayer.gender = gender;

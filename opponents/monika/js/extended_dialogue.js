@@ -143,15 +143,13 @@
         try {
             console.log("[Monika] Beginning extended dialogue with ID " + id);
 
-            if (root.SENTRY_INITIALIZED) {
-                root.Sentry.addBreadcrumb({
-                    category: 'monika',
-                    message: 'Beginning extended dialogue: ' + id,
-                    level: 'info'
-                });
+            root.Sentry.addBreadcrumb({
+                category: 'monika',
+                message: 'Beginning extended dialogue: ' + id,
+                level: 'info'
+            });
 
-                root.Sentry.setTag("extended_dialogue", id);
-            }
+            root.Sentry.setTag("extended_dialogue", id);
 
             if (AUTO_FADE) forceTableVisibility(false);
 
@@ -185,15 +183,13 @@
     function end_extended_dialogue() {
         var pl = monika.utils.get_monika_player();
 
-        if (root.SENTRY_INITIALIZED) {
-            root.Sentry.addBreadcrumb({
-                category: 'monika',
-                message: 'Ending extended dialogue...',
-                level: 'info'
-            });
+        root.Sentry.addBreadcrumb({
+            category: 'monika',
+            message: 'Ending extended dialogue...',
+            level: 'info'
+        });
 
-            root.Sentry.setTag("extended_dialogue", null);
-        }
+        root.Sentry.setTag("extended_dialogue", null);
 
         allowProgression(previousGamePhase);
 

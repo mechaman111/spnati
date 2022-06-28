@@ -163,7 +163,7 @@ function captureError(err) {
     }
 
     logError(err);
-    if (SENTRY_INITIALIZED) Sentry.captureException(err);
+    Sentry.captureException(err);
 }
 
 
@@ -400,103 +400,77 @@ $feedbackReportModal.on('shown.bs.modal', function () {
 });
 
 function sentryInit() {
-    if (!SENTRY_INITIALIZED) {
-        console.log("Initializing Sentry...");
+    console.log("Initializing Sentry...");
 
-        var sentry_opts = {
-            dsn: 'https://df511167a4fa4a35956a8653ff154960@sentry.io/1508488',
-            release: VERSION_TAG,
-            maxBreadcrumbs: 100,
-            integrations: [new Sentry.Integrations.Breadcrumbs({
-                console: false,
-                dom: false
-            })],
-            beforeSend: function (event, hint) {
-                /* Inject additional game state data into event tags: */
-                if (!event.extra) event.extra = {};
+    var sentry_opts = {
+        dsn: 'https://df511167a4fa4a35956a8653ff154960@sentry.io/1508488',
+        release: VERSION_TAG,
+        maxBreadcrumbs: 100,
+        integrations: [new Sentry.Integrations.Breadcrumbs({
+            console: false,
+            dom: false
+        })],
+        beforeSend: function (event, hint) {
+            /* Inject additional game state data into event tags: */
+            if (!event.extra) event.extra = {};
 
-                event.tags.commit = VERSION_COMMIT;
+            event.tags.commit = VERSION_COMMIT;
 
-                if (inGame && !epiloguePlayer) {
-                    event.extra.recentLoser = recentLoser;
-                    event.extra.previousLoser = previousLoser;
-                    event.extra.gameOver = gameOver;
-                    event.extra.currentTurn = currentTurn;
-                    event.extra.currentRound = currentRound;
+            if (inGame && !epiloguePlayer) {
+                event.extra.recentLoser = recentLoser;
+                event.extra.previousLoser = previousLoser;
+                event.extra.gameOver = gameOver;
+                event.extra.currentTurn = currentTurn;
+                event.extra.currentRound = currentRound;
 
-                    event.tags.rollback = inRollback();
-                    event.tags.gamePhase = getGamePhaseString(gamePhase);
-                    event.tags.uiTheme = UI_THEME;
-                }
-
-                if (epiloguePlayer) {
-                    event.tags.epilogue = epiloguePlayer.epilogue.title;
-                    event.tags.epilogue_player = epiloguePlayer.epilogue.player.id;
-                    event.tags.epilogue_gender = epiloguePlayer.epilogue.gender;
-
-                    event.extra.loaded = epiloguePlayer.loaded;
-                    event.extra.directiveIndex = epiloguePlayer.directiveIndex;
-                    event.extra.sceneIndex = epiloguePlayer.sceneIndex;
-                    event.extra.viewIndex = epiloguePlayer.viewIndex;
-                }
-
-                var n_players = 0;
-                for (var i=1;i<players.length;i++) {
-                    if (players[i]) {
-                        n_players += 1;
-                        event.tags["character:" + players[i].id] = true;
-                        event.tags["slot-" + i] = players[i].id;
-
-                        if (players[i].alt_costume) {
-                            event.tags[players[i].id+":alt-costume"] = players[i].alt_costume.id;
-                        }
-                    } else {
-                        event.tags["slot-" + i] = undefined;
-                    }
-                }
-
-                event.tags.n_players = n_players;
-
-                return event;
+                event.tags.rollback = inRollback();
+                event.tags.gamePhase = getGamePhaseString(gamePhase);
+                event.tags.uiTheme = UI_THEME;
             }
-        };
 
-        if (window.location.origin.indexOf('spnati.net') >= 0) {
-            sentry_opts.environment = 'production';
+            if (epiloguePlayer) {
+                event.tags.epilogue = epiloguePlayer.epilogue.title;
+                event.tags.epilogue_player = epiloguePlayer.epilogue.player.id;
+                event.tags.epilogue_gender = epiloguePlayer.epilogue.gender;
+
+                event.extra.loaded = epiloguePlayer.loaded;
+                event.extra.directiveIndex = epiloguePlayer.directiveIndex;
+                event.extra.sceneIndex = epiloguePlayer.sceneIndex;
+                event.extra.viewIndex = epiloguePlayer.viewIndex;
+            }
+
+            var n_players = 0;
+            for (var i=1;i<players.length;i++) {
+                if (players[i]) {
+                    n_players += 1;
+                    event.tags["character:" + players[i].id] = true;
+                    event.tags["slot-" + i] = players[i].id;
+
+                    if (players[i].alt_costume) {
+                        event.tags[players[i].id+":alt-costume"] = players[i].alt_costume.id;
+                    }
+                } else {
+                    event.tags["slot-" + i] = undefined;
+                }
+            }
+
+            event.tags.n_players = n_players;
+
+            return event;
         }
+    };
 
-        Sentry.init(sentry_opts);
-
-        Sentry.setUser({
-            'id': sessionID,
-        });
-
-        Sentry.setTag("game_version", CURRENT_VERSION);
-
-        SENTRY_INITIALIZED = true;
+    if (window.location.origin.indexOf('spnati.net') >= 0) {
+        sentry_opts.environment = 'production';
     }
-}
 
-function enableSentry () {
-    if (SENTRY_INITIALIZED) {
-        var client = Sentry.getCurrentHub().getClient();
-        if (client) {
-            console.log("Enabling Sentry logging...");
-            client.getOptions().enabled = true;
-        }
-    }
-}
+    Sentry.init(sentry_opts);
 
-/**
- * @returns {Promise<boolean>}
- */
-function disableSentry () {
-    if (SENTRY_INITIALIZED) {
-        console.log("Disabling Sentry logging...");
-        return Sentry.close();
-    } else {
-        return Promise.resolve(false);
-    }
+    Sentry.setUser({
+        'id': sessionID,
+    });
+
+    Sentry.setTag("game_version", CURRENT_VERSION);
 }
 
 function collectBaseUsageInfo(type) {
@@ -532,16 +506,14 @@ function sendUsageReport(report) {
  * @returns {Promise<void>}
  */
 function recordStartGameEvent() {
-    if (SENTRY_INITIALIZED) {
-        Sentry.setTag("in_game", true);
-        Sentry.setTag("screen", "game");
+    Sentry.setTag("in_game", true);
+    Sentry.setTag("screen", "game");
 
-        Sentry.addBreadcrumb({
-            category: 'game',
-            message: 'Starting game.',
-            level: 'info'
-        });
-    }
+    Sentry.addBreadcrumb({
+        category: 'game',
+        message: 'Starting game.',
+        level: 'info'
+    });
 
     var report = collectBaseUsageInfo('start_game');
     report.game = gameID;
@@ -554,13 +526,11 @@ function recordStartGameEvent() {
  * @returns {Promise<void>}
  */
 function recordEndGameEvent(winner) {
-    if (SENTRY_INITIALIZED) {
-        Sentry.addBreadcrumb({
-            category: 'game',
-            message: 'Game ended with ' + winner + ' winning.',
-            level: 'info'
-        });
-    }
+    Sentry.addBreadcrumb({
+        category: 'game',
+        message: 'Game ended with ' + winner + ' winning.',
+        level: 'info'
+    });
 
     var report = collectBaseUsageInfo('end_game');
     report.game = gameID;
@@ -575,16 +545,14 @@ function recordEndGameEvent(winner) {
  * @returns {Promise<void>}
  */
 function recordEpilogueEvent(gallery, epilogue) {
-    if (SENTRY_INITIALIZED) {
-        Sentry.addBreadcrumb({
-            category: 'epilogue',
-            message: 'Starting ' + epilogue.player.id + ' epilogue: ' + epilogue.title,
-            level: 'info'
-        });
+    Sentry.addBreadcrumb({
+        category: 'epilogue',
+        message: 'Starting ' + epilogue.player.id + ' epilogue: ' + epilogue.title,
+        level: 'info'
+    });
 
-        Sentry.setTag("epilogue_gallery", gallery);
-        Sentry.setTag("screen", "epilogue");
-    }
+    Sentry.setTag("epilogue_gallery", gallery);
+    Sentry.setTag("screen", "epilogue");
 
     var report = collectBaseUsageInfo(gallery ? 'gallery' : 'epilogue');
     if (gallery) {
