@@ -1475,6 +1475,9 @@ function expandDialogue (dialogue, self, target, bindings) {
                     substitution = activeBackground.metadata.term || activeBackground.id;
                 } else if (fn == 'time' && !('time' in activeBackground.metadata) && args === undefined) {
                     substitution = localDayOrNight;
+                } else if (fn == 'adverb') {
+                    substitution = activeBackground.metadata.surface == 'roof' ? 'up'
+                        : activeBackground.metadata.location == 'outdoors' ? 'out' : 'in';
                 } else if (args === undefined) {
                     substitution = activeBackground.metadata[fn] || '';
                 }
