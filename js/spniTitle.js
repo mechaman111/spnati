@@ -324,6 +324,10 @@ var $gameLoadProgress = $(".game-load-progress");
     "futaba/1-happy.png",
     "futaba/2-bored.png",
     "futaba/3-gremlin.png",
+    "videl/0-confident.png",                   // Has Recent Updates
+    "videl/1-flying.png",
+    "videl/4-happy.png",
+    "videl/5-embarrassed.png",
 ];
 
 /* maybe move this data to an external file if the hardcoded stuff changes often enough */
