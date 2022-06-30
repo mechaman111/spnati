@@ -330,7 +330,6 @@ function loadEpilogueData(player) {
          */
         var base_unlock = $(this).attr('unlock');
         switch (base_unlock) {
-        case "completion": break;
         case "character-loss": if (player.out) { break; } else { return false; }
         case "outlast":
             if (humanPlayerWon || (player.out && (player.outOrder < humanPlayer.outOrder))) {
@@ -338,9 +337,10 @@ function loadEpilogueData(player) {
             } else {
                 return false;
             }
-        case "player-win":
+        case "player-win": if (humanPlayerWon) { break; } else { return false; }
+        case "completion":
         default:
-            if (humanPlayerWon) { break; } else { return false; }
+            break;
         }
 
         var alsoPlaying = $(this).attr('alsoPlaying');
