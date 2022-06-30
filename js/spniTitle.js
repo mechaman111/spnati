@@ -181,9 +181,9 @@ var $gameLoadProgress = $(".game-load-progress");
     "rosa/2-embarrassed.png",
     "rosa/1-thinking.png",
     "petra/0-select.png",                   // Has Recent Updates
-    "petra/0-calmSmile.png",
-    "petra/0-stretch.png",
-    "petra/0-horny.png",
+    "petra/0-wink.png",
+    "reskins/petra_war_outfit/0-happy.png",
+    "reskins/petra_war_outfit/0-horny.png",
     "estelle/0-calm.png",                   // Has Recent Updates
     "estelle/1-determind.png",
     "estelle/2-lecture.png",
@@ -206,8 +206,8 @@ var $gameLoadProgress = $(".game-load-progress");
     "wiifitfemale/0-interested.png",
     "leonie/0-calm.png",                    // Has Recent Updates
     "leonie/0-smug.png",
-    "leonie/1-grin.png",
-    "leonie/2-stretch-alt.png",
+    "reskins/leonie_war_outfit/1-grin.png",
+    "reskins/leonie_war_outfit/2-stretch-alt.png",
     "kazuma/0-happy.png",                   // Has Recent Updates
     "kazuma/0-appreciative.png",
     "kazuma/1-victory.png",
@@ -301,8 +301,8 @@ var $gameLoadProgress = $(".game-load-progress");
     "cagliostro/3-Smug.png",
     "cagliostro/3-Grin.png",
     "mari/0-tease.png",
-    "mari/0-cheer.png",
-    "mari/3-relaxed.png",
+    "reskins/mari_thanksgiving/0-wink-2.png",
+    "reskins/mari_office/3-relaxed.png",
     "mari/4-coy.png",
     "reimu/0-select.png",                   // Highlighted New Character
     "reimu/0-smug.png",
