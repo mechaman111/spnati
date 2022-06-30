@@ -28,10 +28,10 @@ var $gameLoadProgress = $(".game-load-progress");
     "nami/0-seductive.png",
     "nami/0-smiling.png",
     "nami/0-smug.png",
-    "meia/0-disappointed.png",              // High Roster Position
-    "meia/1-busy.png",
-    "meia/2-addressing.png",
+    "meia/0-interested.png",              // High Roster Position
     "meia/2-pleased.png",
+    "meia/2-reminiscing.png",
+    "meia/3-happy.png",
     "natsuki/0-tsun.png",                   // High Roster Position
     "natsuki/1-laugh.png",
     "natsuki/2-happy.png",
