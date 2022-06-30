@@ -175,7 +175,7 @@ var $gameLoadProgress = $(".game-load-progress");
     "noire/0-niya.png",                     // Has Recent Updates
     "noire/0-smug.png",
     "noire/0-teasing.png",
-    "noire/0-thinking.png",
+    "noire/0-embarrassed.png",
     "rosa/0-portrait.png",                  // Has Recent Updates
     "rosa/0-horny.png",
     "rosa/2-embarrassed.png",
