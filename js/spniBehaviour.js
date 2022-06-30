@@ -1458,6 +1458,14 @@ function expandDialogue (dialogue, self, target, bindings) {
                 } else if (fn == 'adverb') {
                     substitution = activeBackground.metadata.surface == 'roof' ? 'up'
                         : activeBackground.metadata.location == 'outdoors' ? 'out' : 'in';
+                } else if (fn == 'if' && fn_parts.length == 2) {
+                    let bg_tag = fixupTagFormatting(fn_parts[1]), val;
+                    if ((bg_tag == 'day' || bg_tag == 'night') && !('time' in activeBackground.metadata)) {
+                        val = localDayOrNight == bg_tag;
+                    } else {
+                        val = activeBackground.tags && (activeBackground.tags.includes(bg_tag));
+                    }
+                    substitution = expandDialogue(args.split('|')[val ? 0 : 1]);
                 } else if (args === undefined) {
                     substitution = activeBackground.metadata[fn] || '';
                 }
