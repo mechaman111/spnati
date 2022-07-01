@@ -653,20 +653,6 @@ TitleClothingSelectionIcon.prototype.onClick = function () {
     }
 }
 
-
-/************************************************************
- * Loads all of the content required to display the title
- * screen.
- ************************************************************/
-function loadTitleScreen () {
-    /* hide Extra Opponents menu if online version */
-    if (getReportedOrigin().includes("spnati.net")) {
-        document.getElementById("title-fullscreen-button").style.left = "25.5%";
-    } else {
-        $(".title-extras-button").prop("hidden", false);
-    }
-}
-
 function setupTitleClothing () {
     loadedOpponents.forEach(function (opp) {
         if (!opp.has_collectibles || !opp.collectibles) return;

@@ -167,7 +167,6 @@ function initialSetup () {
     $gameTable.css({opacity:1});
 
     /* Load title screen info first, since that's fast and synchronous */
-    loadTitleScreen();
     selectTitleCandy();
 
     /* Attempt to detect broken images as caused by running SPNATI from an invalid archive. */
@@ -1047,15 +1046,45 @@ function showImportModal() {
 }
 
 function showExtrasModal() {
-    $('ul.character-status-toggle').each(function() {
-        var show = includedOpponentStatuses[$(this).data('status')];
+    /* hide Extra Opponents options if online version */
+    if (!getReportedOrigin().includes("spnati.net")) {
+        $(".extra-characters-options").prop("hidden", false);
+        $('ul.character-status-toggle').each(function() {
+            var show = includedOpponentStatuses[$(this).data('status')];
+            $(this).children(':has(a[data-value=true])').toggleClass('active', show);
+            $(this).children(':has(a[data-value=false])').toggleClass('active', !show);
+        });
+    }
+
+    updateTrackingToggles();
+
+    $extrasModal.modal('show');
+}
+
+function updateTrackingToggles() {
+    let trackingOpts = save.getUsageTrackingInfo();
+    $('ul.tracking-status-toggle').each(function() {
+        var show = trackingOpts[$(this).data('tracking-option')];
         $(this).children(':has(a[data-value=true])').toggleClass('active', show);
         $(this).children(':has(a[data-value=false])').toggleClass('active', !show);
     });
-    $extrasModal.modal('show');
+
+    $("#tracking-persistent, #tracking-demographics").children().toggleClass("disabled", !trackingOpts.basic);
+    if (!trackingOpts.basic) {
+        $("#tracking-persistent, #tracking-demographics").children().removeClass("active");
+    }
 }
+
 $('ul.character-status-toggle').on('click', 'a', function() {
     includedOpponentStatuses[$(this).parents('ul').data('status')] = $(this).data('value');
+});
+
+$('ul.tracking-status-toggle').on('click', 'a', function() {
+    if ($(this).parents("li").hasClass("disabled")) return;
+
+    var option = $(this).parents('ul').data('tracking-option');
+    save.setUsageTrackingInfo(option, $(this).data('value'));
+    updateTrackingToggles();
 });
 
 /**********************************************************************

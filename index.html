@@ -31,7 +31,7 @@
             <!-- Content -->
             <div id="initial-warning">
                 <div class="warning-container">
-                    <div class="warning-text">
+                    <div class="warning-start-text">
                         <p>This game contains material that is only suitable for adults.<br /><b style="color:#DD3333">If
                                 you are under the age of 18, please leave now.</b></p>
     
@@ -40,15 +40,17 @@
                             original owners.</p>
                     </div>
 
-                    <div class="warning-text">
+                    <div class="warning-info-text">
                         <p>The latest version of the game can be played at
                             <br><a href="https://spnati.net/"><b>spnati.net</b></a>.</p>
     
                         <p>Make sure to check out our list of <a href="#" onclick="showHelpModal()">Frequently-Asked
                                 Questions</a>!</p>
+
+                        <p>By default, we collect some basic statistics about how this game is played. This can be configured in the <a href="#" onclick="showExtrasModal()">settings menu</a>.</p>
                     </div>
 
-                    <div class="warning-text">
+                    <div class="warning-confirm-text">
                         <p>By clicking the button below, you are confirming that you are an adult and such material is legal
                             in your region.</p>
                     </div>
@@ -187,7 +189,7 @@
                 <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>
             </button>
             <button class="title-extras-button bordered smooth-button red banner-flair"
-                onclick="showExtrasModal()" hidden>
+                onclick="showExtrasModal()">
                 <span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
             </button>
             <button id="title-fullscreen-button" class="title-fullscreen-button bordered smooth-button red banner-flair"
@@ -2783,77 +2785,119 @@
     <!-- End of Import/Export Modal -->
 	
 	
-    <!-- Extra Characters Modal -->
+    <!-- Extra Characters + Tracking Options Modal -->
     <div id="extras-modal" class="modal table-modal fade" role="dialog">
         <div class="modal-table-container">
             <div class="modal-cell-container">
-                <div class="bordered modal-dialog wide-modal-dialog">
+                <div class="bordered modal-dialog very-wide-modal-dialog">
                     <div class="bordered modal-dialog-surface">
                         <!-- Start of Modal Content -->
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h3 class="modal-title text-center"><b>Extra Characters</b></h3>
+                                <h3 class="modal-title text-center"><b>Settings</b></h3>
                             </div>
                             <div class="modal-body">
                                 <div class="modal-body-container options-container" style="width:100%">
-                                    <table style="width:100%">
+                                    <h3 class="modal-title text-center extra-characters-options" hidden><b>Extra Characters</b></h3>
+
+                                    <table class="extra-settings-group extra-characters-options" hidden>
                                         <tr>
-                                            <td>
+                                            <td class="setting-toggle">
+                                                <ul class="pagination character-status-toggle" id="show-offline" data-status="offline">
+                                                    <li><a href="#" data-value="true">Show</a></li>
+                                                    <li><a href="#" data-value="false">Hide</a></li>
+                                                </ul>
+                                            </td>
+                                            <td class="setting-description">
                                                 <h4 class="modal-title modal-left">Offline Characters</h4>
                                                 <h5 class="modal-left">These characters no longer meet the standards of the main game,<br />but are still fully complete.</h5>
                                             </td>
-                                            <td>
-                                                <nav>
-                                                    <ul class="pagination character-status-toggle" id="show-offline" data-status="offline">
-                                                        <li><a href="#" data-value="true">Show</a></li>
-                                                        <li><a href="#" data-value="false">Hide</a></li>
-                                                    </ul>
-                                                </nav>
-                                            </td>
                                         </tr>
 										
                                         <tr>
-                                            <td>
+                                            <td class="setting-toggle">
+                                                <ul class="pagination character-status-toggle" id="show-incomplete" data-status="incomplete">
+                                                    <li><a href="#" data-value="true">Show</a></li>
+                                                    <li><a href="#" data-value="false">Hide</a></li>
+                                                </ul>
+                                            </td>
+                                            <td class="setting-description">
                                                 <h4 class="modal-title modal-left">Incomplete Characters</h4>
                                                 <h5 class="modal-left">These characters were never finished or added to the main game,<br />so they may be of lower quality or simply not work properly.</h5>
                                             </td>
-                                            <td>
-                                                <nav>
-                                                    <ul class="pagination character-status-toggle" id="show-incomplete" data-status="incomplete">
-                                                        <li><a href="#" data-value="true">Show</a></li>
-                                                        <li><a href="#" data-value="false">Hide</a></li>
-                                                    </ul>
-                                                </nav>
-                                            </td>
                                         </tr>
 										
                                         <tr>
-                                            <td>
+                                            <td class="setting-toggle">
+                                                <ul class="pagination character-status-toggle" id="show-event" data-status="event">
+                                                    <li><a href="#" data-value="true">Show</a></li>
+                                                    <li><a href="#" data-value="false">Hide</a></li>
+                                                </ul>
+                                            </td>
+                                            <td class="setting-description">
                                                 <h4 class="modal-title modal-left">April Fool's Day Characters</h4>
                                                 <h5 class="modal-left">These are joke characters only available in the main game<br />during the week of April Fool's Day.</h5>
                                             </td>
-                                            <td>
-                                                <nav>
-                                                    <ul class="pagination character-status-toggle" id="show-event" data-status="event">
-                                                        <li><a href="#" data-value="true">Show</a></li>
-                                                        <li><a href="#" data-value="false">Hide</a></li>
-                                                    </ul>
-                                                </nav>
+                                        </tr>
+										
+                                        <tr>
+                                            <td class="setting-toggle">
+                                                <ul class="pagination character-status-toggle" id="show-duplicate" data-status="duplicate">
+                                                    <li><a href="#" data-value="true">Show</a></li>
+                                                    <li><a href="#" data-value="false">Hide</a></li>
+                                                </ul>
+                                            </td>
+                                            <td class="setting-description">
+                                                <h4 class="modal-title modal-left">Duplicate Characters</h4>
+                                                <h5 class="modal-left">These are usually older versions of characters that have been replaced.</h5>
+                                            </td>
+                                        </tr>
+                                    </table>
+
+                                    <h3 class="modal-title text-center"><b>Privacy Settings</b></h3>
+
+                                    <table class="extra-settings-group">
+                                        <tr>
+                                            <td class="setting-toggle">
+                                                <ul class="pagination tracking-status-toggle" id="tracking-basic" data-tracking-option="basic">
+                                                    <li><a href="#" data-value="true">Enable</a></li>
+                                                    <li><a href="#" data-value="false">Disable</a></li>
+                                                </ul>
+                                            </td>
+                                            <td class="setting-description">
+                                                <h4 class="modal-title modal-left">Basic Game Statistics</h4>
+                                                <h5 class="modal-left">Send basic information about the characters you play against, how each game ends, UI settings, and selected backgrounds.</h5>
+                                                <h5 class="modal-left">We use this information to identify popular characters and backgrounds, and to tweak character difficulty.</h5>
+                                                <h5 class="modal-left">Disabling this will disable all data collection.</h5>
                                             </td>
                                         </tr>
 										
                                         <tr>
-                                            <td>
-                                                <h4 class="modal-title modal-left">Duplicate Characters</h4>
-                                                <h5 class="modal-left">These are usually older versions of characters that have been replaced.</h5>
+                                            <td class="setting-toggle">
+                                                <ul class="pagination tracking-status-toggle" id="tracking-persistent" data-tracking-option="persistent">
+                                                    <li><a href="#" data-value="true">Enable</a></li>
+                                                    <li><a href="#" data-value="false">Disable</a></li>
+                                                </ul>
                                             </td>
-                                            <td>
-                                                <nav>
-                                                    <ul class="pagination character-status-toggle" id="show-duplicate" data-status="duplicate">
-                                                        <li><a href="#" data-value="true">Show</a></li>
-                                                        <li><a href="#" data-value="false">Hide</a></li>
-                                                    </ul>
-                                                </nav>
+                                            <td class="setting-description">
+                                                <h4 class="modal-title modal-left">Unlocked Item Reporting</h4>
+                                                <h5 class="modal-left">Send information indicating what collectibles and epilogues you've unlocked, plus a randomly-generated ID connecting together the games you play during this session.</h5>
+                                                <h5 class="modal-left">We use this information to analyze how players approach the game and what they look for when playing.</h5>
+                                            </td>
+                                        </tr>
+										
+                                        <tr>
+                                            <td class="setting-toggle">
+                                                <ul class="pagination tracking-status-toggle" id="tracking-demographics" data-tracking-option="demographics">
+                                                    <li><a href="#" data-value="true">Enable</a></li>
+                                                    <li><a href="#" data-value="false">Disable</a></li>
+                                                </ul>
+                                            </td>
+                                            <td class="setting-description">
+                                                <h4 class="modal-title modal-left">Anonymous Demographics Reporting</h4>
+                                                <h5 class="modal-left">Send information about the player tags you apply (including selected gender and size) and the clothing you choose to wear in-game.</h5>
+                                                <h5 class="modal-left">This does <em>not</em> include any information that directly identifies you or your location.</h5>
+                                                <h5 class="modal-left">We use this information to generally analyze what audiences play this game, as well as what characters are popular with particular audiences.</h5>
                                             </td>
                                         </tr>
                                     </table>
