@@ -6,6 +6,13 @@ var USAGE_TRACKING_ENDPOINT = 'https://spnati.faraway-vision.io/usage/report';
 var BUG_REPORTING_ENDPOINT = 'https://spnati.faraway-vision.io/usage/bug_report';
 var FEEDBACK_ROUTE = "https://spnati.faraway-vision.io/usage/feedback";
 
+/*
+ * Usage tracking types:
+ * Basic info: table composition, game state, UI info, game ID
+ * Persistent/Session info: session IDs, epilogues + collectibles unlocked, number of unique characters played
+ * Demographics info: player tags and clothing
+ */
+
 $bugReportModal = $('#bug-report-modal');
 $feedbackReportModal = $('#feedback-report-modal');
 
@@ -473,149 +480,99 @@ function sentryInit() {
     Sentry.setTag("game_version", CURRENT_VERSION);
 }
 
-function collectBaseUsageInfo(type) {
-    var table = {};
-
-    for (let i = 1; i < 5; i++) {
-        if (players[i]) {
-            table[i] = players[i].id;
-        }
-    }
-
-    return {
+function collectBaseUsageInfo(type, includeGameState) {
+    var report = {
         'date': (new Date()).toISOString(),
         'commit': VERSION_COMMIT,
         'type': type,
-        'session': sessionID,
-        'userAgent': navigator.userAgent,
-        'table': table,
-    };
-}
-
-function collectCommonUsageInfo(type) {
-    var report = collectBaseUsageInfo(type);
-
-    var playerInfo = {
-        'tags': humanPlayer.tags,
-        'clothing': save.selectedClothing().map(function (c) { return c.id; }),
-        'played_characters': save.getPlayedCharacterSet(),
-        'stage': players[0].stage,
-        'outOrder': players[0].outOrder
+        'origin': getReportedOrigin(),
     };
 
-    var unlockedCollectibles = {};
-    var unlockedEpilogues = {};
-    loadedOpponents.forEach(function (opp) {
-        if (opp.collectibles) {
-            let unlocked = opp.collectibles.flatMap(function (c) {
-                return c.isUnlocked(true) ? [c.id] : [];
-            });
-
-            if (unlocked.length > 0) unlockedCollectibles[opp.id] = unlocked;
-        }
-
-        if (opp.endings) {
-            let unlocked = opp.endings.map(function () {
-                /* jQuery's .map actually works like filter-map: returning null/undefined means that no item is inserted into the set. */
-                var rawTitle = $(this).html();
-                if (save.hasEnding(opp.id, rawTitle)) return rawTitle;
-            }).get();
-
-            if (unlocked.length > 0) unlockedEpilogues[opp.id] = unlocked;
-        }
-    });
-
-    var unlockedGeneralCollectibles = generalCollectibles.flatMap(function (c) {
-        return c.isUnlocked(true) ? [c.id] : [];
-    });
-
-    if (unlockedGeneralCollectibles.length > 0) unlockedCollectibles["__general"] = unlockedGeneralCollectibles;
-
-    playerInfo['collectibles'] = unlockedCollectibles;
-    playerInfo['epilogues'] = unlockedEpilogues;
-
-    var table = {};
-    var tableInfo = {};
-
-    for (let i = 1; i < 5; i++) {
-        if (players[i]) {
-            let oppInfo = {
-                'stage': players[i].stage,
-                'seenDialogue': 0,
-                'outOrder': players[i].outOrder,
-                'costume': players[i].selected_costume
-            };
-
-            var markers = {}
-            if (players[i].markers) Object.assign(markers, players[i].markers);
-            Object.assign(markers, save.allPersistentMarkers(players[i]));
-        
-            oppInfo.markers = markers;
-            if (players[i].repeatLog) oppInfo.seenDialogue = Object.keys(players[i].repeatLog).length;
-
-            table[i] = players[i].id;
-            tableInfo[i] = oppInfo;
-        }
+    if (save.getUsageTrackingInfo().persistent) {
+        report.session = sessionID;
     }
 
-    report["player"] = playerInfo;
-    report["tableInfo"] = tableInfo;
-    report["ui"] = {
-        'theme': UI_THEME,
-        'minimal': MINIMAL_UI,
-        'background': activeBackground.id,
-    };
+    if (includeGameState) {
+        let table = {};
+        let tableState = {};
+
+        for (let i = 0; i < 5; i++) {
+            if (players[i]) {
+                let oppInfo = {
+                    'stage': players[i].stage,
+                    'seenDialogue': 0,
+                    'outOrder': players[i].outOrder,
+                    'costume': players[i].selected_costume
+                };
+
+                if (players[i].repeatLog) oppInfo.seenDialogue = Object.keys(players[i].repeatLog).length;
+
+                tableState[i] = oppInfo;
+                if (i > 0) table[i] = players[i].id;
+            }
+        }
+
+        report.game = gameID;
+        report.table = table;
+        report.tableState = tableState;
+        report.ui = {
+            'theme': UI_THEME,
+            'minimal': MINIMAL_UI,
+            'background': activeBackground.id,
+        };
+    }
 
     return report;
 }
 
-function collectInterruptedGameInfo (reason) {
-    /* Data for this type of event may be sent via Navigator.sendBeacon,
-     * so we need to minimize the amount of data we send.
-     * Chromium on Windows 10, for example, limits payload size to 65536 bytes (64KiB).
-     */
-    var report = collectBaseUsageInfo("interrupted_game");
-    var tableInfo = {};
+function collectCommonUsageInfo(type, includeGameState) {
+    var report = collectBaseUsageInfo(type, includeGameState);
 
-    report.player = {
-        'stage': players[0].stage,
-        'outOrder': players[0].outOrder
-    };
-
-    for (let i = 1; i < 5; i++) {
-        if (players[i]) {
-            tableInfo[i] = {
-                'stage': players[i].stage,
-                'seenDialogue': 0,
-                'outOrder': players[i].outOrder,
-                'costume': players[i].selected_costume
-            };
-
-            if (players[i].repeatLog) {
-                tableInfo[i].seenDialogue = Object.keys(players[i].repeatLog).length;
+    if (save.getUsageTrackingInfo().persistent) {
+        let unlockedCollectibles = {};
+        let unlockedEpilogues = {};
+        loadedOpponents.forEach(function (opp) {
+            if (opp.collectibles) {
+                let unlocked = opp.collectibles.flatMap(function (c) {
+                    return c.isUnlocked(true) ? [c.id] : [];
+                });
+    
+                if (unlocked.length > 0) unlockedCollectibles[opp.id] = unlocked;
             }
-        }
+    
+            if (opp.endings) {
+                let unlocked = opp.endings.map(function () {
+                    /* jQuery's .map actually works like filter-map: returning null/undefined means that no item is inserted into the set. */
+                    var rawTitle = $(this).html();
+                    if (save.hasEnding(opp.id, rawTitle)) return rawTitle;
+                }).get();
+    
+                if (unlocked.length > 0) unlockedEpilogues[opp.id] = unlocked;
+            }
+        });
+    
+        let unlockedGeneralCollectibles = generalCollectibles.flatMap(function (c) {
+            return c.isUnlocked(true) ? [c.id] : [];
+        });
+    
+        if (unlockedGeneralCollectibles.length > 0) unlockedCollectibles["__general"] = unlockedGeneralCollectibles;
+
+        report.persistent = {
+            'played_characters': save.getPlayedCharacterSet().length,
+            'collectibles': unlockedCollectibles,
+            'epilogues': unlockedEpilogues,
+        };
     }
 
-    var gameState = {
-        'currentRound': currentRound,
-        'currentTurn': currentTurn,
-        'previousLoser': previousLoser,
-        'recentLoser': recentLoser,
-        'rollback': inRollback()
-    };
-    if (gamePhase) {
-        if (inRollback()) {
-            gameState.gamePhase = rolledBackGamePhase[0];
-        } else {
-            gameState.gamePhase = gamePhase[0];
+    if (save.getUsageTrackingInfo().demographics) {
+        report.player = {
+            'tags': humanPlayer.tags,
+        };
+
+        if (includeGameState) {
+            report.player.clothing = save.selectedClothing().map(function (c) { return c.id; });
         }
     }
-
-    report["tableInfo"] = tableInfo;
-    report["gameState"] = gameState;
-    report["game"] = gameID;
-    report["reason"] = reason;
 
     return report;
 }
@@ -628,7 +585,6 @@ function sendUsageReport(report) {
 
 /**
  * Log the start of a game for bug reporting and analytics.
- * @returns {Promise<void>}
  */
 function recordStartGameEvent() {
     Sentry.setTag("in_game", true);
@@ -640,15 +596,14 @@ function recordStartGameEvent() {
         level: 'info'
     });
 
-    var report = collectCommonUsageInfo('start_game');
-    report.game = gameID;
-    return sendUsageReport(report);
+    if (save.getUsageTrackingInfo().basic) {
+        sendUsageReport(collectCommonUsageInfo('start_game', true));
+    }
 }
 
 /**
  * Log the end of a game for bug reporting and analytics.
  * @param {string} winner The ID of the winning character.
- * @returns {Promise<void>}
  */
 function recordEndGameEvent(winner) {
     Sentry.addBreadcrumb({
@@ -657,11 +612,13 @@ function recordEndGameEvent(winner) {
         level: 'info'
     });
 
-    var report = collectCommonUsageInfo('end_game');
-    report.game = gameID;
+    var report = collectCommonUsageInfo('end_game', true);
     report.winner = winner;
     report.rounds = currentRound;
-    return sendUsageReport(report);
+
+    if (save.getUsageTrackingInfo().basic) {
+        sendUsageReport(report);
+    }
 }
 
 /**
@@ -669,19 +626,38 @@ function recordEndGameEvent(winner) {
  * @param {boolean} isPageUnload If true, this event is being sent just before a page unload.
  */
 function recordInterruptedGameEvent(isPageUnload) {
-    var report = collectInterruptedGameInfo(isPageUnload ? "page-unload" : "return-to-title");
+    var report = collectBaseUsageInfo("interrupted_game", true);
+    report.gameState = {
+        'currentRound': currentRound,
+        'currentTurn': currentTurn,
+        'previousLoser': previousLoser,
+        'recentLoser': recentLoser,
+        'rollback': inRollback()
+    };
 
-    if (isPageUnload) {
-        /* It'd be better to use fetch() with the keepalive option here, but that doesn't work on all browsers, particularly Firefox.
-         * Instead use synchronous XHR. This will delay page unload, but we don't really have many other options.
-         * (navigator.sendBeacon tends to get blocked.)
-         */
-        var xhr = new XMLHttpRequest();
-        xhr.open("POST", USAGE_TRACKING_ENDPOINT, false);
-        xhr.setRequestHeader("Content-Type", "application/json");
-        xhr.send(JSON.stringify(report));
-    } else {
-        sendUsageReport(report);
+    if (gamePhase) {
+        if (inRollback()) {
+            report.gameState.gamePhase = rolledBackGamePhase[0];
+        } else {
+            report.gameState.gamePhase = gamePhase[0];
+        }
+    }
+
+    /* Interruption reasons are related to game sessions. */
+    if (save.getUsageTrackingInfo().persistent) report.isPageUnload = isPageUnload;
+
+    if (save.getUsageTrackingInfo().basic) {
+        if (isPageUnload) {
+            /* It'd be better to use fetch() with the keepalive option here, but that doesn't work on all browsers, particularly Firefox.
+            * Instead use synchronous XHR. This will delay page unload, but we don't really have many other options.
+            */
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", USAGE_TRACKING_ENDPOINT, false);
+            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.send(JSON.stringify(report));
+        } else {
+            sendUsageReport(report);
+        }
     }
 }
 
@@ -689,7 +665,6 @@ function recordInterruptedGameEvent(isPageUnload) {
  * Log the start of an epilogue for bug reporting and analytics.
  * @param {bool} gallery Whether the epilogue was played from the Gallery.
  * @param {Epilogue} epilogue The epilogue that was chosen.
- * @returns {Promise<void>}
  */
 function recordEpilogueEvent(gallery, epilogue) {
     Sentry.addBreadcrumb({
@@ -701,12 +676,9 @@ function recordEpilogueEvent(gallery, epilogue) {
     Sentry.setTag("epilogue_gallery", gallery);
     Sentry.setTag("screen", "epilogue");
 
-    var report = collectCommonUsageInfo(gallery ? 'gallery' : 'epilogue');
-    if (gallery) {
-        delete report.table;
-    } else {
-        report.game = gameID;
+    if (save.getUsageTrackingInfo().basic) {
+        var report = collectCommonUsageInfo(gallery ? 'gallery' : 'epilogue', !gallery);
+        report.chosen = { 'id': epilogue.player.id, 'title': epilogue.title };
+        sendUsageReport(report);
     }
-    report.chosen = { 'id': epilogue.player.id, 'title': epilogue.title };
-    return sendUsageReport(report);
 }

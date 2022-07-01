@@ -138,15 +138,6 @@ Save.prototype.removeItem = function (key) {
     }
 }
 
-/**
- * Get all keys stored in localStorage.
- * 
- * @returns {string[]}
- */
-Save.prototype.keys = function () {
-    return Object.keys(this.storageCache);
-}
-
 /** Serializes the save storage into a base64-encoded JSON string */
 Save.prototype.serializeStorage = function () {
     return Base64.encode(JSON.stringify(this.storageCache));
@@ -429,6 +420,70 @@ Save.prototype.saveSettings = function() {
     this.setItem("settings", settings);
 };
 
+/**
+ * Load usage tracking information from save storage.
+ * @returns {{promptShown: boolean, basic: boolean, persistent: boolean, demographics: boolean} | null}
+ */
+Save.prototype.getUsageTrackingInfo = function () {
+    var savedVal = this.getItem("usageTracking", true);
+
+    if ((typeof(savedVal) === 'boolean') || (typeof(savedVal) === 'string')) {
+        /* Convert saved value to new format. */
+        if (typeof(savedVal) === 'string') {
+            savedVal = (savedVal == 'yes');
+        }
+
+        let ret = {
+            'promptShown': true,
+            'basic': savedVal,
+            'persistent': savedVal,
+            'demographics': savedVal
+        };
+
+        this.setItem("usageTracking", ret);
+        return ret;
+    } else if (savedVal) {
+        /* Saved value is an object... */
+        return savedVal;
+    } else {
+        /* No saved value at all (or saved value is invalid); set defaults and indicate that we need to show the prompt. */
+        let ret = {
+            'promptShown': false,
+            'basic': true,
+            'persistent': false,
+            'demographics': false
+        };
+
+        this.setItem("usageTracking", ret);
+        return ret;
+    }
+}
+
+/**
+ * Update usage tracking information in storage.
+ * @param {'promptShown' | 'basic' | 'persistent' | 'demographics'} option 
+ * @param {boolean} value 
+ */
+Save.prototype.setUsageTrackingInfo = function (option, value) {
+    var info = this.getUsageTrackingInfo();
+    info[option] = value;
+    this.setItem("usageTracking", info);
+}
+
+/**
+ * Save usage tracking options to storage.
+ * @param {boolean} basic 
+ * @param {boolean} persistent 
+ * @param {boolean} demographics 
+ */
+Save.prototype.setUsageTrackingOptions = function (basic, persistent, demographics) {
+    this.setItem("usageTracking", {
+        'basic': basic,
+        'persistent': persistent,
+        'demographics': demographics
+    });
+}
+
 Save.prototype.loadEndings = function () {
     this.endings = this.getItem("endings") || {};
 }
@@ -606,31 +661,6 @@ Save.prototype.getPersistentMarker = function (player, name) {
  */
 Save.prototype.setPersistentMarker = function (player, name, value) {
     this.setItem('marker.' + player.id + '.' + name, value);
-}
-
-/**
- * Get the values of all set persistent markers stored for a player.
- * 
- * @param {Player} player 
- * @returns {Object<string, string | number>}
- */
-Save.prototype.allPersistentMarkers = function (player) {
-    var prefix = 'marker.' + player.id;
-    return this.keys().flatMap(function (key) {
-        if (!key.startsWith(prefix)) return [];
-        
-        var name = key.substring(prefix);
-        var val = this.getItem(key, true);
-
-        if (val) {
-            return [[name, val]];
-        } else {
-            return [];
-        }
-    }, this).reduce(function (acc, pair) {
-        acc[pair[0]] = pair[1];
-        return acc;
-    }, {});
 }
 
 /**
