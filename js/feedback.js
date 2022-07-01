@@ -682,3 +682,18 @@ function recordEpilogueEvent(gallery, epilogue) {
         sendUsageReport(report);
     }
 }
+
+function showDataCollectionPrompt() {
+    $("#selection-data-collection-banner-border").prop("hidden", false);
+
+    $("#enable-data-collection-btn").on("click", hideDataCollectionPrompt.bind(null, true));
+    $("#disable-data-collection-btn").on("click", hideDataCollectionPrompt.bind(null, false));
+}
+
+function hideDataCollectionPrompt(opt_in) {
+    $("#selection-data-collection-banner-border").prop("hidden", true);
+    if (opt_in !== null) {
+        var curInfo = save.getUsageTrackingInfo();
+        save.setUsageTrackingInfo(curInfo.basic, opt_in, opt_in);
+    }
+}

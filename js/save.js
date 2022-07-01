@@ -464,20 +464,22 @@ Save.prototype.getUsageTrackingInfo = function () {
  * @param {'promptShown' | 'basic' | 'persistent' | 'demographics'} option 
  * @param {boolean} value 
  */
-Save.prototype.setUsageTrackingInfo = function (option, value) {
+Save.prototype.updateUsageTrackingInfo = function (option, value) {
     var info = this.getUsageTrackingInfo();
     info[option] = value;
+    info.promptShown = true;
     this.setItem("usageTracking", info);
 }
 
 /**
- * Save usage tracking options to storage.
+ * Update all usage tracking options in storage.
  * @param {boolean} basic 
  * @param {boolean} persistent 
  * @param {boolean} demographics 
  */
-Save.prototype.setUsageTrackingOptions = function (basic, persistent, demographics) {
+Save.prototype.setUsageTrackingInfo = function (basic, persistent, demographics) {
     this.setItem("usageTracking", {
+        'promptShown': true,
         'basic': basic,
         'persistent': persistent,
         'demographics': demographics

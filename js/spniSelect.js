@@ -1446,6 +1446,17 @@ function updateSelectionVisuals () {
         }
     });
 
+    var trackingOptions = save.getUsageTrackingInfo();
+    if (trackingOptions.basic && !trackingOptions.promptShown) {
+        if (filled == 0) {
+            showDataCollectionPrompt();
+        } else {
+            hideDataCollectionPrompt(false);
+        }
+    } else {
+        hideDataCollectionPrompt(null);
+    }
+
     /* Update suggestions images. */
     updateDefaultFillView();
 

@@ -1083,7 +1083,7 @@ $('ul.tracking-status-toggle').on('click', 'a', function() {
     if ($(this).parents("li").hasClass("disabled")) return;
 
     var option = $(this).parents('ul').data('tracking-option');
-    save.setUsageTrackingInfo(option, $(this).data('value'));
+    save.updateUsageTrackingInfo(option, $(this).data('value'));
     updateTrackingToggles();
 });
 
