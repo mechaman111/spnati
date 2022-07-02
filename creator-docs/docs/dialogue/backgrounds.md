@@ -33,6 +33,13 @@ Which one you use is up to preference.
 (If the metadata you're testing is a simple boolean value, though, directly
 testing the metadata value involves a bit less typing!)
 
+### `if` functions
+
+Each tag can be tested in dialogue directly, yielding different text depending on whether it's set or not:  
+```
+It's hot in ~background.if.indoors(here|this place)~!
+```
+
 ## The ID (`id`)
 
 `~background.id~` is currently the same as just `~background~`.  Some
@@ -65,6 +72,12 @@ than its ID for use in dialogue, in some cases. If not set,
 The proper preposition to describe being at the background
 location. Defaults to "in". Examples: _in_ the bedroom, _on_ the roof,
 _at_ the pool.
+
+## Adverb (`adverb`)
+
+A (prepositional) adverb matching the general location. Can be "up"
+(for rooftops), "in" or "out".  Currently automatically determined
+from the surface (roof or other) and location (indoors or outdoors).
 
 ## Location (`location`)
 
