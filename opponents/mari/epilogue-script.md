@@ -157,7 +157,7 @@
 
 **Mari** *(winking)*: Well, I *did* say this was a warmup, right?
 
-**Mari** *(winking)*: Now... I think we should go ahead and get to the real thing, now.
+**Mari** *(winking)*: Now... I think we should go ahead and get to the real thing.
 
 ## Script - Sex 2 (Males): Cowgirl
 

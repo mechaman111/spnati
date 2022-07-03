@@ -441,6 +441,7 @@ if __name__ == "__main__":
     # x=300, y=400 work for zoom 30
     # x=500, y=485 work for zoom 45
     # paizuri uses x=740, y=630 @ zoom 65
+    # cunnilingus uses x=400, y=680 @ zoom 40
     # alignment note: ensure sprites are at x=410, depth=500
 
     mx = (300 - 2) / (30 - 7)
