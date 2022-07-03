@@ -287,6 +287,7 @@ function loadListingFile () {
     var listingProcessor = function($xml, fileIdx) {
         if (!$xml) return immediatePromise();
         var available = {};
+        var onTesting = {};
 
         /* start by checking which characters will be loaded and available */
         $xml.find('>individuals>opponent').each(function () {
@@ -294,6 +295,9 @@ function loadListingFile () {
             var id = $(this).text();
             if (!opponentMap[id] && (oppStatus === undefined || oppStatus === 'testing' || includedOpponentStatuses[oppStatus])) {
                 available[id] = true;
+            }
+            if (oppStatus === 'testing') {
+                onTesting[id] = true;
             }
         });
 
@@ -311,7 +315,12 @@ function loadListingFile () {
 
             var ids = [opp1, opp2, opp3, opp4];
             var costumes = [costume1, costume2, costume3, costume4];
-            if (!ids.every(function(id) { return available[id]; })) return;
+
+            if (isMainSite) {
+                if (!ids.every(function(id) { return available[id] && !onTesting[id]; })) return;
+            } else {
+                if (!ids.every(function(id) { return available[id]; })) return;
+            }
 
             var newGroup = new Group(title, background);
             ids.forEach(function(id, idx) {
