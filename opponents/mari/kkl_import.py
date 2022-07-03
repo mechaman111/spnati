@@ -1,26 +1,18 @@
+from __future__ import annotations
+
 """
-Support library for working with KisekaeLocal.
-
-This module contains functions for importing Kisekae codes using KisekaeLocal,
-and functions for processing the generated image files.
-
-It can also serve as a utility for automatically importing sets of codes from
-CSV files, plain text files, or directly from the command line.
+Support library for parsing Kisekae codes.
 """
 
-import argparse
-import csv
-import os
-import os.path as osp
+import collections.abc
+from itertools import zip_longest
 from pathlib import Path
-import re
-import sys
-import time
+from typing import (IO, Dict, Generator, Iterable, Iterator, List, Optional,
+                    Tuple, Union)
 
-import numpy as np
-from scipy import ndimage
-from PIL import Image
-
+from attrs import define, field, validators
+from bs4 import BeautifulSoup
+from bs4.element import Tag
 
 SETUP_STRING_33 = (
     "33***bc185.500.0.0.1_ga0*0*0*0*0*0*0*0*0#/]ua1.0.0.0_ub_uc7.0.30_ud7.0"
@@ -29,12 +21,18 @@ SETUP_STRING_36 = "36***bc185.500.0.0.1_ga0*0*0*0*0*0*0*0*0#/]a00_b00_c00_d00_w0
 SETUP_STRING_40 = "40***bc185.500.0.0.1*0*0*0*0*0*0*0*0#/]a00_b00_c00_d00_w00_x00_y00_z00_ua1.0.0.0.100_uf0.3.0.0_ue_ub_u0_v0_uc7.2.24_ud7.8"
 SETUP_STRING_68 = "68***ba50_bb6.0_bc410.500.8.0.1.0_bd6_be180_ad0.0.0.0.0.0.0.0.0.0_ae0.3.3.0.0*0*0*0*0*0*0*0*0#/]a00_b00_c00_d00_w00_x00_e00_y00_z00_ua1.0.0.0.100_uf0.3.0.0_ue_ub_u0_v00_ud7.8_uc7.2.24"
 SEPARATOR = "#/]"
+IMG_SEPARATOR = "/#]"
 
 CODE_SPLIT_REGEX = r"(\d+?)\*\*\*?([^\#\/\]]+)(?:\#\/\](.+))?"
 
 
-class KisekaeComponent(object):
-    def __init__(self, data=None):
+class KisekaeComponent:
+    id: str
+    prefix: str
+    attributes: List[str]
+    index: Optional[int]
+
+    def __init__(self, data: Union[KisekaeComponent, str]):
         """
         Represents a subcomponent of a Kisekae character or scene.
         
@@ -44,10 +42,12 @@ class KisekaeComponent(object):
             attributes (list of str): The attributes associated with this component.
         """
 
+        self.index = None
         if isinstance(data, KisekaeComponent):
             self.id = data.id
             self.prefix = data.prefix
             self.attributes = data.attributes.copy()
+            self.index = data.index
         elif isinstance(data, str):
             if data[1].isalpha():
                 self.id = data[0:2]  # code is 2 letters
@@ -64,7 +64,7 @@ class KisekaeComponent(object):
                 + type(data).__name__
             )
 
-    def __eq__(self, other):
+    def __eq__(self, other: Union[KisekaeComponent, str]) -> bool:
         if isinstance(other, KisekaeComponent):
             if (
                 self.id != other.id
@@ -85,61 +85,73 @@ class KisekaeComponent(object):
                 "KisekaeComponents can only be compared to other Components or strings."
             )
 
-    def __len__(self):
+    def __len__(self) -> int:
         return len(self.attributes)
 
-    def __iter__(self):
+    def __iter__(self) :
         return self.attributes.__iter__()
 
-    def __getitem__(self, key):
+    def __getitem__(self, key: int):
         return self.attributes[key]
 
-    def __setitem__(self, key, val):
+    def __setitem__(self, key: int, val: str):
         self.attributes[key] = str(val)
 
-    def __delitem__(self, key):
+    def __delitem__(self, key: int):
         del self.attributes[key]
 
-    def __contains__(self, item):
+    def __contains__(self, item: str):
         return self.attributes.__contains__(self, item)
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.prefix + ".".join(self.attributes)
 
 
 class KisekaeCharacter(object):
-    def __init__(self, character_data=None):
+    subcodes: List[KisekaeComponent]
+    images: List[str]
+
+    def __init__(self, character_data: Union[str, KisekaeCharacter, None]=None):
         """
         Represents a collection of subcodes.
         
         Attributes:
             subcodes (list of KisekaeComponent): The subcodes contained within this object.
+            images (list of str): the images contained within this object.
         """
 
         self.subcodes = []
+        self.images = []
 
         if isinstance(character_data, str):
-            for subcode in character_data.split("_"):
+            parts = character_data.split(IMG_SEPARATOR)
+            for subcode in parts[0].split("_"):
                 self.subcodes.append(KisekaeComponent(subcode))
+            self.images = list(parts[1:])
         elif isinstance(character_data, KisekaeCharacter):
             for subcode in character_data.subcodes:
                 self.subcodes.append(KisekaeComponent(subcode))
-        else:
+            self.images = character_data.images.copy()
+        elif character_data is not None:
             raise ValueError(
                 "`character_data` must be either str or KisekaeCharacter, not "
-                + type(data).__name__
+                + type(character_data).__name__
             )
 
-    def __str__(self):
-        return "_".join(str(sc) for sc in self.subcodes)
+    def __str__(self) -> str:
+        ret = "_".join(str(sc) for sc in self.subcodes)
+        if len(self.images) > 0:
+            ret += IMG_SEPARATOR
+            ret += IMG_SEPARATOR.join(self.images)
+        return ret
 
-    def __len__(self):
+    def __len__(self) -> int:
         return len(self.subcodes)
 
     def __iter__(self):
         return self.subcodes.__iter__()
 
-    def __getitem__(self, key):
+    def __getitem__(self, key: Union[int, str]):
         if isinstance(key, int):
             return self.subcodes[key]
         elif isinstance(key, str):
@@ -152,7 +164,7 @@ class KisekaeCharacter(object):
                 "Index value must be either an int or a subcode ID string."
             )
 
-    def __setitem__(self, key, val):
+    def __setitem__(self, key: Union[int, str], val: KisekaeComponent):
         if not isinstance(val, KisekaeComponent):
             raise ValueError("Assignment value must be a KisekaeComponent.")
 
@@ -170,7 +182,7 @@ class KisekaeCharacter(object):
 
             self.subcodes[idx] = val
 
-    def __delitem__(self, key):
+    def __delitem__(self, key: Union[int, str]):
         if isinstance(key, int):
             del self.subcodes[key]
         elif isinstance(key, str):
@@ -185,7 +197,7 @@ class KisekaeCharacter(object):
 
             del self.subcodes[idx]
 
-    def __contains__(self, item):
+    def __contains__(self, item: Union[KisekaeComponent, str]):
         if isinstance(item, KisekaeComponent):
             return self.subcodes.__contains__(self, item)
         elif isinstance(item, str):
@@ -195,7 +207,7 @@ class KisekaeCharacter(object):
                 "Item must be either a KisekaeComponent or a subcode ID string."
             )
 
-    def find(self, subcode_prefix):
+    def find(self, subcode_prefix: str):
         """
         Find the first inner KisekaeComponent with the given `subcode_prefix`.
         """
@@ -204,16 +216,48 @@ class KisekaeCharacter(object):
             if sc.prefix == subcode_prefix:
                 return sc
 
-    def iter(self, subcode_prefix):
+    def iter(self, subcode_prefix: str):
         """
         Iterate over all inner KisekaeComponents with the given `subcode_prefix`
         """
 
         return filter(lambda sc: sc.prefix.startswith(subcode_prefix), self.subcodes)
 
+    def _subcode_map(self) -> Tuple[Dict[str, KisekaeComponent], Dict[int, str]]:
+        img_map: Dict[int, str] = {}
+        subcode_map: Dict[str, KisekaeComponent] = {}
+        img_numbers: List[int] = []
+
+        for subcode in self.subcodes:
+            subcode_map[subcode.prefix] = KisekaeComponent(subcode)
+            if subcode.id == "f":
+                img_numbers.append(subcode.index)
+
+        for idx, img in zip(sorted(img_numbers), self.images):
+            img_map[idx] = img
+        
+        return subcode_map, img_map
+
+    def overlay(self, other: KisekaeCharacter) -> KisekaeCharacter:
+        self_subcodes, self_images = self._subcode_map()
+        other_subcodes, other_images = other._subcode_map()
+
+        self_subcodes.update(other_subcodes)
+        self_images.update(other_images)
+
+        ret = KisekaeCharacter()
+        ret.subcodes = sorted(self_subcodes.values(), key=lambda sc: sc.prefix)
+        ret.images = [img for _, img in sorted(self_images.items(), key=lambda pair: pair[0])]
+        return ret
+
 
 class KisekaeCode(object):
-    def __init__(self, code=None, version=97):
+    version: int
+    characters: List[KisekaeCharacter]
+    scene: Optional[KisekaeCharacter]
+
+
+    def __init__(self, code: Union[KisekaeCode, KisekaeCharacter, str, None] = None, version: int = 105):
         """
         Represents an entire importable Kisekae code, possibly containing
         character data and scene data.
@@ -222,6 +266,7 @@ class KisekaeCode(object):
             version (int): The version of Kisekae used to generate this code.
             scene (KisekaeCharacter): Container for scene data and attributes.
             characters (list of KisekaeCharacter): List of characters contained in the code.
+            images (list of PurePath): List of image paths contained in the code.
         """
 
         self.version = version
@@ -242,29 +287,26 @@ class KisekaeCode(object):
             self.characters.append(KisekaeCharacter(code))
             return
         elif isinstance(code, str):
-            m = re.match(CODE_SPLIT_REGEX, code.strip())
-            if m is None:
-                return
-
-            version, character_data, scene_data = m.groups()
-
+            version, code = code.split("**", 1)
             self.version = int(version)
-            self.characters = []
 
-            if scene_data is not None:
-                self.scene = KisekaeCharacter(scene_data)
-            else:
+            try:
+                code, scene_code = code.split(SEPARATOR, 1)
+                self.scene = KisekaeCharacter(scene_code)
+            except ValueError:
                 self.scene = None
 
-            for character in character_data.split("*"):
-                if character == "0":
-                    continue
+            self.characters = []
 
-                self.characters.append(KisekaeCharacter(character))
-        else:
+            if len(code) > 0:
+                for character in code.split("*"):
+                    if (len(character) == 0) or (character == "0"):
+                        continue
+                    self.characters.append(KisekaeCharacter(character))
+        elif code is not None:
             raise ValueError(
                 "`code` must be either a KisekaeCode, KisekaeCharacter, or str, not "
-                + type(data).__name__
+                + type(code).__name__
             )
 
     def __str__(self):
@@ -301,587 +343,362 @@ class KisekaeCode(object):
     def __contains__(self, item):
         return self.characters.__contains__(self, item)
 
+    @property
+    def is_single_character(self) -> bool:
+        return (self.scene is None) and (len(self.characters) == 1)
 
-def disable_character_motion(character):
-    """
-    Disables automatic motion for a character.
-    
-    Args:
-        character (KisekaeCharacter): The character to modify.
-    """
+    def overlay(self, other: KisekaeCode) -> KisekaeCode:
+        ret = KisekaeCode(None, version=max(self.version, other.version))
 
-    try:
-        character["ad"].attributes = ["0"] * 10
-    except KeyError:
-        pass
+        for self_character, other_character in zip_longest(self.characters, other.characters):
+            if (self_character is not None) and (other_character is not None):
+                ret.characters.append(self_character.overlay(other_character))
+            elif self_character is not None:
+                ret.characters.append(KisekaeCharacter(self_character))
+            elif other_character is not None:
+                ret.characters.append(KisekaeCharacter(other_character))
 
-    try:
-        character["ae"].attributes = ["0", "3", "3", "0", "0"]
-    except KeyError:
-        pass
+        if (self.scene is not None) and (other.scene is not None):
+            ret.scene = self.scene.overlay(other.scene)
+        elif self.scene is not None:
+            ret.scene = KisekaeCharacter(self.scene)
+        elif other.scene is not None:
+            ret.scene = KisekaeCharacter(other.scene)
 
-    return character
-
-
-def close_character_vagina(character):
-    """
-    Closes / un-spreads a Kisekae character's vagina.
-    
-    Args:
-        character (KisekaeCharacter): The character to modify.
-    """
-
-    try:
-        character["dc"][5] = "0"
-    except KeyError:
-        pass
-
-    return character
+        return ret
 
 
-def preprocess_character_code(
-    in_code,
-    blush=-1,
-    anger=-1,
-    juice=-1,
-    remove_motion=True,
-    close_vagina=True,
-    **kwargs
-):
-    code = KisekaeCode(in_code)
-
-    if remove_motion:
-        disable_character_motion(code.characters[0])
-
-    if close_vagina:
-        close_character_vagina(code.characters[0])
-
-    blush = int(blush)
-    anger = int(anger)
-    juice = int(juice)
-
-    try:
-        code[0]["bc"][1] = int(kwargs.get("z_depth", 500))
-    except KeyError:
-        pass
-
-    if blush >= 0:
-        try:
-            code[0]["gc"][0] = blush
-        except KeyError:
-            pass
-
-    if anger >= 0:
-        try:
-            code[0]["gc"][1] = anger
-        except KeyError:
-            pass
-
-    if juice >= 0:
-        try:
-            code[0]["dc"][0] = juice
-        except KeyError:
-            pass
-
-    return code
+def _tag_string(tag: Tag) -> str:
+    return "".join(map(str, tag.stripped_strings))
 
 
-def _get_wine_kkl_directory():
-    # look for kkl path under Wine:
-    username = Path.home().stem
-    wine_path = (
-        Path.home()
-        / ".wine"
-        / "drive_c"
-        / "users"
-        / username
-        / "Application Data"
-        / "kkl"
-        / "Local Store"
-    )
+@define()
+class MatrixPose:
+    key: str
+    row: MatrixRow
+    cell_code: Optional[KisekaeCode] = None
+    crop: Optional[Tuple[int, int, int, int]] = (0 ,0, 600, 1400)
+    transparency: Dict[str, float] = field(factory=dict)
 
-    return wine_path
+    @property
+    def sheet(self) -> MatrixSheet:
+        return self.row.sheet
 
+    @property
+    def matrix(self) -> PoseMatrix:
+        return self.row.sheet.matrix
 
-def get_kkl_directory():
-    """
-    Retrieve the path to the main KisekaeLocal application directory.
-    """
+    @property
+    def filled(self) -> bool:
+        return self.cell_code is not None
 
-    if sys.platform == "darwin":
-        native_path = (
-            Path.home() / "Library" / "Application Support" / "kkl" / "Local Store"
-        )
-        if native_path.is_dir():
-            return native_path
-
-        p = _get_wine_kkl_directory()
-        if p.is_dir():
-            return p
-        else:
-            raise FileNotFoundError("Could not find path to KKL.")
-    elif sys.platform.startswith("linux"):
-        p = _get_wine_kkl_directory()
-        if p.is_dir():
-            return p
-        else:
-            raise FileNotFoundError("Could not find path to KKL.")
-    else:  # We're on windows, presumably
-        return Path(os.getenv("APPDATA")) / "kkl" / "Local Store"
-
-
-def process_kkl_code(code, scene_name):
-    """
-    Import an image into KisekaeLocal.
-    Returns a Path object to the output image once it has been generated.
-    
-    Args:
-        code (str or KisekaeCode): The Kisekae code to import.
-        scene_name (str): A pose name to use when importing.
-    """
-
-    input_path = get_kkl_directory().joinpath(scene_name + ".txt")
-    output_path = get_kkl_directory().joinpath(scene_name + ".png")
-
-    # remove the input and output files if they already exist
-    if output_path.is_file():
-        output_path.unlink()
-
-    if input_path.is_file():
-        input_path.unlink()
-
-    sys.stdout.write("Importing: {:s}... ".format(scene_name))
-    sys.stdout.flush()
-
-    with input_path.open("w", encoding="utf-8") as f:
-        f.write(str(code))
-
-    # wait for KKL to process the file
-    # print("Waiting for output file to be generated...")
-    while input_path.is_file() or not output_path.is_file():
-        time.sleep(0.1)
-
-    return output_path
-
-
-def open_image_file(path):
-    """
-    Attempt to open an image file generated by KKL.
-    """
-
-    retry_time_limit = 10  #  try for at most 10 seconds before saying there's a problem
-    retry_interval = (
-        0.2  #  re-check for the existance of the image every 200 milliseconds
-    )
-    retry_limit = int(retry_time_limit // retry_interval)  # try 50 times
-
-    for retry in range(retry_limit):
-        try:
-            image_file = Image.open(path)
-            return image_file
-        except IOError:
-            if retry >= retry_limit - 1:
-                raise
-            time.sleep(retry_interval)
-
-
-def get_crop_box(width=600, height=1400, center_x=1000, margin_y=15):
-    """
-    Calculate a cropping rectangle.
-    
-    Args:
-        width (int): The width of the output image.
-        height (int): The height of the output image.
-        center_x (int): Position along the X-axis for the center of the rectangle.
-        margin_y (int): How far down along the Y-axis to position the rectangle.
+    def expand_code(self) -> Optional[KisekaeCode]:
+        if self.cell_code is None:
+            return None
         
-    Returns:
-        A cropping box as a 4-tuple, suitable to be passed to Image.crop().
-    """
+        base = self.row.template_base()
+        if base is not None:
+            return base.overlay(self.cell_code)
+        else:
+            return KisekaeCode(self.cell_code)
 
-    left = center_x - int(width // 2)
-    right = center_x + int(width // 2)
-    upper = margin_y
-    lower = height + margin_y
+    def import_str(self) -> str:
+        ret = str(self.expand_code())
+        if len(self.transparency) > 0:
+            extra = "\n".join("{}={}".format(*kv) for kv in self.transparency.items())
+            ret = extra + "\n" + ret
+        return ret
 
-    return (left, upper, right, lower)
+    @classmethod
+    def from_xml(cls, tag: Tag, row: MatrixRow) -> MatrixPose:
+        key = tag.attrs["key"]
+
+        if tag.code is not None:
+            code = KisekaeCode(_tag_string(tag.code))
+        else:
+            code = None
+
+        if tag.crop is not None:
+            crop_tag = tag.crop
+            # Crop bounds are in PIL box order
+            crop = (int(crop_tag.attrs["left"]), int(crop_tag.attrs["top"]), int(crop_tag.attrs["right"]), int(crop_tag.attrs["bottom"]))
+        else:
+            crop = None
+
+        transparency = {}
+        if tag.extra is not None:
+            extras_str = _tag_string(tag.extra)
+            for pair in extras_str.split(","):
+                try:
+                    transparency_key, alpha = pair.rsplit("=", 1)
+                    transparency[transparency_key] = float(alpha)
+                except ValueError:
+                    continue
+
+        return cls(key, row, code, crop, transparency)
 
 
-def auto_crop_box(image, margin_y=15):
-    """
-    Automatically calculate a centered cropping rectangle from an image's bounding box.
-    
-    Args:
-        margin_y (int): How much empty margin space to leave at the bottom of the image, in px.
+@define()
+class MatrixRow(collections.abc.Mapping):
+    id: int
+    custom_name: Optional[str]
+    poses: Dict[str, MatrixPose]
+    sheet: MatrixSheet
+    clothing: Optional[KisekaeCode] = None
+
+    @property
+    def matrix(self) -> PoseMatrix:
+        return self.sheet.matrix
+
+    @property
+    def name(self) -> str:
+        if self.custom_name is not None:
+            return self.custom_name
+        elif self.sheet.global_sheet:
+            if len(self.sheet.rows) == 1:
+                return "Global"
+            else:
+                return str(self.id)
+        else:
+            try:
+                stage_name = self.matrix.stage_names[self.id]
+                return str(self.id) + " - " + stage_name
+            except IndexError:
+                return str(self.id)
         
-    Returns:
-        A cropping box as a 4-tuple, suitable to be passed to Image.crop().    
-    """
+    def template_base(self) -> Optional[KisekaeCode]:
+        if (self.clothing is not None) and (self.sheet.model is not None):
+            return self.sheet.model.overlay(self.clothing)
+        elif self.clothing is not None:
+            return KisekaeCode(self.clothing)
+        elif self.sheet.model is not None:
+            return KisekaeCode(self.sheet.model)
+        else:
+            return None
 
-    arr = np.array(image)
-    intensity = np.sum(arr, axis=2)
-    nonzero = np.greater(intensity, 0).T
+    def __getitem__(self, key: str) -> MatrixPose:
+        return self.poses.__getitem__(key)
 
-    centroid = ndimage.measurements.center_of_mass(nonzero)
+    def __contains__(self, key: str) -> bool:
+        return self.poses.__contains__(key)
 
-    left, top, right, bottom = image.getbbox()
-
-    out_height = bottom - top
-    if out_height < 1400:
-        out_height = 1400
-
-    com_x = centroid[0]
-    center_x = int((right + left) / 2)
-    shift_x = int(center_x - com_x)  # negative:right, positive:left
-
-    out_width = (right - left) + 2
-    if out_width < 600:
-        out_width = 600
-
-    crop_left = int(com_x - (out_width // 2))
-    crop_right = int(com_x + (out_width // 2))
-
-    if shift_x < 0:
-        # Add extra space to the left side
-        crop_left -= shift_x
-    elif shift_x > 0:
-        crop_right += shift_x
-
-    if crop_left > left:
-        crop_left = left - 1
-        crop_right = crop_left + out_width
-
-    if crop_right < right:
-        crop_right = right + 1
-        crop_left = crop_right - out_width
-
-    crop_top = (bottom + margin_y) - out_height
-    crop_bottom = bottom + margin_y
-
-    return (crop_left, crop_top, crop_right, crop_bottom)
-
-
-def import_character(import_code, pose_name="imported"):
-    """
-    Import a code into KisekaeLocal and open the generated image file.
+    def __iter__(self) -> Iterator[str]:
+        return self.poses.__iter__()
     
-    Args:
-        import_code (str or KisekaeCode): The Kisekae code to import.
-        pose_name (str): A pose name to use when importing.
-    """
+    def __len__(self) -> int:
+        return self.poses.__len__()
 
-    output_path = process_kkl_code(import_code, pose_name)
+    @classmethod
+    def from_xml(cls, tag: Tag, sheet: MatrixSheet) -> MatrixRow:
+        id = int(tag.attrs["id"])
+        name = tag.attrs.get("name")
 
-    img = open_image_file(output_path)
-    img.load()
+        if tag.clothing:
+            clothing = KisekaeCode(_tag_string(tag.clothing))
+        else:
+            clothing = None
 
-    output_path.unlink()
+        ret = cls(id, name, {}, sheet, clothing)
+        if tag.poses:
+            for pose_tag in tag.poses.find_all("pose", recursive=False):
+                pose = MatrixPose.from_xml(pose_tag, ret)
+                ret.poses[pose.key] = pose
+        return ret
 
-    return img
 
+@define()
+class MatrixSheet:
+    name: str
+    rows: Dict[int, MatrixRow]
+    global_sheet: bool
+    matrix: PoseMatrix
+    model: Optional[KisekaeCode] = None
 
-def import_and_unlink(import_code, scene_name="temp"):
-    """
-    Import the specified `import_code` but immediately delete the generated image.
-    This is useful for scene resets, quickly opening characters for editing in KKL, etc.
+    def pose_keys(self) -> Generator[str, None, None]:
+        seen = set()
+        for row in self.rows.values():
+            for key in row:
+                if key not in seen:
+                    seen.add(key)
+                    yield key
+
+    def iter_columns(self) -> Generator[Tuple[str, List[MatrixPose]], None, None]:
+        for key in self.pose_keys():
+            col = []
+            for row in self.rows.values():
+                try:
+                    col.append(row[key])
+                except KeyError:
+                    col.append(MatrixPose(key, row))
+            yield (key, col)
+
+    def iter_pose(self, key: str) -> Generator[MatrixPose, None, None]:
+        for row in self.rows.values():
+            try:
+                yield row[key]
+            except KeyError:
+                pass
+
+    def __contains__(self, key: str) -> bool:
+        return self.rows.__contains__(key)
+
+    def __iter__(self) -> Iterator[str]:
+        return self.rows.__iter__()
     
-    Args:
-        import_code (str or KisekaeCode): The Kisekae code to import.
-        pose_name (str): A pose name to use when importing.
-    """
+    def __len__(self) -> int:
+        return self.rows.__len__()
 
-    output_path = process_kkl_code(import_code, scene_name)
-
-    retry_time_limit = 10  #  try for at most 10 seconds before saying there's a problem
-    retry_interval = (
-        0.2  #  re-check for the existance of the image every 200 milliseconds
-    )
-    retry_limit = int(retry_time_limit // retry_interval)  # try 50 times
-
-    for retry in range(retry_limit):
+    def __getitem__(self, key: Union[Tuple[int, str], int, str]) -> Union[MatrixRow, List[MatrixPose], MatrixPose]:
         try:
-            output_path.unlink()
-            break
-        except PermissionError:
-            if retry >= retry_limit - 1:
-                raise
-            time.sleep(retry_interval)
+            row_key, pose_key = key
+            return self.rows[row_key][pose_key]
+        except ValueError:
+            pass
 
-    sys.stdout.write("done.\n")
-    sys.stdout.flush()
+        try:
+            return self.rows[key]
+        except KeyError:
+            pass
 
+        ret = list(self.iter_pose(key))
+        if len(ret) == 0:
+            raise KeyError(key)
+        return ret
 
-def setup_kkl_scene(z_depth=500):
-    """
-    Send a scene reset code to KKL to prepare for image importing.
-    This will clear away unnecessary characters, backgrounds, objects, etc.
-    """
+    @classmethod
+    def from_xml(cls, tag: Tag, matrix: PoseMatrix) -> MatrixSheet:
+        name = _tag_string(tag.find("name"))
+        global_sheet = tag.attrs.get("global", "false").casefold() == "true"
 
-    reset_code = KisekaeCode(SETUP_STRING_68)
-    reset_code[0]["bc"][1] = z_depth
+        if tag.model:
+            model = KisekaeCode(_tag_string(tag.model))
+        else:
+            model = None
 
-    import_and_unlink(reset_code, "scene_setup")
+        ret = cls(name, {}, global_sheet, matrix, model)
+        if tag.stages:
+            for row_tag in tag.stages.find_all("stage", recursive=False):
+                row = MatrixRow.from_xml(row_tag, ret)
+                ret.rows[row.id] = row
+        return ret
 
+@define()
+class PoseMatrix:
+    sheets: List[MatrixSheet]
+    stage_names: List[str] = field(factory=list, converter=list, validator=validators.deep_iterable(validators.instance_of(str)))
 
-def crop_and_save(img, crop_box, dest_filename):
-    """
-    Crop an image and save it.
-    This is a convenience function.
-    
-    Args:
-        img (PIL.Image): The image object to crop and save.
-        crop_box (4-tuple): The cropping rectangle.
-        dest_filename (pathlib.Path or str): The destination filename to save to.
-    """
+    @classmethod
+    def from_xml(cls, tag: Union[Tag, BeautifulSoup], stage_names: Union[Iterable[str], None] = None) -> PoseMatrix:
+        if stage_names is None:
+            stage_names = []
 
-    cropped_img = img.crop(crop_box)
-    cropped_img.save(dest_filename)
-    cropped_img.close()
-    img.close()
+        ret = cls([], stage_names)
+        if tag.sheets is not None:
+            for sheet_tag in tag.sheets.find_all("sheet", recursive=False):
+                ret.sheets.append(MatrixSheet.from_xml(sheet_tag, ret))
+        return ret
 
+    @classmethod
+    def load_file(cls, file_or_path: Union[Path, str, IO], stage_names: Union[Iterable[str], None] = None) -> PoseMatrix:
+        if isinstance(file_or_path, str):
+            file_or_path = Path(file_or_path)
 
-def read_ce_pose_file(path):
-    """
-    Read a pose file in the format used by the CE, discarding cropping information.
-    """
+        if isinstance(file_or_path, Path):
+            with file_or_path.open("rb") as f:
+                soup = BeautifulSoup(f)
+        else:
+            soup = BeautifulSoup(file_or_path)
 
-    poses = {}
+        if soup.sheets is None:
+            raise ValueError("File does not contain a pose matrix")
 
-    with open(path, "r", encoding="utf-8") as f:
-        for line in f:
-            try:
-                pose_name, code = line.split("=", 1)
-            except ValueError:
-                continue
+        return cls.from_xml(soup, stage_names)
 
-            poses[pose_name.strip()] = code.strip()
+    @staticmethod
+    def _load_stage_names(base_path: Path) -> Optional[List[str]]:
+        with base_path.open("rb") as f:
+            soup = BeautifulSoup(f)
+        
+        if not soup.wardrobe:
+            return None
 
-    return poses
+        clothing_names = []
+        for clothing_tag in soup.wardrobe.find_all("clothing", recursive=False):
+            name: str = clothing_tag.attrs["name"].strip()
+            prettified = " ".join(
+                part[0].upper() + part[1:]
+                for part in filter(lambda s: len(s) > 0, map(str.strip, name.split()))
+            ).strip()
 
+            if len(prettified) == 0:
+                prettified = "Clothing " + str(len(clothing_names) + 1)
+            clothing_names.append(prettified)
 
-def process_single(code, dest, **kwargs):
-    """
-    Import and process a Kisekae code.
-    
-    Args:
-        code (str or KisekaeCode): The Kisekae code to import.
-        dest (str or pathlib.Path): The destination to save to. If the destination exists and is a directory, the image will be saved here as `out.png`.
-            Otherwise, it will be treated as a filename to save to.
-    
-    Kwargs:
-        remove_motion (bool, optional): If True (default), then a code fragment will be automatically appended to the imported codes to disable unwanted breast motion.
-            This may potentially override settings from the imported codes themselves, so be wary.
-        auto_crop (bool, optional): If True, then cropping boxes will be automatically calculated based on the generated image bounding boxes.
-            The `width`, `height`, and `center_x` kwargs will be ignored.
-        width (int): The width of the generated images (when using manual cropping).
-        height (int): The height of the generated images (when using manual cropping).
-        center_x (int): The position along the X-axis around which to center the generated images (when using manual cropping).
-        margin_y (int): When using manual cropping, this is how far down to position the cropping box.
-            When using automatic cropping, this controls how much empty space to add at the bottom of the generated images.
-    """
+        ret = ["Fully Clothed"]
+        for clothing_name in reversed(clothing_names[1:]):
+            ret.append("Lost " + clothing_name)
+        ret.extend(["Naked", "Masturbating", "Finished"])
+        return ret
 
-    dest = Path(dest)
+    @classmethod
+    def load_character(cls, char_path: Union[Path, str]) -> PoseMatrix:
+        char_path = Path(char_path)
 
-    if dest.is_dir():
-        dest_filename = dest.joinpath("out.png")
-    else:
-        dest_filename = dest
+        if char_path.is_file():
+            return cls.load_file(char_path)
 
-    if kwargs.get("do_setup", True):
-        setup_kkl_scene(z_depth=kwargs.get("z_depth", 500))
+        if not char_path.joinpath("poses.xml").is_file():
+            raise ValueError("{} does not contain a character or costume".format(char_path.as_posix()))
 
-    process_code = preprocess_character_code(code, **kwargs)
-    kkl_output = import_character(process_code, dest_filename.stem)
-
-    # kkl_output.save(str(dest_filename.parent.joinpath(dest_filename.stem + '.debug.png')))
-
-    if dest_filename.is_file():
-        dest_filename.unlink()
-
-    margin_y = int(kwargs.get("margin_y", 15))
-
-    if kwargs.get("auto_crop", True):
-        crop_box = auto_crop_box(kkl_output, margin_y)
-    else:
-        width = int(kwargs.get("width", 600))
-        height = int(kwargs.get("height", 1400))
-        center_x = int(kwargs.get("center_x", 1000))
-        crop_box = get_crop_box(width, height, center_x, margin_y)
-
-    crop_and_save(kkl_output, crop_box, dest_filename)
-
-    sys.stdout.write("done.\n")
-    sys.stdout.flush()
+        stage_names = None
+        if char_path.joinpath("costume.xml").is_file():
+            stage_names = cls._load_stage_names(char_path.joinpath("costume.xml"))
+        elif char_path.joinpath("behaviour.xml").is_file():
+            stage_names = cls._load_stage_names(char_path.joinpath("behaviour.xml"))
+        return cls.load_file(char_path.joinpath("poses.xml"), stage_names)
 
 
-def process_csv(infile, dest_dir, **kwargs):
-    """
-    Import and process a set of Kisekae codes listed in a CSV file.
-    
-    Args:
-        infile (pathlib.Path): The CSV file to read.
-        dest_dir (pathlib.Path): The destination folder to save to.
-    
-    Kwargs:
-        stage (list of int, optional): If set, then only codes for these stages will be imported.
-        pose (list of str, optional): If set, then only codes for these poses will be imported.
-    """
+def _fmt_sheet(sheet: MatrixSheet) -> str:
+    cols = []
 
-    setup_kkl_scene(z_depth=kwargs.get("z_depth", 500))
-    with infile.open("r", encoding="utf-8", newline="") as f:
-        reader = csv.DictReader(f, restval="")
-        for row in reader:
-            if "enabled" in row and row["enabled"].strip().lower() == "false":
-                continue
+    stage_col = []
+    max_stage_col_len = max(len(name) for name in sheet.matrix.stage_names) + 1
+    stage_col.extend([" " * max_stage_col_len, "-" * max_stage_col_len])
+    stage_col.extend(name.ljust(max_stage_col_len) for name in sheet.matrix.stage_names)
+    cols.append(stage_col)
 
-            if "stage" not in row or "code" not in row or "pose" not in row:
-                continue
+    for key, col in sheet.iter_columns():
+        col_len = len(key) + 2
+        filled_str = "!".ljust(col_len // 2).rjust(col_len)
+        empty_str = " " * col_len
+        text_col = [" " + key + " ", "-" * col_len]
 
-            if len(row["stage"]) <= 0 or len(row["code"]) <= 0 or len(row["pose"]) <= 0:
-                continue
+        for cell in col:
+            if cell.filled:
+                text_col.append(filled_str)
+            else:
+                text_col.append(empty_str)
+        cols.append(text_col)
 
-            # normalize pose name:
-            row["pose"] = re.sub(r"[^\w\-\_]", "", row["pose"]).lower().strip()
+    rows = [list() for _ in range(max(len(col) for col in cols))]
+    for col in cols:
+        for row, text in zip(rows, col):
+            row.append(text)
 
-            stage = int(row["stage"])
-
-            if (
-                kwargs["stage"] is not None
-                and len(kwargs["stage"]) > 0
-                and stage not in kwargs["stage"]
-            ):
-                continue
-
-            if (
-                kwargs["pose"] is not None
-                and len(kwargs["pose"]) > 0
-                and row["pose"] not in kwargs["pose"]
-            ):
-                continue
-
-            pose_name = "{:d}-{:s}".format(stage, row["pose"])
-            dest_filename = dest_dir.joinpath(pose_name + ".png")
-
-            row["remove_motion"] = (
-                row.get("remove_motion", "").strip().lower() != "false"
-            )
-            row["close_vagina"] = row.get("close_vagina", "").strip().lower() != "false"
-
-            process_single(dest=dest_filename, do_setup=False, **row)
-
-
-def process_file(infile, dest_dir, **kwargs):
-    """
-    Import and process a set of Kisekae codes listed in a plain-text file.
-    
-    Args:
-        infile (pathlib.Path): The text file to read.
-        dest_dir (pathlib.Path): The destination folder to save to.
-    
-    Kwargs:
-        remove_motion (bool, optional): If True (default), then a code fragment will be automatically appended to the imported codes to disable unwanted breast motion.
-            This may potentially override settings from the imported codes themselves, so be wary.
-        auto_crop (bool, optional): If True, then cropping boxes will be automatically calculated based on the generated image bounding boxes.
-            The `width`, `height`, and `center_x` kwargs will be ignored.
-        width (int): The width of the generated images (when using manual cropping).
-        height (int): The height of the generated images (when using manual cropping).
-        center_x (int): The position along the X-axis around which to center the generated images (when using manual cropping).
-        margin_y (int): When using manual cropping, this is how far down to position the cropping box.
-            When using automatic cropping, this controls how much empty space to add at the bottom of the generated images.
-    """
-
-    dest_dir = Path(dest_dir)
-
-    setup_kkl_scene(z_depth=kwargs.get("z_depth", 500))
-    with open(infile, "r", encoding="utf-8") as f:
-        for line in f:
-            try:
-                pose_name, code = line.split("=", 1)
-            except ValueError:
-                continue
-
-            pose_name = pose_name.strip()
-            code = code.strip()
-
-            dest_filename = dest_dir.joinpath(pose_name + ".png")
-
-            process_single(code, dest=dest_filename, do_setup=False, **kwargs)
+    row_texts = ["|".join(row) for row in rows]
+    return "\n".join(row_texts)
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(
-        description="Imports a pose into KisekaeLocal, and saves an automatically cropped image."
-    )
-    parser.add_argument("--width", "-w", default=600, help="Output image width.")
-    parser.add_argument("--height", "-l", default=1400, help="Output image height.")
-    parser.add_argument(
-        "--center-x",
-        "-x",
-        default=1000,
-        help="X position to center the output image around.",
-    )
-    parser.add_argument(
-        "--margin-y",
-        "-y",
-        default=15,
-        help="Number of margin pixels from top when cropping output image.",
-    )
-    parser.add_argument(
-        "--z-depth", "-z", default=500, help="Depth at which to import characters."
-    )
-    parser.add_argument(
-        "--manual-crop",
-        "--manual",
-        "-m",
-        action="store_false",
-        dest="auto_crop",
-        help="Do not automatically calculate crop with bounding box.",
-    )
-    parser.add_argument(
-        "--stage",
-        nargs="*",
-        type=int,
-        help="(CSV-only) Import codes for a particular stage or set of stages only.",
-    )
-    parser.add_argument(
-        "--pose",
-        nargs="*",
-        help="(CSV-only) Import codes for a particular pose or set of poses only.",
-    )
-    parser.add_argument(
-        "--no-remove-motion",
-        action="store_false",
-        dest="remove_motion",
-        help="Do not automatically set motion parameters to 'Manual' on importing.",
-    )
-    parser.add_argument(
-        "--no-close-vagina",
-        action="store_false",
-        dest="close_vagina",
-        help="Do not automatically close the flaps of a female character's vagina on importing.",
-    )
-    parser.add_argument("--file", "-f", help="Load codes from text file.")
-    parser.add_argument("--csv", "-c", help="Load codes from a CSV file.")
-    parser.add_argument(
-        "--code",
-        "-i",
-        help="Load code as command line argument. [dest_dir] is the destination image path in this case.",
-    )
-    parser.add_argument("dest_dir", help="Destination directory to output to.")
-    args = parser.parse_args()
+    import sys
 
-    kwargs = vars(args)
+    sheet, stage, pose = sys.argv[2].split(":", 2)
+    sheet = int(sheet)
+    stage = int(stage)
+    matx = PoseMatrix.load_character(sys.argv[1])
 
-    dest_dir = Path(args.dest_dir).resolve()
-    del kwargs["dest_dir"]
+    cell = matx.sheets[sheet][stage, pose]
+    print(str(cell.expand_code()))
 
-    if args.csv is not None:
-        process_csv(Path(args.csv), dest_dir, **kwargs)
-    elif args.file is not None:
-        process_file(Path(args.file), dest_dir, **kwargs)
-    elif args.code is not None:
-        code = args["code"]
-        del kwargs["code"]
-        process_single(code, dest_dir, **kwargs)
-    else:
-        raise ValueError("Must provide at least one of --csv, --file, or --code.")
+    # with open(sys.argv[1], "w", encoding="utf-8") as f:
+    #     f.write(_fmt_sheet(matx.sheets[0]))
