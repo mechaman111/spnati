@@ -11,7 +11,7 @@ from PIL import Image
 import kkl_client as kkl
 from kkl_client import (KisekaeImageResponse, KisekaeLocalClient,
                         KisekaeServerRequest, KisekaeServerResponse)
-from kkl_import import KisekaeCode
+from kkl_import import KisekaeCode, PoseMatrix
 
 BASE_PARTS = {
     "body_lower": ("dou",),
@@ -420,12 +420,14 @@ if __name__ == "__main__":
         "body_upper_rarm_full",
         "body_upper_arms_full",
         "chest",
+        "hair",
     ]
     BASE_IN_PATH = Path.cwd().joinpath("epilogue", "codes")
     BASE_OUT_PATH = Path.cwd().joinpath("epilogue", "images")
 
     parser = argparse.ArgumentParser()
     parser.add_argument("--no-align", "-A", action="store_false", dest="align")
+    parser.add_argument("--from-matrix", "-m", action="store_true")
     parser.add_argument("--disable-hair", "-d", action="store_true")
     parser.add_argument("--trim", "-t", action="store_true")
     parser.add_argument("--out-name", "-o")
@@ -469,8 +471,40 @@ if __name__ == "__main__":
     else:
         args.camera_y = baseline_cam_y
 
-    with BASE_IN_PATH.joinpath(args.codefile + ".txt").open("r", encoding="utf-8") as f:
-        code = KisekaeCode(f.read())
+    if args.from_matrix:
+        tgt_parts: Tuple[str, ...] = args.codefile.split(":", 2)
+
+        pose_key = tgt_parts[-1]
+        if len(tgt_parts) == 3:
+            stage = int(tgt_parts[1])
+            sheet = tgt_parts[0]
+            try:
+                sheet = int(sheet)
+            except ValueError:
+                pass
+        elif len(tgt_parts) == 2:
+            stage = int(tgt_parts[0])
+            sheet = 0
+        else:
+            stage = 0
+
+        matrix = PoseMatrix.load_character(Path.cwd())
+        if isinstance(sheet, int):
+            pose_sheet = matrix.sheets[sheet]
+        else:
+            for pose_sheet in matrix.sheets:
+                if pose_sheet.name == sheet:
+                    break
+            else:
+                print("Could not find sheet {} in pose matrix", file=sys.stderr)
+                sys.exit(1)
+        code = pose_sheet[stage, pose_key].expand_code()
+        if code is None:
+            print("Specified pose matrix cell is blank", file=sys.stderr)
+            sys.exit(1)
+    else:
+        with BASE_IN_PATH.joinpath(args.codefile + ".txt").open("r", encoding="utf-8") as f:
+            code = KisekaeCode(f.read())
 
     if args.out_name is not None:
         outpath = BASE_OUT_PATH.joinpath(args.out_name)
