@@ -328,6 +328,10 @@ var $gameLoadProgress = $(".game-load-progress");
     "videl/1-flying.png",
     "videl/4-happy.png",
     "videl/5-embarrassed.png",
+    "yusuke/0-Excited.png",   // Highlighted New Character
+    "yusuke/3-Expository.png",
+    "yusuke/4-Confused.png",
+    "yusuke/4-Frame.png",
 ];
 
 /* maybe move this data to an external file if the hardcoded stuff changes often enough */
