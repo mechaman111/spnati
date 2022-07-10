@@ -852,7 +852,7 @@ function State($xml_or_state, parentCase) {
 
     ["intelligence", "size", "gender", "label"].forEach(function (attr) {
         var val = $xml.attr("set-" + attr);
-        if (val) {
+        if (val !== undefined) {
             this.operations.push(new PlayerAttributeOperation(attr, val, parentCase));
         }
     }.bind(this));
