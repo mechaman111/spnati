@@ -991,10 +991,72 @@ if (!pog) var pog = (function (root) {
     // exactly the existing determineAIAction function with PoG support
     // Note: please make this less copy-paste later, but I don't know how
     function pogDetermineAIAction (player) {
+        var eStrategies = {
+            OPTIMAL    : "optimal",
+            SUBOPTIMAL : "suboptimal",
+            RANDOM     : "random",
+            WORST      : "worst",
+            KEEPALL    : "keep-all"
+        };
+        
         var numCards = CARDS_PER_HAND;
         
         if (player.id === "pot_of_greed") {
             numCards += 2;
+        }
+
+        /* Choose a strategy for the hand based on intelligence. Always use suboptimal for the player for card suggestions. */
+        var strategy = eStrategies.KEEPALL;
+        if (player.id == 'human') {
+            strategy = eStrategies.SUBOPTIMAL;
+        } else {
+          var AIRoll = Math.random();
+          switch (player.intelligence) {
+            case eIntelligence.NOSWAP:
+              strategy = eStrategies.KEEPALL;
+              break;
+            case eIntelligence.BEST:
+              if (AIRoll > 0.01) {
+                  strategy = eStrategies.OPTIMAL;
+              } else {
+                  strategy = eStrategies.RANDOM;
+              }
+              break;
+            case eIntelligence.GOOD:
+              if (AIRoll > 0.5) {
+                  strategy = eStrategies.OPTIMAL;
+              } else if (AIRoll > 0.1) {
+                  strategy = eStrategies.SUBOPTIMAL;
+              } else {
+                  strategy = eStrategies.RANDOM;
+              }
+              break;
+            case eIntelligence.AVERAGE:
+              if (AIRoll > 0.6) {
+                  strategy = eStrategies.SUBOPTIMAL;
+              } else {
+                  strategy = eStrategies.RANDOM;
+              }
+              break;
+            case eIntelligence.BAD:
+              if (AIRoll > 0.85) {
+                  strategy = eStrategies.SUBOPTIMAL;
+              } else if (AIRoll > 0.35) {
+                  strategy = eStrategies.RANDOM;
+              } else {
+                  strategy = eStrategies.WORST;
+              }
+              break;
+            case eIntelligence.THROW:
+              if (AIRoll > 0.99) {
+                  strategy = eStrategies.RANDOM;
+              } else {
+                  strategy = eStrategies.WORST;
+              }
+              break;
+            default:
+              console.log("No intelligence match found for " + player.id + ". Defaulting to no-swap.");
+          }
         }
         
         /* determine the current hand */
@@ -1005,7 +1067,7 @@ if (!pog) var pog = (function (root) {
 
         /* Player tries hard to lose */
         /* NO NEED FOR POG SUPPORT - POG IS AVERAGE */
-        if (player.intelligence == eIntelligence.THROW) {
+        if (strategy == eStrategies.WORST) {
             if (player.hand.strength == STRAIGHT || player.hand.strength == FLUSH || player.hand.strength >= STRAIGHT_FLUSH) {
                 var sortedRanks = hand.map(function(c) { return c.rank; }).sort();
                 // Keep the two lowest cards.
@@ -1035,9 +1097,8 @@ if (!pog) var pog = (function (root) {
                 }
             }
 
-        /*for low intelligence characters all trades are done at random. Technically this is the same as doing nothing but this way they won't always just do nothing.*/
-        /* NO NEED FOR POG SUPPORT - POG IS AVERAGE */
-        } else if (player.intelligence == eIntelligence.BAD) {
+        /*for random strategy users all trades are done at random. Technically this is the same as doing nothing but this way they won't always just do nothing.*/
+        } else if (strategy == eStrategies.RANDOM) {
             if (player.id === "pot_of_greed") {
                 player.hand.tradeIns = [false, false, false, false, false, false, false];
             } else {
@@ -1045,7 +1106,7 @@ if (!pog) var pog = (function (root) {
             }
 
             /*choose number of cards to trade in*/
-            var toTrade = Math.floor((Math.random()) * 6);
+            var toTrade = Math.floor((Math.random()) * (numCards + 1));
 
             /*choose cards at random to get rid of*/
             for (var i = 0; i < hand.length; i++) {
@@ -1056,16 +1117,16 @@ if (!pog) var pog = (function (root) {
                 }
             }
 
-        /*for no-swap intelligence characters just don't swap any cards*/
-        } else if (player.intelligence == eIntelligence.NOSWAP) {
+        /*for keep-all strategy users just don't swap any cards*/
+        } else if (strategy == eStrategies.KEEPALL) {
             if (player.id === "pot_of_greed") {
                 player.hand.tradeIns = [false, false, false, false, false, false, false];
             } else {
                 player.hand.tradeIns = [false, false, false, false, false];
             }
 
-        /*for good intelligence characters only attempt to get pairs or improve on pairs*/
-        /*for average intelligence characters use the standard algorithm. Average intelligence is also the default case*/
+        /*optimal strategy users only attempt to get pairs or improve on pairs*/
+        /*suboptimal strategy users use the standard algorithm. Suboptimal strategy is also the default case*/
         } else {
             /* if the current hand is good enough, then take a pre-determined action */
             if (player.hand.strength >= STRAIGHT) {
@@ -1096,7 +1157,7 @@ if (!pog) var pog = (function (root) {
                 return;
             }
 
-            if (player.intelligence == eIntelligence.AVERAGE) {
+            if (strategy == eStrategies.SUBOPTIMAL) {
                 /* Check for flush draw, even if holding a pair */
                 /* CARDS_PER_HAND instead of numCards is not a mistake, since 5-flushes are possible */
                 if (player.hand.suits.some(function(s) { return s == CARDS_PER_HAND - 1; })) {
@@ -1136,7 +1197,7 @@ if (!pog) var pog = (function (root) {
                 return;
             }
 
-            if (player.intelligence == eIntelligence.AVERAGE) {
+            if (strategy == eStrategies.SUBOPTIMAL) {
                 for (var start_rank = 2; start_rank <= 11; start_rank++) {
                     if (player.hand.ranks.slice(start_rank - 1, start_rank - 1 + 3).countTrue() == 3) {
                         player.hand.tradeIns = hand.map(function(c, idx) {
@@ -1148,11 +1209,11 @@ if (!pog) var pog = (function (root) {
                 }
             }
             if (player.hand.strength == HIGH_CARD) {
-                if (player.intelligence == eIntelligence.AVERAGE) {
+                if (strategy == eStrategies.SUBOPTIMAL) {
                     player.hand.tradeIns = hand.map(function(c) { return player.hand.value.slice(0, AVERAGE_KEEP_HIGH).indexOf(c.rank) < 0; });
                     console.log("Hand is bad, trading in "+ (numCards - AVERAGE_KEEP_HIGH) +" cards. "+player.hand.tradeIns);
                     return;
-                } else if (player.intelligence != eIntelligence.BEST || player.hand.value[0] >= 10) {
+                } else if (strategy != eStrategies.OPTIMAL || player.hand.value[0] >= 10) {
                     player.hand.tradeIns = hand.map(function(c) { return c.rank != player.hand.value[0]; });
                     console.log("Hand is bad, trading in four cards. "+player.hand.tradeIns);
                     return;
