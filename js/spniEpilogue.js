@@ -589,6 +589,11 @@ function parseEpilogue(player, rawEpilogue) {
                     overlayAlpha: $scene.attr("overlay-alpha"),
                     directives: [],
                 }
+
+                if (!parseTestExpressions($scene.attr("tests")).every((test) => test.evaluate(player))) {
+                    return;
+                }
+
                 scenes.push(scene);
                 scene.x = toSceneX($scene.attr("x"), scene);
                 scene.y = toSceneY($scene.attr("y"), scene);
@@ -618,9 +623,14 @@ function parseEpilogue(player, rawEpilogue) {
                         directive.time = totalTime;
                     }
 
+                    if (!parseTestExpressions(directive.tests).every((test) => test.evaluate(player))) {
+                        directive.type = "skip";
+                    }
+
                     if (directive.marker && !checkMarker(directive.marker, player)) {
                         directive.type = "skip";
                     }
+
                     addDirectiveToScene(scene, directive);
                 });
             }

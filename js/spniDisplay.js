@@ -276,9 +276,14 @@ function Pose(poseDef, display, onLoadCallback) {
     this.container = container;
     
     poseDef.sprites.forEach(function (def) {
-        if (def.marker && !checkMarker(def.marker, this.player)) {
+        if (def.marker && !checkMarker(def.marker, this.player, this.player.currentTarget)) {
             return;
         }
+
+        if (!def.tests.every((test) => test.evaluate(this.player, this.player.currentTarget))) {
+            return;
+        }
+
         var sprite = new PoseSprite(def.id, def.src, this.onSpriteLoaded.bind(this), this, def);
         this.sprites[def.id] = sprite
         this.totalSprites++;
@@ -293,9 +298,14 @@ function Pose(poseDef, display, onLoadCallback) {
     }
     
     poseDef.animations.forEach(function (def) {
-        if (def.marker && !checkMarker(def.marker, this.player)) {
+        if (def.marker && !checkMarker(def.marker, this.player, this.player.currentTarget)) {
           return;
         }
+
+        if (!def.tests.every((test) => test.evaluate(this.player, this.player.currentTarget))) {
+            return;
+        }
+
         var target = this.sprites[def.id];
         if (!target) return;
         
@@ -398,6 +408,7 @@ function parseSpriteDefinition ($xml, player) {
     targetObj.y = parseFloat(targetObj.y, 10);
     targetObj.delay = parseFloat(targetObj.delay) * 1000 || 0;
     
+    targetObj.tests = parseTestExpressions(targetObj.tests);
     targetObj.player = player;
     
     return targetObj;
@@ -412,7 +423,9 @@ function parseKeyframeDefinition($xml) {
 
 function parseDirective ($xml) {
     var targetObj = xmlToObject($xml);
-    
+
+    targetObj.tests = parseTestExpressions(targetObj.tests);
+
     if (targetObj.type === 'animation') {
         // Keyframe / interpolated animation
         targetObj.keyframes = [];
