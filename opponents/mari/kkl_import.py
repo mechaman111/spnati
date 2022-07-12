@@ -223,7 +223,7 @@ class KisekaeCharacter(object):
 
         return filter(lambda sc: sc.prefix.startswith(subcode_prefix), self.subcodes)
 
-    def _subcode_map(self) -> Tuple[Dict[str, KisekaeComponent], Dict[int, str]]:
+    def subcode_map(self) -> Tuple[Dict[str, KisekaeComponent], Dict[int, str]]:
         img_map: Dict[int, str] = {}
         subcode_map: Dict[str, KisekaeComponent] = {}
         img_numbers: List[int] = []
@@ -239,8 +239,8 @@ class KisekaeCharacter(object):
         return subcode_map, img_map
 
     def overlay(self, other: KisekaeCharacter) -> KisekaeCharacter:
-        self_subcodes, self_images = self._subcode_map()
-        other_subcodes, other_images = other._subcode_map()
+        self_subcodes, self_images = self.subcode_map()
+        other_subcodes, other_images = other.subcode_map()
 
         self_subcodes.update(other_subcodes)
         self_images.update(other_images)

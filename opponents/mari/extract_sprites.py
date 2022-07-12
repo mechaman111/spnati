@@ -82,11 +82,17 @@ class ProgressLine:
         self.last_line = s
         print(s, file=sys.stderr, end=end, flush=True)
 
-    def warn(self, fmt: str, *args, **kwargs):
+    def notice(self, status: str, fmt: str, *args, **kwargs):
         last_line = self.last_line
-        self._print("!", "\n", fmt, args, kwargs)
+        self._print(status, "\n", fmt, args, kwargs)
         self.last_line = last_line
         print(last_line, end="\r", file=sys.stderr, flush=True)
+
+    def warn(self, fmt: str, *args, **kwargs):
+        return self.notice("!", fmt, *args, **kwargs)
+
+    def info(self, fmt: str, *args, **kwargs):
+        return self.notice("i", fmt, *args, **kwargs)
 
     def update(self, fmt: str, *args, **kwargs):
         self._print(self.spinner_frames[self.spinner_idx], "\r", fmt, args, kwargs)
