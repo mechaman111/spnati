@@ -417,23 +417,7 @@ function loadListingFile () {
     }).then(function () {
         loadedOpponents = loadedOpponents.filter(Boolean); // Remove any empty slots should an opponent fail to load
 
-        var selectGroups = {};
-        loadedOpponents.forEach(function (opp) {
-            if (opp.status) return;
-
-            var selectGroup = (parseInt(opp.selectGroup, 10) + 1) || 99
-            if (!selectGroups[selectGroup]) {
-                selectGroups[selectGroup] = [];
-            }
-
-            selectGroups[selectGroup].push(opp);
-        });
-
-        Object.entries(selectGroups).forEach(function (entry) {
-            applySelectGroupOrdering(entry[1], entry[0]).forEach(function (opp, idx) {
-                opp.selectGroupIndex = idx;
-            });
-        });
+        computeSelectGroupIndices();
             
         $tagList.append(Object.keys(TAG_ALIASES).concat(Object.keys(tagSet)).sort().map(function(tag) {
             return new Option(tag);
