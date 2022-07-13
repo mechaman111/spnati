@@ -197,7 +197,7 @@ function computeMagnetismGroups(rng, opponents) {
             }
         }
 
-        if (group.length > 1) rng.shuffle(group);
+        if (rng && (group.length > 1)) rng.shuffle(group);
         groups.push(group);
     }
 
@@ -286,7 +286,7 @@ function applySelectGroupOrdering(opponents, groupNumber, weekIdx) {
         }
 
         /* Apply magnetism to remaining opponents and recombine again. */
-        opponents = Array.prototype.concat.apply(tmp, computeMagnetismGroups(rng, opponents));
+        opponents = Array.prototype.concat.apply(tmp, computeMagnetismGroups(null, opponents));
 
         /* If there isn't already a male in the top 10, pull one up. */
         if (!foundMale) {
