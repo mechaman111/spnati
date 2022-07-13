@@ -145,7 +145,7 @@ var sortingOptionsMap = {
     target: sortOpponentsByMostTargeted(50, Infinity),
     oldest: sortOpponentsByMultipleFields(["release", "-listingIndex"]),
     newest: sortOpponentsByMultipleFields(["-release", "listingIndex"]),
-    featured: sortOpponentsByMultipleFields(["-event_partition", "-event_sort_order", "listingIndex"]),
+    featured: sortOpponentsByMultipleFields(["-event_partition", "-event_sort_order", "selectGroup", "selectGroupIndex"]),
 };
 var groupCreditsShown = false;
 
@@ -178,6 +178,44 @@ var statusIndicators = {
         tooltip: "This opponent is only available in the official version of the game during the April Fool's Day event."
     }
 }
+
+const MAGNET_TAGS = [
+    "one_piece",
+    "vandread",
+    "ddlc",
+    "kid_icarus",
+    "genshin_impact",
+    "league_of_legends",
+    "fire_emblem",
+    "pokemon",
+    "konosuba",
+    "zombieland_saga",
+    "monster_prom",
+    "persona",
+    "panty_and_stocking",
+    "katawa_shoujo",
+    "my_little_pony",
+    "sonic_franchise",
+    "little_witch_academia",
+    "clannad",
+    "touhou_project",
+    "tales_of",
+    "va-11_hall-a",
+    "overwatch_franchise",
+    "danganronpa",
+    "dragon_ball",
+    "street_fighter",
+    "rwby_franchise",
+    "teen_titans_franchise",
+    "huniepop",
+    "ace_attorney",
+    "jjba",
+    "legend_of_dark_witch",
+    "battleborn",
+    "legend_of_zelda",
+    "kim_possible_franchise",
+    "buffy_the_vampire_slayer"
+];
 
 /**********************************************************************
  *****               Opponent & Group Specification               *****
@@ -344,11 +382,13 @@ function loadListingFile () {
             }
             var highlightStatus = $(this).attr('highlight');
 
+            var selectGroup = $(this).attr('group');
+
             if (available[id] && !(id in opponentMap)) {
                 loadProgress[fileIdx].total++;
                 opponentMap[id] = oppDefaultIndex++;
 
-                return loadOpponentMeta(id, oppStatus, releaseNumber, highlightStatus)
+                return loadOpponentMeta(id, oppStatus, selectGroup, releaseNumber, highlightStatus)
                     .then(onComplete).then(function () {
                         loadProgress[fileIdx].current++;
                         var progress = loadProgress.reduce(function (acc, val) {
@@ -376,6 +416,24 @@ function loadListingFile () {
         return Promise.all(files.map(listingProcessor));
     }).then(function () {
         loadedOpponents = loadedOpponents.filter(Boolean); // Remove any empty slots should an opponent fail to load
+
+        var selectGroups = {};
+        loadedOpponents.forEach(function (opp) {
+            if (opp.status) return;
+
+            var selectGroup = (parseInt(opp.selectGroup, 10) + 1) || 99
+            if (!selectGroups[selectGroup]) {
+                selectGroups[selectGroup] = [];
+            }
+
+            selectGroups[selectGroup].push(opp);
+        });
+
+        Object.entries(selectGroups).forEach(function (entry) {
+            applySelectGroupOrdering(entry[1], entry[0]).forEach(function (opp, idx) {
+                opp.selectGroupIndex = idx;
+            });
+        });
             
         $tagList.append(Object.keys(TAG_ALIASES).concat(Object.keys(tagSet)).sort().map(function(tag) {
             return new Option(tag);
@@ -400,14 +458,14 @@ function loadListingFile () {
 /***************************************************************
  * Loads and parses the meta and tags XML files of an opponent.
  ***************************************************************/
-function loadOpponentMeta (id, status, releaseNumber, highlightStatus) {
+function loadOpponentMeta (id, status, selectGroup, releaseNumber, highlightStatus) {
     /* grab and parse the opponent meta file */
     console.log("Loading metadata for \""+id+"\"");
 
     return Promise.all(metaFiles.map(function (filename) {
         return metadataIndex.getFile("opponents/" + id + "/" + filename);
     })).then(function(files) {
-        return new Opponent(id, files, status, releaseNumber, highlightStatus);
+        return new Opponent(id, files, status, selectGroup, releaseNumber, highlightStatus);
     }).catch(function(err) {
         console.error("Failed reading \""+id+"\":");
         captureError(err);
