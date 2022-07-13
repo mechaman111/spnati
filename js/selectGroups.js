@@ -170,37 +170,18 @@ const GROUPING_EPOCH = 1641081600000;
 const MS_PER_WEEK = 7 * 24 * 3600 * 1000;
 
 /**
- * Orders a group of opponents into a randomly generated cycling set of rows.
- * 
- * Conceptually, each week is part of a multi-week cycle; each cycle corresponds to a
- * different randomly-generated permutation of the group's opponents, grouped into
- * rows of five.
- * 
- * Each week within a cycle has a different row rotate to the front of the group,
- * with the foremost row from the previous week cycling to the back of the group.
- * 
- * Once all rows have had a week at the front, a new cycle begins with a new
- * set of randomly-selected rows.
- * 
- * Franchise magnetism rules are applied throughout the row generation process;
+ * Partition characters into groups based on franchise magnetism rules.
  * nearby characters from the same franchise will stick together even after
  * the group is shuffled as a whole.
  * 
+ * @param {ChaCha20RNG} rng
  * @param {Opponent[]} opponents 
- * @param {number} groupNonce
- * @returns {Opponent[]} 
+ * @returns {Opponent[][]}
  */
-function applySelectGroupOrdering(opponents, groupNonce) {
-    const nRows = Math.ceil(opponents.length / 5);
-    const weekIdx = Math.floor((Date.now() - GROUPING_EPOCH) / MS_PER_WEEK);
-    const cycleNumber = Math.floor(weekIdx / nRows);
-    const cycleIndex = weekIdx % nRows;
-    var rng = new ChaCha20RNG(0, groupNonce, cycleNumber);
-
-    opponents = opponents.slice();
+function computeMagnetismGroups(rng, opponents) {
     var groups = [];
+    opponents = opponents.slice();
 
-    /* Magnetism */
     while (opponents.length > 0) {
         let curOpp = opponents.shift();
         let group = [curOpp];
@@ -220,12 +201,144 @@ function applySelectGroupOrdering(opponents, groupNonce) {
         groups.push(group);
     }
 
-    rng.shuffle(groups);
-    
-    /* Combine groups into a flat list of opponents */
-    opponents = Array.prototype.concat.apply([], groups);
+    return groups;
+}
 
-    /* Shift rows */
-    var tmp = opponents.splice(cycleIndex * 5);
-    return tmp.concat(opponents);
+
+/**
+ * Orders a group of opponents into a randomly generated cycling set of rows.
+ * 
+ * Conceptually, each week is part of a multi-week cycle; each cycle corresponds to a
+ * different randomly-generated permutation of the group's opponents, grouped into
+ * rows of five.
+ * 
+ * Each week within a cycle has a different row rotate to the front of the group,
+ * with the foremost row from the previous week cycling to the back of the group.
+ * 
+ * Once all rows have had a week at the front, a new cycle begins with a new
+ * set of randomly-selected rows.
+ * 
+ * Franchise magnetism rules are applied throughout the row generation process;
+ * nearby characters from the same franchise will stick together even after
+ * the group is shuffled as a whole.
+ * 
+ * @param {Opponent[]} opponents 
+ * @param {number} groupNumber
+ * @param {number} [weekIdx]
+ * @returns {Opponent[]} 
+ */
+function applySelectGroupOrdering(opponents, groupNumber, weekIdx) {
+    if (weekIdx === undefined) {
+        weekIdx = Math.floor((Date.now() - GROUPING_EPOCH) / MS_PER_WEEK);
+    }
+
+    const nRows = Math.ceil(opponents.length / 5);
+    const cycleNumber = Math.floor(weekIdx / nRows);
+    const cycleIndex = weekIdx % nRows;
+    var rng = new ChaCha20RNG(0, groupNumber, cycleNumber);
+
+    if (groupNumber == 1) {
+        opponents = opponents.slice();
+
+        /* Perform an initial shuffle to diffuse characters across rows. */
+        rng.shuffle(opponents);
+
+        /* Combine opponents into rows with at most one character per franchise. */
+        let groups = [];
+        while (opponents.length > 0) {
+            let curOpp = opponents.shift();
+            let group = [curOpp];
+
+            let i = 0;
+            while (group.length < 5 && i < opponents.length) {
+                if (opponents[i].magnetismTag && group.some((opp) => opp.magnetismTag == opponents[i].magnetismTag)) {
+                    i++;
+                } else {
+                    group.push(opponents.splice(i, 1)[0]);
+                }
+            }
+
+            rng.shuffle(group);
+            groups.push(group);
+        }
+
+        /* Shuffle rows and recombine into a flat opponents array. */
+        rng.shuffle(groups);
+        opponents = Array.prototype.concat.apply([], groups);
+
+        /* Shift rows. */
+        let tmp = opponents.splice(cycleIndex * 5);
+        opponents = tmp.concat(opponents);
+        
+        /* Ensure that there are no two franchisemates within the top 10. */
+        tmp = [];
+        let i = 0;
+        let foundMale = false;
+        while (tmp.length < 10 && i < opponents.length) {
+            let curOpp = opponents[i];
+            if (curOpp.magnetismTag && tmp.some((opp) => opp.magnetismTag == curOpp.magnetismTag)) {
+                i++;
+                continue;
+            }
+
+            foundMale = foundMale || (curOpp.metaGender === "male");
+            tmp.push(opponents.splice(i, 1)[0]);
+        }
+
+        /* Apply magnetism to remaining opponents and recombine again. */
+        opponents = Array.prototype.concat.apply(tmp, computeMagnetismGroups(rng, opponents));
+
+        /* If there isn't already a male in the top 10, pull one up. */
+        if (!foundMale) {
+            for (let i = 10; i < opponents.length; i++) {
+                if (opponents[i].metaGender === "male") {
+                    /* Move opponents[i] to opponents[9]. */
+                    let opp = opponents.splice(i, 1)[0];
+                    opponents.splice(9, 0, opp);
+                    break;
+                }
+            }
+        }
+
+        return opponents;
+    } else {
+        let groups = computeMagnetismGroups(rng, opponents);
+        rng.shuffle(groups);
+    
+        /* Combine groups into a flat list of opponents. */
+        opponents = Array.prototype.concat.apply([], groups);
+
+        /* Shift rows. */
+        let tmp = opponents.splice(cycleIndex * 5);
+        return tmp.concat(opponents);
+    }
+}
+
+/**
+ * Compute each loaded opponent's selectGroupIndex value.
+ * 
+ * This is mostly in its own function as an aid for debugging;
+ * calling this from a dev tools console with different weekIdx values
+ * allows you to manually move through group cycles.
+ * 
+ * @param {number} [weekIdx] 
+ */
+function computeSelectGroupIndices(weekIdx) {
+    var selectGroups = {};
+    loadedOpponents.slice().sort((a, b) => a.listingIndex - b.listingIndex).forEach(function (opp) {
+        if (opp.status) return;
+
+        var selectGroup = parseInt(opp.selectGroup, 10) || 99
+        if (!selectGroups[selectGroup]) {
+            selectGroups[selectGroup] = [];
+        }
+
+        selectGroups[selectGroup].push(opp);
+    });
+
+    Object.entries(selectGroups).forEach(function (entry) {
+        applySelectGroupOrdering(entry[1], entry[0], weekIdx).forEach(function (opp, idx) {
+            opp.selectGroupIndex = idx;
+        });
+    });
 }
