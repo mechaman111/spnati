@@ -444,11 +444,11 @@ Player.prototype.inboundLinesFromSelected = function (filterStatus, cap) {
  * @param {string} id
  * @param {jQuery} $metaXml
  * @param {string} status
- * @param {number} [selectGroup]
+ * @param {number} [rosterScore]
  * @param {number} [releaseNumber]
  * @param {string} [highlightStatus]
  */
-function Opponent (id, metaFiles, status, selectGroup, releaseNumber, highlightStatus) {
+function Opponent (id, metaFiles, status, rosterScore, releaseNumber, highlightStatus) {
     Player.call(this, id);
 
     this.id = id;
@@ -490,8 +490,8 @@ function Opponent (id, metaFiles, status, selectGroup, releaseNumber, highlightS
     if (!['small', 'smaller'].includes(this.fontSize)) this.fontSize = undefined;
     this.lastUpdated = parseInt($metaXml.children('lastupdate').text(), 10) || 0;
 
-    this.selectGroup = (selectGroup !== undefined) ? selectGroup : 99;
-    this.selectGroupIndex = 9999;
+    this.rosterScore = rosterScore;
+    this.effectiveScore = -Infinity;
 
     this.endings = null;
     if (EPILOGUES_ENABLED) {

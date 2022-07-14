@@ -145,7 +145,7 @@ var sortingOptionsMap = {
     target: sortOpponentsByMostTargeted(50, Infinity),
     oldest: sortOpponentsByMultipleFields(["release", "-listingIndex"]),
     newest: sortOpponentsByMultipleFields(["-release", "listingIndex"]),
-    featured: sortOpponentsByMultipleFields(["-event_partition", "-event_sort_order", "selectGroup", "selectGroupIndex"]),
+    featured: sortOpponentsByMultipleFields(["-event_partition", "-event_sort_order", "-effectiveScore"]),
 };
 var groupCreditsShown = false;
 
@@ -382,13 +382,13 @@ function loadListingFile () {
             }
             var highlightStatus = $(this).attr('highlight');
 
-            var selectGroup = $(this).attr('group');
+            var rosterScore = $(this).attr('score');
 
             if (available[id] && !(id in opponentMap)) {
                 loadProgress[fileIdx].total++;
                 opponentMap[id] = oppDefaultIndex++;
 
-                return loadOpponentMeta(id, oppStatus, selectGroup, releaseNumber, highlightStatus)
+                return loadOpponentMeta(id, oppStatus, rosterScore, releaseNumber, highlightStatus)
                     .then(onComplete).then(function () {
                         loadProgress[fileIdx].current++;
                         var progress = loadProgress.reduce(function (acc, val) {
@@ -417,7 +417,7 @@ function loadListingFile () {
     }).then(function () {
         loadedOpponents = loadedOpponents.filter(Boolean); // Remove any empty slots should an opponent fail to load
 
-        computeSelectGroupIndices();
+        randomizeRosterOrder();
             
         $tagList.append(Object.keys(TAG_ALIASES).concat(Object.keys(tagSet)).sort().map(function(tag) {
             return new Option(tag);
@@ -442,14 +442,14 @@ function loadListingFile () {
 /***************************************************************
  * Loads and parses the meta and tags XML files of an opponent.
  ***************************************************************/
-function loadOpponentMeta (id, status, selectGroup, releaseNumber, highlightStatus) {
+function loadOpponentMeta (id, status, rosterScore, releaseNumber, highlightStatus) {
     /* grab and parse the opponent meta file */
     console.log("Loading metadata for \""+id+"\"");
 
     return Promise.all(metaFiles.map(function (filename) {
         return metadataIndex.getFile("opponents/" + id + "/" + filename);
     })).then(function(files) {
-        return new Opponent(id, files, status, selectGroup, releaseNumber, highlightStatus);
+        return new Opponent(id, files, status, rosterScore, releaseNumber, highlightStatus);
     }).catch(function(err) {
         console.error("Failed reading \""+id+"\":");
         captureError(err);
@@ -752,6 +752,11 @@ function updateIndividualSelectSort() {
         loadedOpponents.sort(sortingOptionsMap[sortingMode]);
     } else {
         loadedOpponents.sort(sortOpponentsByMultipleFields(sortingMode.split(/\s+/)));
+    }
+
+    if (sortingMode === "featured") {
+        /* Apply specific rules for featured sort order. */
+        loadedOpponents = applyFeaturedSortRules(loadedOpponents);
     }
     
     var testingFirst = individualSelectTesting && (sortingMode === "featured" || sortingMode === "-lastUpdated");
