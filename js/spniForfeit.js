@@ -47,11 +47,11 @@ Player.prototype.updateHeavyMasturbation = function () {
         this.forfeit[0] = (this.timer <= 4) ? PLAYER_HEAVY_MASTURBATING : PLAYER_MASTURBATING;
     } else if (!this.forfeitLocked) {
         /* AI player: roll random chance they go into heavy masturbation. */
-        this.forfeit = (
-            (this.timer <= getRandomNumber(HEAVY_LAST_ROUND, HEAVY_FIRST_ROUND)) ?
-            [PLAYER_HEAVY_MASTURBATING, CANNOT_SPEAK] :
-            [PLAYER_MASTURBATING, CAN_SPEAK]
-        );
+        if (this.timer >= HEAVY_FIRST_ROUND) {
+            this.forfeit = [PLAYER_MASTURBATING, CAN_SPEAK];
+        } else if (this.timer <= getRandomNumber(HEAVY_LAST_ROUND, HEAVY_FIRST_ROUND)) {
+            this.forfeit = [PLAYER_HEAVY_MASTURBATING, CANNOT_SPEAK];
+        }
     }
 
     /* Players with locked forfeit status fall through with no changes. */
