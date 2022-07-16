@@ -14,7 +14,7 @@
 |---------|--------|
 | 20-25+ lines targeting characters other than Setogaya Mari | [`16cbdf9fec25b748870975c3e181faf3deff5433`](https://gitgud.io/spnati/spnati/-/commit/16cbdf9fec25b748870975c3e181faf3deff5433) |
 | Fix repetition of line "Keep goin'... er, not that ya need any encouragement from me." | [`16cbdf9fec25b748870975c3e181faf3deff5433`](https://gitgud.io/spnati/spnati/-/commit/16cbdf9fec25b748870975c3e181faf3deff5433) |
-| More lines for her forfeit | [`git number here`](gitgud link here) |
+| More lines for her forfeit | [`9532c2a1d8fa33d631426d195f1a38671ffb9046`](https://gitgud.io/spnati/spnati/-/commit/df26d6594b3908da1e91629755db10a7272854fa) |
 
 | Suggestion | Commit |
 |---------|--------|
@@ -48,7 +48,7 @@ Flawless/free-pass sponsorship.
 
 | Flaw | Commit |
 |---------|--------|
-| Get her to or above 100 filtered lines | [`git number here`](gitgud link here) |
+| Get her to or above 100 filtered lines | [`9532c2a1d8fa33d631426d195f1a38671ffb9046`](https://gitgud.io/spnati/spnati/-/commit/df26d6594b3908da1e91629755db10a7272854fa) |
 | Remove the nipple percing from default outfit | [`16cbdf9fec25b748870975c3e181faf3deff5433`](https://gitgud.io/spnati/spnati/-/commit/16cbdf9fec25b748870975c3e181faf3deff5433) |
 | Do a review of her Scottish accent, esp. early stages | [`git number here`](gitgud link here) |
 
@@ -71,4 +71,4 @@ Flawless/free-pass sponsorship.
 
 | Flaw | Commit |
 |---------|--------|
-| Write 10 lines about her Pokemon team or Pokemon encounters | [`git number here`](gitgud link here) |
+| Write 10 lines about her Pokemon team or Pokemon encounters | [`9532c2a1d8fa33d631426d195f1a38671ffb9046`](https://gitgud.io/spnati/spnati/-/commit/df26d6594b3908da1e91629755db10a7272854fa) |
