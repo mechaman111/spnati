@@ -802,13 +802,12 @@ function exchangeCards (player) {
     players[player].hand.cards = players[player].hand.cards.filter(function(c, i) {
         return !players[player].hand.tradeIns[i];
     });
-    if (SENTRY_INITIALIZED) {
-        Sentry.addBreadcrumb({
-            category: 'game',
-            message: players[player].id+' swaps '+players[player].hand.tradeIns.countTrue()+' cards',
-            level: 'debug'
-        });
-    }
+    
+    Sentry.addBreadcrumb({
+        category: 'game',
+        message: players[player].id+' swaps '+players[player].hand.tradeIns.countTrue()+' cards',
+        level: 'debug'
+    });
 
     /* See above comment in dealHand re: the card animation and table visibility */
     forceTableVisibility(1);

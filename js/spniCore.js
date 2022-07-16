@@ -16,8 +16,6 @@ var COLLECTIBLES_UNLOCKED = false;
 var CARD_DECKS_ENABLED = false;
 var ALT_COSTUMES_ENABLED = true;
 var DEFAULT_COSTUME_SETS = new Set();
-var USAGE_TRACKING = undefined;
-var SENTRY_INITIALIZED = false;
 var BASE_FONT_SIZE = 14;
 var BASE_SCREEN_WIDTH = 100;
 var UI_FONT_WEIGHT = 500;
@@ -169,7 +167,6 @@ function initialSetup () {
     $gameTable.css({opacity:1});
 
     /* Load title screen info first, since that's fast and synchronous */
-    loadTitleScreen();
     selectTitleCandy();
 
     /* Attempt to detect broken images as caused by running SPNATI from an invalid archive. */
@@ -214,7 +211,7 @@ function initialSetup () {
         updateAnnouncementDropdown();
     });
 
-    if (SENTRY_INITIALIZED) Sentry.setTag("screen", "warning");
+    Sentry.setTag("screen", "warning");
 
     /* show the title screen */
     $titleScreen.show();
@@ -264,6 +261,12 @@ function initialSetup () {
         }
     });
 
+    window.addEventListener("unload", function () {
+        if ((document.visibilityState === "hidden") && inGame && !gameOver) {
+            recordInterruptedGameEvent(true);
+        }
+    });
+
     $('[data-toggle="tooltip"]').tooltip({ delay: { show: 200 } });
 }
 
@@ -277,7 +280,7 @@ function loadVersionInfo () {
         var versionElem = versionInfo.children('current');
         CURRENT_VERSION = versionElem.attr('version');
 
-        if (SENTRY_INITIALIZED) Sentry.setTag("game_version", CURRENT_VERSION);
+        Sentry.setTag("game_version", CURRENT_VERSION);
         
         var displayedVersion = 'v' + CURRENT_VERSION;
 
@@ -525,7 +528,7 @@ function enterTitleScreen() {
     $titleContainer.show();
     $('.title-candy').show();
     $('#title-start-button').focus();
-    if (SENTRY_INITIALIZED) Sentry.setTag("screen", "title");
+    Sentry.setTag("screen", "title");
 }
 
 /************************************************************
@@ -581,17 +584,19 @@ function resetPlayers () {
  * Restarts the game.
  ************************************************************/
 function restartGame () {
-    if (SENTRY_INITIALIZED) {
-        Sentry.addBreadcrumb({
-            category: 'ui',
-            message: 'Returning to title screen.',
-            level: 'info'
-        });
+    Sentry.addBreadcrumb({
+        category: 'ui',
+        message: 'Returning to title screen.',
+        level: 'info'
+    });
 
-        Sentry.setTag("screen", "title");
-        Sentry.setTag("epilogue_player", undefined);
-        Sentry.setTag("epilogue", undefined);
-        Sentry.setTag("epilogue_gallery", undefined);
+    Sentry.setTag("screen", "title");
+    Sentry.setTag("epilogue_player", undefined);
+    Sentry.setTag("epilogue", undefined);
+    Sentry.setTag("epilogue_gallery", undefined);
+
+    if (!gameOver) {
+        recordInterruptedGameEvent(false);
     }
 
     clearTimeout(timeoutID); // No error if undefined or no longer valid
@@ -610,9 +615,7 @@ function restartGame () {
     inGame = false;
     autoAdvancePaused = false;
 
-    if (SENTRY_INITIALIZED) {
-        Sentry.setTag("in_game", false);
-    }
+    Sentry.setTag("in_game", false);
 
     /* trigger screen refreshes */
     updateSelectionVisuals();
@@ -1028,13 +1031,11 @@ function showImportModal() {
     $('#import-progress').click(function() {
         var code = $("#export-code").val();
 
-        if (SENTRY_INITIALIZED) {
-            Sentry.addBreadcrumb({
-                category: 'ui',
-                message: 'Loading save code...',
-                level: 'info'
-            });
-        }
+        Sentry.addBreadcrumb({
+            category: 'ui',
+            message: 'Loading save code...',
+            level: 'info'
+        });
 
         if (save.deserializeStorage(code)) {
             $ioModal.modal('hide');
@@ -1045,15 +1046,45 @@ function showImportModal() {
 }
 
 function showExtrasModal() {
-    $('ul.character-status-toggle').each(function() {
-        var show = includedOpponentStatuses[$(this).data('status')];
+    /* hide Extra Opponents options if online version */
+    if (!getReportedOrigin().includes("spnati.net")) {
+        $(".extra-characters-options").prop("hidden", false);
+        $('ul.character-status-toggle').each(function() {
+            var show = includedOpponentStatuses[$(this).data('status')];
+            $(this).children(':has(a[data-value=true])').toggleClass('active', show);
+            $(this).children(':has(a[data-value=false])').toggleClass('active', !show);
+        });
+    }
+
+    updateTrackingToggles();
+
+    $extrasModal.modal('show');
+}
+
+function updateTrackingToggles() {
+    let trackingOpts = save.getUsageTrackingInfo();
+    $('ul.tracking-status-toggle').each(function() {
+        var show = trackingOpts[$(this).data('tracking-option')];
         $(this).children(':has(a[data-value=true])').toggleClass('active', show);
         $(this).children(':has(a[data-value=false])').toggleClass('active', !show);
     });
-    $extrasModal.modal('show');
+
+    $("#tracking-persistent, #tracking-demographics").children().toggleClass("disabled", !trackingOpts.basic);
+    if (!trackingOpts.basic) {
+        $("#tracking-persistent, #tracking-demographics").children().removeClass("active");
+    }
 }
+
 $('ul.character-status-toggle').on('click', 'a', function() {
     includedOpponentStatuses[$(this).parents('ul').data('status')] = $(this).data('value');
+});
+
+$('ul.tracking-status-toggle').on('click', 'a', function() {
+    if ($(this).parents("li").hasClass("disabled")) return;
+
+    var option = $(this).parents('ul').data('tracking-option');
+    save.updateUsageTrackingInfo(option, $(this).data('value'));
+    updateTrackingToggles();
 });
 
 /**********************************************************************
@@ -1128,6 +1159,35 @@ if (!Object.entries) {
 
         return resArray;
     };
+}
+
+if (!Array.prototype.flat) {
+    /**
+     * 
+     * @param {Array} arr 
+     * @param {number} depth 
+     * @returns {Array}
+     */
+    function flatDeep (arr, depth) {
+        if (depth > 0) {
+            return arr.reduce(function (acc, val) {
+                return acc.concat(Array.isArray(val) ? flatDeep(val, depth - 1) : val);
+            }, []);
+        } else {
+            return arr.slice();
+        }
+    }
+
+    Array.prototype.flat = function (depth) {
+        return flatDeep(this, depth || 1);
+    }
+}
+
+
+if (!Array.prototype.flatMap) {
+    Array.prototype.flatMap = function (callbackFn, thisArg) {
+        return this.map(callbackFn, thisArg).flat(1);
+    }
 }
 
 /************************************************************

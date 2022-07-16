@@ -831,10 +831,6 @@ ul.dropdown-menu>li {
     color: hsla(207, 56%, 28%, 1);
 }
 
-#usage-reporting-modal ul {
-    padding-left: 2rem;
-}
-
 #help-modal .modal-body {
     overflow-y: auto;
 }
@@ -933,6 +929,22 @@ ul.dropdown-menu>li {
 .options-container {
     overflow-y: auto;
     max-height: 45rem;
+}
+
+.extra-settings-group {
+    width: 100%;
+}
+
+.extra-settings-group .setting-toggle {
+    padding-right: 1rem;
+}
+
+.extra-settings-group .setting-toggle > ul {
+    display: flex;
+}
+
+.extra-settings-group .setting-description {
+    padding-right: 1rem;
 }
 
 /************************************************************
@@ -1362,10 +1374,26 @@ ul.dropdown-menu>li {
         0.1rem 0.1rem 0 #000;
 }
 
-.warning-text {
+.warning-start-text, .warning-info-text, .warning-confirm-text {
     font-size: 130%;
+}
+
+.warning-start-text, .warning-confirm-text {
     margin-left: 10em;
     margin-right: 10em;
+}
+
+.warning-start-text {
+    margin-bottom: 1em;
+}
+
+.warning-info-text {
+    margin-left: 8em;
+    margin-right: 8em;
+    margin-bottom: 1em;
+}
+
+.warning-confirm-text {
     margin-bottom: 2em;
 }
 
@@ -2139,6 +2167,71 @@ ul.dropdown-menu>li {
     height: 100%;
     width: auto;
 }
+
+#selection-data-collection-banner-container {
+    position: absolute;
+    top: 2%;
+    left: 0;
+    right: 0;
+    z-index: 1;
+    
+    display: flex;
+    justify-content: center;
+}
+
+#selection-data-collection-banner-border {
+    background: linear-gradient(#333333, #222222);
+    background-color: #333333;
+}
+
+#selection-data-collection-banner {
+    margin: 0.25rem;
+
+    background: radial-gradient(#888888, #666666);
+    background-color: #777777;
+
+    display: flex;
+}
+
+#collection-banner-text {
+    flex: 10;
+    margin-left: 0.5rem;
+    font-size: 1.35rem;
+    padding: 0.5rem 0;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+#collection-banner-text a {
+    color: #2c6699;
+}
+
+#collection-banner-text p {
+    margin: 0
+}
+
+#collection-banner-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#collection-banner-buttons button {
+    width: 8rem;
+    height: 3rem;
+}
+
+#enable-data-collection-btn {
+    margin-left: 1.5rem;
+    margin-right: 0.5rem;
+}
+
+#disable-data-collection-btn {
+    margin-right: 1rem;
+}
+
 
 /************************************************************
  * Classes for the new individual select screen.

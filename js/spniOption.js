@@ -256,7 +256,7 @@ function setActiveOption(optionGroupId, selected) {
 }
 
 // Handle changing of active option in one place.
-$('#options-modal .pagination, #game-settings-modal ul.pagination, #extras-modal ul.pagination').on('click', 'a', function() {
+$('#options-modal .pagination, #game-settings-modal ul.pagination, #extras-modal .extra-characters-options ul.pagination').on('click', 'a', function() {
     $(this).parent().siblings().removeClass('active');
     $(this).parent().addClass('active');
 });

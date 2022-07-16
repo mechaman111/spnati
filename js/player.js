@@ -677,13 +677,11 @@ Opponent.prototype.onSelected = function(individual) {
     console.log(this.slot+": ");
     console.log(this);
 
-    if (SENTRY_INITIALIZED) {
-        Sentry.addBreadcrumb({
-            category: 'select',
-            message: 'Load completed for ' + this.id,
-            level: 'info'
-        });
-    }
+    Sentry.addBreadcrumb({
+        category: 'select',
+        message: 'Load completed for ' + this.id,
+        level: 'info'
+    });
 
     this.loaded = true;
 
@@ -853,13 +851,11 @@ Opponent.prototype.loadAlternateCostume = function () {
     this.loaded = false;
 
     return metadataIndex.getFile(this.selected_costume+'costume.xml').then(function ($xml) {
-        if (SENTRY_INITIALIZED) {
-            Sentry.addBreadcrumb({
-                category: 'select',
-                message: 'Initializing alternate costume for ' + this.id + ': ' + this.selected_costume,
-                level: 'info'
-            });
-        }
+        Sentry.addBreadcrumb({
+            category: 'select',
+            message: 'Initializing alternate costume for ' + this.id + ': ' + this.selected_costume,
+            level: 'info'
+        });
 
         this.alt_costume = {
             id: $xml.children('id').text(),
@@ -1098,13 +1094,11 @@ Opponent.prototype.getEpilogueStatus = function(mainSelect) {
 
 /* Called prior to removing a character from the table. */
 Opponent.prototype.unloadOpponent = function () {
-    if (SENTRY_INITIALIZED) {
-        Sentry.addBreadcrumb({
-            category: 'select',
-            message: 'Unloading opponent ' + this.id,
-            level: 'info'
-        });
-    }
+    Sentry.addBreadcrumb({
+        category: 'select',
+        message: 'Unloading opponent ' + this.id,
+        level: 'info'
+    });
 
     if (this.stylesheet) {
         /* Remove the <link> to this opponent's stylesheet. */
@@ -1171,13 +1165,11 @@ Opponent.prototype.loadBehaviour = function (slot, individual) {
      */
     return this.fetchBehavior()
         .then(function($xml) {
-            if (SENTRY_INITIALIZED) {
-                Sentry.addBreadcrumb({
-                    category: 'select',
-                    message: 'Fetched and parsed opponent ' + this.id + ', initializing...',
-                    level: 'info'
-                });
-            }
+            Sentry.addBreadcrumb({
+                category: 'select',
+                message: 'Fetched and parsed opponent ' + this.id + ', initializing...',
+                level: 'info'
+            });
 
             this.xml = $xml;
             this.stamina = Number($xml.children('timer').text());

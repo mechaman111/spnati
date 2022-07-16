@@ -657,20 +657,6 @@ TitleClothingSelectionIcon.prototype.onClick = function () {
     }
 }
 
-
-/************************************************************
- * Loads all of the content required to display the title
- * screen.
- ************************************************************/
-function loadTitleScreen () {
-    /* hide Extra Opponents menu if online version */
-    if (getReportedOrigin().includes("spnati.net")) {
-        document.getElementById("title-fullscreen-button").style.left = "25.5%";
-    } else {
-        $(".title-extras-button").prop("hidden", false);
-    }
-}
-
 function setupTitleClothing () {
     loadedOpponents.forEach(function (opp) {
         if (!opp.has_collectibles || !opp.collectibles) return;
@@ -849,18 +835,14 @@ function validateTitleScreen () {
     updateAllBehaviours(null, null, SELECTED);
     updateSelectionVisuals();
 
-    if (SENTRY_INITIALIZED) Sentry.setTag("screen", "select-main");
+    Sentry.setTag("screen", "select-main");
     screenTransition($titleScreen, $selectScreen);
 
-    if (USAGE_TRACKING === undefined) {
-        showUsageTrackingModal();
-    } else {
-        updateAnnouncementDropdown();
-        showAnnouncements();
+    updateAnnouncementDropdown();
+    showAnnouncements();
 
-        if (curResortEvent && !curResortEvent.resort.checkCharacterThreshold()) {
-            curResortEvent.resort.setFlag(false);
-        }
+    if (curResortEvent && !curResortEvent.resort.checkCharacterThreshold()) {
+        curResortEvent.resort.setFlag(false);
     }
 }
 

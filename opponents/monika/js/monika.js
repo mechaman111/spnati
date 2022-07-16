@@ -43,14 +43,12 @@ if (!window.monika) window.monika = (function (root) {
 
     var exports = {};
 
-    if (root.SENTRY_INITIALIZED) {
-        root.Sentry.setTag('monika-loaded', true);
-        root.Sentry.addBreadcrumb({
-            category: 'monika',
-            message: 'Initializing monika.js...',
-            level: 'info'
-        });
-    }
+    root.Sentry.setTag('monika-loaded', true);
+    root.Sentry.addBreadcrumb({
+        category: 'monika',
+        message: 'Initializing monika.js...',
+        level: 'info'
+    });
 
     exports.EFFECTS_ENABLED = true;
     exports.GLITCH_MODIFIER = 1.0;
@@ -104,7 +102,7 @@ if (!window.monika) window.monika = (function (root) {
         $("#options-monika-glitches-2").removeClass("active");
         $("#options-monika-glitches-3").removeClass("active");
 
-        if (root.SENTRY_INITIALIZED) root.Sentry.setTag('monika-glitch-mode', mode);
+        root.Sentry.setTag('monika-glitch-mode', mode);
 
         switch (mode) {
             /* Off */
@@ -136,16 +134,11 @@ if (!window.monika) window.monika = (function (root) {
     function reportException(prefix, e) {
         console.log("[Monika] Exception swallowed " + prefix + ": ");
 
-        if (USAGE_TRACKING && SENTRY_INITIALIZED) {
-            Sentry.withScope(function (scope) {
-                scope.setTag("monika-error", true);
-                scope.setExtra("where", prefix);
-                captureError(e);
-            });
-            return;
-        }
-
-        captureError(e);
+        Sentry.withScope(function (scope) {
+            scope.setTag("monika-error", true);
+            scope.setExtra("where", prefix);
+            captureError(e);
+        });
     }
     exports.reportException = reportException;
 
