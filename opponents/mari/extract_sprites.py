@@ -306,12 +306,47 @@ def compute_parts_map(code: KisekaeCode):
         tuple(BASE_PARTS["hair_base"]) + tuple(hair_parts) + tuple(ribbon_parts)
     )
 
-    parts_map["body_upper_larm_upper"] = tuple(head_parts + ["mune"]) + BASE_PARTS["upper_arm_left"]
-    parts_map["body_upper_rarm_upper"] = tuple(head_parts + ["mune"]) + BASE_PARTS["upper_arm_right"]
-    parts_map["body_upper_arms_upper"] = tuple(head_parts + ["mune"]) + BASE_PARTS["upper_arm_right"] + BASE_PARTS["upper_arm_left"]
-    parts_map["body_upper_larm_full"] = tuple(head_parts + ["mune"]) + BASE_PARTS["arm_left"]
-    parts_map["body_upper_rarm_full"] = tuple(head_parts + ["mune"]) + BASE_PARTS["arm_right"]
-    parts_map["body_upper_arms_full"] = tuple(head_parts + ["mune"]) + BASE_PARTS["arm_right"] + BASE_PARTS["arm_left"]
+    parts_map["body_upper_larm_upper"] = (
+        tuple(head_parts + ["mune"]) + BASE_PARTS["upper_arm_left"]
+    )
+    parts_map["body_upper_rarm_upper"] = (
+        tuple(head_parts + ["mune"]) + BASE_PARTS["upper_arm_right"]
+    )
+    parts_map["body_upper_arms_upper"] = (
+        tuple(head_parts + ["mune"])
+        + BASE_PARTS["upper_arm_right"]
+        + BASE_PARTS["upper_arm_left"]
+    )
+    parts_map["body_upper_larm_full"] = (
+        tuple(head_parts + ["mune"]) + BASE_PARTS["arm_left"]
+    )
+    parts_map["body_upper_rarm_full"] = (
+        tuple(head_parts + ["mune"]) + BASE_PARTS["arm_right"]
+    )
+    parts_map["body_upper_arms_full"] = (
+        tuple(head_parts + ["mune"]) + BASE_PARTS["arm_right"] + BASE_PARTS["arm_left"]
+    )
+
+    parts_map["body_larm_upper"] = (
+        tuple(head_parts + ["mune", "dou"]) + BASE_PARTS["upper_arm_left"]
+    )
+    parts_map["body_rarm_upper"] = (
+        tuple(head_parts + ["mune", "dou"]) + BASE_PARTS["upper_arm_right"]
+    )
+    parts_map["body_arms_upper"] = (
+        tuple(head_parts + ["mune", "dou"])
+        + BASE_PARTS["upper_arm_right"]
+        + BASE_PARTS["upper_arm_left"]
+    )
+    parts_map["body_larm_full"] = (
+        tuple(head_parts + ["mune", "dou"]) + BASE_PARTS["arm_left"]
+    )
+    parts_map["body_rarm_full"] = (
+        tuple(head_parts + ["mune", "dou"]) + BASE_PARTS["arm_right"]
+    )
+    parts_map["body_arms_full"] = (
+        tuple(head_parts + ["mune", "dou"]) + BASE_PARTS["arm_right"] + BASE_PARTS["arm_left"]
+    )
 
     for t in parts_map.values():
         for part in t:
@@ -325,14 +360,15 @@ async def do_disassembly(
     code: KisekaeCode,
     export_parts: Iterable[str],
     out_folder: Path,
-    disable_hair: bool,
-    trim: bool,
-    align: bool,
-    zoom: int,
-    camera_x: int,
-    camera_y: int,
-    juice: Optional[int],
+    disassemble_phase: str,
+    args: argparse.Namespace,
 ):
+    out_folder.mkdir(exist_ok=True, parents=True)
+    if not args.keep_previous:
+        for child in out_folder.iterdir():
+            if child.is_file() and child.suffix == ".png":
+                child.unlink()
+
     parts_map, all_parts = compute_parts_map(code)
     export_parts = list(export_parts)
 
@@ -340,21 +376,27 @@ async def do_disassembly(
         export_parts = list(parts_map.keys())
 
     progress_total = len(export_parts) + 1
-    progress = AsyncProgress(progress_total, "Importing code")
+
+    if disassemble_phase is not None:
+        s = "Importing " + disassemble_phase
+    else:
+        s = "Importing code"
+
+    progress = AsyncProgress(progress_total, s)
     progress.run()
 
-    if disable_hair:
+    if args.disable_hair:
         code[0]["ec"].attributes = []
 
-    if align:
+    if args.align:
         code[0]["bc"][0] = "400"
         code[0]["bc"][1] = "500"
 
-    if juice is not None:
-        code[0]["dc"][0] = str(juice)
+    if args.juice is not None:
+        code[0]["dc"][0] = str(args.juice)
 
     reset_code = "68***ba50_bb6.0_bc410.500.8.0.1.0_bd6_be180_ad0.0.0.0.0.0.0.0.0.0_ae0.3.3.0.0*0*0*0*0*0*0*0*0#/]a00_b00_c00_d00_w00_x00_e00_y00_z00_ua1.0.0.0.100_uf0.3.0.0_ue_ub_u0_v00_ud7.8_uc{}.{}.{}".format(
-        zoom, camera_x, camera_y
+        args.zoom, args.camera_x, args.camera_y
     )
 
     await do_command(client, KisekaeServerRequest.import_partial(reset_code))
@@ -373,16 +415,21 @@ async def do_disassembly(
         if len(part_name) == 0:
             continue
 
-        progress.update(cur_progress, "Exporting " + part_name)
+        if disassemble_phase is not None:
+            s = "Exporting " + disassemble_phase + " " + part_name
+        else:
+            s = "Exporting " + part_name
+
+        progress.update(cur_progress, s)
         ids = parts_map[part_name]
         data = await export_part(client, ids, all_parts)
 
-        if disable_hair:
+        if args.disable_hair:
             outfile = out_folder.joinpath(part_name + "-nohair.png")
         else:
             outfile = out_folder.joinpath(part_name + ".png")
 
-        if trim:
+        if args.trim:
             with BytesIO(data) as bio:
                 with Image.open(bio, formats=["png"]) as im:
                     bbox = im.getbbox()
@@ -392,23 +439,35 @@ async def do_disassembly(
         else:
             with outfile.open("wb") as f:
                 f.write(data)
+    s = "Cleaning up"
+    if disassemble_phase is not None:
+        s += " " + disassemble_phase
 
-    progress.update(cur_progress, "Cleaning up")
+    progress.update(cur_progress, s)
     await do_command(client, KisekaeServerRequest.reset_all_alpha_direct())
 
-    await progress.finish("Exported {} parts".format(len(export_parts)))
+    s = "Exported {} parts".format(len(export_parts))
+    if disassemble_phase is not None:
+        s += " for " + disassemble_phase
+    await progress.finish(s)
 
 
 async def main(
-    code: KisekaeCode,
-    parts: Iterable[str],
-    outdir: Path,
-    args: argparse.Namespace
+    code: KisekaeCode, parts: Iterable[str], outdir: Path, args: argparse.Namespace
 ):
     async with kkl.connect(5) as client:
-        await do_disassembly(
-            client, code, parts, outdir, args.disable_hair, args.trim, args.align, args.zoom, args.camera_x, args.camera_y, args.juice
-        )
+        if len(code.characters) > 1:
+            if args.character is None:
+                for i, character in enumerate(code.characters):
+                    char_code = KisekaeCode(character, version=code.version)
+                    char_path = outdir.joinpath(str(i + 1))
+                    await do_disassembly(client, char_code, parts, char_path, "character {}".format(i+1), args)
+            else:
+                char_code = KisekaeCode(code[args.character-1], version=code.version)
+                char_path = outdir.joinpath(str(args.character))
+                await do_disassembly(client, char_code, parts, char_path, "character {}".format(args.character), args)
+        else:
+            await do_disassembly(client, code, parts, outdir, None, args)
 
 
 if __name__ == "__main__":
@@ -425,25 +484,37 @@ if __name__ == "__main__":
         "body_upper_larm_full",
         "body_upper_rarm_full",
         "body_upper_arms_full",
+        "body_larm_upper",
+        "body_rarm_upper",
+        "body_arms_upper",
+        "body_larm_full",
+        "body_rarm_full",
+        "body_arms_full",
         "chest",
         "hair",
     ]
-    BASE_IN_PATH = Path.cwd().joinpath("epilogue", "codes")
-    BASE_OUT_PATH = Path.cwd().joinpath("epilogue", "images")
 
     parser = argparse.ArgumentParser()
     parser.add_argument("--no-align", "-A", action="store_false", dest="align")
     parser.add_argument("--from-matrix", "-m", action="store_true")
     parser.add_argument("--disable-hair", "-d", action="store_true")
-    parser.add_argument("--trim", "-t", action="store_true")
+    parser.add_argument("--no-trim", "-T", action="store_false", dest="trim")
+    parser.add_argument("--keep-previous", "-k", action="store_true")
+    parser.add_argument("--character", "-c", type=int)
     parser.add_argument("--out-name", "-o")
     parser.add_argument("--zoom", "-z", type=int, default=7)
     parser.add_argument("--camera-x", "-x")
     parser.add_argument("--camera-y", "-y")
     parser.add_argument("--juice", "-j", type=int)
+    parser.add_argument(
+        "--base-path", "-b", type=Path, default=Path.cwd().joinpath("epilogue")
+    )
     parser.add_argument("codefile")
     parser.add_argument("parts", nargs="+", choices=VALID_PARTS)
     args = parser.parse_args()
+
+    BASE_IN_PATH: Path = args.base_path.joinpath("codes")
+    BASE_OUT_PATH: Path = args.base_path.joinpath("images")
 
     # x=2, y=24 are default with zoom 7
     # x=300, y=400 work for zoom 30
@@ -509,7 +580,9 @@ if __name__ == "__main__":
             print("Specified pose matrix cell is blank", file=sys.stderr)
             sys.exit(1)
     else:
-        with BASE_IN_PATH.joinpath(args.codefile + ".txt").open("r", encoding="utf-8") as f:
+        with BASE_IN_PATH.joinpath(args.codefile + ".txt").open(
+            "r", encoding="utf-8"
+        ) as f:
             code = KisekaeCode(f.read())
 
     if args.out_name is not None:
@@ -520,18 +593,6 @@ if __name__ == "__main__":
     if args.disable_hair:
         outpath = outpath.joinpath("exported-nohair")
     else:
-        outpath = outpath.joinpath("exported") 
+        outpath = outpath.joinpath("exported")
 
-    outpath.mkdir(exist_ok=True, parents=True)
-    for child in outpath.iterdir():
-        if child.is_file() and child.suffix == ".png":
-            child.unlink()
-
-    asyncio.run(
-        main(
-            code,
-            args.parts,
-            outpath,
-            args
-        )
-    )
+    asyncio.run(main(code, args.parts, outpath, args))
