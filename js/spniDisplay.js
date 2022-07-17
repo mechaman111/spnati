@@ -1257,11 +1257,28 @@ OpponentSelectionCard.prototype.update = function () {
     }).show() ;
     updateGenderIcon(this.genderIcon, this.opponent);
 
-    this.simpleImage.one('load', OpponentDisplay.prototype.rescaleSimplePose.bind(this, this.opponent.scale));
+    this.simpleImage.one('load', OpponentSelectionCard.prototype.rescaleSimplePose.bind(this, this.opponent.scale));
     this.simpleImage.attr('src', this.opponent.selection_image).show();
+
+    var xfrmProps = this.opponent.selection_image_adjustment;
+
+    this.imageArea.css(
+        "transform", "translate(" + xfrmProps.x + ", " + xfrmProps.y + ") scale(" + xfrmProps.scale + ")"
+    );
     
     this.label.text(this.opponent.selectLabel);
     this.source.text(this.opponent.source);
+}
+
+OpponentSelectionCard.prototype.rescaleSimplePose = function (base_scale) {
+    /* Required to properly scale oddly-sized simple poses. */
+    var nh = this.simpleImage[0].naturalHeight;
+    if (nh <= 1400) {
+        this.simpleImage.css("max-height", base_scale+"%");
+    } else {
+        var sf = nh / 1400;
+        this.simpleImage.css("max-height", "calc("+base_scale+"% * "+sf+")");
+    }
 }
 
 OpponentSelectionCard.prototype.updateEpilogueBadge = function () {
