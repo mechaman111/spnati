@@ -316,10 +316,10 @@ function getClothingTrigger (player, clothing, removed) {
         }
 
         if (revealPos == FULL_ARTICLE) {
-            triggers.push(removed ? OPPONENT_BOTH_ARE_VISIBLE : OPPONENT_BOTH_WILL_BE_VISIBLE);
+            return [[removed ? OPPONENT_BOTH_ARE_VISIBLE : OPPONENT_BOTH_WILL_BE_VISIBLE], triggers];
+        } else {
+            return triggers;
         }
-
-        return triggers;
     } else {
         if (type == MAJOR_ARTICLE) {
             if (gender == eGender.MALE) {

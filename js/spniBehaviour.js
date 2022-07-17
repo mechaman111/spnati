@@ -2547,6 +2547,13 @@ function addTriggers(triggers, newTriggers) {
  *****                 Behaviour Parsing Functions                *****
  **********************************************************************/
 
+/**
+ * 
+ * @param {Array<Array<string[] | string> | string>} triggers 
+ * @param {Player} opp 
+ * @param {boolean} volatileOnly 
+ * @returns {boolean | State | null}
+ */
 Opponent.prototype.findBehaviour = function(triggers, opp, volatileOnly) {
     /* get the AI stage */
     var stageNum = this.stage;
@@ -2555,44 +2562,87 @@ Opponent.prototype.findBehaviour = function(triggers, opp, volatileOnly) {
         bestMatchPriority = this.chosenState.parentCase.priority + 1;
     }
 
-    var cases = [];
-    triggers.forEach(function (trigger) {
-        var relCases = this.cases.get(trigger+':'+stageNum) || [];
-        relCases.forEach(function (c) {
-            if (!c.hidden && (cases.indexOf(c) < 0)) cases.push(c);
-        });
-    }, this);
 
-    /* quick check to see if the trigger exists */
-    if (cases.length <= 0) {
-        console.log("Warning: couldn't find " + triggers + " dialogue for player " + this.slot + " at stage " + stageNum);
-        return false;
+    if (!Array.isArray(triggers)) {
+        triggers = [triggers];
     }
 
-    /* Evaluate pre-dialogue hidden cases if we're not doing a reaction pass. */
-    if (!volatileOnly) this.evaluateHiddenCases(triggers, opp, false);
-
-    /* Find the best match, as well as potential volatile matches. */
-    var bestMatch = [];
+    /* Each item in `triggers` is either:
+     * - A trigger string
+     * - An array of triggers + other arrays of triggers
+     * 
+     * Sub-arrays are treated as sets of triggers with fallbacks, similarly to how updateBehavior
+     * handles sub-arrays: we go through each item in the group sequentially, stopping as soon as we
+     * find any matching cases.
+     * 
+     * Single strings in `triggers` are treated as groups of one, with no fallbacks.
+     * 
+     * Items in the top-level `triggers` array are processed in parallel as potential alternatives to each
+     * other: 
+     * 
+     * We process each item in the group sequentially, looking for the first item with any matching cases.
+     * The matched cases are then (potentially) added to the overall matches based on their priority.
+     */
     
-    for (var i = 0; i < cases.length; i++) {
-        var curCase = cases[i];
+    /* Evaluate pre-dialogue hidden cases if we're not doing a reaction pass. */
+    if (!volatileOnly) this.evaluateHiddenCases(triggers.flat(3), opp, false);
 
-        if ((curCase.priority >= bestMatchPriority) &&
-            (!volatileOnly || curCase.isVolatile) &&
-            curCase.checkConditions(this, opp))
-        {
-            if (curCase.priority > bestMatchPriority) {
-                /* Cleanup all mutable state on previous best-match cases. */
-                bestMatch.forEach(function (c) { c.cleanupMutableState(); });
+    var bestMatch = [];
 
-                bestMatch = [curCase];
-                bestMatchPriority = curCase.priority;
-            } else {
-                bestMatch.push(curCase);
-            }
+    triggers.forEach((fallbacks) => {
+        if (!Array.isArray(fallbacks)) {
+            fallbacks = [fallbacks];
         }
-    }
+
+        for (let i = 0; i < fallbacks.length; i++) {
+            let foundMatch = false;
+            let curGroup = fallbacks[i];
+
+            if (!Array.isArray(curGroup)) {
+                curGroup = [curGroup];
+            }
+
+            let cases = [];
+            curGroup.forEach(function (trigger) {
+                var relCases = this.cases.get(trigger+':'+stageNum) || [];
+                relCases.forEach(function (c) {
+                    if (!c.hidden && (cases.indexOf(c) < 0)) cases.push(c);
+                });
+            }, this);
+
+            /* quick check to see if the trigger exists */
+            if (cases.length <= 0) {
+                console.log("Warning: couldn't find " + triggers + " dialogue for player " + this.slot + " at stage " + stageNum);
+                continue;
+            }
+
+            /* Find the best match, as well as potential volatile matches. */
+
+            for (let j = 0; j < cases.length; j++) {
+                let curCase = cases[j];
+
+                if ((curCase.priority >= bestMatchPriority) &&
+                    (!volatileOnly || curCase.isVolatile) &&
+                    curCase.checkConditions(this, opp))
+                {
+                    foundMatch = true;
+
+                    if (curCase.priority > bestMatchPriority) {
+                        /* Cleanup all mutable state on previous best-match cases. */
+                        bestMatch.forEach(function (c) { c.cleanupMutableState(); });
+
+                        bestMatch = [curCase];
+                        bestMatchPriority = curCase.priority;
+                    } else {
+                        bestMatch.push(curCase);
+                    }
+                }
+            }
+
+            if (foundMatch) break;
+        }
+    });
+
     var states = bestMatch.reduce(function(list, caseObject) {
         return list.concat(caseObject.states);
     }.bind(this), []).filter(function(state) {
