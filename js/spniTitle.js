@@ -346,7 +346,11 @@ var $gameLoadProgress = $(".game-load-progress");
     "joey/0-cheer.png",
     "joey/2-approve.png",
     "joey/3-wink.png",
-    "joey/4-hot.png"
+    "joey/4-hot.png",
+    "stocking/0-sipp.png",
+    "stocking/2-hex.png",
+    "stocking/3-stripping+.png",
+    "stocking/4-aroused.png"
 ];
 
 /* maybe move this data to an external file if the hardcoded stuff changes often enough */
