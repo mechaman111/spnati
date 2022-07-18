@@ -332,6 +332,17 @@ var $gameLoadProgress = $(".game-load-progress");
     "yusuke/3-Expository.png",
     "yusuke/4-Confused.png",
     "yusuke/4-Frame.png",
+    "sly_cooper/0-Select.png",
+    "sly_cooper/0-Comms+.png",
+    /* TODO: add two more for Sly */
+    "ringo_ando/0-bounceapple.png",
+    "ringo_ando/1-glad.png",
+    "ringo_ando/2-balanceapple.png",
+    "ringo_ando/3-bounceapple.png",
+    "hilda/0-conversational.png",
+    "hilda/1-relaxed.png",
+    "hilda/2-smug.png",
+    "hilda/3-flirty.png"
 ];
 
 /* maybe move this data to an external file if the hardcoded stuff changes often enough */
