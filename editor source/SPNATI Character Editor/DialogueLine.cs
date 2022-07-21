@@ -364,7 +364,7 @@ namespace SPNATI_Character_Editor
 			get
 			{
 				return !string.IsNullOrEmpty(Gender) || !string.IsNullOrEmpty(Size) || Intelligence != null || (!string.IsNullOrEmpty(Direction) && Direction != "down") ||
-					!string.IsNullOrEmpty(FontSize) || Label != null || !string.IsNullOrEmpty(Location) || !string.IsNullOrEmpty(Layer) || Weight != 1;
+					!string.IsNullOrEmpty(FontSize) || Label != null || !string.IsNullOrEmpty(Location) || !string.IsNullOrEmpty(Layer) || Operations != null || Weight != 1;
 			}
 		}
 

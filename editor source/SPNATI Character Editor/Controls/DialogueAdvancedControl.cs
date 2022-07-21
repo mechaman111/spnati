@@ -24,6 +24,9 @@ namespace SPNATI_Character_Editor.Controls
 			InitializeComponent();
 			cboGender.Items.AddRange(new string[] { "", "female", "male" });
 			cboSize.Items.AddRange(new string[] { "", "small", "medium", "large" });
+			cboAttr.Items.AddRange(new string[] { "", "timer", "stamina", "redirect-finish" });
+			cboHeavy.Items.AddRange(new string[] { "", "true", "false", "reset" });
+			cboOp.Items.AddRange(new string[] { "", "=", "+", "-", "*", "/", "%" });
 			cboDirection.DataSource = DialogueLine.ArrowDirections;
 			cboFontSize.DataSource = DialogueLine.FontSizes;
 			cboAI.DataSource = DialogueLine.AILevels;
@@ -169,6 +172,11 @@ namespace SPNATI_Character_Editor.Controls
 			txtLabel.Enabled = !chkResetLabel.Checked;
 		}
 
+		private void chkResetHeavy_CheckedChanged(object sender, EventArgs e)
+		{
+
+        }
+
         private void cboFontSize_SelectedIndexChanged(object sender, EventArgs e)
         {
 			DataUpdated?.Invoke(this, e);
@@ -178,6 +186,49 @@ namespace SPNATI_Character_Editor.Controls
         {
 			DataUpdated?.Invoke(this, e);
 		}
+
+        private void skinnedGroupBox2_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void skinnedLabel2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cboAI_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cboAttr_SelectedIndexChanged(object sender, EventArgs e)
+        {
+			DataUpdated?.Invoke(this, e);
+			string attr = cboAttr.Text;
+			if (attr == "redirect-finish")
+			{
+				cboOp.Items.Clear();
+				cboOp.Items.AddRange(new string[] { "="});
+				cboOp.SelectedItem = "=";
+			}
+			else
+            {
+				cboOp.Items.Clear();
+				cboOp.Items.AddRange(new string[] { "", "=", "+", "-", "*", "/", "%" });
+			}
+		}
+
+        private void cboOp_SelectedIndexChanged(object sender, EventArgs e)
+        {
+			DataUpdated?.Invoke(this, e);
+		}
+
+        private void label5_Click(object sender, EventArgs e)
+        {
+
+        }
+
     }
 
     public interface IDialogueDropDownControl : ISkinnedPanel, ISkinControl
