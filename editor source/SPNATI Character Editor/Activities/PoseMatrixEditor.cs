@@ -808,6 +808,22 @@ namespace SPNATI_Character_Editor.Activities
 			Enabled = true;
 			ShowPreview(_currentPose);
 			UpdateCell(null, _currentPose);
+
+			string dir = Path.Combine(_character.GetBackupDirectory(), "images");
+			string img;
+
+			if (_currentPose.Stage.Name == null)
+			{
+				//stage dependent sheet
+				img = _currentPose.Stage.Stage + "-" + _currentPose.ToString() + ".png";
+			}
+			else 
+			{
+				//stage independent sheet
+				img = _currentPose.Stage.Name + "_" + _currentPose.ToString() + ".png";
+			}
+
+			File.Delete(Path.Combine(dir, img));
 		}
 
 		private void cmdCrop_Click(object sender, EventArgs e)
