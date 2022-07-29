@@ -21,7 +21,7 @@ for suit in suits:
         rankspan = text.find('{*}tspan')
         rankspan.text = str(ranks[rank - 1])
         if suit == 'clubs' and rank == 10:
-            text.attrib['y'] = rankspan.attrib['y'] = '92.4'
+            text.attrib['y'] = rankspan.attrib['y'] = '93'
 
         for el in card.findall('.//*'):
             if 'id' in el.attrib:
