@@ -2572,7 +2572,10 @@ Opponent.prototype.findBehaviour = function(triggers, opp, volatileOnly) {
         return (!state.oneShotId || !this.oneShotStates[state.oneShotId])
             && state.checkUnwanteds(this, opp);
     }.bind(this));
-    
+
+    if (!states.every(s => s.rawDialogue in this.repeatLog)) {
+        states = states.filter(s => !(s.rawDialogue in this.repeatLog));
+    }
     var weightSum = states.reduce(function(sum, state) { return sum + state.weight; }, 0);
     if (weightSum > 0) {
         console.log("Current case priority for player "+this.slot+": "+bestMatchPriority);
