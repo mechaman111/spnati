@@ -119,6 +119,7 @@ function tickForfeitTimers () {
         }
     }
 
+    let finishing = false
     if (gamePhase != eGamePhase.STRIP) for (var i = 0; i < players.length; i++) {
         if (players[i] && players[i].out && players[i].timer == 1) {
             players[i].timer = 0;
@@ -128,11 +129,13 @@ function tickForfeitTimers () {
 
             saveTranscriptMessage('<b>' + players[i].label.escapeHTML() + '</b> is finishing...');
             console.log(players[i].label+" is finishing!");
-            if (i == HUMAN_PLAYER) {
-                /* Hide everyone's dialogue bubbles. */
+            if (!finishing) {
+                /* Hide everyone's dialogue bubbles, if not done already. */
                 gameDisplays.forEach(function (d) {
                     d.hideBubble();
                 });
+            }
+            if (i == HUMAN_PLAYER) {
 
                 /* player's timer is up */
                 /* TEMP FIX: prevent this animation on Safari */
@@ -141,12 +144,17 @@ function tickForfeitTimers () {
                         $gamePlayerCountdown.hide();
                         $gamePlayerCountdown.removeClass('explode');
                         /* finish */
-                        finishMasturbation(i);
+                        if (!players.some(p => p.out && p.timer == 0 && !p.finished)) {
+                            // If a character has finished simultaneously, pause as usual
+                            finishMasturbation(i);
+                        }
                     });
                     $gamePlayerCountdown.addClass('explode');
                 } else {
                     $gamePlayerCountdown.hide();
-                    finishMasturbation(i);
+                    if (!players.some(p => p.out && p.timer == 1)) {
+                        finishMasturbation(i);
+                    }
                 }
                 $gamePlayerCountdown.html('');
                 $gameClothingLabel.html("<b>You're 'Finished'</b>");
@@ -161,18 +169,8 @@ function tickForfeitTimers () {
                     /* If the player has redirected their finishing dialogue to another character,
                      * play Opponent Finishing dialogue for them.
                      */
-
-                    /* Hide everyone else's dialogue bubbles... */
-                    gameDisplays.forEach(function (d) {
-                        if (d.slot != finishTarget.slot) d.hideBubble();
-                    });
-
                     finishTarget.singleBehaviourUpdate(OPPONENT_FINISHING_MASTURBATING, players[i]);
                 } else {
-                    gameDisplays.forEach(function (d) {
-                        if (d.slot != i) d.hideBubble();
-                    });
-
                     players[i].singleBehaviourUpdate(PLAYER_FINISHING_MASTURBATING);
                 }
 
@@ -188,9 +186,10 @@ function tickForfeitTimers () {
                 globalSavedTableVisibility = tableVisible;
                 if (AUTO_FADE) forceTableVisibility(false);
             }
-            return true;
+            finishing = true;
         }
     }
+    if (finishing) return true;
 
     /* Always update ticksInStage for all players, even if they're not out. */
     players.forEach(function (p) {
@@ -267,5 +266,9 @@ function finishMasturbation (player) {
         forceTableVisibility(globalSavedTableVisibility);
         globalSavedTableVisibility = undefined;
     }
-    allowProgression();
+    if (players.some(p => p.out && p.timer == 0 && !p.finished)) { // Players still to finish
+        allowProgression(eGamePhase.END_FORFEIT);
+    } else {
+        allowProgression();
+    }
 }
