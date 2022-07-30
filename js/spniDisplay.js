@@ -1243,6 +1243,7 @@ function OpponentSelectionCard (opponent) {
     this.update();
 
     this.mainElem.addEventListener('click', this.handleClick.bind(this));
+    this.mainElem.addEventListener('dblclick', this.handleDblClick.bind(this));
 }
 
 OpponentSelectionCard.prototype = Object.create(OpponentDisplay.prototype);
@@ -1275,7 +1276,17 @@ OpponentSelectionCard.prototype.updateEpilogueBadge = function () {
 OpponentSelectionCard.prototype.clear = function () {}
 
 OpponentSelectionCard.prototype.handleClick = function (ev) {
+    if (individualDetailDisplay.opponent == this.opponent) {
+        individualDetailDisplay.clear();
+    } else {
+        individualDetailDisplay.update(this.opponent);
+    }
+    ev.stopPropagation();
+}
+
+OpponentSelectionCard.prototype.handleDblClick = function(ev) {
     individualDetailDisplay.update(this.opponent);
+    individualDetailDisplay.handleSelected();
 }
 
 OpponentSelectionCard.prototype.onFavoriteBtnClick = function (ev) {
@@ -1395,18 +1406,20 @@ OpponentDetailsDisplay.prototype = Object.create(OpponentDisplay.prototype);
 OpponentDetailsDisplay.prototype.constructor = OpponentDetailsDisplay;
 
 OpponentDetailsDisplay.prototype.handleSelected = function (ev) {
-    if (!this.opponent) return;
-    
-    Sentry.addBreadcrumb({
-        category: 'select',
-        message: 'Loading individual opponent ' + this.opponent.id,
-        level: 'info'
-    });
-    Sentry.setTag("screen", "select-main");
+    if (this.opponent) {
+        Sentry.addBreadcrumb({
+            category: 'select',
+            message: 'Loading individual opponent ' + this.opponent.id,
+            level: 'info'
+        });
+        Sentry.setTag("screen", "select-main");
 
-    players[selectedSlot] = this.opponent;
-    players[selectedSlot].loadBehaviour(selectedSlot, true);
-    updateSelectionVisuals();
+        players[selectedSlot] = this.opponent;
+        players[selectedSlot].loadBehaviour(selectedSlot, true);
+        updateSelectionVisuals();
+    } else {
+        clickedRandomFillButton(opp => !opp.selectionCard.filtered);
+    }
     screenTransition($individualSelectScreen, $selectScreen);
     
     this.clear();
@@ -1445,7 +1458,7 @@ OpponentDetailsDisplay.prototype.clear = function () {
     this.lastUpdateLabel.empty();
     
     this.simpleImage.attr('src', null);
-    this.selectButton.prop('disabled', true);
+    this.selectButton.text("Random Fill (filtered)");
     this.epiloguesField.removeClass('has-epilogues');
     this.collectiblesField.removeClass('has-collectibles');
     this.costumeSelector.hide();
@@ -1595,12 +1608,6 @@ OpponentDetailsDisplay.prototype.updateCollectiblesView = function () {
 }
 
 OpponentDetailsDisplay.prototype.update = function (opponent) {
-    if (this.opponent === opponent) {
-        // Interpret double-clicks as selection events.
-        return this.handleSelected();
-    }
-    
-    
     this.opponent = opponent;
     
     this.displayContainer.show();
@@ -1621,7 +1628,7 @@ OpponentDetailsDisplay.prototype.update = function (opponent) {
     this.simpleImage.one('load', this.rescaleSimplePose.bind(this, opponent.scale));
     this.simpleImage.attr('src', opponent.selection_image).show();
     
-    this.selectButton.prop('disabled', false);
+    this.selectButton.text('Select Opponent');
     
     var query = window.matchMedia('(min-aspect-ratio: 4/3)');
     if (query.matches) {

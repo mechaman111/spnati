@@ -112,6 +112,7 @@ $groupSearchModal.on('shown.bs.modal', function() {
 });
 
 var $indivSelectionCardContainer = $('#individual-select-screen .selection-cards-container');
+$indivSelectionCardContainer.click(individualDetailDisplay.clear.bind(individualDetailDisplay));
 
 /**********************************************************************
  *****                  Select Screen Variables                   *****
@@ -795,6 +796,9 @@ function updateIndividualSelectVisibility (autoclear) {
         return;
     }
 
+    // Disable the Select button only if there are no characters available and none has been clicked
+    individualDetailDisplay.selectButton.attr('disabled', !anyVisible && !individualDetailDisplay.opponent);
+
     individualSelectSeparatorIndices.forEach(function(pos, i) {
         // Important to send a boolean to toggle().
         $(".card-separator").eq(i).toggle(!!visibleAboveSep[i] && !!visibleAboveSep[i+1]);
@@ -1045,8 +1049,10 @@ function clickedRandomFillButton (predicate) {
                 (!predicate || predicate(opp)));
     });
 
-    /* select random opponents */
-    for (var i = 1; i < players.length; i++) {
+    /* Select random opponents. Note that loadedOpponentsCopy can
+     * become empty when picking from a filtered individual selection
+     * screen */
+    for (var i = 1; i < players.length && loadedOpponentsCopy.length > 0; i++) {
         /* if slot is empty */
         if (!(i in players)) {
             /* select random opponent */
