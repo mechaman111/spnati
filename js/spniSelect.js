@@ -774,7 +774,6 @@ function updateIndividualSelectSort() {
 }
 
 $('#individual-select-screen .sort-filter-field').on('input change:flexdatalist', updateIndividualSelectFilters);
-});
 
 function updateIndividualSelectVisibility (autoclear) {
     var anyVisible = false, visibleAboveSep = Array(individualSelectSeparatorIndices.length + 1), sepIdx = 0;
