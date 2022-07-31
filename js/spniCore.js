@@ -950,7 +950,9 @@ function showPlayerTagsModal () {
     }
 
     for (var choiceName in playerTagOptions) {
-        $('form#player-tags [name="'+choiceName+'"]').val(playerTagSelections[choiceName]).trigger('input');
+        if (playerTagSelections.hasOwnProperty(choiceName)) {
+            $('form#player-tags [name="'+choiceName+'"]').val(playerTagSelections[choiceName]).trigger('input');
+        }
     }
     $('#player-tags-confirm').one('click', function() {
         playerTagSelections = {};
