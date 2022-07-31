@@ -301,7 +301,7 @@ jQuery.fn.flexdatalist = function (_option, _value) {
                 val = $.trim(val);
                 if (val === '' && _this.options.get('minLength') === 0) {
                     _this.data.load(function (data) {
-                        _this.results.show(data);
+                        _this.results.show(data.filter(d => !_this.isDup(d)));
                     });
                 }
             },
@@ -311,15 +311,14 @@ jQuery.fn.flexdatalist = function (_option, _value) {
             inputWidth: function (event) {
                 var options = _this.options.get();
                 if (options.multiple) {
+                    var $inputContainer = $multiple.find('li.input-container');
                     var keyword = $alias.val(),
                         fontSize = parseInt($alias.css('fontSize').replace('px', '')),
-                        minWidth = 40,
-                        maxWidth = $this.innerWidth(),
+                        maxWidth = $multiple.innerWidth() - $inputContainer.outerWidth(true) + $inputContainer.width(),
                         width = ((keyword.length + 1) * fontSize);
 
-                    if (width >= minWidth && width <= maxWidth) {
-                        $alias[0].style.width = width + 'px';
-                    }
+                    if (width > maxWidth) width = maxWidth;
+                    $alias[0].style.width = width + 'px';
                 }
             },
         /**
@@ -404,6 +403,8 @@ jQuery.fn.flexdatalist = function (_option, _value) {
                         'id': aliasid,
                         'placeholder': $this.attr('placeholder')
                     })
+                    .css({'min-width': '5em',
+                          'width': '0'})
                     .addClass('flexdatalist-alias ' + aliasid)
                     .removeClass('flexdatalist')
                     .attr('autocomplete', 'off');
@@ -415,13 +416,8 @@ jQuery.fn.flexdatalist = function (_option, _value) {
             multipleInput: function ($alias) {
                 $multiple = $('<ul tabindex="1">')
                     .addClass('flexdatalist-multiple ' + fid)
-                    .css({
-                        'border-color': $this.css('border-left-color'),
-                        'border-width': $this.css('border-left-width'),
-                        'border-style': $this.css('border-left-style'),
-                        'border-radius': $this.css('border-top-left-radius'),
-                        'background-color': $this.css('background-color')
-                    })
+                    .addClass($this[0].className)
+                    .removeClass('flexdatalist')
                     .insertAfter($this).on('click', function () {
                         $(this).find('input').trigger('focus');
                     });

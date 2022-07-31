@@ -10,6 +10,7 @@
     <!-- Stylesheets -->
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css">
+    <link rel="stylesheet" type="text/css" href="css/jquery.flexdatalist.min.css">
     <link rel="stylesheet" type="text/css" href="css/spni.css" id="spniStyleSheet">
     <link rel="stylesheet" type="text/css" href="css/spniDialogueUtilities.css">
     <meta name="application-name" content="SPNatI">
@@ -620,30 +621,45 @@
                         </ul>
                     </div>
                 </div>
-                <div id="name-creator-column" class="column-component">
-                    <div class="option-component creator-component">
-                        <label for="search-creator">Search Creator:</label>
-                        <input list='creatorList' type="text" id="search-creator"
-                            class='bordered wide-textbox sort-filter-field' placeholder="Search by Creator" />
-                    </div>
+                <div id="name-layers-column" class="column-component">
                     <div class="option-component name-component">
                         <label for="search-name">Search Name: </label>
                         <input type="text" id="search-name" class='bordered wide-textbox sort-filter-field'
                             placeholder="Name" />
                     </div>
-                </div>
-                <div id="source-tag-column" class="column-component">
+                    <div class="option-component layers-component">
+                        <label for="search-layers-min" >Layers from: </label>
+                        <input type="number" id="search-layers-min" class='bordered wide-textbox sort-filter-field'
+                            value="2" min="2" max="8" />
+                        <label for="search-layers-max">To: </label>
+                        <input type="number" id="search-layers-max" class='bordered wide-textbox sort-filter-field'
+                            value="8" min="2" max="8"/>
+                    </div>
+		</div>
+                <div id="creator-source-column" class="column-component">
+                    <div class="option-component creator-component">
+                        <label for="search-creator">Search Creator:</label>
+                        <input list='creatorList' type="text" id="search-creator"
+                            class='bordered wide-textbox sort-filter-field' placeholder="Creator" />
+                    </div>
                     <div class="option-component source-component">
                         <label for="search-source">Search Source: </label>
                         <input list='sourceList' type="text" id="search-source"
-                            class='bordered wide-textbox sort-filter-field' placeholder="Search by Source" />
-                    </div>
-                    <div class="option-component tag-component">
-                        <label for="search-tag">Search Tag: </label>
-                        <input list='tagList' type="text" id="search-tag"
-                            class='bordered wide-textbox sort-filter-field' placeholder="Search by Tag" />
+                            class='bordered wide-textbox sort-filter-field' placeholder="Source" />
                     </div>
                 </div>
+                <div id="tag-column" class="column-component">
+                    <div class="option-component tag-component">
+                        <label for="search-tag">Search Tags: </label>
+                        <input list='tagList' type="text" id="search-tag" multiple='multiple'
+                               class='flexdatalist bordered sort-filter-field'
+                               placeholder="Tag"
+                               data-min-length="0" data-selection-required='true'
+                               data-max-shown-results="0"
+                               data-search-contain='true' data-limit-of-values="4" />
+                    </div>
+                </div>
+                <!--<button type="button" id="select-random-filtered-button" class="bordered smooth-button green" onClick="clickedRandomFillButton(opp => !opp.selectionCard.filtered); screenTransition($individualSelectScreen, $selectScreen);">Random Fill (filtered)</button>-->
             </div>
 
             <div class="opponent-details-container">
@@ -3433,6 +3449,7 @@
 
     <script src="js/jquery-3.4.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.flexdatalist.js"></script>
     <script src="js/js.cookie.js"></script>
     <script src="js/pako.min.js"></script>
     <script src="js/ResizeObserver.js"></script>

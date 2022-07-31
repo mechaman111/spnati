@@ -48,7 +48,6 @@ mainSelectDisplays = [
 
 var individualDetailDisplay = new OpponentDetailsDisplay();
 
-
 /* group select screen */
 $groupSelectTable = $("#group-select-table");
 $groupSwitchTestingButton = $("#group-switch-testing-button");
@@ -645,7 +644,7 @@ function updateGroupSelectScreen (ignore_bg) {
 /* A filter predicate encompassing the filter options on the individual select
  * screen.
  */
-function filterOpponent(opp, name, source, creator, tag) {
+function filterOpponent(opp, name, source, creator, tags, minLayers, maxLayers) {
     // filter by name
     if (name
         && opp.selectLabel.toLowerCase().indexOf(name) < 0
@@ -660,7 +659,7 @@ function filterOpponent(opp, name, source, creator, tag) {
     }
 
     // filter by tag
-    if (tag && !(opp.searchTags && opp.searchTags.indexOf(tag) >= 0)) {
+    if (tags && !tags.every(tag => (opp.searchTags && opp.searchTags.indexOf(tag) >= 0))) {
         return false;
     }
     
@@ -668,6 +667,9 @@ function filterOpponent(opp, name, source, creator, tag) {
     if (creator && opp.artist.toLowerCase().indexOf(creator) < 0 && opp.writer.toLowerCase().indexOf(creator) < 0) {
         return false;
     }
+
+    if (minLayers && opp.layers < minLayers) return false;
+    if (maxLayers && opp.layers > maxLayers) return false;
 
     // filter by gender
     if ((chosenGender == 2 && opp.selectGender !== eGender.MALE)
@@ -686,11 +688,13 @@ function updateIndividualSelectFilters() {
     var name = $searchName.val().toLowerCase();
     var source = $searchSource.val().toLowerCase();
     var creator = $searchCreator.val().toLowerCase();
-    var tag = canonicalizeTag($searchTag.val());
+    var tags = $searchTag.flexdatalist('value').map(canonicalizeTag);
+    var minLayers = $('#search-layers-min').val();
+    var maxLayers = $('#search-layers-max').val();
 
     // Array.prototype.filter automatically skips empty slots
     loadedOpponents.forEach(function (opp) {
-        opp.selectionCard.setFiltered(!filterOpponent(opp, name, source, creator, tag));
+        opp.selectionCard.setFiltered(!filterOpponent(opp, name, source, creator, tags, minLayers, maxLayers));
     });
     updateIndividualSelectVisibility(false);
 }
@@ -769,8 +773,7 @@ function updateIndividualSelectSort() {
     }
 }
 
-$('#individual-select-screen .sort-filter-field').on('input', function () {
-    updateIndividualSelectFilters();
+$('#individual-select-screen .sort-filter-field').on('input change:flexdatalist', updateIndividualSelectFilters);
 });
 
 function updateIndividualSelectVisibility (autoclear) {
