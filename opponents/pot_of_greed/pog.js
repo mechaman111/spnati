@@ -92,14 +92,11 @@ if (!pog) var pog = (function (root) {
     function reportException(prefix, e) {
         console.log("[Pot of Greed] Exception swallowed " + prefix + ": ");
 
-        if (USAGE_TRACKING && SENTRY_INITIALIZED) {
-            Sentry.withScope(function (scope) {
-                scope.setTag("pot-of-greed-error", true);
-                scope.setExtra("where", prefix);
-                captureError(e);
-            });
-            return;
-        }
+        Sentry.withScope(function (scope) {
+            scope.setTag("pot-of-greed-error", true);
+            scope.setExtra("where", prefix);
+            captureError(e);
+        });
 
         captureError(e);
     }
