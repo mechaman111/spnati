@@ -210,7 +210,7 @@ function Group(title, background) {
 function loadSelectScreen () {
     var p = loadListingFile();
     updateSelectionVisuals();
-    
+
     return p;
 }
 
@@ -226,7 +226,7 @@ function splitCreatorField (field) {
 }
 
 String.prototype.simplifyDiacritics = function() {
-    return this.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    return this.toLowerCase().normalize("NFKD").replace(/[\u0300-\u036f]/g, "");
 }
 
 /************************************************************
@@ -234,11 +234,11 @@ String.prototype.simplifyDiacritics = function() {
  ************************************************************/
 function loadListingFile () {
     var listingFiles = [];
-    
+
     if (includedOpponentStatuses["testing"]) {
         listingFiles.push("opponents/listing-test.xml");
     }
-    
+
     listingFiles.push("opponents/listing.xml");
 
     /* clear the previous meta information */
@@ -262,15 +262,15 @@ function loadListingFile () {
                 tagSet[tag] = true;
             });
             sourceSet[opp.source] = true;
-            
+
             splitCreatorField(opp.artist).forEach(function (creator) {
                 creatorSet[creator] = true;
             });
-            
+
             splitCreatorField(opp.writer).forEach(function (creator) {
                 creatorSet[creator] = true;
             });
-            
+
             var disp = new OpponentSelectionCard(opp);
             opp.selectionCard = disp;
             disp.statusIcon.tooltip({ delay: { show: 200 }, placement: 'bottom',
@@ -381,7 +381,7 @@ function loadListingFile () {
         return Promise.all(files.map(listingProcessor));
     }).then(function () {
         loadedOpponents = loadedOpponents.filter(Boolean); // Remove any empty slots should an opponent fail to load
-            
+
         $tagList.append(Object.keys(TAG_ALIASES).concat(Object.keys(tagSet)).sort().map(function(tag) {
             return new Option(tag);
         }));
@@ -458,11 +458,11 @@ function fillCostumeSelector($selector, costumes, selected_costume) {
         text: 'Default Costume'
     }), costumes.map(function(c) {
         var emoji = '\u{1f455} ';
-        
+
         if (c.status != "online") {
             emoji = '\u{1f455} [Offline] ';
         }
-        
+
         if (c.set == "valentines") {
             emoji = '\u{2764}\u{fe0f} ';
         } else if (c.set == "april_fools") {
@@ -478,7 +478,7 @@ function fillCostumeSelector($selector, costumes, selected_costume) {
         } else if (c.set == "xmas") {
             emoji = '\u{1f384} ';
         }
-        
+
         return $('<option>', {
             val: c.folder, text: emoji+c.name,
             selected: c.folder == selected_costume
@@ -490,7 +490,7 @@ function fillCostumeSelector($selector, costumes, selected_costume) {
 /************************************************************
  * Loads opponents onto the group select screen based on the
  * currently selected page.
- * 
+ *
  * ignore_bg {boolean}: If true, skips setting up group backgrounds.
  * This is really only necessary during initial load, when we need to
  * update this screen despite it not actually being visible.
@@ -509,9 +509,9 @@ function updateGroupSelectScreen (ignore_bg) {
 
     /* create and load all of the individual opponents */
     $groupButton.attr('disabled', false);
-    
+
     var group = selectableGroups[groupPage];
-    
+
     if (group) {
         $groupNameLabel.html(group.title);
 
@@ -564,7 +564,7 @@ function updateGroupSelectScreen (ignore_bg) {
                     opponent.selectAlternateCostume(null);
                 } else {
                     costume = "opponents/reskins/" + costume + "/";
-                    
+
                     for (let j = 0; j < opponent.alternate_costumes.length; j++) {
                         if (opponent.alternate_costumes[j].folder === costume) {
                             opponent.selectAlternateCostume(opponent.alternate_costumes[j]);
@@ -653,7 +653,7 @@ function filterOpponent(opp, name, source, creator, tag) {
     name = name.simplifyDiacritics();
     source = source.simplifyDiacritics();
     creator = creator.simplifyDiacritics();
-    
+
     // filter by name
     if (name
         && opp.selectLabel.simplifyDiacritics().indexOf(name) < 0
@@ -671,7 +671,7 @@ function filterOpponent(opp, name, source, creator, tag) {
     if (tag && !(opp.searchTags && opp.searchTags.indexOf(tag) >= 0)) {
         return false;
     }
-    
+
     // filter by creator
     if (creator && opp.artist.simplifyDiacritics().indexOf(creator) < 0 && opp.writer.simplifyDiacritics().indexOf(creator) < 0) {
         return false;
@@ -682,7 +682,7 @@ function filterOpponent(opp, name, source, creator, tag) {
         || (chosenGender == 3 && opp.selectGender !== eGender.FEMALE)) {
         return false;
     }
-    
+
     return true;
 }
 
@@ -707,7 +707,7 @@ function updateIndividualSelectFilters() {
 function updateIndividualSelectSort() {
     // first remove all separators
     $(".card-separator").remove();
-    
+
     /* sort opponents */
     // Since ordered is always initialized here with featured order,
     // check if a different sorting mode is selected, and if yes, sort it.
@@ -716,9 +716,9 @@ function updateIndividualSelectSort() {
     } else {
         loadedOpponents.sort(sortOpponentsByMultipleFields(sortingMode.split(/\s+/)));
     }
-    
+
     var testingFirst = individualSelectTesting && (sortingMode === "featured" || sortingMode === "-lastUpdated");
-    
+
     if (testingFirst) {
         /*
          * As special cases, when using these sort modes in the Testing view,
@@ -814,7 +814,7 @@ function isIndividualSelectViewTypeLocked() {
     return players.some(function (opp) { return opp && opp !== humanPlayer; });
 }
 
-/** 
+/**
  * Update displayed epilogue badges for opponents on the individual
  * selection screen.
  */
@@ -838,7 +838,7 @@ function selectOpponentSlot (slot) {
     } else {
         /* remove the opponent that's there */
         $selectImages[slot-1].off('load');
-        
+
         players[slot].unloadOpponent();
         delete players[slot];
 
@@ -850,10 +850,10 @@ function showIndividualSelectionScreen() {
     /* We don't need to update filtering when moving from the main select screen
      * to the indiv. select screen, since the filters cannot actually change
      * unless the user is already on said screen.
-     * 
+     *
      * We do, however, need to make sure we're actually using the saved sorting
      * mode for each roster.
-     * 
+     *
      * The visibility of characters might change as well, depending on the
      * view type and what characters have already been selected.
      */
@@ -968,7 +968,7 @@ function loadGroup (chosenGroup) {
 
     clickedRemoveAllButton(false);
     console.log(chosenGroup.title);
-    
+
     Sentry.addBreadcrumb({
         category: 'select',
         message: 'Loading group '+chosenGroup.title,
@@ -990,7 +990,7 @@ function loadGroup (chosenGroup) {
             if (players.some(function(p, j) { return i != j && p == member; })) {
                 member = member.clone();
             }
-            
+
             var costumeDesc = $groupCostumeSelectors[i-1].children(':selected').data('costumeDescriptor');
             var selectedCostume = costumeDesc ? costumeDesc.folder : null;
 
@@ -1025,10 +1025,10 @@ function clickedRandomGroupButton () {
     /* workaround for preset costumes */
     for (var i = 0; i < 4; i++) {
         var costume = chosenGroup.costumes[i];
-        
+
         if (costume) {
             var costumeFolder = (costume.toLowerCase() == "default") ? '' : "opponents/reskins/" + costume + "/";
-            
+
             fillCostumeSelector($groupCostumeSelectors[i], chosenGroup.opponents[i].alternate_costumes, costumeFolder);
         } else {
             $groupCostumeSelectors[i].empty();
@@ -1049,7 +1049,7 @@ function clickedRandomFillButton (predicate) {
     /* compose a copy of the loaded opponents list */
     var loadedOpponentsCopy = loadedOpponents.filter(function(opp) {
         // Filter out characters that can't be selected via the regular view
-        return (opp.selectionCard.isVisible(individualSelectTesting, true) && 
+        return (opp.selectionCard.isVisible(individualSelectTesting, true) &&
                 (!predicate || predicate(opp)));
     });
 
@@ -1124,7 +1124,7 @@ function loadDefaultFillSuggestions () {
                 return p.id === opp.id;
             });
         });
-        
+
         var possibleNewPicks = possiblePicks.filter(function (opp) {
             return opp.highlightStatus === "new";
         });
@@ -1133,18 +1133,18 @@ function loadDefaultFillSuggestions () {
             /* select random new opponent */
             var idx = getRandomNumber(0, possibleNewPicks.length);
             var randomOpponent = possibleNewPicks[idx];
-            
+
             possiblePicks = possiblePicks.filter(function (opp) {
                 return opp.id !== randomOpponent.id;
             });
 
             fillPlayers.push(randomOpponent);
         }
-        
+
         var possibleNewAndUpdatedPicks = possiblePicks.filter(function (opp) {
             return opp.highlightStatus === "new" || opp.highlightStatus === "unsorted" || opp.highlightStatus === "updated" || opp.highlightStatus === "unsorted-updated" || opp.highlightStatus == "prefill";
         });
-        
+
         /* Fill slots 2 and 3, but also fill slot 1 if still empty */
         for (var i = fillPlayers.length; i < 3; i++) {
             if (possibleNewAndUpdatedPicks.length === 0) break;
@@ -1152,21 +1152,21 @@ function loadDefaultFillSuggestions () {
             var idx = getRandomNumber(0, possibleNewAndUpdatedPicks.length);
             var randomOpponent = possibleNewAndUpdatedPicks[idx];
             possibleNewAndUpdatedPicks.splice(idx, 1);
-            
+
             possiblePicks = possiblePicks.filter(function (opp) {
                 return opp.id !== randomOpponent.id;
             });
 
             fillPlayers.push(randomOpponent);
         }
-        
+
         /* Remove bottom 20% from consideration */
         var cutoff = possiblePicks.length / 5;
-        
+
         for (var i = 0; i < cutoff; i++) {
             possiblePicks.pop();
         }
-        
+
         for (var i = fillPlayers.length; i < players.length-1; i++) {
             if (possiblePicks.length === 0) break;
             /* select random opponent */
@@ -1176,7 +1176,7 @@ function loadDefaultFillSuggestions () {
 
             fillPlayers.push(randomOpponent);
         }
-        
+
         /* Sort in order of Event -> New -> Updated -> Other, it just looks better */
         fillPlayers.sort(function(a, b) {
             var status1 = a.highlightStatus;
@@ -1187,10 +1187,10 @@ function loadDefaultFillSuggestions () {
             } else if (!a.force_prefill && b.force_prefill) {
                 return 1;
             }
-            
+
             if (!status1 || status1 === "unsorted" || status1 === "unsorted-updated" || status1 === "prefill") status1 = "zzzzz";
             if (!status2 || status2 === "unsorted" || status2 === "unsorted-updated" || status2 === "prefill") status2 = "zzzzz";
-            
+
             return status1.localeCompare(status2);
         });
     } else {
@@ -1205,7 +1205,7 @@ function loadDefaultFillSuggestions () {
                 return p.id === opp.id;
             });
         });
-        
+
         if (DEFAULT_FILL === 'new' || DEFAULT_FILL === 'default') {
             /* Special case: for the 'new' fill mode, always suggest the most
              * recently-added or recently-updated character.
@@ -1258,7 +1258,7 @@ function updateDefaultFillView() {
 function clickedRemoveAllButton (alsoRemoveSuggestions)
 {
     var anyLoaded = false;
-    
+
     for (var i = 1; i < 5; i++) {
         if (players[i]) {
             anyLoaded = true;
@@ -1267,12 +1267,12 @@ function clickedRemoveAllButton (alsoRemoveSuggestions)
             $selectImages[i-1].off('load');
         }
     }
-    
+
     if (alsoRemoveSuggestions && !anyLoaded) {
         FILL_DISABLED = !FILL_DISABLED;
         save.saveSettings();
     }
-    
+
     updateSelectionVisuals();
 }
 
@@ -1332,7 +1332,7 @@ function changeGroupPage (skip, page) {
     } else {
         groupPage += page;
     }
-    
+
     Sentry.addBreadcrumb({
         'category': 'select',
         'level': 'info',
@@ -1394,7 +1394,7 @@ function advanceSelectScreen () {
 
     gameID = generateRandomID();
     recordStartGameEvent();
-    
+
     var playedCharacters = save.getPlayedCharacterSet();
     players.forEach(function(player) {
         if (player.id !== 'human') {
@@ -1737,7 +1737,7 @@ function sortTestingOpponents(opp1, opp2) {
 
     var scores = [opp1, opp2].map(function (opp) {
         if (opp.status !== "testing") return 0;
-        
+
         if (!isStaleOnTesting(opp)) {
             return 2;
         } else {
@@ -1762,7 +1762,7 @@ function setSortingMode(mode) {
 
     sortingMode = mode;
     // change the dropdown text to the selected option
-    $("#sort-dropdown-selection").html($sortingOptionsItems.filter(function() { return $(this).data('value') == mode; }).html()); 
+    $("#sort-dropdown-selection").html($sortingOptionsItems.filter(function() { return $(this).data('value') == mode; }).html());
     updateIndividualSelectSort();
 }
 
@@ -1860,10 +1860,10 @@ function countLinesImages($xml) {
         var numTotalLines = 0;
         var lines = new Set();
         var poses = new Set();
-        
+
         var matched = $xml.find('state').get();
         var layers = $xml.find('>wardrobe>clothing').length;
-    
+
         /* Avoid blocking the UI by breaking the work into smaller chunks. */
         function process () {
             var startTs = performance.now();
@@ -1875,18 +1875,18 @@ function countLinesImages($xml) {
                 // count only unique lines of dialogue
                 if (data.textContent.trim() != "") lines.add(data.textContent.trim());
                 if ($(data).children('text').length) lines.add($(data).children('text').html().trim());
-                
+
                 // count unique number of poses used in dialogue
                 // note that this number may differ from actual image count if some images
                 // are never used, or if images that don't exist are used in the dialogue
-                
+
                 var $case = $(data).parent();
                 var $trigger = $case.parent('trigger');
                 var $stage = $case.parent('stage');
                 var stageInterval = $trigger.length ? getRelevantStagesForTrigger($trigger.attr('id'), layers)
                     : $stage.length ? { min: $case.parent('stage').attr('id'), max: $case.parent('stage').attr('id') }
                     : { min: 0, max: 0 };
-    
+
                 for (var stage = stageInterval.min; stage <= stageInterval.max; stage++) {
                     var images = $(data).children('alt-img').filter(function() {
                         return checkStage(stage, $(this).attr('stage'));
@@ -1900,7 +1900,7 @@ function countLinesImages($xml) {
             }
 
             if (DEBUG) console.log("Processing: "+matched.length+" states to go");
-            
+
             if (matched.length > 0) {
                 setTimeout(process.bind(null), 10);
             } else {
