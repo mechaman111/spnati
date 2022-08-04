@@ -46,11 +46,7 @@ namespace SPNATI_Character_Editor
 		}
 
 		[XmlElement("pic")]
-		public string Portrait
-		{
-			get { return Get<string>(); }
-			set { Set(value); }
-		}
+		public SelectPortrait Portrait { get; set; }
 
 		[XmlElement("gender")]
 		public string Gender
@@ -243,6 +239,29 @@ namespace SPNATI_Character_Editor
 		{
 			//Encoding these doesn't need to be done in OnBeforeSerialize because the serializer does it automatically
 			Description = XMLHelper.DecodeEntityReferences(Description);
+		}
+	}
+
+	public class SelectPortrait
+	{
+		[DefaultValue(0)]
+		[XmlAttribute("x")]
+		public int X;
+
+		[DefaultValue(0)]
+		[XmlAttribute("y")]
+		public int Y;
+
+		[DefaultValue(100.0f)]
+		[XmlAttribute("scale")]
+		public float Scale;
+
+		[XmlText]
+		public string Image;
+
+		public SelectPortrait()
+		{
+			Scale = 100.0f;
 		}
 	}
 

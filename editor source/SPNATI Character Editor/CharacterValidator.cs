@@ -37,7 +37,7 @@ namespace SPNATI_Character_Editor
 					unusedImages.Add(Path.GetFileName(filename));
 				}
 			}
-			unusedImages.Remove(character.Metadata.Portrait);
+			unusedImages.Remove(character.Metadata.Portrait.Image);
 
 			Regex targetRange = new Regex(@"^\d+(-\d+)?$");
 

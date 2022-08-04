@@ -59,7 +59,7 @@ namespace SPNATI_Character_Editor
 			lines.Add("");
 			lines.Add("#required for meta.xml");
 			lines.Add("#select screen image");
-			lines.Add("pic=" + Path.GetFileNameWithoutExtension(metadata.Portrait));
+			lines.Add("pic=" + Path.GetFileNameWithoutExtension(metadata.Portrait.Image));
 			lines.Add("from=" + metadata.Source);
 			lines.Add("writer=" + metadata.Writer);
 			lines.Add("artist=" + metadata.Artist);
@@ -904,7 +904,7 @@ namespace SPNATI_Character_Editor
 						character.Tags.Add(tag);
 						break;
 					case "pic":
-						character.Metadata.Portrait = value;
+						character.Metadata.Portrait.Image = value;
 						break;
 					case "from":
 						character.Metadata.Source = value;

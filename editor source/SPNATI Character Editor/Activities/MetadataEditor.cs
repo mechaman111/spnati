@@ -1,4 +1,4 @@
-﻿using Desktop;
+using Desktop;
 using System;
 using System.Collections.Generic;
 
@@ -64,12 +64,15 @@ namespace SPNATI_Character_Editor.Activities
 			txtWriter.Text = _character.Metadata.Writer;
 			txtArtist.Text = _character.Metadata.Artist;
 			PopulatePortraitDropdown();
-			if (_character.Metadata.Portrait != null)
+			if (_character.Metadata.Portrait.Image != null)
 			{
-				string portrait = _character.Metadata.Portrait;
+				string portrait = _character.Metadata.Portrait.Image;
 				PoseMapping pose = _character.PoseLibrary.GetPose(portrait);
 				cboDefaultPic.SelectedItem = pose;
 			}
+			valPicX.Value = Math.Max(valPicX.Minimum, Math.Min((decimal)_character.Metadata.Portrait.X, valPicX.Maximum));
+			valPicY.Value = Math.Max(valPicY.Minimum, Math.Min((decimal)_character.Metadata.Portrait.Y, valPicY.Maximum));
+			valPicScale.Value = Math.Max(valPicScale.Minimum, Math.Min((decimal)_character.Metadata.Portrait.Scale, valPicScale.Maximum));
 			gridAI.Data = _character.Intelligence;
 
 			string othernotes = CharacterDatabase.GetEditorData(_character).OtherNotes;
@@ -111,10 +114,10 @@ namespace SPNATI_Character_Editor.Activities
 				ExpandLabel();
 			}
 
-			PoseMapping image = _character.PoseLibrary.GetPose(_character.Metadata.Portrait);
+			PoseMapping image = _character.PoseLibrary.GetPose(_character.Metadata.Portrait.Image);
 			if (image == null)
 				return;
-			_character.Metadata.Portrait = image.Key.Replace("#-", "0-");
+			_character.Metadata.Portrait.Image = image.Key.Replace("#-", "0-");
 			Workspace.SendMessage(WorkspaceMessages.UpdatePreviewImage, new UpdateImageArgs(_character, image, 0));
 			Workspace.SendMessage(WorkspaceMessages.PreviewLine, "");
 		}
@@ -142,6 +145,9 @@ namespace SPNATI_Character_Editor.Activities
 			_character.Metadata.Artist = txtArtist.Text;
 			gridAI.Save(ColAIStage);
 			CharacterDatabase.GetEditorData(_character).OtherNotes = txtOtherNotes.Text.Replace(Environment.NewLine,"<br>");
+			_character.Metadata.Portrait.X = (int)valPicX.Value;
+			_character.Metadata.Portrait.Y = (int)valPicY.Value;
+			_character.Metadata.Portrait.Scale = (float)valPicScale.Value;
 		}
 
 		private void cboDefaultPic_SelectedIndexChanged(object sender, EventArgs e)
@@ -151,7 +157,7 @@ namespace SPNATI_Character_Editor.Activities
 			PoseMapping image = cboDefaultPic.SelectedItem as PoseMapping;
 			if (image == null)
 				return;
-			_character.Metadata.Portrait = image.Key.Replace("#-", "0-");
+			_character.Metadata.Portrait.Image = image.Key.Replace("#-", "0-");
 			Workspace.SendMessage(WorkspaceMessages.UpdatePreviewImage, new UpdateImageArgs(_character, image, 0));
 		}
 
@@ -190,6 +196,22 @@ namespace SPNATI_Character_Editor.Activities
 			cmdExpandLabel.Visible = false;
 			lblTitleLabel.Visible = true;
 			txtTitleLabel.Visible = true;
+		}
+
+		private void cmdExpandPicOptions_Click(object sender, EventArgs e)
+		{
+			ExpandPic();
+		}
+
+		private void ExpandPic()
+		{
+			cmdExpandPicOptions.Visible = false;
+			lblPicX.Visible = true;
+			valPicX.Visible = true;
+			lblPicY.Visible = true;
+			valPicY.Visible = true;
+			lblPicScale.Visible = true;
+			valPicScale.Visible = true;
 		}
 	}
 }
