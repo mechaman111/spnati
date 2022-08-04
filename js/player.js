@@ -526,9 +526,9 @@ function Opponent (id, metaFiles, status, releaseNumber, highlightStatus) {
     this.alternate_costumes = [];
     this.selection_image = this.folder + this.image;
     this.selection_image_adjustment = {
-        x: picElem.attr("x") || "0", /* negative values move to the left, positive to the right */
-        y: picElem.attr("y") || "0", /* negative values move up, positive moves down */
-        scale: picElem.attr("scale") || "1",
+        x: (Number(picElem.attr("x")) || 0), /* negative values move to the left, positive to the right */
+        y: (-Number(picElem.attr("y")) || 0), /* negative values move down, positive moves up */
+        scale: Number(picElem.attr("scale")) || 100.0,
     };
 
     this.favorite = save.isCharacterFavorited(this);

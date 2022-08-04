@@ -1263,7 +1263,7 @@ OpponentSelectionCard.prototype.update = function () {
     var xfrmProps = this.opponent.selection_image_adjustment;
 
     this.imageArea.css(
-        "transform", "translate(" + xfrmProps.x + ", " + xfrmProps.y + ") scale(" + xfrmProps.scale + ")"
+        "transform", "translate(" + xfrmProps.x + "%, " + xfrmProps.y + "%) scale(" + (xfrmProps.scale / 100.0) + ")"
     );
     
     this.label.text(this.opponent.selectLabel);
