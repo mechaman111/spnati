@@ -267,11 +267,11 @@ if (!window.monika) window.monika = (function (root) {
                         }
                     }
 
-                    if (amySlot) { break; }
+                    if (amySlot !== null) { break; }
                 }
             }
 
-            if (!amySlot) { return; }
+            if (amySlot === null) { return; }
 
             /* get the next most targeted character that isn't already suggested */
             var suggested_opponents = loadedOpponents.filter(function(opp) {
@@ -279,7 +279,7 @@ if (!window.monika) window.monika = (function (root) {
                 return opp.selectionCard.isVisible(individualSelectTesting, true);
             });
 
-            suggested_opponents.sort(sortOpponentsByMostTargeted());
+            suggested_opponents.sort(sortOpponentsByMostTargeted(50, Infinity));
 
             var idx = (loaded == 2) ? 8 : 4;
 
