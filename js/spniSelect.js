@@ -147,7 +147,7 @@ var chosenGender = -1;
 var chosenGroupGender = -1;
 var sortingMode = "featured";
 var sortingOptionsMap = {
-    target: sortOpponentsByMostTargeted(),
+    target: sortOpponentsByMostTargeted(50, Infinity),
     oldest: sortOpponentsByMultipleFields(["release", "-listingIndex"]),
     newest: sortOpponentsByMultipleFields(["-release", "listingIndex"]),
     featured: sortOpponentsByMultipleFields(["-event_partition", "-event_sort_order", "listingIndex"]),
@@ -1475,8 +1475,18 @@ function updateSelectionVisuals () {
             return opp.selectionCard.isVisible(individualSelectTesting, true);
         });
 
-        /* sort opponents */
-        suggested_opponents.sort(sortOpponentsByMostTargeted());
+        /* Shuffle the suggestions before stable sorting them, to add variety. */
+        for (var i = 0; i < suggested_opponents.length - 1; i++) {
+            swapIndex = getRandomNumber(i, suggested_opponents.length);
+            var t = suggested_opponents[i];
+            suggested_opponents[i] = suggested_opponents[swapIndex];
+            suggested_opponents[swapIndex] = t;
+        }
+
+        /* Sort opponents, capping each selected character's contribution
+         * to the inbound line count for each suggestion at 50 lines.
+         */
+        suggested_opponents.sort(sortOpponentsByMostTargeted(50, Infinity));
 
         var suggestion_idx = 0;
         for (var i = 1; i < players.length; i++) {
@@ -1688,11 +1698,16 @@ function sortOpponentsByMultipleFields(fields) {
  * Special Callback for Arrays.sort to sort an array of opponents on
  * the total number of lines targeting them the currently selected
  * opponents have.
+ * 
+ * @param {number} [indivCap] Cap for contributions to the inbound line counts from individual selected characters.
+ * @param {number} [totalCap] Cap on effective total inbound line counts from all selected characters.
  */
-function sortOpponentsByMostTargeted() {
+function sortOpponentsByMostTargeted(indivCap, totalCap) {
     return function(opp1, opp2) {
         counts = [opp1, opp2].map(function(opp) {
-            return opp.inboundLinesFromSelected(individualSelectTesting ? "testing" : undefined);
+            var n = opp.inboundLinesFromSelected(individualSelectTesting ? "testing" : undefined, indivCap);
+            if (totalCap) return Math.min(n, totalCap);
+            return n;
         });
         if (counts[0] > counts[1]) return -1;
         if (counts[0] < counts[1]) return 1;

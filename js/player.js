@@ -405,18 +405,25 @@ Player.prototype.setMarker = function (baseName, target, value) {
  * Calculates how many lines from currently-selected characters target this
  * character.
  *
- * @param {string} filterStatus? If passed, only lines from characters with the
+ * @param {string} [filterStatus] If passed, only lines from characters with the
  * given status will be considered.
+ * 
+ * @param {number} [cap] If passed, each currently selected character's contribution
+ * to the total inbound line count will be capped to this number.
  *
  * @returns {number}
  */
-Player.prototype.inboundLinesFromSelected = function (filterStatus) {
+Player.prototype.inboundLinesFromSelected = function (filterStatus, cap) {
     var id = this.id;
 
     return players.reduce(function(sum, p) {
         if (p && p.targetedLines && id in p.targetedLines
             && (!filterStatus || p.status === filterStatus)) {
-            sum += p.targetedLines[id].seen.size;
+            if (cap) {
+                sum += Math.min(p.targetedLines[id].seen.size, cap);
+            } else {
+                sum += p.targetedLines[id].seen.size;
+            }
         }
 
         return sum;
