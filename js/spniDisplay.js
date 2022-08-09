@@ -936,9 +936,9 @@ OpponentDisplay.prototype.constrainDialogueBubble = function (requiredImageHeigh
     var screenHeight = this.bubble.parents(".screen").first().height();
     var regularMinHeight = (screenHeight * 0.18) - this.getBubblePadding();
     if (maxContentHeight < regularMinHeight) {
-        this.bubble.css("min-height", maxContentHeight + this.getBubblePadding());
+        this.bubble.addClass("requires-shrink").css("min-height", maxContentHeight + this.getBubblePadding());
     } else {
-        this.bubble.css("min-height", "");
+        this.bubble.removeClass("requires-shrink").css("min-height", "");
     }
 
     if (!curContentHeight || (curContentHeight <= maxContentHeight)) {
