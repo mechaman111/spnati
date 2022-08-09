@@ -465,6 +465,7 @@ function Opponent (id, metaFiles, status, releaseNumber, highlightStatus) {
     this.collectibles = null;
     this.layers = parseInt($metaXml.children('layers').text(), 10);
     this.scale = Number($metaXml.children('scale').text()) || 100.0;
+    this.requiredImageHeights = $metaXml.children('required-image-height');
     this.release = releaseNumber;
     this.uniqueLineCount = parseInt($metaXml.children('lines').text(), 10) || undefined;
     this.posesImageCount = parseInt($metaXml.children('poses').text(), 10) || undefined;
@@ -770,6 +771,10 @@ Opponent.prototype.updateFolder = function () {
     } else if (this.alt_costume) {
         this.poses = this.alt_costume.poses;
     }
+}
+
+Opponent.prototype.getRequiredImageHeight = function (stage) {
+    return parseInt(this.getByStage(this.requiredImageHeights, stage), 10) || Infinity;
 }
 
 Opponent.prototype.getByStage = function (arr, stage) {

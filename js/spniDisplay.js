@@ -572,7 +572,49 @@ function OpponentDisplay(slot, bubbleElem, dialogueElem, simpleImageElem, imageA
     this.label = labelElem;
     this.animCallbackID = undefined;
 
+    this.dialogueOverflow = null;
+    this.requiredImageHeight = 0;
+    this.requirementScale = 100;
     this.imageAreaHeight = this.imageArea.height();
+    this.curOverflowHeight = null;
+
+    /* We need to override the style attribute on the dialogue overflow element, so we can't do this in pure CSS. */
+    var hovered = false;
+    this.bubble.mouseover(() => {
+        if (this.dialogueOverflow) {
+            $(this.dialogueOverflow).css("height", "auto");
+            this.bubble.css("z-index", "9999");
+            hovered = true;
+        }
+    });
+
+    this.bubble.mouseout(() => {
+        if (this.dialogueOverflow) {
+            $(this.dialogueOverflow).css("height", this.curOverflowHeight);
+            this.bubble.css("z-index", "");
+            hovered = false;
+        }
+    });
+
+    /* For mobile users. The hover handlers will take precedence if they function. */
+    var lastClickTime = null;
+    this.bubble.click(() => {
+        /* Debounce click events. */
+        if (lastClickTime && (performance.now() - lastClickTime) < 100) {
+            return;
+        }
+
+        lastClickTime = performance.now();
+        if (this.dialogueOverflow && !hovered) {
+            if (this.bubble.hasClass("expanded")) {
+                $(this.dialogueOverflow).css("height", this.curOverflowHeight);
+                this.bubble.removeClass("expanded").css("z-index", "");
+            } else {
+                $(this.dialogueOverflow).css("height", "auto");
+                this.bubble.addClass("expanded").css("z-index", "9999");
+            }
+        }
+    });
 
     this.resizeObserver = new ResizeObserver(function (entries) {
         if (entries[0].contentBoxSize) {
@@ -647,6 +689,7 @@ OpponentDisplay.prototype.updateBubbleAttributes = function (player) {
 
 OpponentDisplay.prototype.hideBubble = function () {
     this.updateBubbleAttributes(null);
+    this.unconstrainDialogueBubble();
     this.dialogue.html("");
     this.bubble.hide();
 }
@@ -687,6 +730,9 @@ OpponentDisplay.prototype.drawPose = function (pose) {
     } else if (pose instanceof Pose) {
         if(pose.loaded) {
             pose.draw();
+
+            /* Don't need rAF here, since we know the scaling factor up front. */
+            this.constrainDialogueBubble(pose.player.getRequiredImageHeight(), pose.player.scale);
         } else {
             pose.onLoadComplete = () => this.drawPose(pose);
             return;
@@ -735,6 +781,7 @@ OpponentDisplay.prototype.onResize = function () {
     if (this.pose && (this.pose instanceof Pose)) {
         this.pose.draw();
     }
+    this.constrainDialogueBubble(this.requiredImageHeight, this.requirementScale);
 }
 
 OpponentDisplay.prototype.updateText = function (player) {
@@ -799,7 +846,14 @@ OpponentDisplay.prototype.updateImage = function(player) {
         }
     } else {
         this.drawPose(player.folder + chosenState.image.replace('#', player.stage));
-        this.simpleImage.one('load', this.rescaleSimplePose.bind(this, player.scale));
+        this.simpleImage.one('load', () => {
+            this.rescaleSimplePose(player.scale);
+
+            /* The bubble constraint calculation needs to happen in an rAF so that it uses the correct size for the image element. */
+            requestAnimationFrame(() => {
+                this.constrainDialogueBubble(player.getRequiredImageHeight(), player.scale);
+            });
+        });
     }
 }
 
@@ -844,6 +898,127 @@ OpponentDisplay.prototype.update = function(player) {
         this.dialogue.removeClass('small smaller');
         if (chosenState.fontSize != "normal") this.dialogue.addClass(chosenState.fontSize || player.fontSize);
     }
+}
+
+/**
+ * Compute extra space taken up by bubble margins, the top offset, and the dialogue arrow (if any).
+ * @returns {number}
+ */
+OpponentDisplay.prototype.getBubblePadding = function () {
+    return (this.bubble.outerHeight() - this.bubble.height()) + this.bubble.position().top;
+}
+
+/**
+ * Calculate the maximum amount of space allowed to be taken up by the bubble's content in screen pixels, including padding.
+ * This might be infinite if e.g. requiredImageHeight is undefined or 0.
+ *
+ * @param {number} [requiredImageHeight] The amount of vertical space required by poses, in terms of their native height (i.e. before scaling to the screen size)
+ * @param {number} [base_scale] The base scale factor for the character, from 0-100.
+ * @returns {number}
+ */
+OpponentDisplay.prototype.getMaxBubbleContentHeight = function (requiredImageHeight, base_scale) {
+    var screenHeight = this.bubble.parents(".screen").first().height();
+    if (!screenHeight) return Infinity; /* Shouldn't happen */
+    if (!requiredImageHeight || !isFinite(requiredImageHeight)) return Infinity;
+
+    /* Convert requiredImageHeight to screen pixels and apply character scale factor. */
+    if (this.pose instanceof Pose) {
+        requiredImageHeight *= this.pose.getHeightScaleFactor();
+        if (base_scale) requiredImageHeight *= (base_scale / 100.0);
+    } else if (typeof(this.pose) === "string") {
+        /* The simple image element should already be scaled according to the character scale factor
+         * (and for non-1400px images, the adjustment from resizeSimplePose).
+         */
+        requiredImageHeight *= (this.simpleImage.height() / this.simpleImage[0].naturalHeight);
+    } else {
+        /* No pose loaded */
+        return Infinity;
+    }
+
+    var maxHeight = screenHeight - (requiredImageHeight + this.getBubblePadding());
+    return (maxHeight > 0) ? maxHeight : Infinity;
+}
+
+/**
+ * Undo any effects applied by constrainDialogueBubble, returning the dialogue
+ * bubble to its natural size.
+ *
+ * @returns {void}
+ */
+OpponentDisplay.prototype.unconstrainDialogueBubble = function () {
+    if (!this.dialogueOverflow) return;
+
+    this.bubble.children(".dialogue-overflow-label").remove();
+    $(this.dialogueOverflow).children().appendTo(this.bubble);
+    $(this.dialogueOverflow).remove();
+    this.bubble.removeClass("overflows expanded").css("z-index", "");
+    /* Don't clear min-height, since we can come here directly from constrainDialogueBubble. */
+
+    this.dialogueOverflow = null;
+    this.requiredImageHeight = null;
+    this.requirementScale = null;
+    this.curOverflowHeight = null;
+}
+
+/**
+ * Constrain the max height of this dialogue bubble if necessary.
+ *
+ * @param {number} [requiredImageHeight] The amount of vertical space required by poses, in terms of their native height (i.e. before scaling to the screen size)
+ * @param {number} [base_scale] The base scale factor for the character, from 0-100.
+ */
+OpponentDisplay.prototype.constrainDialogueBubble = function (requiredImageHeight, base_scale) {
+    if (!requiredImageHeight || !isFinite(requiredImageHeight) || this.bubble.css("display") == "hidden") {
+        this.unconstrainDialogueBubble();
+        return;
+    }
+
+    this.requiredImageHeight = requiredImageHeight;
+    this.requirementScale = base_scale;
+
+    var maxContentHeight = this.getMaxBubbleContentHeight(requiredImageHeight, base_scale);
+    if (!maxContentHeight) {
+        this.unconstrainDialogueBubble();
+        return;
+    }
+
+    /** @type {HTMLDivElement} */
+    var overflowElem = this.dialogueOverflow;
+    var curContentHeight = overflowElem ? overflowElem.scrollHeight : this.bubble[0].scrollHeight;
+
+    /* Particularly tall characters might have problems with the regular bubble min-height setting.
+     * If so, then we can dynamically adjust it here based on our calculated space constraints.
+     * In this case, we'll need to remove the extra space added by the min-height from our calculated content height.
+     */
+    var screenHeight = this.bubble.parents(".screen").first().height();
+    var regularMinHeight = (screenHeight * 0.18) - this.getBubblePadding();
+    if (maxContentHeight < regularMinHeight) {
+        curContentHeight = this.bubble.height();
+        this.bubble.css("min-height", maxContentHeight + this.getBubblePadding());
+    } else {
+        this.bubble.css("min-height", "");
+    }
+
+    /* Add some slack to account for the "More..." label we'd add on overflow. */
+    curContentHeight -= screenHeight * 0.08;
+    if (!curContentHeight || (curContentHeight <= maxContentHeight)) {
+        /* Don't need to constrain the bubble contents anymore. */
+        return this.unconstrainDialogueBubble();
+    } else if (!overflowElem) {
+        /* Move everything in the bubble into a new overflow wrapper element. */
+        overflowElem = document.createElement("div");
+
+        this.bubble.children().appendTo(overflowElem);
+        $(overflowElem).addClass("dialogue-overflow-wrapper").innerHeight(maxContentHeight).appendTo(this.bubble);
+        this.dialogueOverflow = overflowElem;
+
+        $(document.createElement("div")).addClass("dialogue-overflow-label").text("More...").appendTo(this.bubble);
+        this.bubble.addClass("overflows");
+    } else {
+        /* Update the height of the existing overflow element. */
+        $(overflowElem).innerHeight(maxContentHeight);
+    }
+
+    if (overflowElem) this.curOverflowHeight = $(overflowElem).css("height");
 }
 
 OpponentDisplay.prototype.loop = function (timestamp) {

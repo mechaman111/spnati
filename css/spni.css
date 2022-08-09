@@ -1147,6 +1147,35 @@ ul.dropdown-menu>li {
     transform: scaleX(0.6) rotate(-135deg);
 }
 
+.dialogue-bubble.overflows {
+    justify-content: flex-start;
+    min-height: auto;
+}
+
+.dialogue-overflow-wrapper {
+    mask-image: linear-gradient(180deg, #000 40%, transparent);
+    -webkit-mask-image: linear-gradient(180deg, #000 40%, transparent);
+    overflow-y: hidden;
+    flex: none;
+}
+
+.dialogue-bubble:hover .dialogue-overflow-wrapper, .dialogue-bubble.expanded .dialogue-overflow-wrapper {
+    mask-image: none;
+    -webkit-mask-image: none;
+    overflow-y: visible;
+    flex: auto;
+}
+
+.dialogue-overflow-label {
+    font-size: 85%;
+    color: grey;
+    text-align: center;
+}
+
+.dialogue-bubble:hover .dialogue-overflow-label,  .dialogue-bubble.expanded .dialogue-overflow-label {
+    display: none;
+}
+
 .repeat-count {
     color: red;
 }
