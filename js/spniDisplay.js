@@ -572,6 +572,8 @@ function OpponentDisplay(slot, bubbleElem, dialogueElem, simpleImageElem, imageA
     this.label = labelElem;
     this.animCallbackID = undefined;
 
+    this.requiredImageHeight = 0;
+    this.requirementScale = 100;
     this.imageAreaHeight = this.imageArea.height();
 
     this.resizeObserver = new ResizeObserver(function (entries) {
@@ -647,6 +649,7 @@ OpponentDisplay.prototype.updateBubbleAttributes = function (player) {
 
 OpponentDisplay.prototype.hideBubble = function () {
     this.updateBubbleAttributes(null);
+    this.unconstrainDialogueBubble();
     this.dialogue.html("");
     this.bubble.hide();
 }
@@ -687,6 +690,7 @@ OpponentDisplay.prototype.drawPose = function (pose) {
     } else if (pose instanceof Pose) {
         if(pose.loaded) {
             pose.draw();
+            this.constrainDialogueBubble(pose.player.getRequiredImageHeight(), pose.player.scale);
         } else {
             pose.onLoadComplete = () => this.drawPose(pose);
             return;
@@ -735,6 +739,7 @@ OpponentDisplay.prototype.onResize = function () {
     if (this.pose && (this.pose instanceof Pose)) {
         this.pose.draw();
     }
+    this.constrainDialogueBubble(this.requiredImageHeight, this.requirementScale);
 }
 
 OpponentDisplay.prototype.updateText = function (player) {
@@ -799,7 +804,13 @@ OpponentDisplay.prototype.updateImage = function(player) {
         }
     } else {
         this.drawPose(player.folder + chosenState.image.replace('#', player.stage));
-        this.simpleImage.one('load', this.rescaleSimplePose.bind(this, player.scale));
+
+        /* Do an initial text resize pass now, then recalculate once the image actually loads. */
+        this.constrainDialogueBubble(player.getRequiredImageHeight(), player.scale);
+        this.simpleImage.one('load', () => {
+            this.rescaleSimplePose(player.scale);
+            this.constrainDialogueBubble(player.getRequiredImageHeight(), player.scale);
+        });
     }
 }
 
@@ -843,6 +854,113 @@ OpponentDisplay.prototype.update = function(player) {
         this.bubble.removeClass('over under').addClass(chosenState.dialogue_layering || player.dialogue_layering);
         this.dialogue.removeClass('small smaller');
         if (chosenState.fontSize != "normal") this.dialogue.addClass(chosenState.fontSize || player.fontSize);
+    }
+}
+
+/**
+ * Compute extra space taken up by bubble margins, the top offset, and the dialogue arrow (if any).
+ * @returns {number}
+ */
+OpponentDisplay.prototype.getBubblePadding = function () {
+    return (this.bubble.outerHeight() - this.bubble.height()) + this.bubble.position().top;
+}
+
+/**
+ * Calculate the maximum amount of space allowed to be taken up by the bubble's content in screen pixels, including padding.
+ * This might be infinite if e.g. requiredImageHeight is undefined or 0.
+ *
+ * @param {number} [requiredImageHeight] The amount of vertical space required by poses, in terms of their native height (i.e. before scaling to the screen size)
+ * @param {number} [base_scale] The base scale factor for the character, from 0-100.
+ * @returns {number}
+ */
+OpponentDisplay.prototype.getMaxBubbleContentHeight = function (requiredImageHeight, base_scale) {
+    var screenHeight = this.bubble.parents(".screen").first().height();
+    if (!screenHeight) return Infinity; /* Shouldn't happen */
+    if (!requiredImageHeight || !isFinite(requiredImageHeight)) return Infinity;
+
+    /* Convert requiredImageHeight to screen pixels and apply character scale factor. */
+    if (this.pose instanceof Pose) {
+        requiredImageHeight *= this.pose.getHeightScaleFactor();
+        if (base_scale) requiredImageHeight *= (base_scale / 100.0);
+    } else if (typeof(this.pose) === "string") {
+        /* The simple image element should already be scaled according to the character scale factor
+         * (and for non-1400px images, the adjustment from resizeSimplePose).
+         */
+        requiredImageHeight *= (this.simpleImage.height() / this.simpleImage[0].naturalHeight);
+    } else {
+        /* No pose loaded */
+        return Infinity;
+    }
+
+    var maxHeight = screenHeight - (requiredImageHeight + this.getBubblePadding());
+    return (maxHeight > 0) ? maxHeight : Infinity;
+}
+
+/**
+ * Undo any effects applied by constrainDialogueBubble, returning the dialogue
+ * bubble to its natural size.
+ *
+ * @returns {void}
+ */
+OpponentDisplay.prototype.unconstrainDialogueBubble = function () {
+    this.dialogue.css("font-size", "");
+    /* Don't clear min-height, since we can come here directly from constrainDialogueBubble. */
+}
+
+/**
+ * Constrain the max height of this dialogue bubble if necessary.
+ *
+ * @param {number} [requiredImageHeight] The amount of vertical space required by poses, in terms of their native height (i.e. before scaling to the screen size)
+ * @param {number} [base_scale] The base scale factor for the character, from 0-100.
+ */
+OpponentDisplay.prototype.constrainDialogueBubble = function (requiredImageHeight, base_scale) {
+    this.dialogue.css("font-size", "")
+    if (!requiredImageHeight || !isFinite(requiredImageHeight) || this.bubble.css("display") == "hidden") {
+        this.unconstrainDialogueBubble();
+        return;
+    }
+;
+    this.requiredImageHeight = requiredImageHeight;
+    this.requirementScale = base_scale;
+
+    var maxContentHeight = this.getMaxBubbleContentHeight(requiredImageHeight, base_scale);
+    if (!maxContentHeight) {
+        this.unconstrainDialogueBubble();
+        return;
+    }
+
+    var curContentHeight = this.dialogue[0].scrollHeight;
+
+    /* Particularly tall characters might have problems with the regular bubble min-height setting.
+     * If so, then we can dynamically adjust it here based on our calculated space constraints.
+     */
+    var screenHeight = this.bubble.parents(".screen").first().height();
+    var regularMinHeight = (screenHeight * 0.18) - this.getBubblePadding();
+    if (maxContentHeight < regularMinHeight) {
+        this.bubble.css("min-height", maxContentHeight + this.getBubblePadding());
+    } else {
+        this.bubble.css("min-height", "");
+    }
+
+    if (!curContentHeight || (curContentHeight <= maxContentHeight)) {
+        /* Don't need to constrain the bubble contents anymore. */
+        return this.unconstrainDialogueBubble();
+    } else {
+        /* Binary search for an appropriate font-size in %. */
+        var curMin = 40;
+        var curMax = 100;
+        let iterations = 0;
+        while ((Math.abs(this.dialogue[0].scrollHeight - maxContentHeight) > 2) && iterations < 10) {
+            let mid = (curMax + curMin) / 2;
+            this.dialogue.css("font-size", mid + "%");
+            if (this.dialogue[0].scrollHeight > maxContentHeight) {
+                curMax = mid;
+            } else {
+                curMin = mid;
+            }
+
+            iterations++;
+        }
     }
 }
 
