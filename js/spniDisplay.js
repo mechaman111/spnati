@@ -690,7 +690,6 @@ OpponentDisplay.prototype.drawPose = function (pose) {
     } else if (pose instanceof Pose) {
         if(pose.loaded) {
             pose.draw();
-            this.constrainDialogueBubble(pose.player.getRequiredImageHeight(), pose.player.scale);
         } else {
             pose.onLoadComplete = () => this.drawPose(pose);
             return;
@@ -805,8 +804,7 @@ OpponentDisplay.prototype.updateImage = function(player) {
     } else {
         this.drawPose(player.folder + chosenState.image.replace('#', player.stage));
 
-        /* Do an initial text resize pass now, then recalculate once the image actually loads. */
-        this.constrainDialogueBubble(player.getRequiredImageHeight(), player.scale);
+        /* Recalculate the bubble size once the image actually loads and we rescale it. */
         this.simpleImage.one('load', () => {
             this.rescaleSimplePose(player.scale);
             this.constrainDialogueBubble(player.getRequiredImageHeight(), player.scale);
@@ -854,6 +852,7 @@ OpponentDisplay.prototype.update = function(player) {
         this.bubble.removeClass('over under').addClass(chosenState.dialogue_layering || player.dialogue_layering);
         this.dialogue.removeClass('small smaller');
         if (chosenState.fontSize != "normal") this.dialogue.addClass(chosenState.fontSize || player.fontSize);
+        this.constrainDialogueBubble(player.getRequiredImageHeight(), player.scale);
     }
 }
 
@@ -919,7 +918,7 @@ OpponentDisplay.prototype.constrainDialogueBubble = function (requiredImageHeigh
         this.unconstrainDialogueBubble();
         return;
     }
-;
+
     this.requiredImageHeight = requiredImageHeight;
     this.requirementScale = base_scale;
 
