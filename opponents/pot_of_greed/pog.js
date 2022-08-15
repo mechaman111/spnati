@@ -43,14 +43,12 @@ if (!pog) var pog = (function (root) {
 
     var exports = {};
 
-    if (root.SENTRY_INITIALIZED) {
-        root.Sentry.setTag('pog-loaded', true);
-        root.Sentry.addBreadcrumb({
-            category: 'pot-of-greed',
-            message: 'Initializing pog.js...',
-            level: 'info'
-        });
-    }
+    root.Sentry.setTag('pog-loaded', true);
+    root.Sentry.addBreadcrumb({
+        category: 'pot-of-greed',
+        message: 'Initializing pog.js...',
+        level: 'info'
+    });
     
     var SIX_STRAIGHT = 7.2;
     var STRAIGHT_PLUS_PAIR = 7.35;
@@ -328,13 +326,11 @@ if (!pog) var pog = (function (root) {
         currentRound++;
         saveTranscriptMessage("Starting round "+(currentRound+1)+"...");
 
-        if (SENTRY_INITIALIZED) {
-            Sentry.addBreadcrumb({
-                category: 'game',
-                message: 'Starting round '+(currentRound+1)+'...',
-                level: 'info'
-            });
-        }
+        Sentry.addBreadcrumb({
+            category: 'game',
+            message: 'Starting round '+(currentRound+1)+'...',
+            level: 'info'
+        });
             
         // add the extra PoG cards in round 1
         if (currentRound === 0) {
