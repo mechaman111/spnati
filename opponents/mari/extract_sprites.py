@@ -347,7 +347,9 @@ def compute_parts_map(code: KisekaeCode):
         tuple(head_parts + ["mune", "dou"]) + BASE_PARTS["arm_right"]
     )
     parts_map["body_arms_full"] = (
-        tuple(head_parts + ["mune", "dou"]) + BASE_PARTS["arm_right"] + BASE_PARTS["arm_left"]
+        tuple(head_parts + ["mune", "dou"])
+        + BASE_PARTS["arm_right"]
+        + BASE_PARTS["arm_left"]
     )
 
     for t in parts_map.values():
@@ -357,7 +359,9 @@ def compute_parts_map(code: KisekaeCode):
     return parts_map, all_parts
 
 
-def update_bbox_info(base_folder: Path, bboxes: Dict[Path, Optional[Tuple[int, int, int, int]]]):
+def update_bbox_info(
+    base_folder: Path, bboxes: Dict[Path, Optional[Tuple[int, int, int, int]]]
+):
     cur_bboxes: Dict[str, Optional[Tuple[int, int, int, int]]] = {}
     bbox_file = base_folder.joinpath("bboxes.json")
 
@@ -371,11 +375,18 @@ def update_bbox_info(base_folder: Path, bboxes: Dict[Path, Optional[Tuple[int, i
             cur_bboxes[key] = None
         else:
             left, top, right, bottom = bbox
-            cur_bboxes[key] = { "left": left, "top": top, "right": right, "bottom": bottom }
+            cur_bboxes[key] = {
+                "left": left,
+                "top": top,
+                "right": right,
+                "bottom": bottom,
+            }
 
     with bbox_file.open("w", encoding="utf-8", newline="\n") as f:
         f.write("{")
-        for i, (filename, bbox_dict) in enumerate(sorted(cur_bboxes.items(), key=lambda kv: kv[0])):
+        for i, (filename, bbox_dict) in enumerate(
+            sorted(cur_bboxes.items(), key=lambda kv: kv[0])
+        ):
             if i > 0:
                 f.write(",")
             f.write('\n    "{}": {}'.format(filename, json.dumps(bbox_dict)))
@@ -460,9 +471,13 @@ async def do_disassembly(
 
     # Set the character shadow mode
     if args.shadow:
-        await do_command(client, KisekaeServerRequest.set_character_data(0, "bc", 4, True))
+        await do_command(
+            client, KisekaeServerRequest.set_character_data(0, "bc", 4, True)
+        )
     else:
-        await do_command(client, KisekaeServerRequest.set_character_data(0, "bc", 4, False))
+        await do_command(
+            client, KisekaeServerRequest.set_character_data(0, "bc", 4, False)
+        )
 
     if not out_folder.is_dir():
         out_folder.mkdir()
@@ -521,12 +536,19 @@ async def do_disassembly(
         s += " for " + disassemble_phase
     await progress.finish(s)
 
+
 async def export_individual_character(
-    client: KisekaeLocalClient, code: KisekaeCode, char_idx: int, parts: Iterable[str], base_dir: Path, args: argparse.Namespace, align_center: Optional[Tuple[int, int, int]] = None
+    client: KisekaeLocalClient,
+    code: KisekaeCode,
+    char_idx: int,
+    parts: Iterable[str],
+    base_dir: Path,
+    args: argparse.Namespace,
+    align_center: Optional[Tuple[int, int, int]] = None,
 ):
     character = code.characters[char_idx]
     char_code = KisekaeCode(character, version=code.version)
-    
+
     if (args.character_names is not None) and char_idx < len(args.character_names):
         char_path = base_dir.joinpath(args.character_names[char_idx])
         disassemble_phase = args.character_names[char_idx]
@@ -534,7 +556,16 @@ async def export_individual_character(
         char_path = base_dir.joinpath(str(char_idx + 1))
         disassemble_phase = "character " + str(char_idx + 1)
 
-    return await do_disassembly(client, char_code, parts, base_dir, char_path, disassemble_phase, args, align_center=align_center)
+    return await do_disassembly(
+        client,
+        char_code,
+        parts,
+        base_dir,
+        char_path,
+        disassemble_phase,
+        args,
+        align_center=align_center,
+    )
 
 
 async def main(
@@ -556,9 +587,13 @@ async def main(
                     center = None
 
                 for i in range(len(code.characters)):
-                    await export_individual_character(client, code, i, parts, base_dir, args, align_center=center)
+                    await export_individual_character(
+                        client, code, i, parts, base_dir, args, align_center=center
+                    )
             else:
-                await export_individual_character(client, code, args.character - 1, parts, base_dir, args)
+                await export_individual_character(
+                    client, code, args.character - 1, parts, base_dir, args
+                )
         else:
             await do_disassembly(client, code, parts, base_dir, base_dir, None, args)
 
@@ -589,7 +624,7 @@ def parse_code_file(file: TextIO) -> Tuple[KisekaeCode, Dict[str, Any]]:
             elif key == "align_z":
                 params["align_z"] = val.casefold()
             elif key == "shadow":
-                params["shadow"] = (val.casefold() == "true")
+                params["shadow"] = val.casefold() == "true"
             elif key == "camera":
                 m2 = re.match(r"([+\-]?\d+)\s*(?:,|\s+)\s*([+\-]?\d+)$", val)
                 params["camera_x"] = m2[1]
@@ -640,8 +675,12 @@ if __name__ == "__main__":
     ]
 
     parser = argparse.ArgumentParser()
-    parser.add_argument("--align", choices=("static", "default", "none"), default="default")
-    parser.add_argument("--align-z", choices=("static", "default", "none"), default="default")
+    parser.add_argument(
+        "--align", choices=("static", "default", "none"), default="default"
+    )
+    parser.add_argument(
+        "--align-z", choices=("static", "default", "none"), default="default"
+    )
     parser.add_argument("--show-shadow", "-s", action="store_true", dest="shadow")
     parser.add_argument("--from-matrix", "-m", action="store_true")
     parser.add_argument("--disable-hair", "-d", action="store_true")
@@ -701,7 +740,9 @@ if __name__ == "__main__":
         ) as f:
             code, params = parse_code_file(f)
             for key, val in params.items():
-                if (getattr(args, key) is None) or (key in ("align", "align_z", "shadow")):
+                if (getattr(args, key) is None) or (
+                    key in ("align", "align_z", "shadow")
+                ):
                     setattr(args, key, val)
                 elif (key == "character_names") and (len(args.character_names == 0)):
                     args.character_names = val
