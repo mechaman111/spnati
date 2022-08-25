@@ -40,8 +40,6 @@ var HUMAN_PLAYER = 0;
 /* Directory Constants */
 var IMG = 'img/';
 
-var backgroundImage;
-
 /*var OPP = 'opponents/';
 #The "OPP" folder abbreviation was used to slightly shorten a few lines in spniSelect that looked for opponents in the opponents folder.
 #Now that opponents can be specified in any folder, this is no longer required.*/
@@ -1330,30 +1328,7 @@ function autoResizeFont ()
         return;
     }
 
-    if (backgroundImage && backgroundImage.height && backgroundImage.width) {
-        if (h > (3/4) * w) {
-            h = (3/4) * w;
-        } else {
-            w = 4 * h / 3;
-        }
-        if (activeBackground.viewport) {
-            var scale = backgroundImage.height / (activeBackground.viewport.bottom - activeBackground.viewport.top);
-            var offset = ((backgroundImage.height - activeBackground.viewport.bottom) - activeBackground.viewport.top) / 2;
-            $("body").css("background-size", "auto " + Math.round(scale * h) + "px");
-            $("body").css("background-position-y", "calc(50% + " + h * offset / backgroundImage.height + "px)");
-        } else {
-            var ar = backgroundImage.width / backgroundImage.height;
-            if (ar > 4/3) {
-                var scale = Math.sqrt(16/9 / ar);
-                if (scale < 1.0) scale = 1.0;
-                $("body").css("background-size", "auto " + Math.round(scale * h) + "px");
-            } else {
-                var scale = Math.sqrt(ar);
-                $("body").css("background-size", Math.round(scale * w) + "px auto");
-            }
-            $("body").css("background-position-y", '');
-        }
-    }
+    activeBackground.update();
 }
 
 $('.modal').on('show.bs.modal', function() {
