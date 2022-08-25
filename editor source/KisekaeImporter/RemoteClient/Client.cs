@@ -226,7 +226,7 @@ namespace KisekaeImporter.RemoteClient
 				_requestId = 1;
 			}
 			NetworkStream stream = _clientSocket.GetStream();
-			stream.ReadTimeout = 10000;
+			stream.ReadTimeout = 60000;
 
 			string payload = request.Encode(id);
 			byte[] lengthB = new byte[4] {
