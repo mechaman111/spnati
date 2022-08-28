@@ -1332,7 +1332,7 @@ Opponent.prototype.loadXMLTriggers = function () {
                 this.recordTargetedCase(c);
 
                 c.getStages().forEach(function (stage) {
-                    var key = trigger+':'+stage;
+                    var key = c.trigger+':'+stage;  // Case constructor may have altered the trigger
                     if (!this.cases.has(key)) {
                         this.cases.set(key, []);
                     }

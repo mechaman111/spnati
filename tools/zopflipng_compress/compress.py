@@ -2,14 +2,14 @@
 
 from __future__ import annotations
 
+import argparse
 import asyncio
+import math
+import os
+import sys
+import time
 from pathlib import Path
 from typing import List, Optional, Tuple
-import time
-import sys
-import os
-import argparse
-import math
 
 processed: List[Tuple[Path, int, int, float, float, bool]] = []
 all_files: List[Path] = []
@@ -68,11 +68,18 @@ def format_time(t: float) -> str:
 
 
 async def compress_file_loop(
-    process_queue: asyncio.Queue, out_dir: Path, all_filters: bool, extra_iterations: bool, force_all: bool
+    process_queue: asyncio.Queue,
+    out_dir: Path,
+    all_filters: bool,
+    extra_iterations: bool,
+    force_all: bool,
 ):
     while process_queue.qsize() > 0:
+        infile: Path
+        rel_infile: Path
+
         try:
-            infile: Path = process_queue.get_nowait()
+            infile, rel_infile = process_queue.get_nowait()
         except asyncio.QueueEmpty:
             return
 
@@ -80,7 +87,8 @@ async def compress_file_loop(
         in_size = in_st.st_size
         start_time = time.perf_counter()
 
-        outfile = out_dir.joinpath(infile.parts[-1])
+        outfile = out_dir.joinpath(rel_infile)
+        outfile.parent.mkdir(parents=True, exist_ok=True)
         do_compress = (not outfile.is_file()) or force_all
         if do_compress:
             # NOTE: could also use --filters=01234mepb here to squeeze out a few hundred more bytes per image, at the cost of slowing compression down a bit
@@ -108,13 +116,24 @@ async def compress_file_loop(
 
         out_size = outfile.stat().st_size
         processed.append(
-            (infile, in_size, out_size, start_time, time.perf_counter(), do_compress)
+            (
+                rel_infile,
+                in_size,
+                out_size,
+                start_time,
+                time.perf_counter(),
+                do_compress,
+            )
         )
+
+        if out_size >= in_size:
+            outfile.unlink()
+
         process_queue.task_done()
 
 
 async def term_loop(progress: ProgressLine):
-    justify_file = max(len(path.parts[-1]) for path in all_files)
+    justify_file = max(len(path.as_posix()) for path in all_files)
 
     while True:
         total_new_sz = 0
@@ -134,7 +153,7 @@ async def term_loop(progress: ProgressLine):
             total_reduction = 1.0
 
         if len(processed) > 0:
-            last_file = processed[-1][0].parts[-1].ljust(justify_file)
+            last_file = processed[-1][0].as_posix().ljust(justify_file)
         else:
             last_file = "<none>".ljust(justify_file)
 
@@ -157,15 +176,40 @@ async def term_loop(progress: ProgressLine):
         await asyncio.sleep(0.05)
 
 
-async def main(target_dir: Path, out_dir: Path, n_parallel: Optional[int], all_filters: bool, extra_iterations: bool, force_all: bool):
+def read_gitignores(folder: Path) -> List[Path]:
+    ignored = []
+    for gitignore in folder.glob("**/.gitignore"):
+        with gitignore.open("r", encoding="utf-8") as f:
+            for line in filter(lambda s: len(s) > 0, map(str.strip, f)):
+                ignored.extend(gitignore.parent.glob(line))
+    return ignored
+
+
+async def main(
+    target_dir: Path,
+    out_dir: Path,
+    n_parallel: Optional[int],
+    all_filters: bool,
+    extra_iterations: bool,
+    force_all: bool,
+    ignore: List[Path],
+):
     if not out_dir.is_dir():
         out_dir.mkdir()
 
     process_queue = asyncio.Queue()
-    for path in target_dir.iterdir():
-        if path.is_file() and path.suffix.casefold().endswith("png"):
-            process_queue.put_nowait(path)
-            all_files.append(path)
+    for path in filter(Path.is_file, target_dir.glob("**/*.png")):
+        if (
+            any(path.is_relative_to(ignored_path) for ignored_path in ignore)
+            or path.is_relative_to(out_dir)
+            or path in ignore
+        ):
+            continue
+
+        print(path.as_posix())
+
+        process_queue.put_nowait((path, path.relative_to(target_dir)))
+        all_files.append(path)
 
     progress = ProgressLine()
     tasks: List[asyncio.Task] = [asyncio.create_task(term_loop(progress))]
@@ -175,7 +219,13 @@ async def main(target_dir: Path, out_dir: Path, n_parallel: Optional[int], all_f
             n_parallel = 1
 
     for _ in range(n_parallel):
-        tasks.append(asyncio.create_task(compress_file_loop(process_queue, out_dir, all_filters, extra_iterations, force_all)))
+        tasks.append(
+            asyncio.create_task(
+                compress_file_loop(
+                    process_queue, out_dir, all_filters, extra_iterations, force_all
+                )
+            )
+        )
 
     await process_queue.join()
     for task in tasks:
@@ -208,19 +258,72 @@ async def main(target_dir: Path, out_dir: Path, n_parallel: Optional[int], all_f
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser("compress.py", description="Compress images in parallel using zopflipng.", epilog="""
+    parser = argparse.ArgumentParser(
+        "compress.py",
+        description="Compress images in parallel using zopflipng.",
+        epilog="""
     If no out_dir is passed, images will be written to a 'compressed/' subdirectory in the target directory by default.
     Images that already exist in the destination directory will be skipped by default (unless -f/--force is passed).
-    """)
-    parser.add_argument("-b", "--all-filters", action="store_true", help="Try brute-force filter for images (i.e. pass --filters=01234mepb to zopflipng). Typically not necessary.")
-    parser.add_argument("-m", "--compress-more", action="store_true", help="Compress more: use more iterations (i.e. pass -m to zopflipng). Typically not necessary.")
-    parser.add_argument("-p", "--parallelism", type=int, help="Number of zopflipng processes to run in parallel (default: # of CPU cores available)")
-    parser.add_argument("-f", "--force", action="store_true", help="Attempt to compress images even if they already exist in the destination directory")
-    parser.add_argument("in_dir", type=Path, help="Source directory with images to compress.")
-    parser.add_argument("out_dir", nargs="?", type=Path, default=None, help="Destination directory for writing compressed images (will be created if necessary).")
+    """,
+    )
+    parser.add_argument(
+        "-b",
+        "--all-filters",
+        action="store_true",
+        help="Try brute-force filter for images (i.e. pass --filters=01234mepb to zopflipng). Typically not necessary.",
+    )
+    parser.add_argument(
+        "-m",
+        "--compress-more",
+        action="store_true",
+        help="Compress more: use more iterations (i.e. pass -m to zopflipng). Typically not necessary.",
+    )
+    parser.add_argument(
+        "-p",
+        "--parallelism",
+        type=int,
+        help="Number of zopflipng processes to run in parallel (default: # of CPU cores available)",
+    )
+    parser.add_argument(
+        "-i",
+        "--ignore",
+        type=Path,
+        nargs="*",
+        help="Ignore images under path (can be specified multiple times)",
+    )
+    parser.add_argument(
+        "-f",
+        "--force",
+        action="store_true",
+        help="Attempt to compress images even if they already exist in the destination directory",
+    )
+    parser.add_argument(
+        "in_dir", type=Path, help="Source directory with images to compress."
+    )
+    parser.add_argument(
+        "out_dir",
+        nargs="?",
+        type=Path,
+        default=None,
+        help="Destination directory for writing compressed images (will be created if necessary).",
+    )
     args = parser.parse_args()
 
     if args.out_dir is None:
         args.out_dir = args.in_dir.joinpath("compressed")
 
-    asyncio.run(main(args.in_dir, args.out_dir, args.parallelism, args.all_filters, args.compress_more, args.force))
+    if args.ignore is None:
+        args.ignore = []
+    args.ignore.extend(read_gitignores(args.in_dir))
+
+    asyncio.run(
+        main(
+            args.in_dir,
+            args.out_dir,
+            args.parallelism,
+            args.all_filters,
+            args.compress_more,
+            args.force,
+            args.ignore,
+        )
+    )

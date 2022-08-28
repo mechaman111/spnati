@@ -22,10 +22,11 @@ var backgrounds = {}
 var BACKGROUND_CONFIG_FILE = 'backgrounds.xml';
 
 /* Placeholder default value just in case we fail to load backgrounds.xml. */
-var defaultBackground = new Background('default', 'img/backgrounds/inventory.png', {
-    name: "The Inventory",
-    author: "Zeuses-Swan-Song",
-});
+var defaultBackground = new Background(
+    'default',
+    [new BackgroundLayer('img/backgrounds/inventory.png', true)],
+    { name: "The Inventory", author: "Zeuses-Swan-Song" }
+);
 var defaultBackgroundID = 'inventory';
 
 /* The currently displayed background */
@@ -44,6 +45,146 @@ var UI_THEMES = {
     "dark-mode": "dark-mode"
 };
 
+/**
+ * 
+ * @param {string} src 
+ * @param {boolean} repeat 
+ * @param {number} [viewportTop] 
+ * @param {number} [viewportBottom] 
+ */
+function BackgroundLayer(src, repeat, viewportTop, viewportBottom) {
+    /**
+     * The path to this layer's image.
+     * @type {string}
+     */
+    this.src = src;
+
+    /**
+     * Whether to repeat this layer's image horizontally.
+     * @type {boolean}
+     */
+    this.repeat = repeat;
+
+    /**
+     * The top image coordinate to match with the top of the play area.
+     * @type {number | undefined}
+     */
+    this.viewportTop = (!isNaN(viewportTop) && viewportTop !== undefined) ? viewportTop : undefined;
+
+    /**
+     * The bottom image coordinate to match with the bottom of the play area.
+     * @type {number | undefined}
+     */
+    this.viewportBottom = (!isNaN(viewportBottom) && viewportBottom !== undefined) ? viewportBottom : undefined;
+
+    /**
+     * A callback for when this image is loaded.
+     * @type {undefined | (layer: BackgroundLayer) => void}
+     */
+    this.onload = undefined;
+
+    /**
+     * Whether or not this image has been loaded.
+     * @type {boolean}
+     */
+    this.loaded = false;
+
+    /**
+     * The width of this background image.
+     * @type {number}
+     */
+    this.width = undefined;
+
+    /**
+     * The height of this background image.
+     * @type {number}
+     */
+    this.height = undefined;
+
+    /**
+     * An Image element for performing computations with this background image.
+     * @type {HTMLImageElement?}
+     */
+    this.img = undefined;
+}
+
+/**
+ * Wait for this layer's image to load.
+ * @returns {Promise<void>}
+ */
+BackgroundLayer.prototype.waitForLoad = function () {
+    return new Promise((resolve) => {
+        if (this.loaded) {
+            resolve();
+        } else {
+            let oldOnLoad = this.onload;
+            this.onload = (layer) => {
+                resolve();
+                if (oldOnLoad) oldOnLoad(layer);
+            };
+
+            if (!this.img) {
+                this.img = new Image();
+                this.img.onload = this.img.onerror = (ev) => {
+                    if (!this.height) this.height = this.img.naturalHeight;
+                    if (!this.width) this.width = this.img.naturalWidth;
+                    this.loaded = true;
+                    if (this.onload) this.onload(this);
+                };
+
+                this.img.src = this.src;
+            }
+        }
+    });
+}
+
+/**
+ * Compute CSS property values for this background layer.
+ * @param {number} w The width of the display area.
+ * @param {number} h The height of the display area.
+ * @returns {Promise<{
+ *  "background-image": string,
+ *  "background-size": string,
+ *  "background-position-y": string,
+ *  "background-repeat": string,
+ * }>}
+ */
+BackgroundLayer.prototype.computeDisplayProperties = function (w, h) {
+    if (h > (3/4) * w) {
+        h = (3/4) * w;
+    } else {
+        w = 4 * h / 3;
+    }
+
+    return this.waitForLoad().then(() => {
+        var bgSize = "auto auto";
+        var bgPositionY = "center";
+
+        if ((this.viewportBottom !== undefined) && (this.viewportTop !== undefined)) {
+            let scale = this.height / (this.viewportBottom - this.viewportTop);
+            let offset = ((this.height - this.viewportBottom) - this.viewportTop) / 2;
+            bgSize = "auto " + Math.round(scale * h) + "px";
+            bgPositionY = "calc(50% + " + h * offset / this.height + "px)";
+        } else {
+            let ar = this.width / this.height;
+            if (ar > 4/3) {
+                let scale = Math.sqrt(16/9 / ar);
+                if (scale < 1.0) scale = 1.0;
+                bgSize = "auto " + Math.round(scale * h) + "px";
+            } else {
+                let scale = Math.sqrt(ar);
+                bgSize = Math.round(scale * w) + "px auto";
+            }
+        }
+
+        return {
+            "background-image": "url(" + this.src + ")",
+            "background-size": bgSize,
+            "background-position-y": bgPositionY,
+            "background-repeat": (this.repeat ? "repeat-x" : "no-repeat")
+        };
+    });
+}
 
 /**
  * Constructor for game Background objects.
@@ -52,13 +193,20 @@ var UI_THEMES = {
  * @this {Background}
  * @param {string} id The internal ID for this background. 
  *  `~background~` evaluates to this value.
- * @param {string} src The path to the image for this background.
+ * @param {BackgroundLayer[]} layers The image layers for this background.
  * @param {Object} metadata Metadata to associate with this background, 
  *  such as `name`, `author`, `filter`, `tags`, etc.
  */
-function Background (id, src, metadata) {
+function Background (id, layers, metadata) {
+    /**
+     * @type {string}
+     */
     this.id = id;
-    this.src = src;
+
+    /**
+     * @type {BackgroundLayer[]}
+     */
+    this.layers = layers;
 
     /** 
      * @type {string}
@@ -96,16 +244,36 @@ function Background (id, src, metadata) {
 
     /** 
      * @type {Object}
-     * The top and bottom coordinates to be matched with the top and bottom of the play area.
-     */
-    this.viewport = metadata.viewport;
-
-    /** 
-     * @type {Object}
      * Contains the raw metadata passed to the Background constructor.
      */
     this.metadata = metadata;
 }
+
+Background.prototype.update = function () {
+    return Promise.all(this.layers.map(
+        (layer) => layer.computeDisplayProperties(window.innerWidth, window.innerHeight)
+    )).then((layerProps) => {
+        /* Combine the properties from each layer into a single set of properties with comma-separated values. */
+        var combinedProps = layerProps.reduce(function (acc, props) {
+            Object.entries(props).forEach(function (pair) {
+                var key = pair[0];
+                var val = pair[1];
+
+                if (acc[key]) {
+                    acc[key] += ", " + val;
+                } else {
+                    acc[key] = val;
+                }
+            });
+
+            return acc;
+        }, {});
+
+        $("body").css(combinedProps);
+        $('.screen').css('filter', this.filter || '');
+    });
+}
+
 
 /**
  * Sets this background to be displayed.
@@ -114,29 +282,11 @@ function Background (id, src, metadata) {
  * loads.
  */
 Background.prototype.activateBackground = function () {
-    /* backgroundImage is defined in spniCore */
-    if (backgroundImage === undefined) {
-        backgroundImage = new Image();
-    }
-
     console.log("Activating background: " + this.id);
-    return new Promise(function (resolve, reject) {
-        backgroundImage.onload = function () {
-            $("body").css("background-image", "url(" + this.src + ")");
-            activeBackground = this;
-
-            $('.screen').css('filter', this.filter || '');
-            autoResizeFont();
-
-            resolve(this);
-        }.bind(this);
-
-        backgroundImage.onerror = function () {
-            reject();
-        }
-
-        backgroundImage.src = this.src;
-    }.bind(this));
+    return this.update().then(() => {
+        activeBackground = this;
+        return this;
+    });
 }
 
 /**
@@ -156,7 +306,7 @@ Background.prototype.activateBackground = function () {
  */
 function loadBackgroundFromXml($xml, auto_tag_values) {
     var id = $xml.attr('id');
-    var src = $xml.children('src').text();
+    var layers = [];
     var metadata = {
         tags: []
     };
@@ -165,13 +315,19 @@ function loadBackgroundFromXml($xml, auto_tag_values) {
         var $elem = $(this);
         var tagName = $elem.prop('tagName').toLowerCase();
 
-        if (tagName === 'tags') {
+        if (tagName == 'src') {
+            /* Use unshift() instead of push() so that the last defined layer appears on top. */
+            layers.unshift(new BackgroundLayer(
+                $elem.text(),
+                ($elem.attr("repeat") !== "false"),
+                parseInt($elem.attr("top"), 10),
+                parseInt($elem.attr("bottom"), 10),
+            ));
+        } else if (tagName === 'tags') {
             $elem.children('tag').each(function() {
                 var tag = $(this).text() || '';
                 metadata.tags.push(fixupTagFormatting(tag));
             });
-        } else if (tagName === 'viewport') {
-            metadata.viewport = { top: $elem.attr('top'), bottom: $elem.attr('bottom') };
         } else {
             var val = $elem.text() || true;
 
@@ -187,7 +343,7 @@ function loadBackgroundFromXml($xml, auto_tag_values) {
         }
     });
 
-    return new Background(id, src, metadata);
+    return new Background(id, layers, metadata);
 }
 
 /**
@@ -406,11 +562,18 @@ $('ul#options-player-finishing-effect').on('click', 'a', function() {
  * Push a selection image for the given background onto the
  * background selection modal.
  ************************************************************/
+
+/**
+ * 
+ * @param {Background} background 
+ */
 function pushBackgroundOption (background) {
     var container = $('<div>', {
         "class": "background-option",
         "data-background": background.id,
-        "css": {"background-image": "url(" + background.src + ")"},
+        "css": {
+            "background-image": background.layers.map((layer) => "url(" + layer.src + ")").join(", ")
+        },
         "click": function() {
             optionsBackground = background;
             optionsBackground.activateBackground();

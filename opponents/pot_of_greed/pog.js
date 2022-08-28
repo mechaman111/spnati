@@ -43,14 +43,12 @@ if (!pog) var pog = (function (root) {
 
     var exports = {};
 
-    if (root.SENTRY_INITIALIZED) {
-        root.Sentry.setTag('pog-loaded', true);
-        root.Sentry.addBreadcrumb({
-            category: 'pot-of-greed',
-            message: 'Initializing pog.js...',
-            level: 'info'
-        });
-    }
+    root.Sentry.setTag('pog-loaded', true);
+    root.Sentry.addBreadcrumb({
+        category: 'pot-of-greed',
+        message: 'Initializing pog.js...',
+        level: 'info'
+    });
     
     var SIX_STRAIGHT = 7.2;
     var STRAIGHT_PLUS_PAIR = 7.35;
@@ -92,14 +90,11 @@ if (!pog) var pog = (function (root) {
     function reportException(prefix, e) {
         console.log("[Pot of Greed] Exception swallowed " + prefix + ": ");
 
-        if (USAGE_TRACKING && SENTRY_INITIALIZED) {
-            Sentry.withScope(function (scope) {
-                scope.setTag("pot-of-greed-error", true);
-                scope.setExtra("where", prefix);
-                captureError(e);
-            });
-            return;
-        }
+        Sentry.withScope(function (scope) {
+            scope.setTag("pot-of-greed-error", true);
+            scope.setExtra("where", prefix);
+            captureError(e);
+        });
 
         captureError(e);
     }
@@ -331,13 +326,11 @@ if (!pog) var pog = (function (root) {
         currentRound++;
         saveTranscriptMessage("Starting round "+(currentRound+1)+"...");
 
-        if (SENTRY_INITIALIZED) {
-            Sentry.addBreadcrumb({
-                category: 'game',
-                message: 'Starting round '+(currentRound+1)+'...',
-                level: 'info'
-            });
-        }
+        Sentry.addBreadcrumb({
+            category: 'game',
+            message: 'Starting round '+(currentRound+1)+'...',
+            level: 'info'
+        });
             
         // add the extra PoG cards in round 1
         if (currentRound === 0) {
@@ -1069,9 +1062,9 @@ if (!pog) var pog = (function (root) {
         /* NO NEED FOR POG SUPPORT - POG IS AVERAGE */
         if (strategy == eStrategies.WORST) {
             if (player.hand.strength == STRAIGHT || player.hand.strength == FLUSH || player.hand.strength >= STRAIGHT_FLUSH) {
-                var sortedRanks = hand.map(function(c) { return c.rank; }).sort();
+                var sortedRanks = hand.map(c => c.rank).sort((a,b) => a-b); // necessary because string sorting is applied, so 1, 10, 2 can happen.
                 // Keep the two lowest cards.
-                player.hand.tradeIns = hand.map(function(c) { return c.rank != sortedRanks[0] && c.rank != sortedRanks[1]; })
+                player.hand.tradeIns = hand.map(c => sortedRanks.indexOf(c.rank) > 1);
                 return;
             }
             

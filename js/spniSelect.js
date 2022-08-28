@@ -224,6 +224,10 @@ function splitCreatorField (field) {
             });
 }
 
+String.prototype.simplifyDiacritics = function() {
+    return this.toLowerCase().normalize("NFKD").replace(/[\u0300-\u036f]/g, "");
+}
+
 /************************************************************
  * Loads and parses the main opponent listing file.
  ************************************************************/
@@ -645,16 +649,20 @@ function updateGroupSelectScreen (ignore_bg) {
  * screen.
  */
 function filterOpponent(opp, name, source, creator, tags, minLayers, maxLayers) {
+    name = name.simplifyDiacritics();
+    source = source.simplifyDiacritics();
+    creator = creator.simplifyDiacritics();
+
     // filter by name
     if (name
-        && opp.selectLabel.toLowerCase().indexOf(name) < 0
-        && opp.first.toLowerCase().indexOf(name) < 0
-        && opp.last.toLowerCase().indexOf(name) < 0) {
+        && opp.selectLabel.simplifyDiacritics().indexOf(name) < 0
+        && opp.first.simplifyDiacritics().indexOf(name) < 0
+        && opp.last.simplifyDiacritics().indexOf(name) < 0) {
         return false;
     }
 
     // filter by source
-    if (source && opp.source.toLowerCase().indexOf(source) < 0) {
+    if (source && opp.source.simplifyDiacritics().indexOf(source) < 0) {
         return false;
     }
 
@@ -671,7 +679,7 @@ function filterOpponent(opp, name, source, creator, tags, minLayers, maxLayers) 
     }
     
     // filter by creator
-    if (creator && opp.artist.toLowerCase().indexOf(creator) < 0 && opp.writer.toLowerCase().indexOf(creator) < 0) {
+    if (creator && opp.artist.simplifyDiacritics().indexOf(creator) < 0 && opp.writer.simplifyDiacritics().indexOf(creator) < 0) {
         return false;
     }
 

@@ -89,9 +89,9 @@ function determineAIAction (player) {
     /* Player tries hard to lose */
     if (strategy == eStrategies.WORST) {
         if (player.hand.strength == STRAIGHT || player.hand.strength == FLUSH || player.hand.strength >= STRAIGHT_FLUSH) {
-            var sortedRanks = hand.map(function(c) { return c.rank; }).sort();
+            var sortedRanks = hand.map(c => c.rank).sort((a,b) => a-b); // necessary because string sorting is applied, so 1, 10, 2 can happen.
             // Keep the two lowest cards.
-            player.hand.tradeIns = hand.map(function(c) { return c.rank != sortedRanks[0] && c.rank != sortedRanks[1]; })
+            player.hand.tradeIns = hand.map(c => sortedRanks.indexOf(c.rank) > 1);
             return;
         }
         player.hand.tradeIns = [false, false, false, false, false];
