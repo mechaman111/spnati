@@ -715,7 +715,9 @@ jQuery.fn.flexdatalist = function (_option, _value) {
                         return;
                     }
 
-                    var data = $li.data(),
+                    var values = _this.fvalue.get(),
+                        index = $li.index(),
+                        data = $li.data(),
                         action = $li.hasClass('disabled') ? 'enable' : 'disable',
                         eventArgs = [{value: data.value, text: data.text, action: action}, options];
 
@@ -723,18 +725,13 @@ jQuery.fn.flexdatalist = function (_option, _value) {
 
                     if (action === 'enable') {
                         $li.removeClass('disabled');
+                        values[index] = values[index].slice(1);
                     } else {
                         $li.addClass('disabled');
+                        values[index] = '-' + values[index];
                     }
 
-                    var current = [];
-                    $multiple.find('li.toggle:not(.disabled)').each(function () {
-                        var $item = $(this);
-                        current.push($item.data('value'));
-                    });
-
-                    current = _this.fvalue.toStr(current);
-                    _this.value = current;
+                    _this.value = _this.fvalue.toStr(values);
 
                     $this
                         .trigger('after:flexdatalist.toggle', eventArgs)
@@ -794,7 +791,7 @@ jQuery.fn.flexdatalist = function (_option, _value) {
                     var $inputContainer = $multiple.find('li.input-container');
                     var options = _this.options.get();
                     return $('<li>')
-                        .addClass('value' + (options.toggleSelected ? ' toggle' : ''))
+                        .addClass('value' + (options.toggleSelected ? ' toggle' + (val.startsWith('-') ? ' disabled' : ''): ''))
                         .append('<span class="text">' + txt + '</span>')
                         .append('<span class="fdl-remove">&times;</span>')
                         .data({
@@ -898,6 +895,8 @@ jQuery.fn.flexdatalist = function (_option, _value) {
                     } else {
                         text = this.placeholders.replace(item, options.textProperty, text);
                     }
+                } else if (options.toggleSelected && text.startsWith('-')) {
+                    text = text.slice(1);
                 }
 
                 text = _this.escapeHtml(text);

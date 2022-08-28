@@ -659,7 +659,14 @@ function filterOpponent(opp, name, source, creator, tags, minLayers, maxLayers) 
     }
 
     // filter by tag
-    if (tags && !tags.every(tag => (opp.searchTags && opp.searchTags.indexOf(tag) >= 0))) {
+    if (tags && !tags.every(function(tag) {
+        if (!opp.searchTags) return false;
+        if (tag.startsWith('-')) {
+            return !opp.searchTags.includes(tag.slice(1));
+        } else {
+            return opp.searchTags.includes(tag);
+        }
+    })) {
         return false;
     }
     
