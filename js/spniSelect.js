@@ -924,7 +924,7 @@ function updateSelectableGroups() {
     var groupname = $groupSearchGroupName.val().toLowerCase();
     var name = $groupSearchName.val().toLowerCase();
     var source = $groupSearchSource.val().toLowerCase();
-    var tag = canonicalizeTag($groupSearchTag.val());
+    var tags = $groupSearchTag.flexdatalist('value').map(canonicalizeTag);
 
     // reset filters
     selectableGroups = loadedGroups.filter(function(group) {
@@ -942,8 +942,16 @@ function updateSelectableGroups() {
             return opp.source.toLowerCase().indexOf(source) >= 0;
         })) return false;
 
-        if (tag && !group.opponents.some(function(opp) {
-            return opp.searchTags && opp.searchTags.indexOf(canonicalizeTag(tag)) >= 0;
+        if (tags && !tags.every(function(tag) {
+            if (tag.startsWith('-')) {
+                return !group.opponents.some(function(opp) {
+                    return !opp.searchTags || opp.searchTags.includes(tag.slice(1));
+                });
+            } else {
+                return group.opponents.some(function(opp) {
+                    return opp.searchTags && opp.searchTags.includes(tag);
+                });
+            };
         })) return false;
 
         if ((chosenGroupGender == 2 || chosenGroupGender == 3)
@@ -1358,6 +1366,7 @@ function groupSelectScreen_keyUp(e)
 {
     console.log(e)
     if ($('#group-select-screen').is(':visible')
+        && !$groupSearchModal.is(':visible')
         && !$groupButton.prop('disabled')) {
         if (e.keyCode == 37) { // left arrow
             changeGroupPage(false, -1);
