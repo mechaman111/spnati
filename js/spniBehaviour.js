@@ -1468,6 +1468,9 @@ function expandDialogue (dialogue, self, target, bindings) {
                                     'July', 'August', 'September', 'November', 'December'][new Date().getMonth()];
                 }
                 break;
+            case 'year':
+                substitution = new Date().getFullYear();
+                break;
             case 'blank':
                 return '';
             case 'rng':
