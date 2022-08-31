@@ -1716,10 +1716,9 @@ function checkMarker(predicate, self, target, currentOnly) {
         
         if (match[3]) {
             op = match[4];
-            if (!isNaN(parseInt(match[5], 10))) {
-                cmpVal = parseInt(match[5], 10);
-            } else {
-                cmpVal = expandDialogue(match[5], self, target);
+            cmpVal = expandDialogue(match[5], self, target);
+            if (!isNaN(parseInt(cmpVal, 10))) {
+                cmpVal = parseInt(cmpVal, 10);
             }
         } else {
             op = '!!';
