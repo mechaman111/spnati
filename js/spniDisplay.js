@@ -1609,10 +1609,7 @@ OpponentDetailsDisplay.prototype.update = function (opponent) {
     this.writerLabel.html(opponent.writer);
     this.artistLabel.html(opponent.artist);
     if (this.opponent.lastUpdated) {
-        var timeStyle = Date.now() - this.opponent.lastUpdated > TESTING_MAX_AGE ? undefined : 'short';
-        this.lastUpdateLabel.text(new Intl.DateTimeFormat([], { dateStyle: 'short', timeStyle: timeStyle })
-                                  .format(new Date(opponent.lastUpdated))
-                                  + " (" + fuzzyTimeAgo(opponent.lastUpdated) + ")");
+        this.lastUpdateLabel.text(fuzzyTimeAgo(opponent.lastUpdated));
     } else {
         this.lastUpdateLabel.text('Unknown');
     }
