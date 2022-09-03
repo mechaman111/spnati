@@ -1,3 +1,8 @@
+const DAY_MS = 24 * 60 * 60 * 1000;
+
+/* Order is important (events in earlier listed files take priority over ones defined later) */
+const EVENT_FILES = ["events.xml", "birthdays.xml"];
+
 /** @type {HighlightedAttributeList} */
 var eventCostumeSettings = null;
 
@@ -27,14 +32,12 @@ var activeGameEvents = [];
  * @type {boolean} */
 var eventSortingActive = false;
 
-const DAY_MS = 24 * 60 * 60 * 1000;
-
 var $announcementDropdown = $("#title-announcement-dropdown");
 var $titleResortButton = $("#title-resort-button");
 var $dropdownResortButton = $("#dropdown-resort-button");
 
 /**
- * Parse a child object of a date range element (a <from>, <to>, or <weekOf> element).
+ * Parse a child object of a date range element (an <on>, <from>, <to>, or <weekOf> element).
  * @param {JQuery} $xml 
  * @returns {Date}
  */
@@ -78,6 +81,7 @@ function DateRange(startDate, endDate, override) {
 /**
  * Parse a <date> element.
  * @param {JQuery} $xml 
+ * @param {boolean} useUTC
  * @returns {DateRange}
  */
 DateRange.parseRange = function ($xml, useUTC) {
@@ -116,7 +120,8 @@ DateRange.parseRange = function ($xml, useUTC) {
 /**
  * Parse a <weekOf> element.
  * @param {JQuery} $xml 
- * @returns 
+ * @param {boolean} useUTC
+ * @returns {DateRange}
  */
 DateRange.parseWeekOf = function ($xml, useUTC) {
     var refDate = parseDateRangeElem($xml, useUTC);
@@ -141,6 +146,19 @@ DateRange.parseWeekOf = function ($xml, useUTC) {
     var endTs = startTs + (nDays * DAY_MS);
 
     return new DateRange(new Date(startTs), new Date(endTs), override);
+}
+
+/**
+ * Parse an <on> element.
+ * @param {JQuery} $xml
+ * @param {boolean} useUTC
+ * @returns {DateRange}
+ */
+DateRange.parseSingleDay = function ($xml, useUTC) {
+    var from = parseDateRangeElem($xml, useUTC);
+    var to = new Date(from.getTime() + DAY_MS);
+    var override = (($xml.attr("override") || "").trim().toLowerCase() === "true");
+    return new DateRange(from, to, override);
 }
 
 /**
@@ -243,22 +261,28 @@ HighlightedAttributeList.parse = function ($xml, selector) {
 
 /**
  * Merge multiple attribute lists together.
- * If multiple lists specify a given attribute, the value from the
- * first overlapping list wins.
+ * If multiple lists specify a given attribute, the value from the first overlapping list wins.
+ * (Except for overlapping `sort` values, which are isntead added together.)
  * @param {HighlightedAttributeList[]} lists
  * @returns {HighlightedAttributeList}
  */
 HighlightedAttributeList.merge = function (lists) {
-    function mergeKV (dest, src) {
+    function mergeKV (dest, src, mergeFn) {
         Object.keys(src).forEach(function (key) {
-            if (src[key] !== undefined && dest[key] === undefined) dest[key] = src[key];
+            if (src[key] !== undefined) {
+                if (dest[key] === undefined) {
+                    dest[key] = src[key];
+                } else if (mergeFn) {
+                    dest[key] = mergeFn(dest[key], src[key]);
+                }
+            }
         });
     }
 
     return lists.reduce(function (acc, list) {
         list.ids.forEach(function (id) { acc.ids.add(id); });
         mergeKV(acc.highlights, list.highlights);
-        mergeKV(acc.sorting, list.sorting);
+        mergeKV(acc.sorting, list.sorting, (a, b) => a + b);
         mergeKV(acc.partitions, list.partitions);
         mergeKV(acc.prefills, list.prefills);
         mergeKV(acc.allowTestingGuests, list.allowTestingGuests);
@@ -607,6 +631,10 @@ function parseEventElement ($xml) {
         dateRanges.push(DateRange.parseWeekOf($(elem), useUTC));
     });
 
+    $xml.find("on").each(function (index, elem) {
+        dateRanges.push(DateRange.parseSingleDay($(elem), useUTC));
+    });
+
     var altCostumes = HighlightedAttributeList.parse($xml, "costumes");
     var background = $xml.children("background").text() || null;
     var candyImages = loadChildSet($xml, "candy>path");
@@ -629,6 +657,7 @@ function parseEventElement ($xml) {
     return new GameEvent(id, name, dateRanges, altCostumes, background, candyImages, fillTags, includeStatuses, characters, resortInfo, announceInfo, useUTC);
 }
 
+
 /**
  * @returns {Promise<void>}
  */
@@ -643,10 +672,12 @@ function loadEventData () {
     beginStartupStage("Events");
     console.log("Loading events...");
 
-    return fetchXML("events.xml").then(function ($xml) {
-        var events = $xml.find("event").map(function (index, elem) {
-            return parseEventElement($(elem));
-        }).get();
+    Promise.all(EVENT_FILES.map((file) => fetchXML(file))).then(function ($xmls) {
+        var events = $xmls.flatMap(($xml) => {
+            return $xml.find("event").map(function (index, elem) {
+                return parseEventElement($(elem));
+            }).get();
+        });
 
         /** @type {Set<string>} */
         var activeIds = new Set();

@@ -150,7 +150,7 @@
             Finally, per-tag settings (<tag> elements) are used last.
 
             Furthermore, if multiple overlapping events set an attribute for a character, then the value
-            from the topmost overlapping event will be applied.
+            from the topmost overlapping event will be applied (with the exception of sort values, detailed below).
 
             The "highlight" attribute can be used to apply special roster highlighting (such as Valentine's
             Day highlighting or sponsorship highlighting) to matching characters.
@@ -169,9 +169,15 @@
             - Other specifically-listed characters in an event are given a sort value of 1.
             - Non-event characters are given a sort value of 0.
 
-            Overlapping events share partition and sorting values; for example, short-term "highlighting" events
+            Overlapping events share partition values; for example, short-term "highlighting" events
             can temporarily set a character to have a higher partition value than normal in order to push them
-            higher in the roster, while other events are running.
+            higher in the roster, while other events are running. As mentioned above, if overlapping events
+            set a partition value for a character, the value from the first (topmost) listed event wins out.
+
+            Overlapping events also share sort values. However, unlike partition values, sort values
+            are additive: if multiple concurrent events set a sort value for a character, they will be
+            added together to determine the character's actual sort value, instead of only using the
+            value from the first listed event.
 
             Event characters can be configured to be prioritized when selecting prefill characters
             by setting `prefill="force"`. Setting `prefil="default"` will move characters to the default
