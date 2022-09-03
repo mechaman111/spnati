@@ -278,10 +278,29 @@ if (!window.monika) window.monika = (function (root) {
                 if (individualSelectTesting && opp.status !== "testing") return false;
                 return opp.selectionCard.isVisible(individualSelectTesting, true);
             });
-
+            
             suggested_opponents.sort(sortOpponentsByMostTargeted(50, Infinity));
-
-            var idx = (loaded == 2) ? 8 : 4;
+            
+            var idx = -1;
+            var alreadySuggested;
+            
+            do {
+                idx++;
+                alreadySuggested = false;            
+            
+                for (var i = 1; i < players.length; i++) {
+                    if (players[i] === undefined) {
+                        for (var j = 0; j < 4; j++) {
+                            if (mainSelectDisplays[i - 1].targetSuggestions[j].id == suggested_opponents[idx].id) {
+                                alreadySuggested = true;
+                                break;
+                            }
+                        }
+                        
+                        if (alreadySuggested) { break; }
+                    }
+                }
+            } while (alreadySuggested);
 
             /* Wait 2 seconds, then visually glitch Amy briefly, then wait 1.5 seconds, then glitch her again and replace her */
             var visEffect = new monika.effects.SuggestedAmyGlitchEffect(amySlot, amyQuad);
