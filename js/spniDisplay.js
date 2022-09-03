@@ -968,6 +968,7 @@ function MainSelectScreenDisplay (slot) {
 
     this.altCostumeSelector = $("#main-costume-select-"+slot);
     this.selectButton = $("#select-slot-button-"+slot);
+    this.opponentArea = this.altCostumeSelector.parent();
 
     this.altCostumeSelector.on("change", this.altCostumeSelected.bind(this));
 }
@@ -1065,7 +1066,39 @@ MainSelectScreenDisplay.prototype.onSingleSuggestionSelected = function () {
     updateSelectionVisuals();
 }
 
+/**
+ * 
+ * @param {CharacterSettingsGroup} settingsGroup 
+ */
+MainSelectScreenDisplay.prototype.createCharacterSettingsDropdown = function (settingsGroup) {
+    var selector = $("<select>", { "class": "bordered character-setting-select" });
+
+    settingsGroup.update();
+    var available = settingsGroup.getAvailable();
+    if (available.length <= 1) return null;
+
+    var selected = settingsGroup.getSelected();
+    selector.append(
+        available.map((setting) => $("<option>", {
+            val: setting.value,
+            text: setting.name,
+            selected: setting.value == selected.value
+        }).data("setting", setting))
+    );
+
+    selector.on("change", function () {
+        var selected = selector.children(':selected').data('setting');
+        settingsGroup.setSelected(selected ? selected.value : "");
+        settingsGroup.player.singleBehaviourUpdate(SETTINGS_CHANGED);
+        updateSelectionVisuals();
+    });
+
+    return selector;
+}
+
 MainSelectScreenDisplay.prototype.update = function (player) {
+    this.opponentArea.find(".character-setting-select").remove();
+
     if (!FILL_DISABLED) {
         if (this.prefillSuggestion && this.prefillSuggestion != player
             && players.some(function (p) { return p && p.id === this.prefillSuggestion.id; }, this)) {
@@ -1106,6 +1139,7 @@ MainSelectScreenDisplay.prototype.update = function (player) {
         this.layerIcon.hide();
         this.genderIcon.hide();
         this.statusIcon.hide();
+
         return;
     }
 
@@ -1123,7 +1157,7 @@ MainSelectScreenDisplay.prototype.update = function (player) {
         alt: player.layers + " layers",
     }).show() ;
     updateGenderIcon(this.genderIcon, player);
-    
+
     if (!player.isLoaded()) {
         this.hideBubble();
         this.clearPose();
@@ -1144,6 +1178,12 @@ MainSelectScreenDisplay.prototype.update = function (player) {
                 this.simpleImage.show();
             }.bind(this));
         }
+
+        this.opponentArea.prepend(
+            player.settings
+            .map((group) => this.createCharacterSettingsDropdown(group))
+            .filter((selector) => !!selector)
+        );
 
         this.altCostumeSelector.hide();
         if (player.alternate_costumes.length > 0) {

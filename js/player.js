@@ -154,6 +154,8 @@ Player.prototype.resetState = function () {
         /* Find and grab the wardrobe tag */
         $wardrobe = appearance.wardrobe;
 
+        this.settings.forEach((group) => group.reset());
+
         /* find and create all of their clothing */
         var clothingArr = [];
         $wardrobe.children('clothing').each(function () {
@@ -504,6 +506,7 @@ function Opponent (id, metaFiles, status, releaseNumber, highlightStatus) {
     this.labelOverridden = this.intelligenceOverridden = false;
     this.pendingCollectiblePopups = [];
     this.repeatLog = {};
+    this.settings = [];
 
     this.loaded = false;
     this.loadProgress = undefined;
@@ -1182,6 +1185,10 @@ Opponent.prototype.loadBehaviour = function (slot, individual) {
             this.stamina = Number($xml.children('timer').text());
             this.intelligences = $xml.children('intelligence');
 
+            this.settings = $xml.find("behaviour>settings").map(function (index, elem) {
+                return CharacterSettingsGroup.parseXML(this, $(elem));
+            }.bind(this)).get();
+
             this.default_costume = {
                 id: null,
                 labels: $xml.children('label'),
@@ -1446,3 +1453,89 @@ Player.prototype.preloadStageImages = function (stage) {
         }.bind(this));
     }, this));
 };
+
+/**
+ * 
+ * @param {Player} player
+ * @param {string} marker 
+ * @param {CharacterSetting[]} settings 
+ */
+function CharacterSettingsGroup (player, marker, settings) {
+    this.marker = marker;
+    this.player = player;
+    this.settings = settings; /* preserve order for dropdown display */
+    this.defaultSetting = settings.find((value) => value.isDefault) || null;
+}
+
+CharacterSettingsGroup.parseXML = function (player, $xml) {
+    var marker = $xml.attr("marker");
+    var settings = $xml.children("setting").map(function (index, elem) {
+        return CharacterSetting.parseXML(player, $(elem));
+    }).get();
+
+    return new CharacterSettingsGroup(player, marker, settings);
+}
+
+CharacterSettingsGroup.prototype.update = function () {
+    var markerVal = this.player.getMarker(this.marker);
+    var setTo = this.settings.find((setting) => (setting.value == markerVal) && setting.isAvailable()) || this.defaultSetting;
+    this.setSelected(setTo ? setTo.value : "");
+}
+
+CharacterSettingsGroup.prototype.reset = function () {
+    if (this.player.persistentMarkers[this.marker]) {
+        this.update();
+    } else {
+        this.setSelected(this.defaultSetting ? this.defaultSetting.value : "");
+    }
+}
+
+CharacterSettingsGroup.prototype.setSelected = function (value) {
+    this.player.setMarker(this.marker, null, value || "");
+}
+
+CharacterSettingsGroup.prototype.getSelected = function () {
+    var markerVal = this.player.getMarker(this.marker);
+    var setting = this.settings.find((setting) => (setting.value == markerVal) && setting.isAvailable());
+    if (setting && !setting.isAvailable()) {
+        setting = this.defaultSetting;
+    }
+
+    return setting || this.defaultSetting || null;
+}
+
+CharacterSettingsGroup.prototype.getAvailable = function () {
+    return this.settings.filter((setting) => setting.isAvailable());
+}
+
+/**
+ * 
+ * @param {Player} player
+ * @param {string} value 
+ * @param {string} name
+ * @param {boolean} isDefault
+ * @param {VariableTest[]} tests 
+ */
+function CharacterSetting (player, value, name, isDefault, tests) {
+    this.player = player;
+    this.value = value;
+    this.name = name || value;
+    this.isDefault = isDefault;
+    this.tests = tests;
+}
+
+CharacterSetting.parseXML = function (player, $xml) {
+    var tests = $xml.children("test").map(function (index, elem) {
+        return VariableTest.parseXML($(elem));
+    }).get();
+
+    var isDefault = ($xml.attr("default") || "false") == "true";
+    var value = $xml.attr("value") || "";
+    var name = $xml.children("name").text();
+
+    return new CharacterSetting(player, value, name, isDefault, tests);
+}
+
+CharacterSetting.prototype.isAvailable = function () {
+    return this.tests.every((test) => test.evaluate(this.player, null, null));
+}
