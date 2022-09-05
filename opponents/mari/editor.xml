@@ -238,6 +238,7 @@ At least at time of writing (Nov. 2021), Mari is listed at the very bottom of th
         <note id="2062">Ideas for later; I'm not going to commit to these for now until we actually get to those strip stages, just to leave our options open -- S2: "You've been so obedient so far, Darkness... You really must like being under my thumb. And I do enjoy having a pretty little plaything like you, hehe." / S3: "Why don't you show me something different this time, Darkness? I want you to show me &lt;i&gt;everything&lt;/i&gt; you have to offer, hehe."</note>
         <note id="2063">Mari is dead in her source material. Her appearance in SPNATI is an AU where she only *nearly* died instead.</note>
         <note id="2152">Mari's a classically-trained pianist. Or at least, she's studying to become one. (Now, I myself am decidedly not classically trained, or even a musician for that matter. Still, I'll do my best to keep up.)</note>
+        <note id="2219">The actual calculation here takes advantage of the diff variable: ~human.diff~ equals the layer difference between Mari and the human player, and we know Mari's current layer count since she's at stage 0.</note>
     </notes>
     <labels>
         <label id="1" label="" folder="Generic" sort="0" />
@@ -2378,10 +2379,73 @@ At least at time of writing (Nov. 2021), Mari is listed at the very bottom of th
         <label id="2171" label="Difficulty Override Reset" folder="Difficulty Setup" sort="0" />
         <label id="2172" label="Difficulty Override Reset" folder="Difficulty Setup" sort="0" />
         <label id="2173" label="S3 - Distracted" folder="Sakura" sort="0" />
+        <label id="2174" label="First Out" folder="Forfeit Control Logic" sort="0" />
+        <label id="2175" label="Force Heavy On" folder="Forfeit Control Logic" sort="0" />
+        <label id="2176" label="Force Heavy Off" folder="Forfeit Control Logic" sort="0" />
+        <label id="2177" label="Track Target Data" folder="Memory Setup" sort="0" />
+        <label id="2178" label="Increment Target Plays Today" folder="Memory Setup" sort="0" />
+        <label id="2179" label="Reset Target Plays Today" folder="Memory Setup" sort="0" />
+        <label id="2180" label="Initialize Days Since Last Game" folder="Memory Setup" sort="0" />
+        <label id="2181" label="Calculate Days Since Last Game" folder="Memory Setup" sort="0" />
+        <label id="2182" label="Set Seen Counter Flag" folder="Memory Setup" sort="0" />
+        <label id="2183" label="Store Prev Play Data" folder="Memory Setup" sort="0" />
+        <label id="2184" label="Store Slot 1 Data" folder="Memory Setup" sort="0" />
+        <label id="2185" label="Store Slot 3 Data" folder="Memory Setup" sort="0" />
+        <label id="2186" label="Store Slot 2 Data" folder="Memory Setup" sort="0" />
+        <label id="2187" label="Store Slot 4 Data" folder="Memory Setup" sort="0" />
+        <label id="2188" label="Days Since Last Target Game Wrapping Logic" folder="Memory Setup" sort="0" />
+        <label id="2189" label="Days Since Last Target Game Wrapping Logic - Leap Year Offset" folder="Memory Setup" sort="0" />
+        <label id="2190" label="Immediate Rematch" folder="Memory Lines" sort="0" />
+        <label id="2191" label="Last Played Stage Tracking" folder="Memory Setup" sort="0" />
+        <label id="2192" label="Initialize Games Since Last Play" folder="Memory Setup" sort="0" />
+        <label id="2193" label="Calculate Games Since Last Play" folder="Memory Setup" sort="0" />
+        <label id="2194" label="Track Target Losses" folder="Memory Setup" sort="0" />
+        <label id="2195" label="Track Target Wins" folder="Memory Setup" sort="0" />
+        <label id="2196" label="Immediate Rematch (Target Won Last Game)" folder="Memory Lines" sort="0" />
+        <label id="2197" label="Seeing Something New" folder="Memory Lines" sort="0" />
+        <label id="2198" label="Between 5 - 14 Days Since Last Game" folder="Memory Lines" sort="0" />
+        <label id="2199" label="Between 14 - 30 Days Since Last Game" folder="Memory Lines" sort="0" />
+        <label id="2200" label="" folder="Memory Lines" sort="0" />
+        <label id="2201" label="Between 1 - 5 Days Since Last Game" folder="Memory Lines" sort="0" />
+        <label id="2202" label="5+ Total Plays With Opponent" folder="Memory Lines" sort="0" />
+        <label id="2203" label="5+ Total Plays (Player Exposed)" folder="Memory Lines" sort="0" />
+        <label id="2204" label="Tells Intro (Player Bad Hand)" folder="Player Tells" sort="0" />
+        <label id="2205" label="Tells Continued (Player Bad Hand)" folder="Player Tells" sort="0" />
+        <label id="2206" label="Tells Intro (Player Good Hand)" folder="Player Tells" sort="0" />
+        <label id="2207" label="Tells Continued (Player Good Hand)" folder="Player Tells" sort="0" />
+        <label id="2208" label="Track Time Spent Together" folder="Memory Setup" sort="0" />
+        <label id="2209" label="Tells Continued (Player Good Hand)" folder="Memory Lines" sort="0" />
+        <label id="2210" label="Collectible Unlock" folder="" sort="0" />
+        <label id="2211" label="Player Win Tracking" folder="Memory Setup" sort="0" />
+        <label id="2212" label="LastGameStatus Tracking" folder="Memory Setup" sort="0" />
+        <label id="2213" label="Completed Game Count Tracking" folder="Memory Setup" sort="0" />
+        <label id="2214" label="Completed Game Count Tracking" folder="Memory Setup" sort="0" />
+        <label id="2215" label="Completed Game Count Tracking" folder="Memory Setup" sort="0" />
+        <label id="2216" label="LastGameStatus Tracking" folder="Memory Setup" sort="0" />
+        <label id="2217" label="Mari Win Count Tracking" folder="Memory Setup" sort="0" />
+        <label id="2218" label="" folder="Player Tells" sort="0" />
+        <label id="2219" label="Initialization" folder="Human Starting Layer Count Calculation" sort="0" />
+        <label id="2220" label="Calculation" folder="Human Starting Layer Count Calculation" sort="0" />
+        <label id="2221" label="Setup - Track Remaining Human Layers" folder="" sort="0" />
+        <label id="2222" label="Init Human Remaining Layers" folder="Human Starting Layer Count Calculation" sort="0" />
+        <label id="2223" label="Setup - Track Remaining Human Layers" folder="" sort="0" />
+        <label id="2224" label="" folder="Player Tells" sort="0" />
+        <label id="2225" label="Tells Continued 2 (Player Good Hand)" folder="Player Tells" sort="0" />
+        <label id="2226" label="Tells Continued 2 (Player Bad Hand)" folder="Player Tells" sort="0" />
+        <label id="2227" label="Tells Continued 2A" folder="Player Tells" sort="0" />
+        <label id="2228" label="Post-Encore" folder="Generic" sort="0" />
+        <label id="2229" label="Post-Encore" folder="Generic" sort="0" />
+        <label id="2230" label="Post-Encore" folder="Generic" sort="0" />
+        <label id="2231" label="Post-Encore (Human Alive)" folder="Generic" sort="0" />
+        <label id="2232" label="Post-Encore (Human Not Alive)" folder="Generic" sort="0" />
+        <label id="2233" label="Post-Encore" folder="Generic" sort="0" />
+        <label id="2234" label="Post-Encore" folder="Generic" sort="0" />
+        <label id="2235" label="Last Naked" folder="Generic" sort="0" />
+        <label id="2236" label="Last Naked" folder="" sort="0" />
+        <label id="2237" label="Last Naked (Post-Encore)" folder="Generic" sort="0" />
     </labels>
-    <nextId>2173</nextId>
+    <nextId>2237</nextId>
     <markers>
-        <marker scope="Public" name="" />
         <marker scope="Public" name="__human_nickname" />
         <marker scope="Public" name="Aaravi_SchoolgirlTrope1" />
         <marker scope="Public" name="about_to_lose">Mari has a good chance of losing the game, this round. (Only set during the very last round of the game - only two players are left, and both Mari and the other player are naked.)</marker>
@@ -2689,6 +2753,7 @@ At least at time of writing (Nov. 2021), Mari is listed at the very bottom of th
         <marker scope="Public" name="CharacterWinCount" />
         <marker scope="Public" name="Charlie_KindAndSweet1" />
         <marker scope="Public" name="close_loss">Mari lost the game, despite being close to winning.</marker>
+        <marker scope="Public" name="CompletedGamesTotal" />
         <marker scope="Public" name="CriticalDarling_Keytar" />
         <marker scope="Public" name="CriticalDarling_Keytar2" />
         <marker scope="Public" name="css_enable-custom-box" />
@@ -2907,10 +2972,13 @@ At least at time of writing (Nov. 2021), Mari is listed at the very bottom of th
         <marker scope="Public" name="Generic_EarlyMajorRemoved" />
         <marker scope="Public" name="Generic_EarlyRoundMajorRemoved" />
         <marker scope="Public" name="Generic_FinallyIndecent" />
+        <marker scope="Public" name="Generic_FivePlusPlays" />
         <marker scope="Public" name="Generic_FridayNights" />
         <marker scope="Public" name="Generic_GameWinnerWonTwice" />
         <marker scope="Public" name="Generic_GlassesRemoved" />
         <marker scope="Public" name="Generic_HatInside" />
+        <marker scope="Public" name="Generic_LastNakedA" />
+        <marker scope="Public" name="Generic_LastNakedB" />
         <marker scope="Public" name="Generic_LastSeenComment" />
         <marker scope="Public" name="Generic_MariLostAfterPrevLoss" />
         <marker scope="Public" name="Generic_MariLostAfterPrevWin" />
@@ -2945,10 +3013,30 @@ At least at time of writing (Nov. 2021), Mari is listed at the very bottom of th
         <marker scope="Public" name="Generic_SuperheroRemovingCostume" />
         <marker scope="Public" name="Generic_SwimsuitNoWater" />
         <marker scope="Public" name="Generic_SwimsuitWater" />
+        <marker scope="Public" name="Generic_TargetedHiAgain" />
+        <marker scope="Public" name="Generic_TargetedItsBeenAFewDays" />
+        <marker scope="Public" name="Generic_TargetedItsBeenAWhile" />
+        <marker scope="Public" name="Generic_TargetedSeeingSomethingNew" />
+        <marker scope="Public" name="Generic_TargetRematchComment" />
         <marker scope="Public" name="Generic_TargetWonPrev" />
+        <marker scope="Public" name="Generic_TellsBadHand" />
+        <marker scope="Public" name="Generic_TellsContinued" />
+        <marker scope="Public" name="Generic_TellsContinued2" />
+        <marker scope="Public" name="Generic_TellsGoodHand" />
+        <marker scope="Public" name="Generic_TellsIntro" />
+        <marker scope="Public" name="Generic_TellsIntroLocal" />
         <marker scope="Public" name="Generic_VeryLargeLead" />
         <marker scope="Public" name="Generic_WeekendComment" />
         <marker scope="Public" name="Generic_WeekendMeetupComment" />
+        <marker scope="Public" name="GenericPostStrip_PostEncore1" />
+        <marker scope="Public" name="GenericPostStrip_PostEncore2" />
+        <marker scope="Public" name="GenericPostStrip_PostEncore4" />
+        <marker scope="Public" name="GenericPostStrip_PostEncore5" />
+        <marker scope="Public" name="GenericPostStrip_PostEncore5A" />
+        <marker scope="Public" name="GenericPostStrip_PostEncore5B" />
+        <marker scope="Public" name="GenericPostStrip_PostEncore6" />
+        <marker scope="Public" name="GenericPostStrip_PostEncore7" />
+        <marker scope="Public" name="GenericStrip_PostEncore1" />
         <marker scope="Public" name="Gloomy_Lost" />
         <marker scope="Public" name="Gloomy_Stripping" />
         <marker scope="Public" name="Gloria_CurryChatter" />
@@ -3057,6 +3145,9 @@ At least at time of writing (Nov. 2021), Mari is listed at the very bottom of th
         <marker scope="Public" name="Hilda_SchoolClasses3A" />
         <marker scope="Public" name="Hilda_SchoolClasses3B" />
         <marker scope="Public" name="Human_MultipleUnderwear" />
+        <marker scope="Public" name="HumanRemainingLayers" />
+        <marker scope="Public" name="HumanStartingLayers" />
+        <marker scope="Public" name="HumanStartingLayersCalculated" />
         <marker scope="Public" name="IgnatzDelayedLoss1">Set when Ignatz loses during his glasses sequence, if he didn't lose immediately after starting the sequence.</marker>
         <marker scope="Public" name="IgnatzGlasses1">Set when Ignatz loses his glasses (during After Strip / Removed Minor).</marker>
         <marker scope="Public" name="IgnatzGlasses2">Set during Mari's first comment about Ignatz losing his glasses (Hand phase, both line variants)</marker>
@@ -3913,6 +4004,22 @@ At least at time of writing (Nov. 2021), Mari is listed at the very bottom of th
         <marker scope="Public" name="Shy_Lost" />
         <marker scope="Public" name="Shy_Lost1" />
         <marker scope="Public" name="Shy_Lost2" />
+        <marker scope="Public" name="SlotFour_DaysSinceLastGame" />
+        <marker scope="Public" name="SlotFour_LastPlayedTime" />
+        <marker scope="Public" name="SlotFour_PlaysToday" />
+        <marker scope="Public" name="SlotFour_PlaysTotal" />
+        <marker scope="Public" name="SlotOne_DaysSinceLastGame" />
+        <marker scope="Public" name="SlotOne_LastPlayedTime" />
+        <marker scope="Public" name="SlotOne_PlaysToday" />
+        <marker scope="Public" name="SlotOne_PlaysTotal" />
+        <marker scope="Public" name="SlotThree_DaysSinceLastGame" />
+        <marker scope="Public" name="SlotThree_LastPlayedTime" />
+        <marker scope="Public" name="SlotThree_PlaysToday" />
+        <marker scope="Public" name="SlotThree_PlaysTotal" />
+        <marker scope="Public" name="SlotTwo_DaysSinceLastGame" />
+        <marker scope="Public" name="SlotTwo_LastPlayedTime" />
+        <marker scope="Public" name="SlotTwo_PlaysToday" />
+        <marker scope="Public" name="SlotTwo_PlaysTotal" />
         <marker scope="Public" name="SpecialName_Corgi" />
         <marker scope="Public" name="SpecialName_Corgi1" />
         <marker scope="Public" name="SpecialName_Corgi2" />
@@ -3949,10 +4056,32 @@ At least at time of writing (Nov. 2021), Mari is listed at the very bottom of th
         <marker scope="Public" name="Supernova_Time2" />
         <marker scope="Public" name="Supernova_Time2=1" />
         <marker scope="Public" name="Supernova_Time3" />
+        <marker scope="Public" name="Target_DaysSinceLastGame" />
+        <marker scope="Public" name="Target_DaysSinceLastGameWrapped" />
+        <marker scope="Public" name="Target_FamiliarComment" />
+        <marker scope="Public" name="Target_GamesSinceLastPlay" />
+        <marker scope="Public" name="Target_LastPlayedGameCtr" />
+        <marker scope="Public" name="Target_LastPlayedOutcome" />
+        <marker scope="Public" name="Target_LastPlayedStage" />
+        <marker scope="Public" name="Target_LastPlayedStatus" />
+        <marker scope="Public" name="Target_LastPlayedTime" />
         <marker scope="Public" name="Target_MultipleUnderwear" />
         <marker scope="Public" name="Target_MultipleUnderwear*" />
+        <marker scope="Public" name="Target_PlaysToday" />
+        <marker scope="Public" name="Target_PlaysTotal" />
+        <marker scope="Public" name="Target_PrevPlayedGameCtr" />
+        <marker scope="Public" name="Target_PrevPlayedOutcome" />
+        <marker scope="Public" name="Target_PrevPlayedStage" />
+        <marker scope="Public" name="Target_PrevPlayedStatus" />
+        <marker scope="Public" name="Target_PrevPlayedTime" />
+        <marker scope="Public" name="Target_PrevPlayedTime*==~self.marker.Date_CurrentDayOfYear~" />
+        <marker scope="Public" name="Target_TickedSeenCounter" />
         <marker scope="Public" name="TargetInitiallyDecent" />
         <marker scope="Public" name="TargetInitiallyExposed" />
+        <marker scope="Public" name="TargetLastPlayedAt" />
+        <marker scope="Public" name="TargetLastPlayedTime" />
+        <marker scope="Public" name="TargetLastPlayedTime*==~month.number~0~day.number~" />
+        <marker scope="Public" name="TargetPlays" />
         <marker scope="Public" name="Tomoko_Forfeit" />
         <marker scope="Public" name="Tomoko_JugglingTime1" />
         <marker scope="Public" name="Toph_Teaching1" />
