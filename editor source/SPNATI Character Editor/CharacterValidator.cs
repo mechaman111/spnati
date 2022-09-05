@@ -1165,7 +1165,7 @@ namespace SPNATI_Character_Editor
 			unusedImages.Remove("custom:" + pose.Id);
 			foreach (Sprite sprite in pose.Sprites)
 			{
-				string path = GetRelativeImagePath(character, sprite.Src);
+				string path = GetRelativeImagePath(character, sprite.GetActualSrc(character));
 				if (!string.IsNullOrEmpty(path))
 				{
 					if (path.Substring(0, 1) != "#")
@@ -1189,7 +1189,7 @@ namespace SPNATI_Character_Editor
 				{
 					if (!string.IsNullOrEmpty(kf.Src))
 					{
-						string path = GetRelativeImagePath(character, kf.Src);
+						string path = GetRelativeImagePath(character, kf.GetActualSrc(character));
 						if (!string.IsNullOrEmpty(path))
 						{
 							if (path.Substring(0, 1) != "#")

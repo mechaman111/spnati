@@ -15,7 +15,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 	/// </summary>
 	public abstract class LiveAnimatedObject : LiveObject, IFixedLength
 	{
-		public Character Character;
+		public ISkin Character;
 		public bool DisplayPastEnd = true;
 
 		private float _lastPlaybackTime;
