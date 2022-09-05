@@ -51,15 +51,15 @@
             this.skinnedLabel1 = new Desktop.Skinning.SkinnedLabel();
             this.chkLayer = new Desktop.Skinning.SkinnedCheckBox();
             this.skinnedGroupBox2 = new Desktop.Skinning.SkinnedGroupBox();
+            this.txtValue = new Desktop.Skinning.SkinnedTextBox();
+            this.skinnedLabel5 = new Desktop.Skinning.SkinnedLabel();
+            this.cboHeavy = new Desktop.Skinning.SkinnedComboBox();
+            this.skinnedLabel4 = new Desktop.Skinning.SkinnedLabel();
+            this.chkResetHeavy = new Desktop.Skinning.SkinnedCheckBox();
             this.cboOp = new Desktop.Skinning.SkinnedComboBox();
             this.cboAttr = new Desktop.Skinning.SkinnedComboBox();
             this.skinnedLabel3 = new Desktop.Skinning.SkinnedLabel();
             this.skinnedLabel2 = new Desktop.Skinning.SkinnedLabel();
-            this.chkResetHeavy = new Desktop.Skinning.SkinnedCheckBox();
-            this.skinnedLabel4 = new Desktop.Skinning.SkinnedLabel();
-            this.cboHeavy = new Desktop.Skinning.SkinnedComboBox();
-            this.skinnedLabel5 = new Desktop.Skinning.SkinnedLabel();
-            this.txtValue = new Desktop.Skinning.SkinnedTextBox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.valLocation)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -436,6 +436,73 @@
             this.skinnedGroupBox2.Text = "Forfeit Operations";
             this.skinnedGroupBox2.Enter += new System.EventHandler(this.skinnedGroupBox2_Enter);
             // 
+            // txtValue
+            // 
+            this.txtValue.BackColor = System.Drawing.Color.White;
+            this.txtValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txtValue.ForeColor = System.Drawing.Color.Black;
+            this.txtValue.Location = new System.Drawing.Point(80, 56);
+            this.txtValue.Name = "txtValue";
+            this.txtValue.Size = new System.Drawing.Size(80, 20);
+            this.txtValue.TabIndex = 19;
+            // 
+            // skinnedLabel5
+            // 
+            this.skinnedLabel5.AutoSize = true;
+            this.skinnedLabel5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.skinnedLabel5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.skinnedLabel5.Highlight = Desktop.Skinning.SkinnedHighlight.Normal;
+            this.skinnedLabel5.Level = Desktop.Skinning.SkinnedLabelLevel.Label;
+            this.skinnedLabel5.Location = new System.Drawing.Point(172, 59);
+            this.skinnedLabel5.Name = "skinnedLabel5";
+            this.skinnedLabel5.Size = new System.Drawing.Size(41, 13);
+            this.skinnedLabel5.TabIndex = 18;
+            this.skinnedLabel5.Text = "Heavy:";
+            // 
+            // cboHeavy
+            // 
+            this.cboHeavy.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
+            this.cboHeavy.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
+            this.cboHeavy.BackColor = System.Drawing.Color.White;
+            this.cboHeavy.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboHeavy.FieldType = Desktop.Skinning.SkinnedFieldType.Surface;
+            this.cboHeavy.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.cboHeavy.FormattingEnabled = true;
+            this.cboHeavy.KeyMember = null;
+            this.cboHeavy.Location = new System.Drawing.Point(240, 56);
+            this.cboHeavy.Name = "cboHeavy";
+            this.cboHeavy.SelectedIndex = -1;
+            this.cboHeavy.SelectedItem = null;
+            this.cboHeavy.Size = new System.Drawing.Size(84, 21);
+            this.cboHeavy.Sorted = false;
+            this.cboHeavy.TabIndex = 17;
+            this.cboHeavy.SelectedIndexChanged += new System.EventHandler(this.cboHeavy_SelectedIndexChanged);
+            // 
+            // skinnedLabel4
+            // 
+            this.skinnedLabel4.AutoSize = true;
+            this.skinnedLabel4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.skinnedLabel4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.skinnedLabel4.Highlight = Desktop.Skinning.SkinnedHighlight.Normal;
+            this.skinnedLabel4.Level = Desktop.Skinning.SkinnedLabelLevel.Label;
+            this.skinnedLabel4.Location = new System.Drawing.Point(6, 59);
+            this.skinnedLabel4.Name = "skinnedLabel4";
+            this.skinnedLabel4.Size = new System.Drawing.Size(37, 13);
+            this.skinnedLabel4.TabIndex = 16;
+            this.skinnedLabel4.Text = "Value:";
+            // 
+            // chkResetHeavy
+            // 
+            this.chkResetHeavy.AutoSize = true;
+            this.chkResetHeavy.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
+            this.chkResetHeavy.Location = new System.Drawing.Point(329, 58);
+            this.chkResetHeavy.Name = "chkResetHeavy";
+            this.chkResetHeavy.Size = new System.Drawing.Size(54, 17);
+            this.chkResetHeavy.TabIndex = 15;
+            this.chkResetHeavy.Text = "Reset";
+            this.chkResetHeavy.UseVisualStyleBackColor = true;
+            this.chkResetHeavy.CheckedChanged += new System.EventHandler(this.chkResetHeavy_CheckedChanged);
+            // 
             // cboOp
             // 
             this.cboOp.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
@@ -500,72 +567,6 @@
             this.skinnedLabel2.TabIndex = 1;
             this.skinnedLabel2.Text = "Attribute:";
             this.skinnedLabel2.Click += new System.EventHandler(this.skinnedLabel2_Click);
-            // 
-            // chkResetHeavy
-            // 
-            this.chkResetHeavy.AutoSize = true;
-            this.chkResetHeavy.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
-            this.chkResetHeavy.Location = new System.Drawing.Point(329, 58);
-            this.chkResetHeavy.Name = "chkResetHeavy";
-            this.chkResetHeavy.Size = new System.Drawing.Size(54, 17);
-            this.chkResetHeavy.TabIndex = 15;
-            this.chkResetHeavy.Text = "Reset";
-            this.chkResetHeavy.UseVisualStyleBackColor = true;
-            this.chkResetHeavy.CheckedChanged += new System.EventHandler(this.chkResetHeavy_CheckedChanged);
-            // 
-            // skinnedLabel4
-            // 
-            this.skinnedLabel4.AutoSize = true;
-            this.skinnedLabel4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.skinnedLabel4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.skinnedLabel4.Highlight = Desktop.Skinning.SkinnedHighlight.Normal;
-            this.skinnedLabel4.Level = Desktop.Skinning.SkinnedLabelLevel.Label;
-            this.skinnedLabel4.Location = new System.Drawing.Point(6, 59);
-            this.skinnedLabel4.Name = "skinnedLabel4";
-            this.skinnedLabel4.Size = new System.Drawing.Size(37, 13);
-            this.skinnedLabel4.TabIndex = 16;
-            this.skinnedLabel4.Text = "Value:";
-            // 
-            // cboHeavy
-            // 
-            this.cboHeavy.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
-            this.cboHeavy.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
-            this.cboHeavy.BackColor = System.Drawing.Color.White;
-            this.cboHeavy.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboHeavy.FieldType = Desktop.Skinning.SkinnedFieldType.Surface;
-            this.cboHeavy.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.cboHeavy.FormattingEnabled = true;
-            this.cboHeavy.KeyMember = null;
-            this.cboHeavy.Location = new System.Drawing.Point(240, 56);
-            this.cboHeavy.Name = "cboHeavy";
-            this.cboHeavy.SelectedIndex = -1;
-            this.cboHeavy.SelectedItem = null;
-            this.cboHeavy.Size = new System.Drawing.Size(84, 21);
-            this.cboHeavy.Sorted = false;
-            this.cboHeavy.TabIndex = 17;
-            // 
-            // skinnedLabel5
-            // 
-            this.skinnedLabel5.AutoSize = true;
-            this.skinnedLabel5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.skinnedLabel5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.skinnedLabel5.Highlight = Desktop.Skinning.SkinnedHighlight.Normal;
-            this.skinnedLabel5.Level = Desktop.Skinning.SkinnedLabelLevel.Label;
-            this.skinnedLabel5.Location = new System.Drawing.Point(172, 59);
-            this.skinnedLabel5.Name = "skinnedLabel5";
-            this.skinnedLabel5.Size = new System.Drawing.Size(41, 13);
-            this.skinnedLabel5.TabIndex = 18;
-            this.skinnedLabel5.Text = "Heavy:";
-            // 
-            // txtValue
-            // 
-            this.txtValue.BackColor = System.Drawing.Color.White;
-            this.txtValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txtValue.ForeColor = System.Drawing.Color.Black;
-            this.txtValue.Location = new System.Drawing.Point(80, 56);
-            this.txtValue.Name = "txtValue";
-            this.txtValue.Size = new System.Drawing.Size(80, 20);
-            this.txtValue.TabIndex = 19;
             // 
             // DialogueAdvancedControl
             // 

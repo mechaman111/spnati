@@ -100,7 +100,7 @@ namespace SPNATI_Character_Editor
 
 		private DialogueOperations _operations;
 		[XmlElement("operations")]
-		public DialogueOperations Operations
+		public DialogueOperations DialogueOperations
 		{
 			get { return _operations; }
 			set { if (_operations != value) { _operations = value; NotifyPropertyChanged(); } }
@@ -229,7 +229,7 @@ namespace SPNATI_Character_Editor
 			Marker = null;
 			Images = new List<StageImage>();
 			Markers = new List<MarkerOperation>();
-			Operations = null;
+			DialogueOperations = null;
 		}
 
 		public DialogueLine(string image, string text) : this()
@@ -272,9 +272,9 @@ namespace SPNATI_Character_Editor
 			{
 				copy.Markers.Add(marker.Copy());
 			}
-			if (Operations != null && !Operations.IsEmpty())
+			if (DialogueOperations != null && !DialogueOperations.IsEmpty())
 			{
-				copy.Operations = Operations.Copy();
+				copy.DialogueOperations = DialogueOperations.Copy();
 			}
 			return copy;
 		}
@@ -304,9 +304,9 @@ namespace SPNATI_Character_Editor
 			{
 				hash = (hash * 397) ^ op.GetHashCode();
 			}
-			if (Operations != null)
+			if (DialogueOperations != null)
 			{
-				hash = (hash * 397) ^ Operations.GetHashCode();
+				hash = (hash * 397) ^ DialogueOperations.GetHashCode();
 			}
 			return hash;
 		}
@@ -364,14 +364,14 @@ namespace SPNATI_Character_Editor
 			get
 			{
 				return !string.IsNullOrEmpty(Gender) || !string.IsNullOrEmpty(Size) || Intelligence != null || (!string.IsNullOrEmpty(Direction) && Direction != "down") ||
-					!string.IsNullOrEmpty(FontSize) || Label != null || !string.IsNullOrEmpty(Location) || !string.IsNullOrEmpty(Layer) || Operations != null || Weight != 1;
+					!string.IsNullOrEmpty(FontSize) || Label != null || !string.IsNullOrEmpty(Location) || !string.IsNullOrEmpty(Layer) || DialogueOperations != null || Weight != 1;
 			}
 		}
 
 		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
 		private bool UseXmlText()
 		{
-			return Images.Count == 0 && Markers.Count == 0 && ((Operations == null) || Operations.IsEmpty());
+			return Images.Count == 0 && Markers.Count == 0 && ((DialogueOperations == null) || DialogueOperations.IsEmpty());
 		}
 	}
 }
