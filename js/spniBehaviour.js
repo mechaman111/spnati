@@ -1904,15 +1904,16 @@ function Case($xml, trigger) {
         this.customPriority = undefined;
     }
 
-    var hasTarget = !!this.target || this.counters.some(function (ctr) {
+    var targetCondition = this.counters.find(function (ctr) {
         return (ctr.role == "target") && (isNaN(ctr.count.max) || (ctr.count.max === null) || (ctr.count.max > 0)) && ctr.id;
     });
 
+    var targetID = targetCondition ? targetCondition.id : this.target;
     var hasTargetStage = !!this.targetStage || this.counters.some(function (ctr) {
         return (ctr.role == "target") && (isNaN(ctr.count.max) || (ctr.count.max === null) || (ctr.count.max > 0)) && ctr.stage;
     });
 
-    if (hasTarget && hasTargetStage) {
+    if (targetID && hasTargetStage && (targetID != "human")) {
         if (this.trigger == MALE_MUST_STRIP || this.trigger == FEMALE_MUST_STRIP) {
             this.trigger = OPPONENT_LOST;
         } else if (CONVERT_STRIP_CASES.indexOf(this.trigger) >= 0) {
