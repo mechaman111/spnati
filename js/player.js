@@ -271,6 +271,10 @@ Player.prototype.removeTag = function(tag) {
 }
 
 Player.prototype.hasTag = function(tag) {
+    if (tag && tag[0] == "!") {
+        return !this.hasTag(tag.substring(1));
+    }
+
     return tag && this.tags && this.tags.indexOf(canonicalizeTag(tag)) >= 0;
 };
 
@@ -1271,13 +1275,19 @@ Opponent.prototype.recordTargetedCase = function (caseObj) {
 
     if (caseObj.target) entities.add(caseObj.target);
     if (caseObj.alsoPlaying) entities.add(caseObj.alsoPlaying);
-    if (caseObj.filter) entities.add(caseObj.filter);
+    if (caseObj.filter && caseObj.filter[0] !== "!") entities.add(caseObj.filter);
 
     caseObj.counters.forEach(function (ctr) {
         /* Conditions checking if a character/tag is not at the table don't count as targeted. */
-        if (ctr.count.max === 0) return;
-        if (ctr.id) entities.add(ctr.id);
-        if (ctr.tag) entities.add(ctr.tag);
+        if (ctr.id && ctr.count.max !== 0) entities.add(ctr.id);
+        if (ctr.tag) {
+            if (ctr.tag[0] !== "!" && ctr.count.max !== 0) {
+                entities.add(ctr.tag);
+            } else if (ctr.tag[0] === "!" && ctr.count.max === 0) {
+                /* (filter="!tag" and count: 0) implies checking if everyone has the given tag */
+                entities.add(ctr.tag.substring(1));
+            }
+        }
     });
 
     var lines = new Set();
