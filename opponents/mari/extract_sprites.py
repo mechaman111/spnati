@@ -409,7 +409,7 @@ async def do_disassembly(
         out_folder = out_folder.joinpath("exported")
 
     out_folder.mkdir(exist_ok=True, parents=True)
-    if not args.keep_previous:
+    if "all" in export_parts:
         for child in out_folder.iterdir():
             if child.is_file() and child.suffix == ".png":
                 child.unlink()
@@ -617,11 +617,15 @@ def parse_code_file(file: TextIO) -> Tuple[KisekaeCode, Dict[str, Any]]:
 
             if key in ("zoom", "juice"):
                 params[key] = int(val)
+            elif key == "camera-x":
+                params["camera_x"] = val
+            elif key == "camera-y":
+                params["camera_y"] = val
             elif key in ("camera_x", "camera_y"):
                 params[key] = val
             elif key == "align":
                 params["align"] = val.casefold()
-            elif key == "align_z":
+            elif key in ("align_z", "align-z"):
                 params["align_z"] = val.casefold()
             elif key == "shadow":
                 params["shadow"] = val.casefold() == "true"
@@ -685,17 +689,14 @@ if __name__ == "__main__":
     parser.add_argument("--from-matrix", "-m", action="store_true")
     parser.add_argument("--disable-hair", "-d", action="store_true")
     parser.add_argument("--no-trim", "-T", action="store_false", dest="trim")
-    parser.add_argument("--keep-previous", "-k", action="store_true")
     parser.add_argument("--character", "-c", type=int)
     parser.add_argument("--out-name", "-o")
     parser.add_argument("--zoom", "-z", type=int)
     parser.add_argument("--camera-x", "-x")
     parser.add_argument("--camera-y", "-y")
     parser.add_argument("--juice", "-j", type=int)
-    parser.add_argument(
-        "--base-path", "-b", type=Path, default=Path.cwd().joinpath("epilogue")
-    )
     parser.add_argument("--names", "-n", nargs="*", dest="character_names")
+    parser.add_argument("base_path", type=Path)
     parser.add_argument("codefile")
     parser.add_argument("parts", nargs="+", choices=VALID_PARTS)
     args = parser.parse_args()
