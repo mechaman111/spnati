@@ -261,9 +261,10 @@ class Layer:
             id = None
             bbox_of = None
             if m.group(2) is not None:
-                for m2 in re.finditer(r"([^=]+)\s*=\s*([^,]+)", m[2], re.I):
-                    key = m2[1].casefold().strip()
-                    val = m2[2].strip()
+                for assign in m.group(2).split(","):
+                    key, val = assign.strip().split("=", 1)
+                    key = key.casefold().strip()
+                    val = val.strip()
 
                     if key in ("x", "y", "z"):
                         if val[0] == "+":
@@ -301,6 +302,7 @@ def _apply_offset(
     ret[1] += offset[1]
     ret[3] += offset[1]
     return tuple(ret)
+
 
 @define()
 class LayerBlock:
