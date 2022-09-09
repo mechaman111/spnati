@@ -1,6 +1,7 @@
 using System;
-using System.Xml.Serialization;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Xml.Serialization;
 
 namespace SPNATI_Character_Editor
 {
@@ -91,6 +92,10 @@ namespace SPNATI_Character_Editor
 		[XmlAttribute("name")]
 		public string Name;
 
+		[DefaultValue(1)]
+		[XmlAttribute("weight")]
+		public int Weight;
+
 		public NicknameOperation() { }
 
 		public NicknameOperation Copy()
@@ -104,6 +109,7 @@ namespace SPNATI_Character_Editor
 			int hash = (Character ?? string.Empty).GetHashCode();
 			hash = (hash * 397) ^ (Operator ?? string.Empty).GetHashCode();
 			hash = (hash * 397) ^ (Name ?? string.Empty).GetHashCode();
+			hash = (hash * 397) ^ Weight.GetHashCode();
 			return hash;
 		}
 	}

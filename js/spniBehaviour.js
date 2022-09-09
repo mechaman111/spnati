@@ -688,13 +688,17 @@ ForfeitTimerOperation.prototype.sortKey = function () {
  * @param {string} target 
  * @param {string} op
  * @param {string} value 
+ * @param {string} weight
  * @param {Case} parentCase 
  */
- function NicknameOperation (target, op, value, parentCase) {
+ function NicknameOperation (target, op, value, weight, parentCase) {
     this.target = target.toLowerCase();
     this.op = op;
     this.value = value;
+    this.weight = parseInt(weight, 10);
     this.parentCase = parentCase;
+
+    if (isNaN(this.weight)) this.weight = 1;
 }
 
 /**
@@ -733,18 +737,34 @@ NicknameOperation.prototype.apply = function (self, opp) {
 
     /* NOTE: don't apply variable expansion to this.value here, since it will be expanded later
      * during nickname substitution.
+     *
+     * Weight values for `+` and `-` operations have a minimum of 1,
+     * but weight can be 0 for `>` to simply clear all instances of a nickname from the list
+     * without re-adding it.
      */
 
-    if (this.op == "clear" || (this.op == "=" && !this.value)) {
+    if (this.op == "clear" || this.op == "=") {
+        /* "clear" doesn't take a value */
         newNicknames = [];
-    } else if (this.op == "=") {
-        newNicknames = [this.value];
-    } else if (this.op == "+") {
-        if (this.value.length > 0 && newNicknames.indexOf(this.value) < 0) newNicknames.push(this.value);
-    } else if (this.op == "-") {
-        newNicknames = newNicknames.filter(function (v) { return v !== this.value; });
+        if ((this.op == "=") && this.value) newNicknames.push(this.value);
+    } else if ((this.op == ">") && this.value) {
+        newNicknames = newNicknames.filter((nickname) => nickname !== this.value);
+        for (let i = 0; i < this.weight; i++) newNicknames.push(this.value);
+    } else if ((this.op == "+") && this.value) {
+        let weight = Math.max(this.weight, 1);
+        for (let i = 0; i < weight; i++) newNicknames.push(this.value);
+    } else if ((this.op == "-") && this.value) {
+        let weight = Math.max(this.weight, 1);
+        for (let i = 0; i < weight; i++) {
+            let idx = newNicknames.indexOf(this.value);
+            if (idx >= 0) {
+                newNicknames.splice(idx, 1);
+            } else {
+                break;
+            }
+        }
     } else {
-        console.error("Unknown nickname operation: ", this.op);
+        console.error("Unknown nickname operation '", this.op, "' with value '", this.value, "'");
     }
 
     if (newNicknames.length === 0) {
@@ -762,9 +782,9 @@ NicknameOperation.prototype.apply = function (self, opp) {
  * @returns {number}
  */
 NicknameOperation.prototype.sortKey = function () {
-    /* Operations that clear the nickname list ("clear" and "=") should
-     * come before operations that add nicknames ("=" and "+"), which should
-     * themselves come before operations that remove nicknames ("-").
+    /* Operations that clear the nickname list ("clear", "=", and ">") should
+     * come before operations that add nicknames ("=", ">", and "+"), which should
+     * themselves come before operations that only remove nicknames ("-").
      * 
      * This allows the nickname list to be cleared and replaced with a new
      * set of (potentially multiple) nicknames, and it ensures that situations
@@ -774,9 +794,10 @@ NicknameOperation.prototype.sortKey = function () {
     switch (this.op) {
     case "clear": return 0;
     case "=": return 1;
-    case "+": return 2;
-    case "-": return 3;
-    default: return 4;
+    case ">": return 2;
+    case "+": return 3;
+    case "-": return 4;
+    default: return 5;
     }
 }
 
@@ -803,6 +824,7 @@ NicknameOperation.prototype.sortKey = function () {
             $elem.attr("character"),
             $elem.attr("op") || "=",
             $elem.attr("name"),
+            $elem.attr("weight"),
             parentCase
         );
     } else if (type == "player") {
