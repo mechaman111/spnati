@@ -302,6 +302,15 @@ function Pose(poseDef, display, onLoadCallback) {
         var anim = new PoseAnimation(target, this, def);
         this.animations.push(anim);
     }.bind(this));
+
+    /* Make sure to fire onLoadCallback for "empty" poses.
+     * However, we need to make sure to schedule it to fire *after* we return from this constructor,
+     * since the callback might try to access this pose using an as-of-yet unbound variable.
+     */
+    if (poseDef.sprites.length === 0) {
+        this.loaded = true;
+        if (onLoadCallback) setTimeout(onLoadCallback, 0);
+    }
 }
 
 Pose.prototype.getHeightScaleFactor = function() {
