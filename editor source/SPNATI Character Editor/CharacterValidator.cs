@@ -495,22 +495,23 @@ namespace SPNATI_Character_Editor
 					{
 						ValidateMarker(warnings, character, caseLabel, condition.SaidMarker, context);
 					}
-
+					
 					// these next ones are not warnable if the case is hidden AND negative-priority
-					if (string.IsNullOrEmpty(stageCase.Hidden) || stageCase.CustomPriority.ToInt() > 0)
+					int caseCustomPriority = 0;
+					int.TryParse(stageCase.CustomPriority, out caseCustomPriority);
+					bool isPostDialogueCase = !string.IsNullOrEmpty(stageCase.Hidden) && (caseCustomPriority < 0);
+
+					if (!String.IsNullOrEmpty(condition.SayingMarker) && !isPostDialogueCase)
+                    {
+						warnings.Add(new ValidationError(ValidationFilterLevel.Case, string.Format("Trying to use a Saying Marker condition on Self, which will always fail. {0}", caseLabel), context));
+					}
+					if (!String.IsNullOrEmpty(condition.Saying) && !isPostDialogueCase)
 					{
-						if (!String.IsNullOrEmpty(condition.SayingMarker) && (string.IsNullOrEmpty(stageCase.Hidden) || stageCase.CustomPriority.ToInt() > 0))
-						{
-							warnings.Add(new ValidationError(ValidationFilterLevel.Case, string.Format("Trying to use a Saying Marker condition on Self, which will always fail. {0}", caseLabel), context));
-						}
-						if (!String.IsNullOrEmpty(condition.Saying))
-						{
-							warnings.Add(new ValidationError(ValidationFilterLevel.Case, string.Format("Trying to use a Saying Text condition on Self, which will always fail. {0}", caseLabel), context));
-						}
-						if (!String.IsNullOrEmpty(condition.Pose))
-						{
-							warnings.Add(new ValidationError(ValidationFilterLevel.Case, string.Format("Trying to use a Pose condition on Self, which will always fail. {0}", caseLabel), context));
-						}
+						warnings.Add(new ValidationError(ValidationFilterLevel.Case, string.Format("Trying to use a Saying Text condition on Self, which will always fail. {0}", caseLabel), context));
+					}
+					if (!String.IsNullOrEmpty(condition.Pose) && !isPostDialogueCase)
+					{
+						warnings.Add(new ValidationError(ValidationFilterLevel.Case, string.Format("Trying to use a Pose condition on Self, which will always fail. {0}", caseLabel), context));
 					}
 
 					if (!string.IsNullOrEmpty(condition.Said))
