@@ -88,6 +88,14 @@ Four special player IDs exist:
  - `self`, which refers to the subject (your) character.
  - `player`, which refers to the human player, though you can also refer to them using `human`.
 
+A condition can also define a custom player variable. If the condition matches at least one player, that custom variable will be bound to one of them randomly.
+If multiple conditions define the same variable, and they all require at least one player fulfilling it, it is guaranteed that at least one player satisfies all those
+conditions. You can also add extra restrictions using variable tests on the custom variable. Furthermore, any additional matches will (randomly) be assigned variables
+with the same names but with `2`, `3`, and so on, appended. These can also be used with variable tests, but note that not all possible combinations of such additional
+numbered variables will be tried.
+
+Note that you _don't_ have to define a custom variable to reference a specific character whose presence you've ensured with an Opponent or Also Playing condition.
+
 | Subvariable  | Description                                    |
 | ------------ | ---------------------------------------------- |
 | (none)       | Using only `~character_id~`, `~target~`, or `~self~` returns the name of the referenced player, or a nickname if one has been specified for that character. |
