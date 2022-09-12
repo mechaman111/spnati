@@ -107,6 +107,7 @@ Note that you _don't_ have to define a custom variable to reference a specific c
 | `.tag.tag_name` | `true` if the player has the tag `tag_name`, `false` otherwise. |
 | `.costume`      | The ID of the player's alternate costume/skin, or `default` if no alternate costume is worn. |
 | `.size`         | The player's breast or penis size depending on the gender (`small`, `medium`, or `large`). |
+| `.intelligence` | The player's AI intelligence. For the human player, this always expands to `average`. |
 | `.gender`       | The player's (current) gender, `male` or `female`. |
 | `.ifmale` | Outputs "text if male" if the player is male and "text if female" otherwise. Typically uses with `he\|she`, `him\|her` etc. in cases that don't depend on the particular player's gender except for the choice of pronouns. See the section below for how to use this variable. |
 | `.place`        | The player's current rank in terms of layers left or the reverse order they are eliminated, between 1 and 5 (if there are that many players). Two (or more) players can be in the same place if they have the same number of layers. In other words, the number of other players that have more layers left or were eliminated after this player, plus one. |

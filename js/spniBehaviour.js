@@ -1245,6 +1245,8 @@ function expandPlayerVariable(split_fn, args, player, self, target, bindings) {
         return player.size;
     case 'gender':
         return player.gender;
+    case 'intelligence':
+        return player.intelligence;
 	case 'tostutter':
 		var n = Math.min(Math.max((parseInt(args, 10) || 1), 1), 10);
 		var name = expandNicknames(self, player);
