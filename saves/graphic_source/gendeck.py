@@ -26,9 +26,9 @@ for suit in suits:
         for el in card.findall('.//*'):
             if 'id' in el.attrib:
                 del el.attrib['id']
-        card.write('%s%i.svg' % (suit, rank))
+        card.write('%s%i.tmp.svg' % (suit, rank))
 
         if suit == 'clubs' or suit == 'diamo':
             path = card.find('.//{*}path')
             path.attrib['stroke'] = path.attrib['fill'] = "#187800" if suit == 'clubs' else "#1020ff"
-            card.write('%s%s%i.svg' % ('green' if suit == 'clubs' else 'blue', suit, rank))
+            card.write('%s%s%i.tmp.svg' % ('green' if suit == 'clubs' else 'blue', suit, rank))
