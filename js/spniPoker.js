@@ -53,7 +53,7 @@ var CARDS_PER_HAND = 5;
 /* image constants */
 var CARD_CONFIG_FILE = "cards.xml";
 var BLANK_CARD_IMAGE = IMG + "blank.png";
-var UNKNOWN_CARD_IMAGE = IMG + "cards/default/unknown.jpg";
+var UNKNOWN_CARD_IMAGE = IMG + "cards/default/unknown.svg";
 var SUIT_PREFIXES = ["spade", "heart", "diamo", "clubs"];
 var ACTIVE_CARD_IMAGES = new ActiveCardImages();
 var CARD_IMAGE_SETS = {};
