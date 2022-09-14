@@ -139,6 +139,12 @@ namespace SPNATI_Character_Editor
 							warnings.Add(new ValidationError(ValidationFilterLevel.Lines, string.Format("Line has no text. If this was intentional, the correct way to create a blank line is to use ~blank~. {0}", caseLabel), context));
 						}
 
+						//Make sure it doesn't have weight 0
+						if (line.Weight == 0.001f && string.IsNullOrEmpty(stageCase.Hidden) && string.IsNullOrEmpty(stageCase.Disabled))
+						{
+							warnings.Add(new ValidationError(ValidationFilterLevel.Lines, string.Format("Line has a weight of 0. This does not actually prevent the line from playing. {0}", caseLabel), context));
+						}
+
 						//Make sure it doesn't contain invalid variables (~name~ or ~target~ in untargeted cases)
 						if (!trigger.HasTarget)
 						{
@@ -153,15 +159,13 @@ namespace SPNATI_Character_Editor
 						}
 
 						// check if line is entirely covered by {small}
-						if (line.Text.Trim().StartsWith("{small}") && !line.Text.Substring(1).Contains("{"))
+						var trimLine = line.Text.Trim();
+						if (trimLine.StartsWith("{small}"))
                         {
-							warnings.Add(new ValidationError(ValidationFilterLevel.Lines, "Line uses \"{small}\" " + string.Format("to shrink the entire line. Instead, please use the built-in \"Text size\" option. {0}", caseLabel), context));
-						}
-
-						// check if line has {!reset} at the end
-						if (line.Text.Trim().EndsWith("{!reset}"))
-						{
-							warnings.Add(new ValidationError(ValidationFilterLevel.Minor, "\"{!reset}\" " + string.Format("at the end of a line is unnecessary. {0}", caseLabel), context));
+							if (!trimLine.Substring(1).Contains("{") || (trimLine.EndsWith("{!reset}") && !trimLine.Substring(1, trimLine.Length - 9).Contains("{")))
+                            {
+								warnings.Add(new ValidationError(ValidationFilterLevel.Lines, "Line uses \"{small}\" " + string.Format("to shrink the entire line. Instead, please use the built-in \"Text size\" option. {0}", caseLabel), context));
+							}
 						}
 
 						// check for undefined custom styles
@@ -474,17 +478,21 @@ namespace SPNATI_Character_Editor
 						ValidateMarker(warnings, character, caseLabel, condition.SaidMarker, context);
 					}
 
-					if (!String.IsNullOrEmpty(condition.SayingMarker))
-                    {
-						warnings.Add(new ValidationError(ValidationFilterLevel.Case, string.Format("Trying to use a Saying Marker condition on Self, which will always fail. {0}", caseLabel), context));
-					}
-					if (!String.IsNullOrEmpty(condition.Saying))
+					// these next ones are not warnable if the case is hidden AND negative-priority
+					if (string.IsNullOrEmpty(stageCase.Hidden) || stageCase.CustomPriority.ToInt() > 0)
 					{
-						warnings.Add(new ValidationError(ValidationFilterLevel.Case, string.Format("Trying to use a Saying Text condition on Self, which will always fail. {0}", caseLabel), context));
-					}
-					if (!String.IsNullOrEmpty(condition.Pose))
-					{
-						warnings.Add(new ValidationError(ValidationFilterLevel.Case, string.Format("Trying to use a Pose condition on Self, which will always fail. {0}", caseLabel), context));
+						if (!String.IsNullOrEmpty(condition.SayingMarker) && (string.IsNullOrEmpty(stageCase.Hidden) || stageCase.CustomPriority.ToInt() > 0))
+						{
+							warnings.Add(new ValidationError(ValidationFilterLevel.Case, string.Format("Trying to use a Saying Marker condition on Self, which will always fail. {0}", caseLabel), context));
+						}
+						if (!String.IsNullOrEmpty(condition.Saying))
+						{
+							warnings.Add(new ValidationError(ValidationFilterLevel.Case, string.Format("Trying to use a Saying Text condition on Self, which will always fail. {0}", caseLabel), context));
+						}
+						if (!String.IsNullOrEmpty(condition.Pose))
+						{
+							warnings.Add(new ValidationError(ValidationFilterLevel.Case, string.Format("Trying to use a Pose condition on Self, which will always fail. {0}", caseLabel), context));
+						}
 					}
 
 					if (!string.IsNullOrEmpty(condition.Said))
