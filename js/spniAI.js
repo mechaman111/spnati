@@ -80,9 +80,6 @@ function determineAIAction (player) {
       }
     }
 
-    /* determine the current hand */
-    player.hand.determine();
-
     /* collect the ranks and suits of the cards */
     var hand = player.hand.cards;
 
