@@ -954,22 +954,22 @@ CardDeckGroup.prototype.disableAll = function () {
 function CardDeckDisplay (imageSet) {
     this.imageSet = imageSet;
 
-    var suits = {"spade": [], "diamo": [], "heart": [], "clubs": []};
+    var suits = [[], [], [], []];
     imageSet.includedFrontCards.forEach(function (c) {
         suits[c.suit].push(c);
     });
 
     /** @type {Array<CardDeckGroup>} */
     this.groups = [];
-    Object.entries(suits).forEach(function (kv) {
-        if (kv[1].length === 0) return;
+    suits.forEach(function (suit, idx) {
+        if (suit.length === 0) return;
 
-        kv[1].sort(function (a, b) {
+        suit.sort(function (a, b) {
             return a.rank - b.rank;
         });
 
         this.groups.push(new CardDeckGroup(
-            this, cardSuitToString(kv[0]), imageSet, kv[1], false
+            this, cardSuitToString(idx), imageSet, suit, false
         ));
     }.bind(this));
 
