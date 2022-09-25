@@ -214,6 +214,7 @@ Many of these should be self-explanatory.
 |`lesbian`| | The character is female and exclusively attracted to other females.
 |`bisexual`| | The character is attracted to both genders.
 |`bi-curious`| | The character is predominantly attracted to the opposite gender, but is curious about the same sex. Also applicable to otherwise-straight characters that open up to characters of the same sex in lategame.
+|`reverse_bi-curious`| | The  character is predominantly attracted to the same sex, but is curious about the opposite sex. Also applicable to otherwise gay/lesbian characters that open up to opposite-sex characters late in the game.
 
 ## Occupation
 
