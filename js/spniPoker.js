@@ -780,9 +780,6 @@ function dealHand (player, numPlayers, playersBefore) {
      */
     forceTableVisibility(1);
 
-    /* reset the strength so any hand condition won't use the last
-     * round's result. */
-    players[player].hand.strength = NONE;
     /* deal the new cards */
     for (var i = 0; i < CARDS_PER_HAND; i++) {
         players[player].hand.tradeIns[i] = false;
@@ -791,6 +788,7 @@ function dealHand (player, numPlayers, playersBefore) {
         // each player, and so on.
         animateDealtCard(player, i, numPlayers * i + playersBefore);
     }
+    players[player].hand.determine();
 }
 
 /************************************************************
@@ -822,6 +820,7 @@ function exchangeCards (player) {
         players[player].hand.cards.push(activeDeck.dealCard());
         animateDealtCard(player, i, n);
     }
+    players[player].hand.determine();
 }
 
 /**********************************************************************
@@ -1017,7 +1016,7 @@ Hand.prototype.describeFormal = function() {
 };
 
 Hand.prototype.score = function() {
-    return (this.strength - 1) * 100 + this.value[0];
+    return this.strength != NONE ? (this.strength - 1) * 100 + this.value[0] : undefined;
 };
 
 // Sort the cards
