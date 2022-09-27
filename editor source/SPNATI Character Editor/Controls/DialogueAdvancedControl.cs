@@ -16,6 +16,7 @@ namespace SPNATI_Character_Editor.Controls
 
 		private Character _character;
 		private DialogueLine _line;
+		private bool _settingData;
 
 		public event EventHandler DataUpdated;
 
@@ -30,6 +31,7 @@ namespace SPNATI_Character_Editor.Controls
 			cboDirection.DataSource = DialogueLine.ArrowDirections;
 			cboFontSize.DataSource = DialogueLine.FontSizes;
 			cboAI.DataSource = DialogueLine.AILevels;
+			_settingData = false;
 			OnUpdateSkin(SkinManager.Instance.CurrentSkin);
 		}
 
@@ -45,6 +47,8 @@ namespace SPNATI_Character_Editor.Controls
 
 		public void SetData(int row, DialogueLine line, Character character)
 		{
+			_settingData = true;
+
 			OnUpdateSkin(SkinManager.Instance.CurrentSkin);
 			RowIndex = row;
 			_line = line;
@@ -73,7 +77,11 @@ namespace SPNATI_Character_Editor.Controls
 			}
 			valLocation.Value = Math.Max(valLocation.Minimum, Math.Min(valLocation.Maximum, (decimal)location));
 
-			cboHeavy.Text = ""; // stops it from keeping the last heavy value looked at 
+			cboHeavy.Text = "";
+			cboAttr.Text = "";
+			txtValue.Text = "";
+			cboOp.Text = "";
+			chkResetHeavy.Checked = false;
 			if (line.DialogueOperations != null && line.DialogueOperations.ForfeitOps != null)
 			{
 				foreach (ForfeitOperation op in line.DialogueOperations.ForfeitOps.ToArray())
@@ -99,17 +107,11 @@ namespace SPNATI_Character_Editor.Controls
 					}
 				}
 			}
-			else
-			{
-				cboAttr.Text = "";
-				txtValue.Text = "";
-				cboOp.Text = "";
-				cboHeavy.Text = "";
-				chkResetHeavy.Checked = false;
-			}
 
 			// has to be at end or else weight and location are set incorrectly
 			cboFontSize.Text = fontSize ?? "";
+
+			_settingData = false;
 		}
 
 		public DialogueLine GetLine()
@@ -229,14 +231,21 @@ namespace SPNATI_Character_Editor.Controls
 				{
 					_line.DialogueOperations.ForfeitOps.Add(heavyOp);
 				}
-			}
+			} else if (_line.DialogueOperations != null && _line.DialogueOperations.ForfeitOps != null)
+            {
+				_line.DialogueOperations.ForfeitOps.Clear();
+				if (_line.DialogueOperations.IsEmpty())
+                {
+					_line.DialogueOperations = null;
+                }
+            }
 
 			return _line;
 		}
 
 		private void valLocation_ValueChanged(object sender, EventArgs e)
 		{
-			DataUpdated?.Invoke(this, e);
+			if (!_settingData) DataUpdated?.Invoke(this, e);
 		}
 
 		private void chkResetAI_CheckedChanged(object sender, EventArgs e)
@@ -256,12 +265,12 @@ namespace SPNATI_Character_Editor.Controls
 
         private void cboFontSize_SelectedIndexChanged(object sender, EventArgs e)
         {
-			DataUpdated?.Invoke(this, e);
+			if (!_settingData) DataUpdated?.Invoke(this, e);
 		}
 
         private void chkLayer_CheckedChanged(object sender, EventArgs e)
         {
-			DataUpdated?.Invoke(this, e);
+			if (!_settingData) DataUpdated?.Invoke(this, e);
 		}
 
         private void skinnedGroupBox2_Enter(object sender, EventArgs e)
@@ -281,7 +290,6 @@ namespace SPNATI_Character_Editor.Controls
 
         private void cboAttr_SelectedIndexChanged(object sender, EventArgs e)
         {
-			DataUpdated?.Invoke(this, e);
 			string attr = cboAttr.Text;
 			if (attr == "redirect-finish")
 			{
@@ -295,11 +303,13 @@ namespace SPNATI_Character_Editor.Controls
 				cboOp.Items.AddRange(new string[] { "=", "+", "-", "*", "/", "%" });
 				cboOp.SelectedItem = "=";
 			}
+
+			if (!_settingData) DataUpdated?.Invoke(this, e);
 		}
 
-        private void cboOp_SelectedIndexChanged(object sender, EventArgs e)
+		private void cboOp_SelectedIndexChanged(object sender, EventArgs e)
         {
-			DataUpdated?.Invoke(this, e);
+			if (!_settingData) DataUpdated?.Invoke(this, e);
 		}
 
         private void label5_Click(object sender, EventArgs e)
