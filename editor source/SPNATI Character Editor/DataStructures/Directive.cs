@@ -583,6 +583,56 @@ namespace SPNATI_Character_Editor
 		}
 
 		/// <summary>
+		/// Get the actual source path for this keyframe, relative to opponents/
+		/// </summary>
+		/// <param name="character"></param>
+		/// <returns></returns>
+		public string GetActualSrc(ISkin character)
+		{
+			if (String.IsNullOrEmpty(Src))
+            {
+				return null;
+            }
+
+			if (Src.StartsWith("/opponents/"))
+			{
+				return Src.Substring("/opponents/".Length);
+			}
+			else if (Src.StartsWith("opponents/"))
+			{
+				return Src.Substring("opponents/".Length);
+			}
+
+			if (character == null || Src.StartsWith("reskins/"))
+            {
+				return Src;
+            }
+
+			string curFolderName = character.FolderName;
+			if (curFolderName.StartsWith("opponents/"))
+            {
+				curFolderName = curFolderName.Substring("opponents/".Length);
+            }
+
+			if (Src.StartsWith(curFolderName + "/"))
+			{
+				return Src;
+			}
+			else
+			{
+				// Check to see if we match *some* character under opponents/
+				foreach(Character c in CharacterDatabase.Characters)
+                {
+					if (Src.StartsWith(c.FolderName + "/")) {
+						return Src;
+                    }
+                }
+
+				return curFolderName + "/" + Src;
+			}
+		}
+
+		/// <summary>
 		/// Moves all non-null properties from this frame into another one
 		/// </summary>
 		/// <param name="dest"></param>

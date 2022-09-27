@@ -248,7 +248,7 @@ namespace SPNATI_Character_Editor.Activities
 
 				// create dummy column to prevent crash
 				if (_columns.Count == 0)
-                {
+				{
 					AddColumn("calm");
 				}
 
@@ -808,6 +808,22 @@ namespace SPNATI_Character_Editor.Activities
 			Enabled = true;
 			ShowPreview(_currentPose);
 			UpdateCell(null, _currentPose);
+
+			string dir = Path.Combine(_character.GetBackupDirectory(), "images");
+			string img;
+
+			if (_currentPose.Stage.Name == null)
+			{
+				//stage dependent sheet
+				img = _currentPose.Stage.Stage + "-" + _currentPose.ToString() + ".png";
+			}
+			else 
+			{
+				//stage independent sheet
+				img = _currentPose.Stage.Name + "_" + _currentPose.ToString() + ".png";
+			}
+
+			File.Delete(Path.Combine(dir, img));
 		}
 
 		private void cmdCrop_Click(object sender, EventArgs e)
@@ -1123,6 +1139,35 @@ namespace SPNATI_Character_Editor.Activities
 
 			ImportPosesAsync(toImport);
 		}
+
+		/// <summary>
+		/// Gives checkmark on selected cells
+		/// </summary>
+		private void CheckmarkSelectedCells()
+		{
+			DataGridViewCell cell;
+			bool usingWardrobe = false;
+			foreach (DataGridViewCell cell2 in grid.SelectedCells)
+            {
+				PoseStage stage = _sheet.Stages[cell2.RowIndex];
+				usingWardrobe = usingWardrobe || !string.IsNullOrEmpty(stage.Code);
+				if (usingWardrobe && string.IsNullOrEmpty(stage.Code))
+				{
+					continue;
+				}
+				PoseEntry pose = cell2.Tag as PoseEntry;
+				if (pose != null)
+				{
+					if (_cells.TryGetValue(pose, out cell))
+					{
+						pose.LastUpdate = 0;
+						UpdateCell(cell, pose);
+					}
+				}	
+			}
+
+		}
+
 
 		/// <summary>
 		/// Imports all poses, replacing existing images
@@ -1957,9 +2002,14 @@ namespace SPNATI_Character_Editor.Activities
 				}
 			}
 		}
-	}
 
-	public class CellClipboardData
+		private void tsCheckCell_Click(object sender, EventArgs e)
+		{
+			CheckmarkSelectedCells();
+		}
+    }
+
+    public class CellClipboardData
 	{
 		private List<Tuple<Point, PoseEntry>> _cells = new List<Tuple<Point, PoseEntry>>();
 

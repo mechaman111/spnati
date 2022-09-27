@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 
 namespace SPNATI_Character_Editor.EpilogueEditor
@@ -102,10 +103,33 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			if (path.StartsWith("/opponents/"))
 			{
 				return path.Substring("/opponents/".Length);
+			} 
+			else if (path.StartsWith("opponents/"))
+            {
+				return path.Substring("opponents/".Length);
+            }
+
+			string curFolderName = character.FolderName;
+			if (curFolderName.StartsWith("opponents/"))
+			{
+				curFolderName = curFolderName.Substring("opponents/".Length);
+			}
+
+			if (path.StartsWith(curFolderName + "/") || path.StartsWith("reskins/"))
+			{
+				return path;
 			}
 			else
 			{
-				return character.FolderName + "/" + path;
+				foreach (Character c in CharacterDatabase.Characters)
+				{
+					if (path.StartsWith(c.FolderName + "/"))
+					{
+						return path;
+					}
+				}
+
+				return curFolderName + "/" + path;
 			}
 		}
 
