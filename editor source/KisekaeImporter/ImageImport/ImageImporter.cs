@@ -145,7 +145,7 @@ namespace KisekaeImporter.ImageImport
 						y = scene.Camera.Y;
 						zoom = scene.Camera.Zoom;
 					}
-					code.MergeIn(importCode, false, false);
+					code.MergeIn(importCode, false, null);
 					if (scene != null)
 					{
 						scene.Camera.X = x;

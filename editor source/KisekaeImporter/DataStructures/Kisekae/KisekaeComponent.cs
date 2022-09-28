@@ -6,6 +6,7 @@ using System.Reflection;
 
 namespace KisekaeImporter
 {
+
 	public abstract class KisekaeComponent
 	{
 		private static Dictionary<Type, Dictionary<string, string>> _map = new Dictionary<Type, Dictionary<string, string>>();
@@ -152,29 +153,35 @@ namespace KisekaeImporter
 			return code;
 		}
 
-		public void ReplaceSubCode(KisekaeSubCode code, bool applyEmpties, bool poseOnly)
+		public void ReplaceSubCode(KisekaeSubCode code, bool addNew, ReplaceMode mode)
 		{
 			string prefix = code.Id;
 			if (code.Index >= 0)
 				prefix += code.Index.ToString("00");
 
 			KisekaeSubCode existingCode = GetSubCode(prefix);
-			if (existingCode == null || !code.IsEmpty || applyEmpties)
-			{
-				if (poseOnly && existingCode is IPoseable && !existingCode.IsEmpty)
-				{
-					((IPoseable)existingCode).Pose(code as IPoseable);
-
-					// All current IAttachedText subcode types (i.e. KisekaeImage and KisekaeGlobalImage) are also IPoseable.
-					if (existingCode is IAttachedText && !String.IsNullOrEmpty(((IAttachedText)code).Text))
+			if (existingCode != null && !existingCode.IsEmpty)
+            {
+				if (mode == ReplaceMode.Overwrite || !((existingCode is IPoseable) || (existingCode is IAttachedText)))
+                {
+					SetSubCode(prefix, code);
+				}
+				else
+                {
+					if ((existingCode is IPoseable) && (mode == ReplaceMode.PoseOnly || mode == ReplaceMode.PoseAndTextOnly))
                     {
+						((IPoseable)existingCode).Pose(code as IPoseable);
+					}
+
+					if ((existingCode is IAttachedText) && !String.IsNullOrEmpty(((IAttachedText)code).Text) && (mode == ReplaceMode.TextOnly || mode == ReplaceMode.PoseAndTextOnly))
+					{
 						((IAttachedText)existingCode).Text = ((IAttachedText)code).Text;
 					}
 				}
-				else
-				{
-					SetSubCode(prefix, code);
-				}
+            }
+			else if (addNew || code.IsEmpty)
+            {
+				SetSubCode(prefix, code);
 			}
 		}
 
@@ -191,6 +198,23 @@ namespace KisekaeImporter
 			if (!_subcodes.TryGetValue(prefix, out subcode))
 				return false;
 			return !subcode.IsEmpty;
+		}
+
+		public void RemoveSubCodesOfType<T>()
+        {
+			List<string> toRemove = new List<string>();
+			foreach (var kvp in _subcodes)
+			{
+				if (kvp.Value is T)
+                {
+					toRemove.Add(kvp.Key);
+                }
+			}
+
+			foreach (var key in toRemove)
+            {
+				_subcodes.Remove(key);
+            }
 		}
 
 		public IEnumerable<KisekaeSubCode> GetSubCodesOfType<T>()
@@ -230,5 +254,12 @@ namespace KisekaeImporter
 				subcode.ShiftX(offset);
 			}
 		}
+	}
+	public enum ReplaceMode
+	{
+		Overwrite,
+		PoseOnly,
+		TextOnly,
+		PoseAndTextOnly
 	}
 }

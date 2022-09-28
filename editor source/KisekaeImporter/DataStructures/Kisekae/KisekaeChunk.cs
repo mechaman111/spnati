@@ -186,7 +186,7 @@ namespace KisekaeImporter.DataStructures.Kisekae
 		/// Merges another chunk into this one
 		/// </summary>
 		/// <param name="chunk"></param>
-		public void MergeIn(KisekaeChunk chunk, bool applyEmpties, bool poseOnly)
+		public void MergeIn(KisekaeChunk chunk, bool poseOnly, IDictionary<Type, MergeOptions> subcodeOptions)
 		{
 			KisekaeChunk copy = new KisekaeChunk(chunk);
 			foreach (var kvp in copy._components)
@@ -194,9 +194,30 @@ namespace KisekaeImporter.DataStructures.Kisekae
 				KisekaeComponent existing = GetOrAddComponent(kvp.Key);
 				KisekaeComponent component = kvp.Value;
 
+				if (subcodeOptions != null)
+				{
+					foreach (var optKvp in subcodeOptions)
+					{
+						if (optKvp.Value.RemoveExisting)
+						{
+							var method = existing.GetType().GetMethod(nameof(KisekaeComponent.RemoveSubCodesOfType));
+							var generic = method.MakeGenericMethod(optKvp.Key);
+							generic.Invoke(existing, null);
+						}
+					}
+				}
+
 				foreach (var subcode in component.GetSubCodes())
 				{
-					existing.ReplaceSubCode(subcode, applyEmpties, poseOnly);
+					MergeOptions opts = null;
+					if (subcodeOptions != null && subcodeOptions.TryGetValue(subcode.GetType(), out opts))
+					{
+						existing.ReplaceSubCode(subcode, opts.AddNew, opts.Mode);
+					}
+					else
+					{
+						existing.ReplaceSubCode(subcode, true, poseOnly ? ReplaceMode.PoseOnly : ReplaceMode.Overwrite);
+					}
 				}
 			}
 		}
@@ -258,4 +279,11 @@ namespace KisekaeImporter.DataStructures.Kisekae
 			}
 		}
 	}
+
+	public class MergeOptions
+    {
+		public bool RemoveExisting = false;
+		public bool AddNew = true;
+		public ReplaceMode Mode = ReplaceMode.Overwrite;
+    }
 }

@@ -875,6 +875,14 @@ namespace SPNATI_Character_Editor.DataStructures
 		[DefaultValue(0L)]
 		public long LastUpdate { get; set; }
 
+		[XmlArray("merge-settings")]
+		[XmlArrayItem("setting")]
+		public List<PartOptions> PartMergeOptions
+		{
+			get { return Get<List<PartOptions>>(); }
+			set { Set(value); }
+		}
+
 		private Dictionary<string, string> _data;
 		[XmlIgnore]
 		public Dictionary<string, string> ExtraMetadata
@@ -955,12 +963,30 @@ namespace SPNATI_Character_Editor.DataStructures
 				}
 
 				modelCode = new KisekaeCode("", true);
-				modelCode.MergeIn(baseCode, false, false);
-				modelCode.MergeIn(stageCode, false, false);
+				modelCode.MergeIn(baseCode, false, null);
+				modelCode.MergeIn(stageCode, false, null);
+
+				var mergeOpts = new Dictionary<Type, MergeOptions>();
+				foreach (PartOptions opts in PartMergeOptions)
+                {
+					Type subcodeType = opts.GetSubCodeType();
+					MergeOptions merge = opts.GetOptions();
+
+					if (subcodeType != null && merge != null)
+                    {
+						mergeOpts.Add(subcodeType, merge);
+                    }
+                }
 
 				//Remove any belts and such that appear in the pose but not in the clothing or base
 				foreach (KisekaeSubCode subcode in poseCode.GetSubCodesOfType<IPoseable>())
 				{
+					MergeOptions subcodeOpts = null;
+					if (mergeOpts.TryGetValue(subcode.GetType(), out subcodeOpts))
+                    {
+						continue;
+					}
+
 					bool inBase = baseCode.HasSubCode(subcode.Id, subcode.Index);
 					bool inStage = stageCode.HasSubCode(subcode.Id, subcode.Index);
 					if (!inBase && !inStage)
@@ -973,7 +999,7 @@ namespace SPNATI_Character_Editor.DataStructures
 					}
 				}
 
-				modelCode.MergeIn(poseCode, false, true);
+				modelCode.MergeIn(poseCode, true, mergeOpts);
 			}
 			else
 			{
@@ -985,6 +1011,84 @@ namespace SPNATI_Character_Editor.DataStructures
 			metadata.ExtraData = ExtraMetadata;
 			return metadata;
 		}
+	}
+
+    [Serializable]
+	public class PartOptions
+    {
+		[XmlAttribute("type")]
+		public string PartType { get; set; }
+
+        [XmlAttribute("mode")]
+		public string Mode { get; set; }
+
+		public Type GetSubCodeType()
+        {
+			switch (this.PartType)
+            {
+				case "ribbon": return typeof(KisekaeHairpiece);
+				case "hair": return typeof(KisekaeAhoge);
+				case "belt": return typeof(KisekaeBelt);
+				case "facemark": return typeof(KisekaeFacePaint);
+				case "image": return typeof(KisekaeImage);
+				default: return null;
+            }
+        }
+
+		public MergeOptions GetOptions()
+        {
+			MergeOptions mergeOptions = new MergeOptions();
+
+			if (Mode == "override")
+            {
+				mergeOptions.Mode = ReplaceMode.Overwrite;
+				mergeOptions.RemoveExisting = true;
+				mergeOptions.AddNew = true;
+            }
+			else if (this.Mode == "update")
+			{
+				mergeOptions.Mode = ReplaceMode.PoseAndTextOnly;
+				mergeOptions.RemoveExisting = false;
+				mergeOptions.AddNew = false;
+			}
+			else if (this.PartType == "image")
+            {
+				if (this.Mode == "update-pose")
+				{
+					mergeOptions.Mode = ReplaceMode.PoseOnly;
+					mergeOptions.RemoveExisting = false;
+					mergeOptions.AddNew = false;
+				}
+				else if (this.Mode == "update-source")
+				{
+					mergeOptions.Mode = ReplaceMode.TextOnly;
+					mergeOptions.RemoveExisting = false;
+					mergeOptions.AddNew = false;
+				}
+				else if (this.Mode == "merge-pose")
+				{
+					mergeOptions.Mode = ReplaceMode.PoseOnly;
+					mergeOptions.RemoveExisting = false;
+					mergeOptions.AddNew = true;
+				}
+				else if (this.Mode == "merge-source")
+				{
+					mergeOptions.Mode = ReplaceMode.TextOnly;
+					mergeOptions.RemoveExisting = false;
+					mergeOptions.AddNew = true;
+				}
+				else
+				{
+					mergeOptions = null;
+				}
+			}
+			else
+            {
+				mergeOptions = null;
+            }
+
+			return mergeOptions;
+        }
 	}
 
 	public interface IPoseCode

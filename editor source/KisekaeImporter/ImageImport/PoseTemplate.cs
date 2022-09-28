@@ -42,8 +42,8 @@ namespace KisekaeImporter.ImageImport
 			}
 
 			KisekaeCode output = new KisekaeCode("", true);
-			output.MergeIn(baseCode, false, false);
-			output.MergeIn(new KisekaeCode(stage.Code), false, false);
+			output.MergeIn(baseCode, false, null);
+			output.MergeIn(new KisekaeCode(stage.Code), false, null);
 
 			//Remove any belts and such that appear in the pose but not in the clothing or base
 			foreach (KisekaeSubCode subcode in poseCode.GetSubCodesOfType<IPoseable>())
@@ -54,7 +54,7 @@ namespace KisekaeImporter.ImageImport
 				}
 			}
 
-			output.MergeIn(poseCode, false, true);
+			output.MergeIn(poseCode, true, null);
 
 			//Add in stage blush, etc.
 			KisekaeExpression expression = output.GetOrAddComponent<KisekaeExpression>();
