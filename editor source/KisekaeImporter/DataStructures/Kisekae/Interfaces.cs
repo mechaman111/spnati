@@ -21,4 +21,9 @@
 	{
 		void ShiftX(int offset);
 	}
+
+	public interface IAttachedText
+    {
+		string Text { get; set; }
+    }
 }
