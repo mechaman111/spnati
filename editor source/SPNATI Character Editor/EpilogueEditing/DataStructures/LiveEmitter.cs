@@ -404,7 +404,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			}
 			if (!string.IsNullOrEmpty(kf.Src))
 			{
-				string path = LiveSceneSegment.FixPath(kf.Src, Character);
+				string path = kf.GetActualSrc(Character);
 				AddValue<string>(time, "Src", path, addBreak);
 				properties.Add("Src");
 			}
