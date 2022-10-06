@@ -328,8 +328,7 @@ function loadBackgroundFromXml($xml, auto_tag_values) {
         var tagName = $elem.prop('tagName').toLowerCase();
 
         if (tagName == 'src') {
-            /* Use unshift() instead of push() so that the last defined layer appears on top. */
-            layers.unshift(new BackgroundLayer(
+            layers.push(new BackgroundLayer(
                 $elem.text(),
                 ($elem.attr("repeat") !== "false"),
                 $elem.attr("anchor"),
@@ -588,7 +587,7 @@ function pushBackgroundOption (background) {
         "css": {
             "background-image": background.layers.filter((layer) => {
                 return (layer.anchor !== "left" && layer.anchor !== "right");
-            }).sort((a, b) => a.isOverlay - b.isOverlay).map((layer) => "url(" + layer.src + ")").join(", ")
+            }).sort((a, b) => a.isOverlay - b.isOverlay).reverse().map((layer) => "url(" + layer.src + ")").join(", ")
         },
         "click": function() {
             optionsBackground = background;
