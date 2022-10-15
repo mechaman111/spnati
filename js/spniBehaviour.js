@@ -1324,6 +1324,17 @@ function expandPlayerVariable(split_fn, args, player, self, target, bindings) {
         } else if (split_fn[1] == 'noart' || split_fn[1] === undefined) {
             return player.hand.describe(split_fn[1] == undefined);
         }
+        throw new Error('Incorrect use of .hand');
+    case 'cards':
+        var n = player.hand.tradeIns.countTrue();
+        if (split_fn.length == 1) {
+            return String(n);
+        } else if (split_fn[1] == 'ifplural') {
+            return expandDialogue(args.split('|')[n == 1 ? 1 : 0], player, target, bindings);
+        } else if (split_fn[1] == 'text' && args === undefined) {
+            return [ 'zero', 'one', 'two', 'three', 'four', 'five' ][n];
+        }
+        throw new Error('Incorrect use of .cards');
     case 'wearing':
         {
             var types = [], positions = [], names = [];
@@ -1425,14 +1436,7 @@ function expandDialogue (dialogue, self, target, bindings) {
                 }
                 break;
             case 'cards': /* determine how many cards are being swapped */
-                var n = self.hand.tradeIns.countTrue();
-                if (fn == 'ifplural') {
-                    substitution = expandDialogue(args.split('|')[n == 1 ? 1 : 0], self, target, bindings);
-                } else if (fn == 'text' && args === undefined) {
-                    substitution = [ 'zero', 'one', 'two', 'three', 'four', 'five' ][n];
-                } else if (fn === undefined) {
-                    substitution = String(n);
-                }
+                substitution = expandPlayerVariable(['cards'].concat(fn_parts), args, self, self, target, bindings);
                 break;
             case 'collectible':
                 fn = fn_parts[0];
