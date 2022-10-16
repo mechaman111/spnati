@@ -1464,13 +1464,28 @@ function expandDialogue (dialogue, self, target, bindings) {
                 }
                 break;
             case 'background':
-                if (fn == undefined) {
+                if (fn == undefined || fn === 'id') {
                     substitution = activeBackground.id;
                 } else if (fn === 'tag') {
                     var bg_tag = fixupTagFormatting(fn_parts[1]);
                     substitution = !!activeBackground.tags && (activeBackground.tags.indexOf(bg_tag) >= 0);
+                } else if (fn === 'preposition') {
+                    substitution = activeBackground.metadata[fn] || 'in';
+                } else if (fn === 'term') {
+                    substitution = activeBackground.metadata.term || activeBackground.id;
                 } else if (fn == 'time' && !('time' in activeBackground.metadata) && args === undefined) {
                     substitution = localDayOrNight;
+                } else if (fn == 'adverb') {
+                    substitution = activeBackground.metadata.surface == 'roof' ? 'up'
+                        : activeBackground.metadata.location == 'outdoors' ? 'out' : 'in';
+                } else if (fn == 'if' && fn_parts.length == 2) {
+                    let bg_tag = fixupTagFormatting(fn_parts[1]), val;
+                    if ((bg_tag == 'day' || bg_tag == 'night') && !('time' in activeBackground.metadata)) {
+                        val = localDayOrNight == bg_tag;
+                    } else {
+                        val = activeBackground.tags && (activeBackground.tags.includes(bg_tag));
+                    }
+                    substitution = expandDialogue(args.split('|')[val ? 0 : 1]);
                 } else if (args === undefined) {
                     substitution = activeBackground.metadata[fn] || '';
                 }
