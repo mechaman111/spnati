@@ -6,9 +6,15 @@ var USAGE_TRACKING_ENDPOINT = 'https://spnati.faraway-vision.io/usage/report';
 var BUG_REPORTING_ENDPOINT = 'https://spnati.faraway-vision.io/usage/bug_report';
 var FEEDBACK_ROUTE = "https://spnati.faraway-vision.io/usage/feedback";
 
+/*
+ * Usage tracking types:
+ * Basic info: table composition, game state, UI info, game ID
+ * Persistent/Session info: session IDs, epilogues + collectibles unlocked, number of unique characters played
+ * Demographics info: player tags and clothing
+ */
+
 $bugReportModal = $('#bug-report-modal');
 $feedbackReportModal = $('#feedback-report-modal');
-$usageTrackingModal = $('#usage-reporting-modal');
 
 function getReportedOrigin () {
     var origin = window.location.origin;
@@ -149,12 +155,10 @@ function logError(err, message, fileName, lineNum) {
 
     jsErrors.push(errData);
 
-    if (USAGE_TRACKING) {
-        var report = compileBaseErrorReport('Automatically generated after Javascript error.', 'auto');
+    var report = compileBaseErrorReport('Automatically generated after Javascript error.', 'auto');
         
-        // swallow errors here so we don't call this function recursively
-        return postJSON(BUG_REPORTING_ENDPOINT, report).catch(function() {});
-    }
+    // swallow errors here so we don't call this function recursively
+    return postJSON(BUG_REPORTING_ENDPOINT, report).catch(function() {});
 }
 
 /** Helper function for manually logging / capturing errors. */
@@ -166,7 +170,7 @@ function captureError(err) {
     }
 
     logError(err);
-    if (SENTRY_INITIALIZED) Sentry.captureException(err);
+    Sentry.captureException(err);
 }
 
 
@@ -402,142 +406,171 @@ $feedbackReportModal.on('shown.bs.modal', function () {
     $('#feedback-report-character').focus();
 });
 
-/*
- * Show the usage tracking consent modal.
- */
-
-function showUsageTrackingModal() {
-    $usageTrackingModal.modal('show');
-}
-
-function enableUsageTracking() {
-    USAGE_TRACKING = true;
-    save.saveUsageTracking();
-    enableSentry();
-}
-
-function disableUsageTracking() {
-    USAGE_TRACKING = false;
-    save.saveUsageTracking();
-    disableSentry();
-}
-
 function sentryInit() {
-    if (!SENTRY_INITIALIZED) {
-        console.log("Initializing Sentry...");
+    console.log("Initializing Sentry...");
 
-        var sentry_opts = {
-            dsn: 'https://df511167a4fa4a35956a8653ff154960@sentry.io/1508488',
-            release: VERSION_TAG,
-            maxBreadcrumbs: 100,
-            integrations: [new Sentry.Integrations.Breadcrumbs({
-                console: false,
-                dom: false
-            })],
-            beforeSend: function (event, hint) {
-                /* Inject additional game state data into event tags: */
-                if (!event.extra) event.extra = {};
+    var sentry_opts = {
+        dsn: 'https://df511167a4fa4a35956a8653ff154960@sentry.io/1508488',
+        release: VERSION_TAG,
+        maxBreadcrumbs: 100,
+        integrations: [new Sentry.Integrations.Breadcrumbs({
+            console: false,
+            dom: false
+        })],
+        beforeSend: function (event, hint) {
+            /* Inject additional game state data into event tags: */
+            if (!event.extra) event.extra = {};
 
-                event.tags.commit = VERSION_COMMIT;
+            event.tags.commit = VERSION_COMMIT;
 
-                if (inGame && !epiloguePlayer) {
-                    event.extra.recentLoser = recentLoser;
-                    event.extra.previousLoser = previousLoser;
-                    event.extra.gameOver = gameOver;
-                    event.extra.currentTurn = currentTurn;
-                    event.extra.currentRound = currentRound;
+            if (inGame && !epiloguePlayer) {
+                event.extra.recentLoser = recentLoser;
+                event.extra.previousLoser = previousLoser;
+                event.extra.gameOver = gameOver;
+                event.extra.currentTurn = currentTurn;
+                event.extra.currentRound = currentRound;
 
-                    event.tags.rollback = inRollback();
-                    event.tags.gamePhase = getGamePhaseString(gamePhase);
-                    event.tags.uiTheme = UI_THEME;
-                }
-
-                if (epiloguePlayer) {
-                    event.tags.epilogue = epiloguePlayer.epilogue.title;
-                    event.tags.epilogue_player = epiloguePlayer.epilogue.player.id;
-                    event.tags.epilogue_gender = epiloguePlayer.epilogue.gender;
-
-                    event.extra.loaded = epiloguePlayer.loaded;
-                    event.extra.directiveIndex = epiloguePlayer.directiveIndex;
-                    event.extra.sceneIndex = epiloguePlayer.sceneIndex;
-                    event.extra.viewIndex = epiloguePlayer.viewIndex;
-                }
-
-                var n_players = 0;
-                for (var i=1;i<players.length;i++) {
-                    if (players[i]) {
-                        n_players += 1;
-                        event.tags["character:" + players[i].id] = true;
-                        event.tags["slot-" + i] = players[i].id;
-
-                        if (players[i].alt_costume) {
-                            event.tags[players[i].id+":alt-costume"] = players[i].alt_costume.id;
-                        }
-                    } else {
-                        event.tags["slot-" + i] = undefined;
-                    }
-                }
-
-                event.tags.n_players = n_players;
-
-                return event;
+                event.tags.rollback = inRollback();
+                event.tags.gamePhase = getGamePhaseString(gamePhase);
+                event.tags.uiTheme = UI_THEME;
             }
-        };
 
-        if (window.location.origin.indexOf('spnati.net') >= 0) {
-            sentry_opts.environment = 'production';
+            if (epiloguePlayer) {
+                event.tags.epilogue = epiloguePlayer.epilogue.title;
+                event.tags.epilogue_player = epiloguePlayer.epilogue.player.id;
+                event.tags.epilogue_gender = epiloguePlayer.epilogue.gender;
+
+                event.extra.loaded = epiloguePlayer.loaded;
+                event.extra.directiveIndex = epiloguePlayer.directiveIndex;
+                event.extra.sceneIndex = epiloguePlayer.sceneIndex;
+                event.extra.viewIndex = epiloguePlayer.viewIndex;
+            }
+
+            var n_players = 0;
+            for (var i=1;i<players.length;i++) {
+                if (players[i]) {
+                    n_players += 1;
+                    event.tags["character:" + players[i].id] = true;
+                    event.tags["slot-" + i] = players[i].id;
+
+                    if (players[i].alt_costume) {
+                        event.tags[players[i].id+":alt-costume"] = players[i].alt_costume.id;
+                    }
+                } else {
+                    event.tags["slot-" + i] = undefined;
+                }
+            }
+
+            event.tags.n_players = n_players;
+
+            return event;
         }
+    };
 
-        Sentry.init(sentry_opts);
-
-        Sentry.setUser({
-            'id': sessionID,
-        });
-
-        Sentry.setTag("game_version", CURRENT_VERSION);
-
-        SENTRY_INITIALIZED = true;
+    if (window.location.origin.indexOf('spnati.net') >= 0) {
+        sentry_opts.environment = 'production';
     }
+
+    Sentry.init(sentry_opts);
+
+    Sentry.setUser({
+        'id': sessionID,
+    });
+
+    Sentry.setTag("game_version", CURRENT_VERSION);
 }
 
-function enableSentry () {
-    if (SENTRY_INITIALIZED) {
-        var client = Sentry.getCurrentHub().getClient();
-        if (client) {
-            console.log("Enabling Sentry logging...");
-            client.getOptions().enabled = true;
-        }
-    }
-}
-
-/**
- * @returns {Promise<boolean>}
- */
-function disableSentry () {
-    if (SENTRY_INITIALIZED) {
-        console.log("Disabling Sentry logging...");
-        return Sentry.close();
-    } else {
-        return Promise.resolve(false);
-    }
-}
-
-function collectBaseUsageInfo(type) {
+function collectBaseUsageInfo(type, includeGameState) {
     var report = {
         'date': (new Date()).toISOString(),
         'commit': VERSION_COMMIT,
         'type': type,
-        'session': sessionID,
         'origin': getReportedOrigin(),
-        'table': {},
-        'tags': humanPlayer.tags,
-        'uiTheme': UI_THEME,
     };
 
+    if (save.getUsageTrackingInfo().persistent) {
+        report.session = sessionID;
+    }
 
-    for (let i=1;i<5;i++) {
-        if (players[i]) {
-            report.table[i] = players[i].id;
+    if (includeGameState) {
+        let table = {};
+        let tableState = {};
+
+        for (let i = 0; i < 5; i++) {
+            if (players[i]) {
+                let oppInfo = {
+                    'stage': players[i].stage,
+                    'seenDialogue': 0,
+                    'outOrder': players[i].outOrder,
+                    'costume': players[i].selected_costume
+                };
+
+                if (players[i].repeatLog) oppInfo.seenDialogue = Object.keys(players[i].repeatLog).length;
+
+                tableState[i] = oppInfo;
+                if (i > 0) table[i] = players[i].id;
+            }
+        }
+
+        report.game = gameID;
+        report.table = table;
+        report.tableState = tableState;
+        report.ui = {
+            'theme': UI_THEME,
+            'minimal': MINIMAL_UI,
+            'background': activeBackground.id,
+        };
+    }
+
+    return report;
+}
+
+function collectCommonUsageInfo(type, includeGameState) {
+    var report = collectBaseUsageInfo(type, includeGameState);
+
+    if (save.getUsageTrackingInfo().persistent) {
+        let unlockedCollectibles = {};
+        let unlockedEpilogues = {};
+        loadedOpponents.forEach(function (opp) {
+            if (opp.collectibles) {
+                let unlocked = opp.collectibles.flatMap(function (c) {
+                    return c.isUnlocked(true) ? [c.id] : [];
+                });
+    
+                if (unlocked.length > 0) unlockedCollectibles[opp.id] = unlocked;
+            }
+    
+            if (opp.endings) {
+                let unlocked = opp.endings.map(function () {
+                    /* jQuery's .map actually works like filter-map: returning null/undefined means that no item is inserted into the set. */
+                    var rawTitle = $(this).html();
+                    if (save.hasEnding(opp.id, rawTitle)) return rawTitle;
+                }).get();
+    
+                if (unlocked.length > 0) unlockedEpilogues[opp.id] = unlocked;
+            }
+        });
+    
+        let unlockedGeneralCollectibles = generalCollectibles.flatMap(function (c) {
+            return c.isUnlocked(true) ? [c.id] : [];
+        });
+    
+        if (unlockedGeneralCollectibles.length > 0) unlockedCollectibles["__general"] = unlockedGeneralCollectibles;
+
+        report.persistent = {
+            'played_characters': save.getPlayedCharacterSet().length,
+            'collectibles': unlockedCollectibles,
+            'epilogues': unlockedEpilogues,
+        };
+    }
+
+    if (save.getUsageTrackingInfo().demographics) {
+        report.player = {
+            'tags': humanPlayer.tags,
+        };
+
+        if (includeGameState) {
+            report.player.clothing = save.selectedClothing().map(function (c) { return c.id; });
         }
     }
 
@@ -552,69 +585,115 @@ function sendUsageReport(report) {
 
 /**
  * Log the start of a game for bug reporting and analytics.
- * @returns {Promise<void>}
  */
 function recordStartGameEvent() {
-    if (SENTRY_INITIALIZED) {
-        Sentry.setTag("in_game", true);
-        Sentry.setTag("screen", "game");
+    Sentry.setTag("in_game", true);
+    Sentry.setTag("screen", "game");
 
-        Sentry.addBreadcrumb({
-            category: 'game',
-            message: 'Starting game.',
-            level: 'info'
-        });
+    Sentry.addBreadcrumb({
+        category: 'game',
+        message: 'Starting game.',
+        level: 'info'
+    });
+
+    if (save.getUsageTrackingInfo().basic) {
+        sendUsageReport(collectCommonUsageInfo('start_game', true));
     }
-
-    var report = collectBaseUsageInfo('start_game');
-    report.game = gameID;
-    return sendUsageReport(report);
 }
 
 /**
  * Log the end of a game for bug reporting and analytics.
  * @param {string} winner The ID of the winning character.
- * @returns {Promise<void>}
  */
 function recordEndGameEvent(winner) {
-    if (SENTRY_INITIALIZED) {
-        Sentry.addBreadcrumb({
-            category: 'game',
-            message: 'Game ended with ' + winner + ' winning.',
-            level: 'info'
-        });
+    Sentry.addBreadcrumb({
+        category: 'game',
+        message: 'Game ended with ' + winner + ' winning.',
+        level: 'info'
+    });
+
+    var report = collectCommonUsageInfo('end_game', true);
+    report.winner = winner;
+    report.rounds = currentRound;
+
+    if (save.getUsageTrackingInfo().basic) {
+        sendUsageReport(report);
+    }
+}
+
+/**
+ * Log a game in progress that's been interrupted, for example because the player navigated to another page.
+ * @param {boolean} isPageUnload If true, this event is being sent just before a page unload.
+ */
+function recordInterruptedGameEvent(isPageUnload) {
+    var report = collectBaseUsageInfo("interrupted_game", true);
+    report.gameState = {
+        'currentRound': currentRound,
+        'currentTurn': currentTurn,
+        'previousLoser': previousLoser,
+        'recentLoser': recentLoser,
+        'rollback': inRollback()
+    };
+
+    if (gamePhase) {
+        if (inRollback()) {
+            report.gameState.gamePhase = rolledBackGamePhase[0];
+        } else {
+            report.gameState.gamePhase = gamePhase[0];
+        }
     }
 
-    var report = collectBaseUsageInfo('end_game');
-    report.game = gameID;
-    report.winner = winner;
-    return sendUsageReport(report);
+    /* Interruption reasons are related to game sessions. */
+    if (save.getUsageTrackingInfo().persistent) report.isPageUnload = isPageUnload;
+
+    if (save.getUsageTrackingInfo().basic) {
+        if (isPageUnload) {
+            /* It'd be better to use fetch() with the keepalive option here, but that doesn't work on all browsers, particularly Firefox.
+            * Instead use synchronous XHR. This will delay page unload, but we don't really have many other options.
+            */
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", USAGE_TRACKING_ENDPOINT, false);
+            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.send(JSON.stringify(report));
+        } else {
+            sendUsageReport(report);
+        }
+    }
 }
 
 /**
  * Log the start of an epilogue for bug reporting and analytics.
  * @param {bool} gallery Whether the epilogue was played from the Gallery.
  * @param {Epilogue} epilogue The epilogue that was chosen.
- * @returns {Promise<void>}
  */
 function recordEpilogueEvent(gallery, epilogue) {
-    if (SENTRY_INITIALIZED) {
-        Sentry.addBreadcrumb({
-            category: 'epilogue',
-            message: 'Starting ' + epilogue.player.id + ' epilogue: ' + epilogue.title,
-            level: 'info'
-        });
+    Sentry.addBreadcrumb({
+        category: 'epilogue',
+        message: 'Starting ' + epilogue.player.id + ' epilogue: ' + epilogue.title,
+        level: 'info'
+    });
 
-        Sentry.setTag("epilogue_gallery", gallery);
-        Sentry.setTag("screen", "epilogue");
-    }
+    Sentry.setTag("epilogue_gallery", gallery);
+    Sentry.setTag("screen", "epilogue");
 
-    var report = collectBaseUsageInfo(gallery ? 'gallery' : 'epilogue');
-    if (gallery) {
-        delete report.table;
-    } else {
-        report.game = gameID;
+    if (save.getUsageTrackingInfo().basic) {
+        var report = collectCommonUsageInfo(gallery ? 'gallery' : 'epilogue', !gallery);
+        report.chosen = { 'id': epilogue.player.id, 'title': epilogue.title };
+        sendUsageReport(report);
     }
-    report.chosen = { 'id': epilogue.player.id, 'title': epilogue.title };
-    return sendUsageReport(report);
+}
+
+function showDataCollectionPrompt() {
+    $("#selection-data-collection-banner-border").prop("hidden", false);
+
+    $("#enable-data-collection-btn").on("click", hideDataCollectionPrompt.bind(null, true));
+    $("#disable-data-collection-btn").on("click", hideDataCollectionPrompt.bind(null, false));
+}
+
+function hideDataCollectionPrompt(opt_in) {
+    $("#selection-data-collection-banner-border").prop("hidden", true);
+    if (opt_in !== null) {
+        var curInfo = save.getUsageTrackingInfo();
+        save.setUsageTrackingInfo(curInfo.basic, opt_in, opt_in);
+    }
 }

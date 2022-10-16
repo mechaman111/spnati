@@ -42,6 +42,68 @@ namespace SPNATI_Character_Editor
 			}
 			return true;
 		}
+
+		/// <summary>
+		/// Normalize the source path of a sprite attached to the given character.
+		/// The resulting path will either be relative to the `opponents/` directory, or relative to the given
+		/// character / skin folder.
+		/// </summary>
+		/// <param name="inPath"></param>
+		/// <param name="character"></param>
+		/// <returns></returns>
+		public static string NormalizeSrcPath(string inPath, ISkin character)
+        {
+			string localPath = character.GetDirectory();
+			string curFolderName = character.FolderName.Replace("\\", "/");
+			inPath = inPath.Replace("\\", "/");
+
+			// Don't attempt to rewrite paths if we know for certain there's a file we can point to within the character/skin folder.
+			if (!File.Exists(Path.Combine(localPath, inPath)))
+			{
+				// Attempt to "unpeel" opponents/ prefixes from both the character/skin folder name and inPath first:
+				if (inPath.StartsWith("opponents/"))
+				{
+					inPath = inPath.Substring("opponents/".Length);
+				}
+
+				if (curFolderName.StartsWith("opponents/"))
+				{
+					curFolderName = curFolderName.Substring("opponents/".Length);
+				}
+
+				if (inPath.StartsWith(curFolderName + "/"))
+				{
+					// Rewrite path as relative to the character / skin folder.
+					inPath = inPath.Substring(curFolderName.Length + 1);
+				}
+				else if (!inPath.StartsWith("reskins/")) // paths starting with reskins/ are already relative to opponents/.
+				{
+					foreach (Character c in CharacterDatabase.Characters)
+					{
+						// Check to see if we're pointing into another character's folder.
+						// If so, make sure the result path is explicitly rooted at opponents/.
+						if (inPath.StartsWith(c.FolderName + "/"))
+						{
+							inPath = "opponents/" + inPath;
+							break;
+						}
+					}
+				}
+			}
+			else
+			{
+				// Edge case: if for whatever reason we have a subfolder within the character folder
+				// with the same name as the character folder itself, or one named reskins, we need
+				// to add the costume or skin folder name to the path, or else the game will treat it as pointing directly into opponents/,
+				// instead of pointing into the target folder.
+				if (inPath.StartsWith(curFolderName + "/") || inPath.StartsWith("reskins/"))
+				{
+					inPath = curFolderName + "/" + inPath;
+				}
+			}
+
+			return inPath;
+		}
 		
 		/// <summary>
 		/// Generates a character's xml files
@@ -55,6 +117,12 @@ namespace SPNATI_Character_Editor
 			if (!Directory.Exists(dir))
 			{
 				Directory.CreateDirectory(dir);
+			}
+
+			bool backupEnabled = Config.BackupEnabled;
+			if (backupEnabled)
+			{
+				CleanUpBackups(character);
 			}
 
 			string timestamp = GetTimeStamp();
@@ -90,24 +158,20 @@ namespace SPNATI_Character_Editor
 			DeleteFile(character, "markers.edit.bak");
 			DeleteFile(character, "editor.edit.bak");
 
-			// I really wish I didn't have to put this here
 			foreach (Pose pose in character.Poses)
 			{
 				foreach (Sprite sp in pose.Sprites)
 				{
-					if (!sp.Src.Contains(character.FolderName + "/"))
-					{
-						sp.Src = character.FolderName + "/" + sp.Src;
-					}
+					sp.Src = NormalizeSrcPath(sp.Src, character);
 				}
 
 				foreach (Directive d in pose.Directives)
 				{
 					foreach (Keyframe keyf in d.Keyframes)
 					{
-						if (!String.IsNullOrEmpty(keyf.Src) && !keyf.Src.Contains(character.FolderName + "/"))
+						if (!String.IsNullOrEmpty(keyf.Src))
 						{
-							keyf.Src = character.FolderName + "/" + keyf.Src;
+							keyf.Src = NormalizeSrcPath(keyf.Src, character);
 						}
 					}
 				}
@@ -657,6 +721,25 @@ namespace SPNATI_Character_Editor
 			if (!Directory.Exists(dir))
 			{
 				Directory.CreateDirectory(dir);
+			}
+
+			foreach (Pose pose in skin.Poses)
+			{
+				foreach (Sprite sp in pose.Sprites)
+				{
+					sp.Src = NormalizeSrcPath(sp.Src, skin);
+				}
+
+				foreach (Directive d in pose.Directives)
+				{
+					foreach (Keyframe keyf in d.Keyframes)
+					{
+						if (!String.IsNullOrEmpty(keyf.Src))
+						{
+							keyf.Src = NormalizeSrcPath(keyf.Src, skin);
+						}
+					}
+				}
 			}
 
 			bool success = ExportXml(skin, Path.Combine(dir, "costume.xml"));

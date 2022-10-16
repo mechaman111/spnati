@@ -145,7 +145,7 @@ namespace SPNATI_Character_Editor.Controls
 			availableHeight = (int)(availableHeight * (_character == null ? 1 : (_character.Character.Metadata.Scale / 100)));
 			float screenScale = availableHeight / (Pose == null ? 1400.0f : Pose.BaseHeight);
 			SceneTransform.Scale(screenScale, screenScale, MatrixOrder.Append); // scale to display
-			SceneTransform.Translate(canvas.Width * 0.5f, screenHeight - availableHeight, MatrixOrder.Append); // center horizontally
+			SceneTransform.Translate(canvas.Width * 0.5f, screenHeight - availableHeight + ScreenMargin, MatrixOrder.Append); // center horizontally
 		}
 
 		public void Destroy()
@@ -246,7 +246,7 @@ namespace SPNATI_Character_Editor.Controls
 						{
 							p = poseRef.Pose;
 						}
-						Pose = new LivePose(_character, p, _currentStage);
+						Pose = new LivePose(_character.Skin, p, _currentStage);
 						if (AutoPlayback)
 						{
 							_time = 0;
@@ -320,7 +320,7 @@ namespace SPNATI_Character_Editor.Controls
 						{
 							p = poseRef.Pose;
 						}
-						Pose = new LivePose(_character, p, _currentStage);
+						Pose = new LivePose(_character.Skin, p, _currentStage);
 						if (AutoPlayback)
 						{
 							_time = 0;

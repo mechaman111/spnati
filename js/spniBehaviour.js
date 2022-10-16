@@ -1169,6 +1169,12 @@ function expandClothingVariable(clothing, fn, args, self, target, bindings) {
         } else {
             return '';
         }
+    } else if (fn == "withart") {
+        if (clothing.plural === false) {
+            return indefiniteArticle(clothing.name) + ' ' + clothing.name;
+        } else {
+            return clothing.name;
+        }
     } else if ((fn == 'type' || fn == 'position' || fn == 'generic') && args === undefined) {
         return clothing[fn];
     } else if (fn === "id") {
@@ -1198,6 +1204,26 @@ function expandPlayerVariable(split_fn, args, player, self, target, bindings) {
         return Math.abs(player.slot - other.slot);
     case 'slot':
         return player.slot;
+    case 'compatible':
+    case 'attracted':
+        if (player.hasTag("bisexual")) return true;
+        var other = (!args ? self : findVariablePlayer(args, self, target, bindings));
+        if (player.hasTag('straight')) {
+            return player.gender !== other.gender;
+        }
+        if (player.gender == eGender.MALE && player.hasTag('gay')) {
+            return other.gender === eGender.MALE;
+        }
+        if (player.gender == eGender.FEMALE && player.hasTag('lesbian')) {
+            return other.gender === eGender.FEMALE;
+        }
+        if (player.hasTag('bi-curious')) {
+            return fn == 'compatible' || player.gender !== other.gender
+        }
+        if (player.hasTag('reverse_bi-curious')) {
+            return fn == 'compatible' || player.gender === other.gender
+        }
+        return undefined;
     case 'collectible':
         var collectibleID = split_fn[1];
         if (collectibleID) {
@@ -1239,6 +1265,16 @@ function expandPlayerVariable(split_fn, args, player, self, target, bindings) {
         return player.size;
     case 'gender':
         return player.gender;
+    case 'intelligence':
+        return player.intelligence;
+	case 'tostutter':
+		var n = Math.min(Math.max((parseInt(args, 10) || 1), 1), 10);
+		var name = expandNicknames(self, player);
+		var ret = name;
+		for (var i = 0; i < n; i++) {
+			ret = name[0] + "-" + ret;
+		}
+		return ret;
     case 'ifmale':
         return args.split('|')[(player.gender == 'male' ? 0 : 1)];
     case 'place':
@@ -1428,13 +1464,28 @@ function expandDialogue (dialogue, self, target, bindings) {
                 }
                 break;
             case 'background':
-                if (fn == undefined) {
+                if (fn == undefined || fn === 'id') {
                     substitution = activeBackground.id;
                 } else if (fn === 'tag') {
                     var bg_tag = fixupTagFormatting(fn_parts[1]);
                     substitution = !!activeBackground.tags && (activeBackground.tags.indexOf(bg_tag) >= 0);
+                } else if (fn === 'preposition') {
+                    substitution = activeBackground.metadata[fn] || 'in';
+                } else if (fn === 'term') {
+                    substitution = activeBackground.metadata.term || activeBackground.id;
                 } else if (fn == 'time' && !('time' in activeBackground.metadata) && args === undefined) {
                     substitution = localDayOrNight;
+                } else if (fn == 'adverb') {
+                    substitution = activeBackground.metadata.surface == 'roof' ? 'up'
+                        : activeBackground.metadata.location == 'outdoors' ? 'out' : 'in';
+                } else if (fn == 'if' && fn_parts.length == 2) {
+                    let bg_tag = fixupTagFormatting(fn_parts[1]), val;
+                    if ((bg_tag == 'day' || bg_tag == 'night') && !('time' in activeBackground.metadata)) {
+                        val = localDayOrNight == bg_tag;
+                    } else {
+                        val = activeBackground.tags && (activeBackground.tags.includes(bg_tag));
+                    }
+                    substitution = expandDialogue(args.split('|')[val ? 0 : 1]);
                 } else if (args === undefined) {
                     substitution = activeBackground.metadata[fn] || '';
                 }
@@ -1461,6 +1512,9 @@ function expandDialogue (dialogue, self, target, bindings) {
                     substitution = ['January', 'February', 'March', 'April', 'May', 'June',
                                     'July', 'August', 'September', 'November', 'December'][new Date().getMonth()];
                 }
+                break;
+            case 'year':
+                substitution = new Date().getFullYear();
                 break;
             case 'blank':
                 return '';
@@ -1707,10 +1761,9 @@ function checkMarker(predicate, self, target, currentOnly) {
         
         if (match[3]) {
             op = match[4];
-            if (!isNaN(parseInt(match[5], 10))) {
-                cmpVal = parseInt(match[5], 10);
-            } else {
-                cmpVal = expandDialogue(match[5], self, target);
+            cmpVal = expandDialogue(match[5], self, target);
+            if (!isNaN(parseInt(cmpVal, 10))) {
+                cmpVal = parseInt(cmpVal, 10);
             }
         } else {
             op = '!!';
@@ -1896,15 +1949,16 @@ function Case($xml, trigger) {
         this.customPriority = undefined;
     }
 
-    var hasTarget = !!this.target || this.counters.some(function (ctr) {
+    var targetCondition = this.counters.find(function (ctr) {
         return (ctr.role == "target") && (isNaN(ctr.count.max) || (ctr.count.max === null) || (ctr.count.max > 0)) && ctr.id;
     });
 
+    var targetID = targetCondition ? targetCondition.id : this.target;
     var hasTargetStage = !!this.targetStage || this.counters.some(function (ctr) {
         return (ctr.role == "target") && (isNaN(ctr.count.max) || (ctr.count.max === null) || (ctr.count.max > 0)) && ctr.stage;
     });
 
-    if (hasTarget && hasTargetStage) {
+    if (targetID && hasTargetStage && (targetID != "human")) {
         if (this.trigger == MALE_MUST_STRIP || this.trigger == FEMALE_MUST_STRIP) {
             this.trigger = OPPONENT_LOST;
         } else if (CONVERT_STRIP_CASES.indexOf(this.trigger) >= 0) {

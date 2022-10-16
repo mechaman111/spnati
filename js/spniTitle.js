@@ -332,6 +332,31 @@ var $gameLoadProgress = $(".game-load-progress");
     "yusuke/3-Expository.png",
     "yusuke/4-Confused.png",
     "yusuke/4-Frame.png",
+    "sly_cooper/0-Select.png",
+    "sly_cooper/0-Comms+.png",
+    "sly_cooper/0-Select.png",
+    "sly_cooper/0-Comms+.png",
+    /* TODO: add two more for Sly, instead of using the same two twice */
+    "ringo_ando/0-bounceapple.png",
+    "ringo_ando/1-glad.png",
+    "ringo_ando/2-balanceapple.png",
+    "ringo_ando/3-bounceapple.png",
+    "hilda/0-conversational.png",
+    "hilda/1-relaxed.png",
+    "hilda/2-smug.png",
+    "hilda/3-flirty.png",
+    "joey/0-cheer.png",
+    "joey/2-approve.png",
+    "joey/3-wink.png",
+    "joey/4-hot.png",
+    "stocking/0-sipp.png",
+    "stocking/2-hex.png",
+    "stocking/3-stripping+.png",
+    "stocking/4-aroused.png",
+    "n/0-coNfused.png",
+    "n/4-Naturally.png",
+    "n/2-fiddliNg.png",
+    "n/6-iNform.png",
 ];
 
 /* maybe move this data to an external file if the hardcoded stuff changes often enough */
@@ -407,6 +432,8 @@ var playerTagOptions = {
             { value: 'straight' },
             { value: 'bi-curious' },
             { value: 'bisexual' },
+            { value: 'reverse_bi-curious', gender: 'male', text: 'Male-leaning bi-curious ' },
+            { value: 'reverse_bi-curious', gender: 'female', text: 'Female-leaning bi-curious' },
             { value: 'gay', gender: 'male' },
             { value: 'lesbian', gender: 'female' },
         ]
@@ -657,20 +684,6 @@ TitleClothingSelectionIcon.prototype.onClick = function () {
     }
 }
 
-
-/************************************************************
- * Loads all of the content required to display the title
- * screen.
- ************************************************************/
-function loadTitleScreen () {
-    /* hide Extra Opponents menu if online version */
-    if (getReportedOrigin().includes("spnati.net")) {
-        document.getElementById("title-fullscreen-button").style.left = "25.5%";
-    } else {
-        $(".title-extras-button").prop("hidden", false);
-    }
-}
-
 function setupTitleClothing () {
     loadedOpponents.forEach(function (opp) {
         if (!opp.has_collectibles || !opp.collectibles) return;
@@ -849,18 +862,14 @@ function validateTitleScreen () {
     updateAllBehaviours(null, null, SELECTED);
     updateSelectionVisuals();
 
-    if (SENTRY_INITIALIZED) Sentry.setTag("screen", "select-main");
+    Sentry.setTag("screen", "select-main");
     screenTransition($titleScreen, $selectScreen);
 
-    if (USAGE_TRACKING === undefined) {
-        showUsageTrackingModal();
-    } else {
-        updateAnnouncementDropdown();
-        showAnnouncements();
+    updateAnnouncementDropdown();
+    showAnnouncements();
 
-        if (curResortEvent && !curResortEvent.resort.checkCharacterThreshold()) {
-            curResortEvent.resort.setFlag(false);
-        }
+    if (curResortEvent && !curResortEvent.resort.checkCharacterThreshold()) {
+        curResortEvent.resort.setFlag(false);
     }
 }
 

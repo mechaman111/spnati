@@ -302,6 +302,15 @@ function Pose(poseDef, display, onLoadCallback) {
         var anim = new PoseAnimation(target, this, def);
         this.animations.push(anim);
     }.bind(this));
+
+    /* Make sure to fire onLoadCallback for "empty" poses.
+     * However, we need to make sure to schedule it to fire *after* we return from this constructor,
+     * since the callback might try to access this pose using an as-of-yet unbound variable.
+     */
+    if (poseDef.sprites.length === 0) {
+        this.loaded = true;
+        if (onLoadCallback) setTimeout(onLoadCallback, 0);
+    }
 }
 
 Pose.prototype.getHeightScaleFactor = function() {
@@ -998,13 +1007,11 @@ MainSelectScreenDisplay.prototype.updateTargetSuggestionDisplay = function (quad
 MainSelectScreenDisplay.prototype.targetSuggestionSelected = function (quad) {
     players[this.slot] = this.targetSuggestions[quad];
 
-    if (SENTRY_INITIALIZED) {
-        Sentry.addBreadcrumb({
-            category: 'select',
-            message: 'Loading suggested opponent ' + this.targetSuggestions[quad].id,
-            level: 'info'
-        });
-    }
+    Sentry.addBreadcrumb({
+        category: 'select',
+        message: 'Loading suggested opponent ' + this.targetSuggestions[quad].id,
+        level: 'info'
+    });
 
     players[this.slot].loadBehaviour(this.slot, true);
     updateSelectionVisuals();
@@ -1057,13 +1064,11 @@ MainSelectScreenDisplay.prototype.displaySingleSuggestion = function () {
 MainSelectScreenDisplay.prototype.onSingleSuggestionSelected = function () {
     players[this.slot] = this.prefillSuggestion;
 
-    if (SENTRY_INITIALIZED) {
-        Sentry.addBreadcrumb({
-            category: 'select',
-            message: 'Loading prefill suggested opponent ' + this.prefillSuggestion.id,
-            level: 'info'
-        });
-    }
+    Sentry.addBreadcrumb({
+        category: 'select',
+        message: 'Loading prefill suggested opponent ' + this.prefillSuggestion.id,
+        level: 'info'
+    });
 
     players[this.slot].loadBehaviour(this.slot, true);
     updateSelectionVisuals();
@@ -1401,14 +1406,12 @@ OpponentDetailsDisplay.prototype.constructor = OpponentDetailsDisplay;
 OpponentDetailsDisplay.prototype.handleSelected = function (ev) {
     if (!this.opponent) return;
     
-    if (SENTRY_INITIALIZED) {
-        Sentry.addBreadcrumb({
-            category: 'select',
-            message: 'Loading individual opponent ' + this.opponent.id,
-            level: 'info'
-        });
-        Sentry.setTag("screen", "select-main");
-    }
+    Sentry.addBreadcrumb({
+        category: 'select',
+        message: 'Loading individual opponent ' + this.opponent.id,
+        level: 'info'
+    });
+    Sentry.setTag("screen", "select-main");
 
     players[selectedSlot] = this.opponent;
     players[selectedSlot].loadBehaviour(selectedSlot, true);

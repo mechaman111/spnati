@@ -8,11 +8,11 @@
  *****               Poker Hand Object Specification              *****
  **********************************************************************/
  
-/* suit names */
-var SPADES   = "spade";
-var HEARTS   = "heart";
-var DIAMONDS = "diamo";
-var CLUBS    = "clubs";
+/* suit indices */
+const SPADES   = 0;
+const HEARTS   = 1;
+const DIAMONDS = 2;
+const CLUBS    = 3;
 
 /* hand strengths */
 var NONE            = 0;
@@ -182,14 +182,7 @@ function setupPoker () {
  * @returns {string}
  */
 function cardImageKey(suit, rank) {
-    var s = null;
-    if (SUIT_PREFIXES[suit]) {
-        s = SUIT_PREFIXES[suit];
-    } else {
-        s = suit;
-    }
-    
-    return s + (rank == 14 ? 1 : rank);
+    return SUIT_PREFIXES[suit] + (rank == 14 ? 1 : rank);
 }
 
 /**
@@ -343,7 +336,7 @@ function imageSetFromXML($xml) {
                 var im = imageSrc.replace("%i", imgIdx.toString(10));
 
                 suits.forEach(function (suit) {
-                    var c = new Card(suit, rank);
+                    var c = new Card(SUIT_PREFIXES.indexOf(suit), rank);
                     mapping[c.toString()] = [c, im.replace("%s", suit)];
                 });
             }
@@ -564,18 +557,8 @@ ActiveCardImages.prototype.isBackImageActive = function (imageSet, imgID) {
  * Generate a random mapping between all 52 cards and active card back images.
  */
 ActiveCardImages.prototype.generateCardBackMapping = function () {
-    var allCards = [];
-    SUIT_PREFIXES.forEach(function (suit) {
-        for (var i = 2; i < 15; i++) allCards.push(cardImageKey(suit, i));
-    });
-
-    /* Shuffle card sequence. */
-    for (var i = 0; i < allCards.length - 1; i++) {
-        swapIndex = getRandomNumber(i, allCards.length);
-        var c = allCards[i];
-        allCards[i] = allCards[swapIndex];
-        allCards[swapIndex] = c;
-    }
+    var allCards = new Deck();
+    allCards.shuffle();
 
     var backImages = null;
     if (this.backImages) {
@@ -588,9 +571,10 @@ ActiveCardImages.prototype.generateCardBackMapping = function () {
         backImages = Object.values(CARD_IMAGE_SETS[DEFAULT_CARD_DECK].backImages);
     }
 
-    allCards.forEach(function (k, i) {
-        this.backImageMap[k] = backImages[i % backImages.length];
-    }.bind(this));
+    var i = 0, card;
+    while (card = allCards.dealCard()) {
+        this.backImageMap[card.toString()] = backImages[i++ % backImages.length];
+    }
 
     /* Pre-set the "deck" image underneath the main button to an arbitrary
      * selected card back image.
@@ -606,14 +590,8 @@ ActiveCardImages.prototype.generateCardBackMapping = function () {
  * @param {number?} rank
  * @returns {string}
  */
-ActiveCardImages.prototype.getCardImage = function (visible, card_or_suit, rank) {
-    var k = "";
-    if (card_or_suit instanceof Card) {
-        k = card_or_suit.toString();
-    } else {
-        k = cardImageKey(card_or_suit, rank);
-    }
-
+ActiveCardImages.prototype.getCardImage = function (visible, card) {
+    var k = card.toString();
 
     if (visible) {
         var set = this.frontImageMap[k];
@@ -660,7 +638,7 @@ ActiveCardImages.prototype.displayCard = function (player, slot, visible) {
  * Prefetch all active card images.
  */
 ActiveCardImages.prototype.preloadImages = function () {
-    SUIT_PREFIXES.forEach(function (suit) {
+    for (var suit = 0; suit < 4; suit++) {
         for (var i = 2; i < 15; i++) {
             var key = cardImageKey(suit, i);
             var src = CARD_IMAGE_SETS[DEFAULT_CARD_DECK].frontImages[key] || (IMG + k + ".jpg");
@@ -672,7 +650,7 @@ ActiveCardImages.prototype.preloadImages = function () {
             
             new Image().src = src;
         }
-    }.bind(this));
+    }
     
     var backImages = null;
     if (this.backImages) {
@@ -780,9 +758,6 @@ function dealHand (player, numPlayers, playersBefore) {
      */
     forceTableVisibility(1);
 
-    /* reset the strength so any hand condition won't use the last
-     * round's result. */
-    players[player].hand.strength = NONE;
     /* deal the new cards */
     for (var i = 0; i < CARDS_PER_HAND; i++) {
         players[player].hand.tradeIns[i] = false;
@@ -791,6 +766,7 @@ function dealHand (player, numPlayers, playersBefore) {
         // each player, and so on.
         animateDealtCard(player, i, numPlayers * i + playersBefore);
     }
+    players[player].hand.determine();
 }
 
 /************************************************************
@@ -802,13 +778,12 @@ function exchangeCards (player) {
     players[player].hand.cards = players[player].hand.cards.filter(function(c, i) {
         return !players[player].hand.tradeIns[i];
     });
-    if (SENTRY_INITIALIZED) {
-        Sentry.addBreadcrumb({
-            category: 'game',
-            message: players[player].id+' swaps '+players[player].hand.tradeIns.countTrue()+' cards',
-            level: 'debug'
-        });
-    }
+    
+    Sentry.addBreadcrumb({
+        category: 'game',
+        message: players[player].id+' swaps '+players[player].hand.tradeIns.countTrue()+' cards',
+        level: 'debug'
+    });
 
     /* See above comment in dealHand re: the card animation and table visibility */
     forceTableVisibility(1);
@@ -823,6 +798,7 @@ function exchangeCards (player) {
         players[player].hand.cards.push(activeDeck.dealCard());
         animateDealtCard(player, i, n);
     }
+    players[player].hand.determine();
 }
 
 /**********************************************************************
@@ -947,10 +923,6 @@ function cardRankToString(rank, plural) {
 
 function cardSuitToString (suit) {
     switch (suit) {
-        case 0:        return "Spades";
-        case 1:        return "Hearts";
-        case 2:        return "Diamonds";
-        case 3:        return "Clubs";
         case SPADES:   return "Spades";
         case HEARTS:   return "Hearts";
         case DIAMONDS: return "Diamonds";
@@ -1018,7 +990,7 @@ Hand.prototype.describeFormal = function() {
 };
 
 Hand.prototype.score = function() {
-    return (this.strength - 1) * 100 + this.value[0];
+    return this.strength != NONE ? (this.strength - 1) * 100 + this.value[0] : undefined;
 };
 
 // Sort the cards

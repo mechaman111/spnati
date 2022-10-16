@@ -180,7 +180,8 @@
             <h2>2d. Dialogue Editor</h2>
             This where the dialogue lines for the current case are edited. Each row specifies a unique line of dialogue.
             <ul>
-                <li><span class="label">Image column:</span> Available images are available for selection here to tie with a line of text. When you choose an image, the Pose Preview will automatically update to show you it. This makes it easy to pick poses and dialogue that fit together.
+                <li>
+                    <span class="label">Image column:</span> Available images are available for selection here to tie with a line of text. When you choose an image, the Pose Preview will automatically update to show you it. This makes it easy to pick poses and dialogue that fit together.
                     <div class="info">
                         <h5><i class="fa fa-info"></i>My pose is missing!</h5>
                         Which images are available for a case depends on which stages the case applies to. If your case applies to stages 1, 2, and 3 and you want to use the "happy" pose, 1-happy.png, 2-happy.png and 3-happy.png <strong>must all exist</strong> in the character's folder.
@@ -206,7 +207,8 @@
                 <li><span class="label">Collectible button:</span> This button allows you to link a collectible to the line.</li>
                 <li><span class="label">Advanced line options:</span> Side effects of a line playing are found here. For instance, you can change the character's label (name), AI, or even gender if a particular line plays.</li>
                 <li><span class="label">Italics:</span> Words can be italicized by encasing them in &lt;i&gt;&lt;/i&gt;. For example, &lt;i&gt;Wow!&lt;/i&gt; will produce <span style="font-style: italic">Wow!</span>.</li>
-                <li><span class="label">Variables:</span> Lines can use variables, which are placeholder labels that will be replaced at runtime with a dynamic bit of text. To use a variable, in the text type ~variableName~ where variableName is the name of the variable. There is an ever expanding list of variables, but for dialogue, the most important are:
+                <li>
+                    <span class="label">Variables:</span> Lines can use variables, which are placeholder labels that will be replaced at runtime with a dynamic bit of text. To use a variable, in the text type ~variableName~ where variableName is the name of the variable. There is an ever expanding list of variables, but for dialogue, the most important are:
                     <ul>
                         <li><span class="label">~player~: </span>Replaced with the human player's name.</li>
                         <li><span class="label">~name~: </span>Replaced with the target's name, if there is a target.</li>
@@ -220,6 +222,40 @@
                 <li><span class="label">Copy All:</span> This will copy all of the current case's dialogue lines into the editor's clipboard, useful if you want to copy lines from one case to another.</li>
                 <li><span class="label">Paste All:</span> This will paste previous copied lines into the current case's dialogue. You are given the option to either overwrite the existing dialogue, or add to it.</li>
             </ul>
+
+            <h2>2e. Advanced Line Options</h2>
+            Side effects of a line playing can be edited here. For more detailed explanations on these features, please see the SPNATI Docs.
+            <ul>
+                <li>
+                    <span class="label">Change State: </span>Allows you to change various attributes of the character's metadata. These will override global and per-stage settings until reset.
+                    <ul>
+                        <li><span class="label">gender: </span>The in-game gender of this character. Characters such as Chihiro use this to implement their gender reveal mechanics.</li>
+                        <li><span class="label">intelligence: </span>The difficulty setting of the character's AI.</li>
+                        <li><span class="label">size: </span>The size of this character's breasts or penis. This determines what Chest/Crotch reveal size is used by the game, independently of the tags applied to the character.</li>
+                        <li><span class="label">label: </span>The name that is displayed above the character's cards, and the name that other characters will use for this character by default. Unlike other operations, changes to a character's label are processed before dialogue is displayed, so other characters will begin using the new label in their dialogue immediately (instead of only using the new name starting from their next lines).</li>
+                    </ul>
+                </li>
+                <li><span class="label">Arrow:</span> Allows you to manipulate the direction and location of the speech bubble.</li>
+                <li><span class="label">Speech Bubble:</span> Allows you to change the size of the text displayed in the speech bubble, as well as whether or not the speech bubble should display over the top of the character's art.'</li>
+                <li>
+                    <span class="label">Forfeit Operations</span> Forfeit operations change various aspects of a character's forfeit. For obvious reasons, none of these operations will have any effect after a character has finished.
+                    <ul>
+                        <li>
+                            <span class="label">Attribute: </span>The attribute you are editing. These are stamina, timer, or redirect-finish.
+                            <ul>
+                                <li>A character's <b>stamina</b> attribute controls how long the character's forfeit will last once they start. This attribute can only be changed before a character's forfeit starts.</li>
+                                <li><i>During</i> a character's forfeit, however, the <b>timer</b> attribute determines how long they have left before finishing; this attribute can only be changed while a character is forfeiting, beginning with the Start Masturbating (Self) case.</li>
+                                <li>The <b>redirect-finish</b> attribute can 'redirect' the dialogue that plays when this character is finishing. The character that has the redirect-finish operation in their dialogue is passing their dialogue across to the target of the operation. This must be applied <i>before</i> the character with redirect-finish finishes.</li>
+                            </ul>
+                        </li>
+                        <li><span class="label">Operation: </span>How the Attribute interacts with the Value field. For redirect-finish, only equals (=) is applicable.</li>
+                        <li><span class="label">Value: </span>The value used to modify the Attribute. For timer and stamina, this will be an integer. For redirect-finish, this will be the folder name of the character that the finishing dialogue is being redirected to, e.g. florina.</li>
+                        <li><span class="label">Heavy: </span>In addition to changing timers and finishing dialogue redirection, forfeit operations can also affect whether or not a character is heavily masturbating. Setting this to true or false will override the default heavy state; using reset will restore the default state.</li>
+                    </ul>
+                </li>
+            </ul>
+
+
         </section>
         <section class="card" id="preview">
             <h1>3. Pose Preview</h1>

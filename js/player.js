@@ -271,6 +271,10 @@ Player.prototype.removeTag = function(tag) {
 }
 
 Player.prototype.hasTag = function(tag) {
+    if (tag && tag[0] == "!") {
+        return !this.hasTag(tag.substring(1));
+    }
+
     return tag && this.tags && this.tags.indexOf(canonicalizeTag(tag)) >= 0;
 };
 
@@ -405,18 +409,25 @@ Player.prototype.setMarker = function (baseName, target, value) {
  * Calculates how many lines from currently-selected characters target this
  * character.
  *
- * @param {string} filterStatus? If passed, only lines from characters with the
+ * @param {string} [filterStatus] If passed, only lines from characters with the
  * given status will be considered.
+ * 
+ * @param {number} [cap] If passed, each currently selected character's contribution
+ * to the total inbound line count will be capped to this number.
  *
  * @returns {number}
  */
-Player.prototype.inboundLinesFromSelected = function (filterStatus) {
+Player.prototype.inboundLinesFromSelected = function (filterStatus, cap) {
     var id = this.id;
 
     return players.reduce(function(sum, p) {
         if (p && p.targetedLines && id in p.targetedLines
             && (!filterStatus || p.status === filterStatus)) {
-            sum += p.targetedLines[id].seen.size;
+            if (cap) {
+                sum += Math.min(p.targetedLines[id].seen.size, cap);
+            } else {
+                sum += p.targetedLines[id].seen.size;
+            }
         }
 
         return sum;
@@ -677,13 +688,11 @@ Opponent.prototype.onSelected = function(individual) {
     console.log(this.slot+": ");
     console.log(this);
 
-    if (SENTRY_INITIALIZED) {
-        Sentry.addBreadcrumb({
-            category: 'select',
-            message: 'Load completed for ' + this.id,
-            level: 'info'
-        });
-    }
+    Sentry.addBreadcrumb({
+        category: 'select',
+        message: 'Load completed for ' + this.id,
+        level: 'info'
+    });
 
     this.loaded = true;
 
@@ -853,13 +862,11 @@ Opponent.prototype.loadAlternateCostume = function () {
     this.loaded = false;
 
     return metadataIndex.getFile(this.selected_costume+'costume.xml').then(function ($xml) {
-        if (SENTRY_INITIALIZED) {
-            Sentry.addBreadcrumb({
-                category: 'select',
-                message: 'Initializing alternate costume for ' + this.id + ': ' + this.selected_costume,
-                level: 'info'
-            });
-        }
+        Sentry.addBreadcrumb({
+            category: 'select',
+            message: 'Initializing alternate costume for ' + this.id + ': ' + this.selected_costume,
+            level: 'info'
+        });
 
         this.alt_costume = {
             id: $xml.children('id').text(),
@@ -1098,13 +1105,11 @@ Opponent.prototype.getEpilogueStatus = function(mainSelect) {
 
 /* Called prior to removing a character from the table. */
 Opponent.prototype.unloadOpponent = function () {
-    if (SENTRY_INITIALIZED) {
-        Sentry.addBreadcrumb({
-            category: 'select',
-            message: 'Unloading opponent ' + this.id,
-            level: 'info'
-        });
-    }
+    Sentry.addBreadcrumb({
+        category: 'select',
+        message: 'Unloading opponent ' + this.id,
+        level: 'info'
+    });
 
     if (this.stylesheet) {
         /* Remove the <link> to this opponent's stylesheet. */
@@ -1171,13 +1176,11 @@ Opponent.prototype.loadBehaviour = function (slot, individual) {
      */
     return this.fetchBehavior()
         .then(function($xml) {
-            if (SENTRY_INITIALIZED) {
-                Sentry.addBreadcrumb({
-                    category: 'select',
-                    message: 'Fetched and parsed opponent ' + this.id + ', initializing...',
-                    level: 'info'
-                });
-            }
+            Sentry.addBreadcrumb({
+                category: 'select',
+                message: 'Fetched and parsed opponent ' + this.id + ', initializing...',
+                level: 'info'
+            });
 
             this.xml = $xml;
             this.stamina = Number($xml.children('timer').text());
@@ -1272,13 +1275,19 @@ Opponent.prototype.recordTargetedCase = function (caseObj) {
 
     if (caseObj.target) entities.add(caseObj.target);
     if (caseObj.alsoPlaying) entities.add(caseObj.alsoPlaying);
-    if (caseObj.filter) entities.add(caseObj.filter);
+    if (caseObj.filter && caseObj.filter[0] !== "!") entities.add(caseObj.filter);
 
     caseObj.counters.forEach(function (ctr) {
         /* Conditions checking if a character/tag is not at the table don't count as targeted. */
-        if (ctr.count.max === 0) return;
-        if (ctr.id) entities.add(ctr.id);
-        if (ctr.tag) entities.add(ctr.tag);
+        if (ctr.id && ctr.count.max !== 0) entities.add(ctr.id);
+        if (ctr.tag) {
+            if (ctr.tag[0] !== "!" && ctr.count.max !== 0) {
+                entities.add(ctr.tag);
+            } else if (ctr.tag[0] === "!" && ctr.count.max === 0) {
+                /* (filter="!tag" and count: 0) implies checking if everyone has the given tag */
+                entities.add(ctr.tag.substring(1));
+            }
+        }
     });
 
     var lines = new Set();
@@ -1340,7 +1349,7 @@ Opponent.prototype.loadXMLTriggers = function () {
                 this.recordTargetedCase(c);
 
                 c.getStages().forEach(function (stage) {
-                    var key = trigger+':'+stage;
+                    var key = c.trigger+':'+stage;  // Case constructor may have altered the trigger
                     if (!this.cases.has(key)) {
                         this.cases.set(key, []);
                     }

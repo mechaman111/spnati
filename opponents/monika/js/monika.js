@@ -43,14 +43,12 @@ if (!window.monika) window.monika = (function (root) {
 
     var exports = {};
 
-    if (root.SENTRY_INITIALIZED) {
-        root.Sentry.setTag('monika-loaded', true);
-        root.Sentry.addBreadcrumb({
-            category: 'monika',
-            message: 'Initializing monika.js...',
-            level: 'info'
-        });
-    }
+    root.Sentry.setTag('monika-loaded', true);
+    root.Sentry.addBreadcrumb({
+        category: 'monika',
+        message: 'Initializing monika.js...',
+        level: 'info'
+    });
 
     exports.EFFECTS_ENABLED = true;
     exports.GLITCH_MODIFIER = 1.0;
@@ -104,7 +102,7 @@ if (!window.monika) window.monika = (function (root) {
         $("#options-monika-glitches-2").removeClass("active");
         $("#options-monika-glitches-3").removeClass("active");
 
-        if (root.SENTRY_INITIALIZED) root.Sentry.setTag('monika-glitch-mode', mode);
+        root.Sentry.setTag('monika-glitch-mode', mode);
 
         switch (mode) {
             /* Off */
@@ -136,16 +134,11 @@ if (!window.monika) window.monika = (function (root) {
     function reportException(prefix, e) {
         console.log("[Monika] Exception swallowed " + prefix + ": ");
 
-        if (USAGE_TRACKING && SENTRY_INITIALIZED) {
-            Sentry.withScope(function (scope) {
-                scope.setTag("monika-error", true);
-                scope.setExtra("where", prefix);
-                captureError(e);
-            });
-            return;
-        }
-
-        captureError(e);
+        Sentry.withScope(function (scope) {
+            scope.setTag("monika-error", true);
+            scope.setExtra("where", prefix);
+            captureError(e);
+        });
     }
     exports.reportException = reportException;
 
@@ -274,21 +267,40 @@ if (!window.monika) window.monika = (function (root) {
                         }
                     }
 
-                    if (amySlot) { break; }
+                    if (amySlot !== null) { break; }
                 }
             }
 
-            if (!amySlot) { return; }
+            if (amySlot === null) { return; }
 
             /* get the next most targeted character that isn't already suggested */
             var suggested_opponents = loadedOpponents.filter(function(opp) {
                 if (individualSelectTesting && opp.status !== "testing") return false;
                 return opp.selectionCard.isVisible(individualSelectTesting, true);
             });
-
-            suggested_opponents.sort(sortOpponentsByMostTargeted());
-
-            var idx = (loaded == 2) ? 8 : 4;
+            
+            suggested_opponents.sort(sortOpponentsByMostTargeted(50, Infinity));
+            
+            var idx = -1;
+            var alreadySuggested;
+            
+            do {
+                idx++;
+                alreadySuggested = false;            
+            
+                for (var i = 1; i < players.length; i++) {
+                    if (players[i] === undefined) {
+                        for (var j = 0; j < 4; j++) {
+                            if (mainSelectDisplays[i - 1].targetSuggestions[j].id == suggested_opponents[idx].id) {
+                                alreadySuggested = true;
+                                break;
+                            }
+                        }
+                        
+                        if (alreadySuggested) { break; }
+                    }
+                }
+            } while (alreadySuggested);
 
             /* Wait 2 seconds, then visually glitch Amy briefly, then wait 1.5 seconds, then glitch her again and replace her */
             var visEffect = new monika.effects.SuggestedAmyGlitchEffect(amySlot, amyQuad);

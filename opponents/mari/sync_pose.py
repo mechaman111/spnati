@@ -20,7 +20,14 @@ def _tag_string(tag: Tag) -> str:
 
 
 AttributeDict = Dict[str, KisekaeComponent]
-AttributeConflicts = Dict[str, Tuple[Optional[KisekaeComponent], Optional[KisekaeComponent], Optional[KisekaeComponent]]]
+AttributeConflicts = Dict[
+    str,
+    Tuple[
+        Optional[KisekaeComponent],
+        Optional[KisekaeComponent],
+        Optional[KisekaeComponent],
+    ],
+]
 ImageConflicts = Dict[int, Tuple[Optional[str], Optional[str], Optional[str]]]
 
 
@@ -30,7 +37,9 @@ class AttributeDiff:
     b: AttributeDict
     added: AttributeDict = field(factory=dict)
     removed: AttributeDict = field(factory=dict)
-    modified: Dict[str, Dict[int, Tuple[Optional[str], Optional[str]]]] = field(factory=dict)
+    modified: Dict[str, Dict[int, Tuple[Optional[str], Optional[str]]]] = field(
+        factory=dict
+    )
     common: AttributeDict = field(factory=dict)
 
     @classmethod
@@ -60,7 +69,9 @@ class AttributeDiff:
             b_data = b[prefix]
             diff = {}
 
-            for i, (a_attr, b_attr) in enumerate(zip_longest(a_data.attributes, b_data.attributes, fillvalue=None)):
+            for i, (a_attr, b_attr) in enumerate(
+                zip_longest(a_data.attributes, b_data.attributes, fillvalue=None)
+            ):
                 if a_attr != b_attr:
                     diff[i] = (a_attr, b_attr)
 
@@ -71,7 +82,9 @@ class AttributeDiff:
 
         return ret
 
-    def merge(self, common: AttributeDict) -> Tuple[bool, Union[AttributeDict, AttributeConflicts]]:
+    def merge(
+        self, common: AttributeDict
+    ) -> Tuple[bool, Union[AttributeDict, AttributeConflicts]]:
         ret = dict()
         conflicts: AttributeConflicts = dict()
 
@@ -81,22 +94,30 @@ class AttributeDiff:
         for prefix, b_data in self.added.items():
             common_data = common.get(prefix, None)
             if common_data is None:
-                ret[prefix] = KisekaeComponent(b_data) # added in B only
+                ret[prefix] = KisekaeComponent(b_data)  # added in B only
             elif common_data == b_data:
-                continue # deleted in A only
+                continue  # deleted in A only
             else:
                 # delete / modify conflict
-                conflicts[prefix] = (None, KisekaeComponent(b_data), KisekaeComponent(common_data))
-        
+                conflicts[prefix] = (
+                    None,
+                    KisekaeComponent(b_data),
+                    KisekaeComponent(common_data),
+                )
+
         for prefix, a_data in self.removed.items():
             common_data = common.get(prefix, None)
             if common_data is None:
-                ret[prefix] = KisekaeComponent(a_data) # added in A only
+                ret[prefix] = KisekaeComponent(a_data)  # added in A only
             elif common_data == a_data:
-                continue # deleted in B only
+                continue  # deleted in B only
             else:
                 # delete / modify conflict
-                conflicts[prefix] = (KisekaeComponent(a_data), None, KisekaeComponent(common_data))
+                conflicts[prefix] = (
+                    KisekaeComponent(a_data),
+                    None,
+                    KisekaeComponent(common_data),
+                )
 
         for prefix in self.modified.keys():
             common_data = common.get(prefix, None)
@@ -105,12 +126,21 @@ class AttributeDiff:
 
             if common_data is None:
                 # delete / modify conflict
-                conflicts[prefix] = (KisekaeComponent(a_data), KisekaeComponent(b_data), None)
+                conflicts[prefix] = (
+                    KisekaeComponent(a_data),
+                    KisekaeComponent(b_data),
+                    None,
+                )
                 continue
 
             conflicted = False
             new_data = []
-            for a_attr, b_attr, c_attr in zip_longest(a_data.attributes, b_data.attributes, common_data.attributes, fillvalue=None):
+            for a_attr, b_attr, c_attr in zip_longest(
+                a_data.attributes,
+                b_data.attributes,
+                common_data.attributes,
+                fillvalue=None,
+            ):
                 if a_attr == b_attr:
                     new_data.append(a_attr)
                 elif a_attr == c_attr:
@@ -121,9 +151,13 @@ class AttributeDiff:
                     # modify / modify conflict (or delete/modify conflict)
                     conflicted = True
                     break
-            
+
             if conflicted:
-                conflicts[prefix] = (KisekaeComponent(a_data), KisekaeComponent(b_data), KisekaeComponent(common_data))
+                conflicts[prefix] = (
+                    KisekaeComponent(a_data),
+                    KisekaeComponent(b_data),
+                    KisekaeComponent(common_data),
+                )
             else:
                 merged_component = KisekaeComponent(a_data)
                 merged_component.attributes = new_data
@@ -169,7 +203,9 @@ class ImageDiff:
 
         return ret
 
-    def merge(self, common: Dict[str, str]) -> Tuple[bool, Union[Dict[int, str], ImageConflicts]]:
+    def merge(
+        self, common: Dict[str, str]
+    ) -> Tuple[bool, Union[Dict[int, str], ImageConflicts]]:
         ret = dict()
         conflicts = dict()
 
@@ -179,19 +215,19 @@ class ImageDiff:
         for prefix, b_data in self.added.items():
             common_data = common.get(prefix, None)
             if common_data is None:
-                ret[prefix] = b_data # added in B only
+                ret[prefix] = b_data  # added in B only
             elif common_data == b_data:
-                continue # deleted in A only
+                continue  # deleted in A only
             else:
                 # delete / modify conflict
                 conflicts[prefix] = (None, b_data, common_data)
-        
+
         for prefix, a_data in self.removed.items():
             common_data = common.get(prefix, None)
             if common_data is None:
-                ret[prefix] = a_data # added in A only
+                ret[prefix] = a_data  # added in A only
             elif common_data == a_data:
-                continue # deleted in B only
+                continue  # deleted in B only
             else:
                 # delete / modify conflict
                 conflicts[prefix] = (a_data, None, common_data)
@@ -206,7 +242,11 @@ class ImageDiff:
             elif b_data == common_data:
                 ret[prefix] = a_data
             else:
-                conflicts[prefix] = (a_data, b_data, common_data) # modify/modify or delete/modify conflict
+                conflicts[prefix] = (
+                    a_data,
+                    b_data,
+                    common_data,
+                )  # modify/modify or delete/modify conflict
 
         if len(conflicts) > 0:
             return False, conflicts
@@ -214,7 +254,11 @@ class ImageDiff:
             return True, ret
 
 
-def merge_characters(common: KisekaeCharacter, a: KisekaeCharacter, b: KisekaeCharacter) -> Tuple[Optional[KisekaeCharacter], Optional[AttributeConflicts], Optional[ImageConflicts]]:
+def merge_characters(
+    common: KisekaeCharacter, a: KisekaeCharacter, b: KisekaeCharacter
+) -> Tuple[
+    Optional[KisekaeCharacter], Optional[AttributeConflicts], Optional[ImageConflicts]
+]:
     common_subcodes, common_images = common.subcode_map()
     a_subcodes, a_images = a.subcode_map()
     b_subcodes, b_images = b.subcode_map()
@@ -227,9 +271,9 @@ def merge_characters(common: KisekaeCharacter, a: KisekaeCharacter, b: KisekaeCh
 
     if (not attrs_merged) and (not imgs_merged):
         return None, merge_attrs, merge_imgs
-    elif (not attrs_merged):
+    elif not attrs_merged:
         return None, merge_attrs, None
-    elif (not imgs_merged):
+    elif not imgs_merged:
         return None, None, merge_imgs
 
     def _prefix_index(prefix: str, character: KisekaeCharacter) -> int:
@@ -263,7 +307,9 @@ def merge_characters(common: KisekaeCharacter, a: KisekaeCharacter, b: KisekaeCh
     return ret_character, None, None
 
 
-def find_pose_tags(soup: BeautifulSoup) -> Generator[Tuple[str, str, Tag, Tag], None, None]:
+def find_pose_tags(
+    soup: BeautifulSoup,
+) -> Generator[Tuple[str, str, Tag, Tag], None, None]:
     sheet: Tag
     for sheet in soup.find_all("sheet"):
         sheet_name = _tag_string(sheet.find("name")).strip()
@@ -280,13 +326,17 @@ def find_pose_tags(soup: BeautifulSoup) -> Generator[Tuple[str, str, Tag, Tag], 
 
                 yield (sheet_name, stage_id, pose_tag, code_tag)
 
+
 def normalize_character(in_char: KisekaeCharacter) -> KisekaeCharacter:
     for subcode in in_char.subcodes:
-        if subcode.prefix == "bc": # 410.500.8.0.1.0
+        if subcode.prefix == "bc":  # 410.500.8.0.1.0
             subcode.attributes = ["400", "500", "8", "0", "1", "0"]
     return in_char
 
-def read_pose_codes(fpath: Path, pose_key: str, from_rev: Optional[str] = None) -> Dict[Tuple[str, str], KisekaeCharacter]:
+
+def read_pose_codes(
+    fpath: Path, pose_key: str, from_rev: Optional[str] = None
+) -> Dict[Tuple[str, str], KisekaeCharacter]:
     progress = ProgressLine()
     progress.update("Loading pose data from {}...", fpath.as_posix())
 
@@ -312,7 +362,13 @@ def read_pose_codes(fpath: Path, pose_key: str, from_rev: Optional[str] = None) 
 
         parsed_code = KisekaeCode(code)
         if (parsed_code.scene is not None) or len(parsed_code.characters) != 1:
-            progress.warn("Skipped [{}]:{}/{}/{} : appears to be an ALL code", src, sheet_name, stage_id, pose_key)
+            progress.warn(
+                "Skipped [{}]:{}/{}/{} : appears to be an ALL code",
+                src,
+                sheet_name,
+                stage_id,
+                pose_key,
+            )
             continue
 
         ret[(sheet_name, stage_id)] = normalize_character(parsed_code.characters[0])
@@ -322,7 +378,10 @@ def read_pose_codes(fpath: Path, pose_key: str, from_rev: Optional[str] = None) 
 
     return ret
 
-def find_or_make_pose_tag(soup: BeautifulSoup, sheet_name: str, stage_id: str, pose_key: str) -> Optional[Tuple[Tag, Tag, Tag]]:
+
+def find_or_make_pose_tag(
+    soup: BeautifulSoup, sheet_name: str, stage_id: str, pose_key: str
+) -> Optional[Tuple[Tag, Tag, Tag]]:
     sheet: Tag
     for sheet in soup.find_all("sheet"):
         tag_sheet_name = _tag_string(sheet.find("name")).strip()
@@ -342,7 +401,7 @@ def find_or_make_pose_tag(soup: BeautifulSoup, sheet_name: str, stage_id: str, p
             else:
                 pose_tag = soup.new_tag("pose")
                 stage_tag.append(pose_tag)
-            
+
             code_tag: Tag = pose_tag.find("code")
             if code_tag is None:
                 code_tag = soup.new_tag("code")
@@ -367,22 +426,33 @@ def find_or_make_pose_tag(soup: BeautifulSoup, sheet_name: str, stage_id: str, p
     return None
 
 
-def apply_pose_codes(fpath: Path, pose_key: str, codes: Dict[Tuple[str, str], KisekaeCharacter], common_codes: Dict[Tuple[str, str], KisekaeCharacter]):
+def apply_pose_codes(
+    fpath: Path,
+    pose_key: str,
+    codes: Dict[Tuple[str, str], KisekaeCharacter],
+    common_codes: Dict[Tuple[str, str], KisekaeCharacter],
+):
     progress = ProgressLine()
     progress.update("Loading pose data from {}...", fpath.as_posix())
 
     with fpath.open("rb") as f:
         soup = BeautifulSoup(f, features="lxml")
-    
+
     n_merged = 0
     for pose_idx, ((sheet_name, stage_id), new_char) in enumerate(codes.items()):
         progress.update("Merging pose {} / {}...", pose_idx, len(codes))
 
         tags = find_or_make_pose_tag(soup, sheet_name, stage_id, pose_key)
         if tags is None:
-            progress.warn("Skipped [{}]:{}/{}/{} : could not find sheet and/or stage", fpath.as_posix(), sheet_name, stage_id, pose_key)
+            progress.warn(
+                "Skipped [{}]:{}/{}/{} : could not find sheet and/or stage",
+                fpath.as_posix(),
+                sheet_name,
+                stage_id,
+                pose_key,
+            )
             continue
-        
+
         _, code_tag, lastupdate_tag = tags
 
         try:
@@ -396,27 +466,60 @@ def apply_pose_codes(fpath: Path, pose_key: str, codes: Dict[Tuple[str, str], Ki
         cur_code = _tag_string(code_tag)
         if len(cur_code) == 0:
             if common_char is not None:
-                progress.warn("Skipped [{}]:{}/{}/{} : not deleting code", fpath.as_posix(), sheet_name, stage_id, pose_key)
+                progress.warn(
+                    "Skipped [{}]:{}/{}/{} : not deleting code",
+                    fpath.as_posix(),
+                    sheet_name,
+                    stage_id,
+                    pose_key,
+                )
                 continue
 
             code_tag.string = str(prev_code)
-            progress.notice("✓", "Added [{}]:{}/{}/{}", fpath.as_posix(), sheet_name, stage_id, pose_key)
+            progress.notice(
+                "✓",
+                "Added [{}]:{}/{}/{}",
+                fpath.as_posix(),
+                sheet_name,
+                stage_id,
+                pose_key,
+            )
         else:
             if common_char is None:
                 if str(prev_code) != cur_code:
-                    progress.warn("Skipped [{}]:{}/{}/{} : add/add conflict", fpath.as_posix(), sheet_name, stage_id, pose_key)
+                    progress.warn(
+                        "Skipped [{}]:{}/{}/{} : add/add conflict",
+                        fpath.as_posix(),
+                        sheet_name,
+                        stage_id,
+                        pose_key,
+                    )
                 else:
-                    progress.warn("Skipped [{}]:{}/{}/{} : no change necessary", fpath.as_posix(), sheet_name, stage_id, pose_key)
+                    progress.warn(
+                        "Skipped [{}]:{}/{}/{} : no change necessary",
+                        fpath.as_posix(),
+                        sheet_name,
+                        stage_id,
+                        pose_key,
+                    )
                 continue
-            
+
             cur_code = KisekaeCode(cur_code)
             if (cur_code.scene is not None) or len(cur_code.characters) != 1:
-                progress.warn("Skipped [{}]:{}/{}/{} : appears to be an ALL code", fpath.as_posix(), sheet_name, stage_id, pose_key)
+                progress.warn(
+                    "Skipped [{}]:{}/{}/{} : appears to be an ALL code",
+                    fpath.as_posix(),
+                    sheet_name,
+                    stage_id,
+                    pose_key,
+                )
                 continue
 
             merged_code = KisekaeCode()
             cur_char = normalize_character(cur_code.characters[0])
-            merged_char, attr_conflicts, img_conflicts = merge_characters(common_char, cur_char, new_char)
+            merged_char, attr_conflicts, img_conflicts = merge_characters(
+                common_char, cur_char, new_char
+            )
 
             if merged_char is not None:
                 merged_code.characters.append(merged_char)
@@ -430,12 +533,26 @@ def apply_pose_codes(fpath: Path, pose_key: str, codes: Dict[Tuple[str, str], Ki
                         s += ", and "
                     s += "images " + ", ".join(map(str, img_conflicts.keys()))
 
-                progress.warn("Skipped [{}]:{}/{}/{} : merge conflicts in {}", fpath.as_posix(), sheet_name, stage_id, pose_key, s)
+                progress.warn(
+                    "Skipped [{}]:{}/{}/{} : merge conflicts in {}",
+                    fpath.as_posix(),
+                    sheet_name,
+                    stage_id,
+                    pose_key,
+                    s,
+                )
                 continue
 
             code_tag.string = str(merged_code)
 
-            progress.notice("✓", "Merged [{}]:{}/{}/{}", fpath.as_posix(), sheet_name, stage_id, pose_key)
+            progress.notice(
+                "✓",
+                "Merged [{}]:{}/{}/{}",
+                fpath.as_posix(),
+                sheet_name,
+                stage_id,
+                pose_key,
+            )
 
         lastupdate_tag.string = str(int(round(time.time() * 1000)))
         n_merged += 1
@@ -444,7 +561,7 @@ def apply_pose_codes(fpath: Path, pose_key: str, codes: Dict[Tuple[str, str], Ki
         progress.update("Writing new pose data...")
         with fpath.open("wb") as f:
             f.write(soup.find("posegrid").encode("utf-8", formatter="minimal"))
-    
+
     progress.finish("Merged {} poses", n_merged)
 
 
@@ -461,7 +578,9 @@ if __name__ == "__main__":
         print("ERROR: could not read any pose codes to merge", file=sys.stderr)
         sys.exit(1)
 
-    common_codes = read_pose_codes(args.source_path, args.pose_key, from_rev=args.base_rev)
+    common_codes = read_pose_codes(
+        args.source_path, args.pose_key, from_rev=args.base_rev
+    )
     if len(common_codes) == 0:
         print("ERROR: could not read any common base codes", file=sys.stderr)
         sys.exit(1)

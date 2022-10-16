@@ -6,7 +6,7 @@ How to let your characters talk about the game with dynamic text
 
 Variables are placeholders that you can use in your dialogue and let your characters say things that are relevant to the situation; as the most basic example, the name of the player that lost the current hand and has to strip. In addition to appearing in dialogue text, they can be used in generic variable tests that let you determine which lines are relevant to a given situation.
 
-Variable names are enclosed in tildes (`~`). Example: `~name~`. Several variables are structured in multiple levels; you only put tildes at the beginning and end, e.g. `~target.marker.some_marker~. However, there exist functions, which take arguments that can contain other variable references enclosed in tildes.
+Variable names are enclosed in tildes (`~`). Example: `~name~`. Several variables are structured in multiple levels; you only put tildes at the beginning and end, e.g. `~target.marker.some_marker~. However, there exist functions, which take arguments that can contain other variable references enclosed in tildes. Note, however, that the parsing can't handle nested functions.
 
 Variable names are generally not case sensitive. However, if the first letter of a variable name is written in uppercase, the first letter of the resulting variable expansion will be converted to uppercase. Thus, if a sentence begins with a variable, the variable name should start with an uppercase letter, as in `~Player~ must be new to this!`.
 Additionally, if a variable is written in all caps (e.g. `~PLAYER~`), then the expansion will also be all-uppercase.
@@ -88,17 +88,27 @@ Four special player IDs exist:
  - `self`, which refers to the subject (your) character.
  - `player`, which refers to the human player, though you can also refer to them using `human`.
 
+A condition can also define a custom player variable. If the condition matches at least one player, that custom variable will be bound to one of them randomly.
+If multiple conditions define the same variable, and they all require at least one player fulfilling it, it is guaranteed that at least one player satisfies all those
+conditions. You can also add extra restrictions using variable tests on the custom variable. Furthermore, any additional matches will (randomly) be assigned variables
+with the same names but with `2`, `3`, and so on, appended. These can also be used with variable tests, but note that not all possible combinations of such additional
+numbered variables will be tried.
+
+Note that you _don't_ have to define a custom variable to reference a specific character whose presence you've ensured with an Opponent or Also Playing condition.
+
 | Subvariable  | Description                                    |
 | ------------ | ---------------------------------------------- |
 | (none)       | Using only `~character_id~`, `~target~`, or `~self~` returns the name of the referenced player, or a nickname if one has been specified for that character. |
 | `.id`        | The ID (folder name) of the referenced player. Can be useful to store in a marker.   |
-| `.position`  | The position, `left` or `right` (from the perspective of the human player, not the characters) of the player relative to the subject character. The human player is considered to be to `across` from all characters. `~self.position~` resolves to simply `self`. |
-| `.distance` | How many slots away this character is from the subject character. `1` indicates the characters are adjacent. |
+| `.position(other)`  | The position, `left` or `right` (from the perspective of the human player, not the characters) of the player relative to `other`, defaulting to the subject character. The human player is considered to be to `across` from all characters. `~self.position~` resolves to simply `self`. |
+| `.distance(other)` | How many slots away this player is from `other`, defaulting to the subject character. `1` indicates the characters are adjacent. |
 | `.slot`      | The slot number of the player, from 0 (the human player) to 5. |
+| `.attracted(other)`, `.compatible(other)` | Helps checking all relevant sexual orientation tags in one go. `.attracted()` only tests for predominant sexual attraction to `other`'s gender (defaulting to the subject character), whereas `compatible()` returns `true` also if the player is curious. If the player has no sexual orientation tag at all, `undefined` is returned. So, for example, if the subject character is female, `~target.compatible~ != false` yields the same result as checking that the target is male and not gay, OR female and not straight.
 | `.collectible`, `.marker`, `.targetmarker` | Lets you access collectible and marker data of a different character. See the corresponding general variable descriptions above for details. |
 | `.tag.tag_name` | `true` if the player has the tag `tag_name`, `false` otherwise. |
 | `.costume`      | The ID of the player's alternate costume/skin, or `default` if no alternate costume is worn. |
 | `.size`         | The player's breast or penis size depending on the gender (`small`, `medium`, or `large`). |
+| `.intelligence` | The player's AI intelligence. For the human player, this always expands to `average`. |
 | `.gender`       | The player's (current) gender, `male` or `female`. |
 | `.ifmale` | Outputs "text if male" if the player is male and "text if female" otherwise. Typically uses with `he\|she`, `him\|her` etc. in cases that don't depend on the particular player's gender except for the choice of pronouns. See the section below for how to use this variable. |
 | `.place`        | The player's current rank in terms of layers left or the reverse order they are eliminated, between 1 and 5 (if there are that many players). Two (or more) players can be in the same place if they have the same number of layers. In other words, the number of other players that have more layers left or were eliminated after this player, plus one. |

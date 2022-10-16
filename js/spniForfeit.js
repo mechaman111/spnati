@@ -17,9 +17,9 @@ var CANNOT_SPEAK = false;
 /* orgasm timer */
 var ORGASM_DELAY = 2000;
 
-/* The first and last rounds a character starts heavy masturbation, counted in phases before they finish */
-var HEAVY_FIRST_ROUND = 6;
-var HEAVY_LAST_ROUND = 2;
+/* The earliest and latest a character starts heavy masturbation, counted in phases before they finish */
+const HEAVY_EARLIEST_TIME = 5;
+const HEAVY_LATEST_TIME = 3;
  
 /**********************************************************************
  *****                      Forfeit Functions                     *****
@@ -47,11 +47,11 @@ Player.prototype.updateHeavyMasturbation = function () {
         this.forfeit[0] = (this.timer <= 4) ? PLAYER_HEAVY_MASTURBATING : PLAYER_MASTURBATING;
     } else if (!this.forfeitLocked) {
         /* AI player: roll random chance they go into heavy masturbation. */
-        this.forfeit = (
-            (this.timer <= getRandomNumber(HEAVY_LAST_ROUND, HEAVY_FIRST_ROUND)) ?
-            [PLAYER_HEAVY_MASTURBATING, CANNOT_SPEAK] :
-            [PLAYER_MASTURBATING, CAN_SPEAK]
-        );
+        if (this.timer > HEAVY_EARLIEST_TIME) {
+            this.forfeit = [PLAYER_MASTURBATING, CAN_SPEAK];
+        } else if (this.timer <= getRandomNumber(HEAVY_LATEST_TIME, HEAVY_EARLIEST_TIME + 1)) {
+            this.forfeit = [PLAYER_HEAVY_MASTURBATING, CANNOT_SPEAK];
+        }
     }
 
     /* Players with locked forfeit status fall through with no changes. */

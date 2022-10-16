@@ -83,7 +83,7 @@ Save.prototype.getItem = function (key, acceptBareString) {
             return serialized;
         } else {
             console.error("Failed to parse saved data for '"+key+"': ", ex);
-            if (SENTRY_INITIALIZED) Sentry.captureException(ex);
+            Sentry.captureException(ex);
         }
     }
 }
@@ -107,7 +107,7 @@ Save.prototype.setItem = function (key, value) {
         serialized = JSON.stringify(value);
     } catch (ex) {
         console.error("Failed to serialize saved data for '"+key+"': ", ex);
-        if (SENTRY_INITIALIZED) Sentry.captureException(ex);
+        Sentry.captureException(ex);
         return;
     }
 
@@ -117,7 +117,7 @@ Save.prototype.setItem = function (key, value) {
         localStorage.setItem(this.prefix + key, serialized);
     } catch (ex) {
         console.error("Failed to save data '"+key+"' to localStorage: ", ex);
-        if (SENTRY_INITIALIZED) Sentry.captureException(ex);
+        Sentry.captureException(ex);
     }
 }
 
@@ -134,7 +134,7 @@ Save.prototype.removeItem = function (key) {
         localStorage.removeItem(this.prefix + key);
     } catch (ex) {
         console.error("Failed to remove data '"+key+"' from localStorage: ", ex);
-        if (SENTRY_INITIALIZED) Sentry.captureException(ex);
+        Sentry.captureException(ex);
     }
 }
 
@@ -178,7 +178,7 @@ Save.prototype.deserializeStorage = function (code) {
         }.bind(this));
     } catch (ex) {
         console.error('Failed to write save code data to localStorage: ', ex);
-        if (SENTRY_INITIALIZED) Sentry.captureException(ex);
+        Sentry.captureException(ex);
     }
 
     this.load();
@@ -226,10 +226,6 @@ Save.prototype.convertCookie = function() {
             this.setItem("endings", data.endings);
         }
 
-        if (data.askedUsageTracking) {
-            this.setItem("usageTracking", data.usageTracking);
-        }
-
         Cookies.remove('save');
     }
 };
@@ -240,7 +236,7 @@ Save.prototype.loadLocalStorage = function () {
         len = localStorage.length;
     } catch (ex) {
         console.error("Failed to read localStorage length: ", ex);
-        if (SENTRY_INITIALIZED) Sentry.captureException(ex);
+        Sentry.captureException(ex);
         return;
     }
 
@@ -255,7 +251,7 @@ Save.prototype.loadLocalStorage = function () {
             this.storageCache[suffix] = localStorage.getItem(key);
         } catch (ex) {
             console.error("Failed to load save data from localStorage: ", ex);
-            if (SENTRY_INITIALIZED) Sentry.captureException(ex);
+            Sentry.captureException(ex);
         }
     }
 }
@@ -357,25 +353,6 @@ Save.prototype.loadOptions = function(){
         useGroupBackgrounds = true;
     }
 
-    var usageTracking = this.getItem("usageTracking", true);
-    if (typeof(usageTracking) === 'boolean') {
-        USAGE_TRACKING = usageTracking;
-    } else if (typeof(usageTracking) === 'string') {
-        USAGE_TRACKING = (usageTracking == 'yes');
-        this.setItem("usageTracking", USAGE_TRACKING); // Convert old value to a proper boolean.
-    } else {
-        USAGE_TRACKING = undefined;
-    }
-
-    /* If we couldn't find a usage tracking option, keep Sentry error logging
-     * enabled by default until we show the usage tracking modal.
-     */
-    if (USAGE_TRACKING === false) {
-        disableSentry();
-    } else {
-        enableSentry();
-    }
-
     var gender = this.getItem("gender", true);
     if (gender) {
         humanPlayer.gender = gender;
@@ -406,12 +383,6 @@ Save.prototype.loadOptionsBackground = function (settings) {
 
     return optionsBackground.activateBackground();
 }
-
-Save.prototype.saveUsageTracking = function() {
-    if (USAGE_TRACKING !== undefined) {
-        this.setItem("usageTracking", USAGE_TRACKING);
-    }
-};
 
 Save.prototype.saveOptions = function() {
     var options = {
@@ -448,6 +419,72 @@ Save.prototype.saveSettings = function() {
 
     this.setItem("settings", settings);
 };
+
+/**
+ * Load usage tracking information from save storage.
+ * @returns {{promptShown: boolean, basic: boolean, persistent: boolean, demographics: boolean} | null}
+ */
+Save.prototype.getUsageTrackingInfo = function () {
+    var savedVal = this.getItem("usageTracking", true);
+
+    if ((typeof(savedVal) === 'boolean') || (typeof(savedVal) === 'string')) {
+        /* Convert saved value to new format. */
+        if (typeof(savedVal) === 'string') {
+            savedVal = (savedVal == 'yes');
+        }
+
+        let ret = {
+            'promptShown': true,
+            'basic': savedVal,
+            'persistent': savedVal,
+            'demographics': savedVal
+        };
+
+        this.setItem("usageTracking", ret);
+        return ret;
+    } else if (savedVal) {
+        /* Saved value is an object... */
+        return savedVal;
+    } else {
+        /* No saved value at all (or saved value is invalid); set defaults and indicate that we need to show the prompt. */
+        let ret = {
+            'promptShown': false,
+            'basic': true,
+            'persistent': false,
+            'demographics': false
+        };
+
+        this.setItem("usageTracking", ret);
+        return ret;
+    }
+}
+
+/**
+ * Update usage tracking information in storage.
+ * @param {'promptShown' | 'basic' | 'persistent' | 'demographics'} option 
+ * @param {boolean} value 
+ */
+Save.prototype.updateUsageTrackingInfo = function (option, value) {
+    var info = this.getUsageTrackingInfo();
+    info[option] = value;
+    info.promptShown = true;
+    this.setItem("usageTracking", info);
+}
+
+/**
+ * Update all usage tracking options in storage.
+ * @param {boolean} basic 
+ * @param {boolean} persistent 
+ * @param {boolean} demographics 
+ */
+Save.prototype.setUsageTrackingInfo = function (basic, persistent, demographics) {
+    this.setItem("usageTracking", {
+        'promptShown': true,
+        'basic': basic,
+        'persistent': persistent,
+        'demographics': demographics
+    });
+}
 
 Save.prototype.loadEndings = function () {
     this.endings = this.getItem("endings") || {};

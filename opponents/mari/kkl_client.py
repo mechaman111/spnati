@@ -1,24 +1,15 @@
 from __future__ import annotations
 
 import asyncio
-from pathlib import Path
-import struct
 import json
-import time
-from typing import (
-    ClassVar,
-    List,
-    Optional,
-    Dict,
-    Any,
-    Union,
-    Type,
-    Tuple,
-    AsyncIterator,
-)
-import sys
-from contextlib import asynccontextmanager
 import logging
+import struct
+import sys
+import time
+from contextlib import asynccontextmanager
+from pathlib import Path
+from typing import (Any, AsyncIterator, ClassVar, Dict, List, Optional, Tuple,
+                    Type, Union)
 
 LOGGER = logging.getLogger("kkl_client")
 

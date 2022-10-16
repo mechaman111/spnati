@@ -35,7 +35,7 @@ class KisekaeComponent:
     def __init__(self, data: Union[KisekaeComponent, str]):
         """
         Represents a subcomponent of a Kisekae character or scene.
-        
+
         Attributes:
             id (str): An ID identifying this subcomponent's type.
             prefix (str): A prefix identifying this subcomponent.
@@ -88,7 +88,7 @@ class KisekaeComponent:
     def __len__(self) -> int:
         return len(self.attributes)
 
-    def __iter__(self) :
+    def __iter__(self):
         return self.attributes.__iter__()
 
     def __getitem__(self, key: int):
@@ -111,10 +111,10 @@ class KisekaeCharacter(object):
     subcodes: List[KisekaeComponent]
     images: List[str]
 
-    def __init__(self, character_data: Union[str, KisekaeCharacter, None]=None):
+    def __init__(self, character_data: Union[str, KisekaeCharacter, None] = None):
         """
         Represents a collection of subcodes.
-        
+
         Attributes:
             subcodes (list of KisekaeComponent): The subcodes contained within this object.
             images (list of str): the images contained within this object.
@@ -235,7 +235,7 @@ class KisekaeCharacter(object):
 
         for idx, img in zip(sorted(img_numbers), self.images):
             img_map[idx] = img
-        
+
         return subcode_map, img_map
 
     def overlay(self, other: KisekaeCharacter) -> KisekaeCharacter:
@@ -247,7 +247,9 @@ class KisekaeCharacter(object):
 
         ret = KisekaeCharacter()
         ret.subcodes = sorted(self_subcodes.values(), key=lambda sc: sc.prefix)
-        ret.images = [img for _, img in sorted(self_images.items(), key=lambda pair: pair[0])]
+        ret.images = [
+            img for _, img in sorted(self_images.items(), key=lambda pair: pair[0])
+        ]
         return ret
 
 
@@ -256,12 +258,15 @@ class KisekaeCode(object):
     characters: List[KisekaeCharacter]
     scene: Optional[KisekaeCharacter]
 
-
-    def __init__(self, code: Union[KisekaeCode, KisekaeCharacter, str, None] = None, version: int = 105):
+    def __init__(
+        self,
+        code: Union[KisekaeCode, KisekaeCharacter, str, None] = None,
+        version: int = 105,
+    ):
         """
         Represents an entire importable Kisekae code, possibly containing
         character data and scene data.
-        
+
         Attributes:
             version (int): The version of Kisekae used to generate this code.
             scene (KisekaeCharacter): Container for scene data and attributes.
@@ -350,7 +355,9 @@ class KisekaeCode(object):
     def overlay(self, other: KisekaeCode) -> KisekaeCode:
         ret = KisekaeCode(None, version=max(self.version, other.version))
 
-        for self_character, other_character in zip_longest(self.characters, other.characters):
+        for self_character, other_character in zip_longest(
+            self.characters, other.characters
+        ):
             if (self_character is not None) and (other_character is not None):
                 ret.characters.append(self_character.overlay(other_character))
             elif self_character is not None:
@@ -377,8 +384,10 @@ class MatrixPose:
     key: str
     row: MatrixRow
     cell_code: Optional[KisekaeCode] = None
-    crop: Optional[Tuple[int, int, int, int]] = (0 ,0, 600, 1400)
+    crop: Optional[Tuple[int, int, int, int]] = (0, 0, 600, 1400)
     transparency: Dict[str, float] = field(factory=dict)
+    tag: Optional[Tag] = None
+    code_tag: Optional[Tag] = None
 
     @property
     def sheet(self) -> MatrixSheet:
@@ -395,7 +404,7 @@ class MatrixPose:
     def expand_code(self) -> Optional[KisekaeCode]:
         if self.cell_code is None:
             return None
-        
+
         base = self.row.template_base()
         if base is not None:
             return base.overlay(self.cell_code)
@@ -421,7 +430,12 @@ class MatrixPose:
         if tag.crop is not None:
             crop_tag = tag.crop
             # Crop bounds are in PIL box order
-            crop = (int(crop_tag.attrs["left"]), int(crop_tag.attrs["top"]), int(crop_tag.attrs["right"]), int(crop_tag.attrs["bottom"]))
+            crop = (
+                int(crop_tag.attrs["left"]),
+                int(crop_tag.attrs["top"]),
+                int(crop_tag.attrs["right"]),
+                int(crop_tag.attrs["bottom"]),
+            )
         else:
             crop = None
 
@@ -435,7 +449,7 @@ class MatrixPose:
                 except ValueError:
                     continue
 
-        return cls(key, row, code, crop, transparency)
+        return cls(key, row, code, crop, transparency, tag)
 
 
 @define()
@@ -445,6 +459,7 @@ class MatrixRow(collections.abc.Mapping):
     poses: Dict[str, MatrixPose]
     sheet: MatrixSheet
     clothing: Optional[KisekaeCode] = None
+    tag: Optional[Tag] = None
 
     @property
     def matrix(self) -> PoseMatrix:
@@ -465,7 +480,7 @@ class MatrixRow(collections.abc.Mapping):
                 return str(self.id) + " - " + stage_name
             except IndexError:
                 return str(self.id)
-        
+
     def template_base(self) -> Optional[KisekaeCode]:
         if (self.clothing is not None) and (self.sheet.model is not None):
             return self.sheet.model.overlay(self.clothing)
@@ -484,7 +499,7 @@ class MatrixRow(collections.abc.Mapping):
 
     def __iter__(self) -> Iterator[str]:
         return self.poses.__iter__()
-    
+
     def __len__(self) -> int:
         return self.poses.__len__()
 
@@ -498,9 +513,11 @@ class MatrixRow(collections.abc.Mapping):
         else:
             clothing = None
 
-        ret = cls(id, name, {}, sheet, clothing)
+        ret = cls(id, name, {}, sheet, clothing, tag)
         if tag.poses:
             for pose_tag in tag.poses.find_all("pose", recursive=False):
+                if "key" not in pose_tag.attrs:
+                    continue
                 pose = MatrixPose.from_xml(pose_tag, ret)
                 ret.poses[pose.key] = pose
         return ret
@@ -513,6 +530,7 @@ class MatrixSheet:
     global_sheet: bool
     matrix: PoseMatrix
     model: Optional[KisekaeCode] = None
+    tag: Optional[Tag] = None
 
     def pose_keys(self) -> Generator[str, None, None]:
         seen = set()
@@ -544,11 +562,13 @@ class MatrixSheet:
 
     def __iter__(self) -> Iterator[str]:
         return self.rows.__iter__()
-    
+
     def __len__(self) -> int:
         return self.rows.__len__()
 
-    def __getitem__(self, key: Union[Tuple[int, str], int, str]) -> Union[MatrixRow, List[MatrixPose], MatrixPose]:
+    def __getitem__(
+        self, key: Union[Tuple[int, str], int, str]
+    ) -> Union[MatrixRow, List[MatrixPose], MatrixPose]:
         try:
             row_key, pose_key = key
             return self.rows[row_key][pose_key]
@@ -575,31 +595,45 @@ class MatrixSheet:
         else:
             model = None
 
-        ret = cls(name, {}, global_sheet, matrix, model)
+        ret = cls(name, {}, global_sheet, matrix, model, tag)
         if tag.stages:
             for row_tag in tag.stages.find_all("stage", recursive=False):
                 row = MatrixRow.from_xml(row_tag, ret)
                 ret.rows[row.id] = row
         return ret
 
+
 @define()
 class PoseMatrix:
     sheets: List[MatrixSheet]
-    stage_names: List[str] = field(factory=list, converter=list, validator=validators.deep_iterable(validators.instance_of(str)))
+    stage_names: List[str] = field(
+        factory=list,
+        converter=list,
+        validator=validators.deep_iterable(validators.instance_of(str)),
+    )
+    tag: Union[Tag, BeautifulSoup, None] = None
 
     @classmethod
-    def from_xml(cls, tag: Union[Tag, BeautifulSoup], stage_names: Union[Iterable[str], None] = None) -> PoseMatrix:
+    def from_xml(
+        cls,
+        tag: Union[Tag, BeautifulSoup],
+        stage_names: Union[Iterable[str], None] = None,
+    ) -> PoseMatrix:
         if stage_names is None:
             stage_names = []
 
-        ret = cls([], stage_names)
+        ret = cls([], stage_names, tag)
         if tag.sheets is not None:
             for sheet_tag in tag.sheets.find_all("sheet", recursive=False):
                 ret.sheets.append(MatrixSheet.from_xml(sheet_tag, ret))
         return ret
 
     @classmethod
-    def load_file(cls, file_or_path: Union[Path, str, IO], stage_names: Union[Iterable[str], None] = None) -> PoseMatrix:
+    def load_file(
+        cls,
+        file_or_path: Union[Path, str, IO],
+        stage_names: Union[Iterable[str], None] = None,
+    ) -> PoseMatrix:
         if isinstance(file_or_path, str):
             file_or_path = Path(file_or_path)
 
@@ -618,7 +652,7 @@ class PoseMatrix:
     def _load_stage_names(base_path: Path) -> Optional[List[str]]:
         with base_path.open("rb") as f:
             soup = BeautifulSoup(f)
-        
+
         if not soup.wardrobe:
             return None
 
@@ -648,7 +682,11 @@ class PoseMatrix:
             return cls.load_file(char_path)
 
         if not char_path.joinpath("poses.xml").is_file():
-            raise ValueError("{} does not contain a character or costume".format(char_path.as_posix()))
+            raise ValueError(
+                "{} does not contain a character or costume".format(
+                    char_path.as_posix()
+                )
+            )
 
         stage_names = None
         if char_path.joinpath("costume.xml").is_file():
@@ -656,37 +694,6 @@ class PoseMatrix:
         elif char_path.joinpath("behaviour.xml").is_file():
             stage_names = cls._load_stage_names(char_path.joinpath("behaviour.xml"))
         return cls.load_file(char_path.joinpath("poses.xml"), stage_names)
-
-
-def _fmt_sheet(sheet: MatrixSheet) -> str:
-    cols = []
-
-    stage_col = []
-    max_stage_col_len = max(len(name) for name in sheet.matrix.stage_names) + 1
-    stage_col.extend([" " * max_stage_col_len, "-" * max_stage_col_len])
-    stage_col.extend(name.ljust(max_stage_col_len) for name in sheet.matrix.stage_names)
-    cols.append(stage_col)
-
-    for key, col in sheet.iter_columns():
-        col_len = len(key) + 2
-        filled_str = "!".ljust(col_len // 2).rjust(col_len)
-        empty_str = " " * col_len
-        text_col = [" " + key + " ", "-" * col_len]
-
-        for cell in col:
-            if cell.filled:
-                text_col.append(filled_str)
-            else:
-                text_col.append(empty_str)
-        cols.append(text_col)
-
-    rows = [list() for _ in range(max(len(col) for col in cols))]
-    for col in cols:
-        for row, text in zip(rows, col):
-            row.append(text)
-
-    row_texts = ["|".join(row) for row in rows]
-    return "\n".join(row_texts)
 
 
 if __name__ == "__main__":

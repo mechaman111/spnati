@@ -146,8 +146,8 @@ function Collectible(xmlElem, player) {
     }
 }
 
-Collectible.prototype.isUnlocked = function () {
-    if (COLLECTIBLES_UNLOCKED) return true;
+Collectible.prototype.isUnlocked = function (ignoreUnlockAllOption) {
+    if (COLLECTIBLES_UNLOCKED && !ignoreUnlockAllOption) return true;
     
     var curCounter = save.getCollectibleCounter(this);
     if (this.counter) {
@@ -308,7 +308,7 @@ var playerCollectibles = {}; /* Indexed by player ID. */
 var currentDeckDisplay = null;
 
 function goToEpiloguesScreen() {
-    if (SENTRY_INITIALIZED) Sentry.setTag("screen", "gallery-epilogues");
+    Sentry.setTag("screen", "gallery-epilogues");
 
     $galleryEndingsScreen.show();
     $galleryCollectiblesScreen.hide();
@@ -319,7 +319,7 @@ function goToEpiloguesScreen() {
 }
 
 function goToCollectiblesScreen() {
-    if (SENTRY_INITIALIZED) Sentry.setTag("screen", "gallery-collectibles");
+    Sentry.setTag("screen", "gallery-collectibles");
 
     $galleryCollectiblesScreen.show();
     $galleryEndingsScreen.hide();
@@ -331,7 +331,7 @@ function goToCollectiblesScreen() {
 }
 
 function goToCardsScreen() {
-    if (SENTRY_INITIALIZED) Sentry.setTag("screen", "gallery-decks");
+    Sentry.setTag("screen", "gallery-decks");
 
     if (!currentDeckDisplay) {
         currentDeckDisplay = new CardDeckDisplay(CARD_IMAGE_SETS[DEFAULT_CARD_DECK]);
@@ -388,7 +388,7 @@ function loadGalleryScreen(){
 }
 
 function backGalleryScreen(){
-    if (SENTRY_INITIALIZED) Sentry.setTag("screen", "title");
+    Sentry.setTag("screen", "title");
     screenTransition($galleryScreen, $titleScreen);
 }
 
@@ -680,10 +680,7 @@ function doEpilogueFromGallery(){
                 }
             });
         
-            if (USAGE_TRACKING) {
-                recordEpilogueEvent(true, epilogue);
-            }
-        
+            recordEpilogueEvent(true, epilogue);
             loadEpilogue(epilogue, null, true); //initialise buttons and text boxes
             screenTransition($galleryScreen, $epilogueScreen);
             $galleryStartButton.attr('disabled', false);
@@ -957,22 +954,22 @@ CardDeckGroup.prototype.disableAll = function () {
 function CardDeckDisplay (imageSet) {
     this.imageSet = imageSet;
 
-    var suits = {"spade": [], "diamo": [], "heart": [], "clubs": []};
+    var suits = [[], [], [], []];
     imageSet.includedFrontCards.forEach(function (c) {
         suits[c.suit].push(c);
     });
 
     /** @type {Array<CardDeckGroup>} */
     this.groups = [];
-    Object.entries(suits).forEach(function (kv) {
-        if (kv[1].length === 0) return;
+    suits.forEach(function (suit, idx) {
+        if (suit.length === 0) return;
 
-        kv[1].sort(function (a, b) {
+        suit.sort(function (a, b) {
             return a.rank - b.rank;
         });
 
         this.groups.push(new CardDeckGroup(
-            this, cardSuitToString(kv[0]), imageSet, kv[1], false
+            this, cardSuitToString(idx), imageSet, suit, false
         ));
     }.bind(this));
 

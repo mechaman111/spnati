@@ -16,6 +16,7 @@ namespace SPNATI_Character_Editor.Controls
 
 		private Character _character;
 		private DialogueLine _line;
+		private bool _settingData;
 
 		public event EventHandler DataUpdated;
 
@@ -24,9 +25,13 @@ namespace SPNATI_Character_Editor.Controls
 			InitializeComponent();
 			cboGender.Items.AddRange(new string[] { "", "female", "male" });
 			cboSize.Items.AddRange(new string[] { "", "small", "medium", "large" });
+			cboAttr.Items.AddRange(new string[] { "", "timer", "stamina", "redirect-finish" });
+			cboHeavy.Items.AddRange(new string[] { "", "true", "false" });
+			cboOp.Items.AddRange(new string[] { "=", "+", "-", "*", "/", "%" });
 			cboDirection.DataSource = DialogueLine.ArrowDirections;
 			cboFontSize.DataSource = DialogueLine.FontSizes;
 			cboAI.DataSource = DialogueLine.AILevels;
+			_settingData = false;
 			OnUpdateSkin(SkinManager.Instance.CurrentSkin);
 		}
 
@@ -42,6 +47,8 @@ namespace SPNATI_Character_Editor.Controls
 
 		public void SetData(int row, DialogueLine line, Character character)
 		{
+			_settingData = true;
+
 			OnUpdateSkin(SkinManager.Instance.CurrentSkin);
 			RowIndex = row;
 			_line = line;
@@ -56,7 +63,6 @@ namespace SPNATI_Character_Editor.Controls
 			chkResetAI.Checked = line.Intelligence == "";
 			chkResetLabel.Checked = line.Label == "";
 			chkLayer.Checked = line.Layer == "over" || (character.Metadata.BubblePosition.ToString() == "over" && line.Layer != "under");
-
 			valWeight.Value = Math.Max(valWeight.Minimum, Math.Min(valWeight.Maximum, (decimal)line.Weight));
 
 			float location = 0;
@@ -71,8 +77,41 @@ namespace SPNATI_Character_Editor.Controls
 			}
 			valLocation.Value = Math.Max(valLocation.Minimum, Math.Min(valLocation.Maximum, (decimal)location));
 
+			cboHeavy.Text = "";
+			cboAttr.Text = "";
+			txtValue.Text = "";
+			cboOp.Text = "";
+			chkResetHeavy.Checked = false;
+			if (line.DialogueOperations != null && line.DialogueOperations.ForfeitOps != null)
+			{
+				foreach (ForfeitOperation op in line.DialogueOperations.ForfeitOps.ToArray())
+				{
+					if (op.Attribute == "heavy")
+					{
+						if (op.Value == "reset")
+						{
+							cboHeavy.Text = "";
+							chkResetHeavy.Checked = true;
+						}
+						else
+						{
+							cboHeavy.Text = op.Value ?? "";
+							chkResetHeavy.Checked = false;
+						}
+					}
+					else
+					{
+						cboAttr.Text = op.Attribute;
+						txtValue.Text = op.Value;
+						cboOp.Text = op.Operator;
+					}
+				}
+			}
+
 			// has to be at end or else weight and location are set incorrectly
 			cboFontSize.Text = fontSize ?? "";
+
+			_settingData = false;
 		}
 
 		public DialogueLine GetLine()
@@ -151,12 +190,62 @@ namespace SPNATI_Character_Editor.Controls
 				_line.Layer = chkLayer.Checked ? "over" : "";
 			}
 
+			ForfeitOperation mainForfeitOp = null;
+			ForfeitOperation heavyOp = null;
+			if (!String.IsNullOrEmpty(cboAttr.Text))
+			{
+				mainForfeitOp = new ForfeitOperation();
+				mainForfeitOp.Attribute = cboAttr.Text;
+				mainForfeitOp.Operator = cboOp.Text;
+				mainForfeitOp.Value = txtValue.Text;
+			}
+
+			if (chkResetHeavy.Checked)
+			{
+				heavyOp = new ForfeitOperation();
+				heavyOp.Attribute = "heavy";
+				heavyOp.Value = "reset";
+			}
+			else if (!String.IsNullOrEmpty(cboHeavy.Text))
+			{
+				heavyOp = new ForfeitOperation();
+				heavyOp.Attribute = "heavy";
+				heavyOp.Value = cboHeavy.Text;
+			}
+
+			if (mainForfeitOp != null || heavyOp != null)
+			{
+				if (_line.DialogueOperations == null)
+				{
+					_line.DialogueOperations = new DialogueOperations();
+				}
+
+				_line.DialogueOperations.ForfeitOps.Clear();
+
+				if (mainForfeitOp != null)
+				{
+					_line.DialogueOperations.ForfeitOps.Add(mainForfeitOp);
+				}
+
+				if (heavyOp != null)
+				{
+					_line.DialogueOperations.ForfeitOps.Add(heavyOp);
+				}
+			} else if (_line.DialogueOperations != null && _line.DialogueOperations.ForfeitOps != null)
+            {
+				_line.DialogueOperations.ForfeitOps.Clear();
+				if (_line.DialogueOperations.IsEmpty())
+                {
+					_line.DialogueOperations = null;
+                }
+            }
+
 			return _line;
 		}
 
 		private void valLocation_ValueChanged(object sender, EventArgs e)
 		{
-			DataUpdated?.Invoke(this, e);
+			if (!_settingData) DataUpdated?.Invoke(this, e);
 		}
 
 		private void chkResetAI_CheckedChanged(object sender, EventArgs e)
@@ -169,15 +258,69 @@ namespace SPNATI_Character_Editor.Controls
 			txtLabel.Enabled = !chkResetLabel.Checked;
 		}
 
+		private void chkResetHeavy_CheckedChanged(object sender, EventArgs e)
+		{
+			cboHeavy.Enabled = !chkResetHeavy.Checked;
+		}
+
         private void cboFontSize_SelectedIndexChanged(object sender, EventArgs e)
         {
-			DataUpdated?.Invoke(this, e);
+			if (!_settingData) DataUpdated?.Invoke(this, e);
 		}
 
         private void chkLayer_CheckedChanged(object sender, EventArgs e)
         {
-			DataUpdated?.Invoke(this, e);
+			if (!_settingData) DataUpdated?.Invoke(this, e);
 		}
+
+        private void skinnedGroupBox2_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void skinnedLabel2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cboAI_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cboAttr_SelectedIndexChanged(object sender, EventArgs e)
+        {
+			string attr = cboAttr.Text;
+			if (attr == "redirect-finish")
+			{
+				cboOp.Items.Clear();
+				cboOp.Items.AddRange(new string[] { "="});
+				cboOp.SelectedItem = "=";
+			}
+			else
+            {
+				cboOp.Items.Clear();
+				cboOp.Items.AddRange(new string[] { "=", "+", "-", "*", "/", "%" });
+				cboOp.SelectedItem = "=";
+			}
+
+			if (!_settingData) DataUpdated?.Invoke(this, e);
+		}
+
+		private void cboOp_SelectedIndexChanged(object sender, EventArgs e)
+        {
+			if (!_settingData) DataUpdated?.Invoke(this, e);
+		}
+
+        private void label5_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cboHeavy_SelectedIndexChanged(object sender, EventArgs e)
+        {
+			
+        }
     }
 
     public interface IDialogueDropDownControl : ISkinnedPanel, ISkinControl

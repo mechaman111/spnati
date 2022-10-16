@@ -50,11 +50,22 @@
             this.cboFontSize = new Desktop.Skinning.SkinnedComboBox();
             this.skinnedLabel1 = new Desktop.Skinning.SkinnedLabel();
             this.chkLayer = new Desktop.Skinning.SkinnedCheckBox();
+            this.skinnedGroupBox2 = new Desktop.Skinning.SkinnedGroupBox();
+            this.txtValue = new Desktop.Skinning.SkinnedTextBox();
+            this.skinnedLabel5 = new Desktop.Skinning.SkinnedLabel();
+            this.cboHeavy = new Desktop.Skinning.SkinnedComboBox();
+            this.skinnedLabel4 = new Desktop.Skinning.SkinnedLabel();
+            this.chkResetHeavy = new Desktop.Skinning.SkinnedCheckBox();
+            this.cboOp = new Desktop.Skinning.SkinnedComboBox();
+            this.cboAttr = new Desktop.Skinning.SkinnedComboBox();
+            this.skinnedLabel3 = new Desktop.Skinning.SkinnedLabel();
+            this.skinnedLabel2 = new Desktop.Skinning.SkinnedLabel();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.valLocation)).BeginInit();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.valWeight)).BeginInit();
             this.skinnedGroupBox1.SuspendLayout();
+            this.skinnedGroupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -203,6 +214,7 @@
             this.cboAI.Size = new System.Drawing.Size(83, 21);
             this.cboAI.Sorted = false;
             this.cboAI.TabIndex = 3;
+            this.cboAI.SelectedIndexChanged += new System.EventHandler(this.cboAI_SelectedIndexChanged);
             // 
             // label7
             // 
@@ -311,11 +323,12 @@
             this.label5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.label5.Highlight = Desktop.Skinning.SkinnedHighlight.Normal;
             this.label5.Level = Desktop.Skinning.SkinnedLabelLevel.Label;
-            this.label5.Location = new System.Drawing.Point(5, 176);
+            this.label5.Location = new System.Drawing.Point(9, 278);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(44, 13);
+            this.label5.Size = new System.Drawing.Size(67, 13);
             this.label5.TabIndex = 2;
-            this.label5.Text = "Weight:";
+            this.label5.Text = "Line Weight:";
+            this.label5.Click += new System.EventHandler(this.label5_Click);
             // 
             // valWeight
             // 
@@ -323,7 +336,7 @@
             this.valWeight.DecimalPlaces = 2;
             this.valWeight.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.valWeight.ForeColor = System.Drawing.Color.Black;
-            this.valWeight.Location = new System.Drawing.Point(55, 174);
+            this.valWeight.Location = new System.Drawing.Point(87, 276);
             this.valWeight.Minimum = new decimal(new int[] {
             1,
             0,
@@ -399,17 +412,174 @@
             this.chkLayer.UseVisualStyleBackColor = true;
             this.chkLayer.CheckedChanged += new System.EventHandler(this.chkLayer_CheckedChanged);
             // 
+            // skinnedGroupBox2
+            // 
+            this.skinnedGroupBox2.BackColor = System.Drawing.Color.White;
+            this.skinnedGroupBox2.Controls.Add(this.txtValue);
+            this.skinnedGroupBox2.Controls.Add(this.skinnedLabel5);
+            this.skinnedGroupBox2.Controls.Add(this.cboHeavy);
+            this.skinnedGroupBox2.Controls.Add(this.skinnedLabel4);
+            this.skinnedGroupBox2.Controls.Add(this.chkResetHeavy);
+            this.skinnedGroupBox2.Controls.Add(this.cboOp);
+            this.skinnedGroupBox2.Controls.Add(this.cboAttr);
+            this.skinnedGroupBox2.Controls.Add(this.skinnedLabel3);
+            this.skinnedGroupBox2.Controls.Add(this.skinnedLabel2);
+            this.skinnedGroupBox2.Highlight = Desktop.Skinning.SkinnedHighlight.Heading;
+            this.skinnedGroupBox2.Image = null;
+            this.skinnedGroupBox2.Location = new System.Drawing.Point(3, 175);
+            this.skinnedGroupBox2.Name = "skinnedGroupBox2";
+            this.skinnedGroupBox2.PanelType = Desktop.Skinning.SkinnedBackgroundType.Surface;
+            this.skinnedGroupBox2.ShowIndicatorBar = false;
+            this.skinnedGroupBox2.Size = new System.Drawing.Size(389, 95);
+            this.skinnedGroupBox2.TabIndex = 13;
+            this.skinnedGroupBox2.TabStop = false;
+            this.skinnedGroupBox2.Text = "Forfeit Operations";
+            this.skinnedGroupBox2.Enter += new System.EventHandler(this.skinnedGroupBox2_Enter);
+            // 
+            // txtValue
+            // 
+            this.txtValue.BackColor = System.Drawing.Color.White;
+            this.txtValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txtValue.ForeColor = System.Drawing.Color.Black;
+            this.txtValue.Location = new System.Drawing.Point(80, 56);
+            this.txtValue.Name = "txtValue";
+            this.txtValue.Size = new System.Drawing.Size(80, 20);
+            this.txtValue.TabIndex = 19;
+            // 
+            // skinnedLabel5
+            // 
+            this.skinnedLabel5.AutoSize = true;
+            this.skinnedLabel5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.skinnedLabel5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.skinnedLabel5.Highlight = Desktop.Skinning.SkinnedHighlight.Normal;
+            this.skinnedLabel5.Level = Desktop.Skinning.SkinnedLabelLevel.Label;
+            this.skinnedLabel5.Location = new System.Drawing.Point(172, 59);
+            this.skinnedLabel5.Name = "skinnedLabel5";
+            this.skinnedLabel5.Size = new System.Drawing.Size(41, 13);
+            this.skinnedLabel5.TabIndex = 18;
+            this.skinnedLabel5.Text = "Heavy:";
+            // 
+            // cboHeavy
+            // 
+            this.cboHeavy.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
+            this.cboHeavy.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
+            this.cboHeavy.BackColor = System.Drawing.Color.White;
+            this.cboHeavy.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboHeavy.FieldType = Desktop.Skinning.SkinnedFieldType.Surface;
+            this.cboHeavy.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.cboHeavy.FormattingEnabled = true;
+            this.cboHeavy.KeyMember = null;
+            this.cboHeavy.Location = new System.Drawing.Point(240, 56);
+            this.cboHeavy.Name = "cboHeavy";
+            this.cboHeavy.SelectedIndex = -1;
+            this.cboHeavy.SelectedItem = null;
+            this.cboHeavy.Size = new System.Drawing.Size(84, 21);
+            this.cboHeavy.Sorted = false;
+            this.cboHeavy.TabIndex = 17;
+            this.cboHeavy.SelectedIndexChanged += new System.EventHandler(this.cboHeavy_SelectedIndexChanged);
+            // 
+            // skinnedLabel4
+            // 
+            this.skinnedLabel4.AutoSize = true;
+            this.skinnedLabel4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.skinnedLabel4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.skinnedLabel4.Highlight = Desktop.Skinning.SkinnedHighlight.Normal;
+            this.skinnedLabel4.Level = Desktop.Skinning.SkinnedLabelLevel.Label;
+            this.skinnedLabel4.Location = new System.Drawing.Point(6, 59);
+            this.skinnedLabel4.Name = "skinnedLabel4";
+            this.skinnedLabel4.Size = new System.Drawing.Size(37, 13);
+            this.skinnedLabel4.TabIndex = 16;
+            this.skinnedLabel4.Text = "Value:";
+            // 
+            // chkResetHeavy
+            // 
+            this.chkResetHeavy.AutoSize = true;
+            this.chkResetHeavy.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
+            this.chkResetHeavy.Location = new System.Drawing.Point(329, 58);
+            this.chkResetHeavy.Name = "chkResetHeavy";
+            this.chkResetHeavy.Size = new System.Drawing.Size(54, 17);
+            this.chkResetHeavy.TabIndex = 15;
+            this.chkResetHeavy.Text = "Reset";
+            this.chkResetHeavy.UseVisualStyleBackColor = true;
+            this.chkResetHeavy.CheckedChanged += new System.EventHandler(this.chkResetHeavy_CheckedChanged);
+            // 
+            // cboOp
+            // 
+            this.cboOp.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
+            this.cboOp.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
+            this.cboOp.BackColor = System.Drawing.Color.White;
+            this.cboOp.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboOp.FieldType = Desktop.Skinning.SkinnedFieldType.Surface;
+            this.cboOp.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.cboOp.FormattingEnabled = true;
+            this.cboOp.KeyMember = null;
+            this.cboOp.Location = new System.Drawing.Point(240, 29);
+            this.cboOp.Name = "cboOp";
+            this.cboOp.SelectedIndex = -1;
+            this.cboOp.SelectedItem = null;
+            this.cboOp.Size = new System.Drawing.Size(84, 21);
+            this.cboOp.Sorted = false;
+            this.cboOp.TabIndex = 14;
+            this.cboOp.SelectedIndexChanged += new System.EventHandler(this.cboOp_SelectedIndexChanged);
+            // 
+            // cboAttr
+            // 
+            this.cboAttr.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
+            this.cboAttr.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
+            this.cboAttr.BackColor = System.Drawing.Color.White;
+            this.cboAttr.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboAttr.FieldType = Desktop.Skinning.SkinnedFieldType.Surface;
+            this.cboAttr.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.cboAttr.FormattingEnabled = true;
+            this.cboAttr.KeyMember = null;
+            this.cboAttr.Location = new System.Drawing.Point(80, 29);
+            this.cboAttr.Name = "cboAttr";
+            this.cboAttr.SelectedIndex = -1;
+            this.cboAttr.SelectedItem = null;
+            this.cboAttr.Size = new System.Drawing.Size(80, 21);
+            this.cboAttr.Sorted = false;
+            this.cboAttr.TabIndex = 13;
+            this.cboAttr.SelectedIndexChanged += new System.EventHandler(this.cboAttr_SelectedIndexChanged);
+            // 
+            // skinnedLabel3
+            // 
+            this.skinnedLabel3.AutoSize = true;
+            this.skinnedLabel3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.skinnedLabel3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.skinnedLabel3.Highlight = Desktop.Skinning.SkinnedHighlight.Normal;
+            this.skinnedLabel3.Level = Desktop.Skinning.SkinnedLabelLevel.Label;
+            this.skinnedLabel3.Location = new System.Drawing.Point(172, 35);
+            this.skinnedLabel3.Name = "skinnedLabel3";
+            this.skinnedLabel3.Size = new System.Drawing.Size(56, 13);
+            this.skinnedLabel3.TabIndex = 2;
+            this.skinnedLabel3.Text = "Operation:";
+            // 
+            // skinnedLabel2
+            // 
+            this.skinnedLabel2.AutoSize = true;
+            this.skinnedLabel2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.skinnedLabel2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.skinnedLabel2.Highlight = Desktop.Skinning.SkinnedHighlight.Normal;
+            this.skinnedLabel2.Level = Desktop.Skinning.SkinnedLabelLevel.Label;
+            this.skinnedLabel2.Location = new System.Drawing.Point(6, 35);
+            this.skinnedLabel2.Name = "skinnedLabel2";
+            this.skinnedLabel2.Size = new System.Drawing.Size(49, 13);
+            this.skinnedLabel2.TabIndex = 1;
+            this.skinnedLabel2.Text = "Attribute:";
+            this.skinnedLabel2.Click += new System.EventHandler(this.skinnedLabel2_Click);
+            // 
             // DialogueAdvancedControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.skinnedGroupBox2);
             this.Controls.Add(this.skinnedGroupBox1);
             this.Controls.Add(this.valWeight);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Name = "DialogueAdvancedControl";
-            this.Size = new System.Drawing.Size(395, 195);
+            this.Size = new System.Drawing.Size(395, 318);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.valLocation)).EndInit();
@@ -418,6 +588,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.valWeight)).EndInit();
             this.skinnedGroupBox1.ResumeLayout(false);
             this.skinnedGroupBox1.PerformLayout();
+            this.skinnedGroupBox2.ResumeLayout(false);
+            this.skinnedGroupBox2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -447,5 +619,15 @@
 		private Desktop.Skinning.SkinnedCheckBox chkLayer;
         private Desktop.Skinning.SkinnedComboBox cboFontSize;
         private Desktop.Skinning.SkinnedLabel skinnedLabel1;
+        private Desktop.Skinning.SkinnedGroupBox skinnedGroupBox2;
+        private Desktop.Skinning.SkinnedLabel skinnedLabel2;
+        private Desktop.Skinning.SkinnedComboBox cboOp;
+        private Desktop.Skinning.SkinnedComboBox cboAttr;
+        private Desktop.Skinning.SkinnedLabel skinnedLabel3;
+        private Desktop.Skinning.SkinnedTextBox txtValue;
+        private Desktop.Skinning.SkinnedLabel skinnedLabel5;
+        private Desktop.Skinning.SkinnedComboBox cboHeavy;
+        private Desktop.Skinning.SkinnedLabel skinnedLabel4;
+        private Desktop.Skinning.SkinnedCheckBox chkResetHeavy;
     }
 }
