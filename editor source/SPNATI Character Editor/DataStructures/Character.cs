@@ -642,20 +642,44 @@ namespace SPNATI_Character_Editor
 				ending.OnBeforeSerialize();
 			}
 
+			// dumb and also bad
 			foreach (Pose pose in Poses)
             {
 				foreach (Sprite sp in pose.Sprites)
-				{
-					sp.Src = Serialization.NormalizeSrcPath(sp.Src, this);
+                {
+					if (sp.Src.Contains(FolderName + "/"))
+                    {
+						sp.Src = sp.Src.Substring(FolderName.Length + 1);
+
+						// dumber and also worse (I mean REALLY bad, I hate it)
+						foreach (Character c in CharacterDatabase.Characters)
+                        {
+							if (sp.Src.StartsWith(c.FolderName + "/"))
+                            {
+								sp.Src = "../" + sp.Src;
+								break;
+                            }
+                        }
+                    }
 				}
 
 				foreach (Directive dir in pose.Directives)
                 {
 					foreach (Keyframe keyf in dir.Keyframes)
                     {
-						if (!String.IsNullOrEmpty(keyf.Src))
-                        {
-							keyf.Src = Serialization.NormalizeSrcPath(keyf.Src, this);
+						if (!String.IsNullOrEmpty(keyf.Src) && keyf.Src.Contains(FolderName + "/"))
+						{
+							keyf.Src = keyf.Src.Substring(FolderName.Length + 1);
+
+							// dumber and also worse (I mean REALLY bad, I hate it)
+							foreach (Character c in CharacterDatabase.Characters)
+							{
+								if (keyf.Src.StartsWith(c.FolderName + "/"))
+								{
+									keyf.Src = "../" + keyf.Src;
+									break;
+								}
+							}
 						}
 					}
                 }
@@ -684,18 +708,22 @@ namespace SPNATI_Character_Editor
 			{
 				pose.OnAfterDeserialize();
 
+				// dumb and also bad
 				foreach (Sprite sp in pose.Sprites)
                 {
-					sp.Src = Serialization.NormalizeSrcPath(sp.Src, this);
+					if (!sp.Src.Contains(FolderName + "/"))
+					{
+						sp.Src = FolderName + "/" + sp.Src;
+					}
                 }
 
 				foreach (Directive dir in pose.Directives)
 				{
 					foreach (Keyframe keyf in dir.Keyframes)
 					{
-						if (!String.IsNullOrEmpty(keyf.Src))
+						if (!String.IsNullOrEmpty(keyf.Src) && !keyf.Src.Contains(FolderName + "/"))
 						{
-							keyf.Src = Serialization.NormalizeSrcPath(keyf.Src, this);
+							keyf.Src = FolderName + "/" + keyf.Src;
 						}
 					}
 				}

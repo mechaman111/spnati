@@ -99,15 +99,12 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 					{
 						Image bmp = LiveImageCache.Get(src);
 
-						if (bmp != null)
+						//create a 32px tall image matching the source's aspect ratio
+						int width = (int)((float)bmp.Width / bmp.Height * ThumbnailHeight);
+						_thumbnail = new Bitmap(width, ThumbnailHeight);
+						using (Graphics g = Graphics.FromImage(_thumbnail))
 						{
-							//create a 32px tall image matching the source's aspect ratio
-							int width = (int)((float)bmp.Width / bmp.Height * ThumbnailHeight);
-							_thumbnail = new Bitmap(width, ThumbnailHeight);
-							using (Graphics g = Graphics.FromImage(_thumbnail))
-							{
-								g.DrawImage(bmp, 0, 0, _thumbnail.Width, _thumbnail.Height);
-							}
+							g.DrawImage(bmp, 0, 0, _thumbnail.Width, _thumbnail.Height);
 						}
 					}
 					catch { }

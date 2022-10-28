@@ -11,7 +11,7 @@ namespace SPNATI_Character_Editor
 		private bool _initialized;
 		private Character _character;
 
-		private static readonly Regex _regex = new Regex(@"^(\d+)-(.*)");
+		private static readonly Regex _regex = new Regex(@"(\d+)-(.*)");
 
 		private Dictionary<string, PoseMapping> _poseMap = new Dictionary<string, PoseMapping>();
 		private List<PoseMapping> _poses = new List<PoseMapping>();

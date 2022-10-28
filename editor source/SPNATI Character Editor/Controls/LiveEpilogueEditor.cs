@@ -685,7 +685,7 @@ namespace SPNATI_Character_Editor.Controls
 					LiveSprite sprite = obj as LiveSprite;
 					if (!string.IsNullOrEmpty(sprite.Src) && !sprite.WidthOverride.HasValue && !sprite.HeightOverride.HasValue)
 					{
-						sprite.Image = LiveImageCache.Get(sprite.GetImagePath(sprite.Src));
+						sprite.Image = LiveImageCache.Get(sprite.Src);
 						if (sprite.Image != null)
 						{
 							sprite.Width = sprite.Image.Width;

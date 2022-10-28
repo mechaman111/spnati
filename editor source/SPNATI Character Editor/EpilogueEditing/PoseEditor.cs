@@ -198,7 +198,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			_sourcePose = pose;
 			if (pose != null)
 			{
-				_pose = new LivePose(_character.Skin, pose, _stage);
+				_pose = new LivePose(_character, pose, _stage);
 				_pose.CurrentStage = _stage;
 			}
 			else
@@ -561,7 +561,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			{
 				if (!string.IsNullOrEmpty(sprite.Src))
 				{
-					sprite.Image = LiveImageCache.Get(sprite.GetImagePath(sprite.Src));
+					sprite.Image = LiveImageCache.Get(sprite.Src);
 					if (sprite.Image != null)
 					{
 						sprite.Width = sprite.Image.Width;
