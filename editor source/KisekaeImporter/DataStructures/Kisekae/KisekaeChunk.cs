@@ -9,6 +9,8 @@ namespace KisekaeImporter.DataStructures.Kisekae
 	/// </summary>
 	public class KisekaeChunk
 	{
+		public List<string> Assets = new List<string>();
+
 		private Dictionary<Type, KisekaeComponent> _components = new Dictionary<Type, KisekaeComponent>();
 
 		public KisekaeChunk(string data)
@@ -24,7 +26,6 @@ namespace KisekaeImporter.DataStructures.Kisekae
 		public void Deserialize(string data)
 		{
 			string[] assets = data.Split(new string[] { "/#]" }, StringSplitOptions.None);
-			List<IAttachedText> needsAttachment = new List<IAttachedText>();
 
 			//codes
 			string[] subcodes = assets[0].Split('_');
@@ -66,35 +67,15 @@ namespace KisekaeImporter.DataStructures.Kisekae
 				{
 					string[] subcodePieces = codeData.Split('.');
 					KisekaeComponent component = GetOrAddComponent(componentType);
-					KisekaeSubCode subcode = component.ApplySubCode(prefix, subcodePieces);
-
-					IAttachedText needsText = subcode as IAttachedText;
-					if (needsText != null)
-                    {
-						needsAttachment.Add(needsText);
-                    }
+					component.ApplySubCode(prefix, subcodePieces);
 				}
 			}
 
-			// Assets need to be assigned in order of increasing Index values,
-			// even if the subcodes themselves appear out of order in the serialized code.
-			if (needsAttachment.Count > 0)
-            {
-				needsAttachment.Sort(delegate (IAttachedText a, IAttachedText b)
-				{
-					return (a as KisekaeSubCode).Index - (b as KisekaeSubCode).Index;
-				});
-
-				int curAssetIdx = 1;
-				foreach(KisekaeSubCode subcode in needsAttachment)
-                {
-					if (curAssetIdx < assets.Length && !String.IsNullOrEmpty(assets[curAssetIdx]))
-					{
-						(subcode as IAttachedText).Text = assets[curAssetIdx];
-						curAssetIdx += 1;
-					}
-				}
-
+			//assets
+			Assets.Clear();
+			for (int i = 1; i < assets.Length; i++)
+			{
+				Assets.Add(assets[i]);
 			}
 		}
 
@@ -102,30 +83,18 @@ namespace KisekaeImporter.DataStructures.Kisekae
 		{
 			StringBuilder sb = new StringBuilder();
 			List<string> components = new List<string>();
-			List<IAttachedText> assetComponents = new List<IAttachedText>();
 			foreach (var component in _components.Values)
 			{
-				string serialized = component.Serialize(assetComponents);
-				if (!String.IsNullOrEmpty(serialized))
-                {
-					components.Add(serialized);
-				}
+				components.Add(component.Serialize());
 			}
 			sb.Append(string.Join("_", components));
 
-			if (assetComponents.Count > 0)
+			if (Assets.Count > 0)
 			{
-				// Kisekae reads assets in order of increasing slot numbers,
-				// even if the subcodes for each slot appear out of order!
-				assetComponents.Sort(delegate (IAttachedText a, IAttachedText b)
-				{
-					return (a as KisekaeSubCode).Index - (b as KisekaeSubCode).Index;
-				});
-
-				for (int i = 0; i < assetComponents.Count; i++)
+				for (int i = 0; i < Assets.Count; i++)
 				{
 					sb.Append("/#]");
-					sb.Append(assetComponents[i].Text);
+					sb.Append(Assets[i]);
 				}
 			}
 			return sb.ToString();
@@ -188,6 +157,19 @@ namespace KisekaeImporter.DataStructures.Kisekae
 		/// <param name="chunk"></param>
 		public void MergeIn(KisekaeChunk chunk, bool applyEmpties, bool poseOnly)
 		{
+			//TODO: Asset merging is very flawed since there's no way to know what image/speech bubble the asset belongs to
+			for (int i = 0; i < chunk.Assets.Count; i++)
+			{
+				if (Assets.Count > i)
+				{
+					Assets[i] = chunk.Assets[i];
+				}
+				else
+				{
+					Assets.Add(chunk.Assets[i]);
+				}
+			}
+
 			KisekaeChunk copy = new KisekaeChunk(chunk);
 			foreach (var kvp in copy._components)
 			{
@@ -216,33 +198,17 @@ namespace KisekaeImporter.DataStructures.Kisekae
 			}
 		}
 
-		public IEnumerable<string> GetAssets()
-        {
-			foreach (IAttachedText hasText in GetSubCodesOfType<IAttachedText>())
-            {
-				if (!String.IsNullOrEmpty(hasText.Text))
-                {
-					yield return hasText.Text;
-                }
-            }
-        }
-
 		public void ReplaceAssetPaths(string newRelativePath)
 		{
-			foreach (IAttachedText hasText in GetSubCodesOfType<IAttachedText>())
+			for (int i = 0; i < Assets.Count; i++)
 			{
-				if (String.IsNullOrEmpty(hasText.Text))
-                {
-					continue;
-				}
-
-				string path = hasText.Text;
+				string path = Assets[i];
 				string filename = System.IO.Path.GetFileName(path);
 				bool missingExtension = (filename == System.IO.Path.GetFileNameWithoutExtension(filename));
 				string fullpath = System.IO.Path.GetFullPath(System.IO.Path.Combine(newRelativePath, filename));
 				fullpath = fullpath.Replace("\\", "/");
 				fullpath = fullpath.Replace(" ", "%20");
-				hasText.Text = System.IO.Path.Combine(newRelativePath, filename);
+				Assets[i] = System.IO.Path.Combine(newRelativePath, filename);
 			}
 		}
 

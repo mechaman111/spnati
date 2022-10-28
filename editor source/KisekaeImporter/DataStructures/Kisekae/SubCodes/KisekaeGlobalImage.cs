@@ -2,16 +2,8 @@
 
 namespace KisekaeImporter.SubCodes
 {
-	public class KisekaeGlobalImage : KisekaeSubCode, IPoseable, IMoveable, IAttachedText
+	public class KisekaeGlobalImage : KisekaeSubCode, IPoseable, IMoveable
 	{
-		string _text;
-
-		public KisekaeGlobalImage() : base("v")
-		{
-			_text = "";
-		}
-
-
 		public void Pose(IPoseable pose)
 		{
 			KisekaeGlobalImage other = pose as KisekaeGlobalImage;
@@ -26,11 +18,6 @@ namespace KisekaeImporter.SubCodes
 			Rotation = other.Rotation;
 			ScaleY = other.ScaleY;
 			RotationZ = other.RotationZ;
-		}
-		public string Text
-		{
-			get { return _text; }
-			set { _text = value; }
 		}
 
 		public int ScaleX

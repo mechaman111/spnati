@@ -1,6 +1,5 @@
 ﻿using Desktop.CommonControls.PropertyControls;
 using SPNATI_Character_Editor.Controls;
-using System;
 using System.IO;
 
 namespace SPNATI_Character_Editor.EpilogueEditor
@@ -98,91 +97,5 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			}
 		}
 
-		/// <summary>
-		/// Get the actual source path for this keyframe, relative to opponents/
-		/// </summary>
-		/// <param name="character"></param>
-		/// <returns></returns>
-		public string GetActualSrc(ISkin character)
-		{
-			if (String.IsNullOrEmpty(Src))
-			{
-				return null;
-			}
-
-			if (Src.StartsWith("/opponents/"))
-			{
-				return Src.Substring("/opponents/".Length);
-			}
-			else if (Src.StartsWith("opponents/"))
-			{
-				return Src.Substring("opponents/".Length);
-			}
-
-			if (character == null)
-			{
-				return Src;
-			}
-
-			string curFolderName = character.FolderName;
-			if (curFolderName.StartsWith("opponents/"))
-			{
-				curFolderName = curFolderName.Substring("opponents/".Length);
-			}
-
-			if (Src.StartsWith(curFolderName + "/") || Src.StartsWith("reskins/"))
-			{
-				return Src;
-			}
-			else
-			{
-				foreach (Character c in CharacterDatabase.Characters)
-				{
-					if (Src.StartsWith(c.FolderName + "/"))
-					{
-						return Src;
-					}
-				}
-
-				return curFolderName + "/" + Src;
-			}
-		}
-
-		/// <summary>
-		/// Corrects this sprite's source to the type of path used by scenes, which is relative to character's folder, or / if not in the character's folder
-		/// </summary>
-		/// <param name="scene"></param>
-		/// <param name="character"></param>
-		/// <returns></returns>
-		public string GetSceneSrc(ISkin character)
-		{
-			if (String.IsNullOrEmpty(Src))
-			{
-				return null;
-			}
-
-			if (Src.StartsWith("/opponents/"))
-			{
-				return Src;
-			}
-			else if (Src.StartsWith("opponents/"))
-			{
-				return "/" + Src;
-			}
-
-			if (character == null)
-			{
-				return Src;
-			}
-
-			if (Src.StartsWith(character.FolderName + "/"))
-            {
-				return Src.Substring(character.FolderName.Length + 1);
-            }
-			else
-            {
-				return "/opponents/" + Src;
-            }
-		}
 	}
 }

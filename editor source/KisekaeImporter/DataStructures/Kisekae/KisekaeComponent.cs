@@ -114,24 +114,11 @@ namespace KisekaeImporter
 			_subcodes[prefix] = code;
 		}
 
-		public string Serialize(List<IAttachedText> assetList)
+		public string Serialize()
 		{
 			List<string> output = new List<string>();
 			foreach (var subcode in _subcodes)
 			{
-				IAttachedText hasText = subcode.Value as IAttachedText;
-				if (hasText != null)
-				{
-					if (!String.IsNullOrEmpty(hasText.Text))
-					{
-						assetList.Add(hasText);
-					}
-					else
-                    {
-						continue;
-                    }
-				}
-
 				output.Add(subcode.Value.ToString());
 			}
 			return string.Join("_", output);
@@ -145,11 +132,10 @@ namespace KisekaeImporter
 			}
 		}
 
-		public KisekaeSubCode ApplySubCode(string id, string[] data)
+		public void ApplySubCode(string id, string[] data)
 		{
 			KisekaeSubCode code = GetSubCode(id);
 			code.Deserialize(data);
-			return code;
 		}
 
 		public void ReplaceSubCode(KisekaeSubCode code, bool applyEmpties, bool poseOnly)
@@ -164,12 +150,6 @@ namespace KisekaeImporter
 				if (poseOnly && existingCode is IPoseable && !existingCode.IsEmpty)
 				{
 					((IPoseable)existingCode).Pose(code as IPoseable);
-
-					// All current IAttachedText subcode types (i.e. KisekaeImage and KisekaeGlobalImage) are also IPoseable.
-					if (existingCode is IAttachedText && !String.IsNullOrEmpty(((IAttachedText)code).Text))
-                    {
-						((IAttachedText)existingCode).Text = ((IAttachedText)code).Text;
-					}
 				}
 				else
 				{
@@ -177,7 +157,6 @@ namespace KisekaeImporter
 				}
 			}
 		}
-
 
 		public bool HasSubCode(string id, int index)
 		{

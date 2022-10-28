@@ -32,7 +32,6 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		public LiveSprite(LivePose pose, Sprite sprite, float time) : this()
 		{
 			Data = pose;
-			Character = pose.Character;
 			ParentId = sprite.ParentId;
 			Marker = sprite.Marker;
 			Length = 1;
@@ -212,7 +211,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			}
 			if (!string.IsNullOrEmpty(kf.Src))
 			{
-				string src = kf.GetActualSrc(Character);
+				string src = LiveSceneSegment.FixPath(kf.Src, Character);
 				AddValue<string>(time, "Src", src, addBreak);
 				properties.Add("Src");
 			}
@@ -276,47 +275,6 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 
 		public string GetImagePath(string src)
 		{
-			if (string.IsNullOrEmpty(src))
-            {
-				return src;
-            }
-
-			if (src.StartsWith("/opponents/"))
-			{
-				src = src.Substring("/opponents/".Length);
-			}
-			else if (src.StartsWith("opponents/"))
-			{
-				src = src.Substring("opponents/".Length);
-			}
-
-			if (Character != null)
-			{
-				string curFolderName = Character.FolderName;
-				if (curFolderName.StartsWith("opponents/"))
-				{
-					curFolderName = curFolderName.Substring("opponents/".Length);
-				}
-
-				if (!src.StartsWith(curFolderName + "/") && !src.StartsWith("reskins/"))
-				{
-					bool foundMatch = false;
-					foreach (Character c in CharacterDatabase.Characters)
-					{
-						if (src.StartsWith(c.FolderName + "/"))
-						{
-							foundMatch = true;
-							break;
-						}
-					}
-
-					if (!foundMatch)
-					{
-						src = curFolderName + "/" + src;
-					}
-				}
-			}
-
 			if (Data != null && Data.AllowsCrossStageImages && !string.IsNullOrEmpty(src) && src.Contains("#-"))
 			{
 				src = src.Replace("#-", $"{_stage}-");
@@ -410,7 +368,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				{
 					if (!string.IsNullOrEmpty(initialFrame.Src))
 					{
-						sprite.Src = initialFrame.GetSceneSrc((Data as LiveSceneSegment).Character);
+						sprite.Src = Scene.FixPath(initialFrame.Src, (Data as LiveSceneSegment).Character);
 					}
 					if (initialFrame.X.HasValue)
 					{
