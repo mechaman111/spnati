@@ -466,7 +466,9 @@ function Opponent (id, metaFiles, status, releaseNumber, highlightStatus) {
     this.label = this.selectLabel = this.metaLabel = $metaXml.children('label').text();
     this.gender = this.selectGender = this.metaGender = $metaXml.children('gender').text();
 
-    this.image = $metaXml.children('pic').text();
+    var picElem = $metaXml.children('pic');
+
+    this.image = picElem.text();
     this.height = $metaXml.children('height').text();
     this.source = $metaXml.children('from').text();
     this.artist = $metaXml.children('artist').text();
@@ -534,6 +536,11 @@ function Opponent (id, metaFiles, status, releaseNumber, highlightStatus) {
 
     this.alternate_costumes = [];
     this.selection_image = this.folder + this.image;
+    this.selection_image_adjustment = {
+        x: (Number(picElem.attr("x")) || 0), /* negative values move to the left, positive to the right */
+        y: (-Number(picElem.attr("y")) || 0), /* negative values move down, positive moves up */
+        scale: Number(picElem.attr("scale")) || 100.0,
+    };
 
     this.favorite = save.isCharacterFavorited(this);
 

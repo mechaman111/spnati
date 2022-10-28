@@ -1,4 +1,4 @@
-﻿namespace SPNATI_Character_Editor.Activities
+namespace SPNATI_Character_Editor.Activities
 {
 	partial class MetadataEditor
 	{
@@ -30,9 +30,9 @@
 		private void InitializeComponent()
 		{
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
             this.txtLabel = new Desktop.Skinning.SkinnedTextBox();
             this.label1 = new Desktop.Skinning.SkinnedLabel();
             this.gridAI = new Desktop.Skinning.SkinnedDataGridView();
@@ -62,6 +62,13 @@
             this.lblSize = new Desktop.Skinning.SkinnedLabel();
             this.cboGender = new Desktop.Skinning.SkinnedComboBox();
             this.skinnedGroupBox1 = new Desktop.Skinning.SkinnedGroupBox();
+            this.valPicScale = new Desktop.Skinning.SkinnedNumericUpDown();
+            this.lblPicScale = new Desktop.Skinning.SkinnedLabel();
+            this.valPicY = new Desktop.Skinning.SkinnedNumericUpDown();
+            this.lblPicY = new Desktop.Skinning.SkinnedLabel();
+            this.valPicX = new Desktop.Skinning.SkinnedNumericUpDown();
+            this.cmdExpandPicOptions = new Desktop.Skinning.SkinnedIcon();
+            this.lblPicX = new Desktop.Skinning.SkinnedLabel();
             this.cmdExpandGender = new Desktop.Skinning.SkinnedIcon();
             this.cboTitleGender = new Desktop.Skinning.SkinnedComboBox();
             this.lblTitleGender = new Desktop.Skinning.SkinnedLabel();
@@ -81,6 +88,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.gridAI)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.valRounds)).BeginInit();
             this.skinnedGroupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.valPicScale)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.valPicY)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.valPicX)).BeginInit();
             this.skinnedGroupBox2.SuspendLayout();
             this.skinnedGroupBox3.SuspendLayout();
             this.skinnedGroupBox4.SuspendLayout();
@@ -118,27 +128,27 @@
             this.gridAI.BackgroundColor = System.Drawing.Color.White;
             this.gridAI.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.gridAI.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.gridAI.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle13.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle13.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle13.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle13.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle13.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle13.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.gridAI.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle13;
             this.gridAI.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.gridAI.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ColAIStage,
             this.ColDifficulty});
             this.gridAI.Data = null;
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.gridAI.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle14.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle14.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle14.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle14.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle14.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle14.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.gridAI.DefaultCellStyle = dataGridViewCellStyle14;
             this.gridAI.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
             this.gridAI.EnableHeadersVisualStyles = false;
             this.gridAI.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
@@ -146,14 +156,14 @@
             this.gridAI.Location = new System.Drawing.Point(107, 27);
             this.gridAI.Name = "gridAI";
             this.gridAI.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.gridAI.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle15.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle15.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle15.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle15.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle15.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle15.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.gridAI.RowHeadersDefaultCellStyle = dataGridViewCellStyle15;
             this.gridAI.RowHeadersVisible = false;
             this.gridAI.Size = new System.Drawing.Size(230, 125);
             this.gridAI.TabIndex = 18;
@@ -492,6 +502,13 @@
             // skinnedGroupBox1
             // 
             this.skinnedGroupBox1.BackColor = System.Drawing.Color.White;
+            this.skinnedGroupBox1.Controls.Add(this.valPicScale);
+            this.skinnedGroupBox1.Controls.Add(this.lblPicScale);
+            this.skinnedGroupBox1.Controls.Add(this.valPicY);
+            this.skinnedGroupBox1.Controls.Add(this.lblPicY);
+            this.skinnedGroupBox1.Controls.Add(this.valPicX);
+            this.skinnedGroupBox1.Controls.Add(this.cmdExpandPicOptions);
+            this.skinnedGroupBox1.Controls.Add(this.lblPicX);
             this.skinnedGroupBox1.Controls.Add(this.cmdExpandGender);
             this.skinnedGroupBox1.Controls.Add(this.cboTitleGender);
             this.skinnedGroupBox1.Controls.Add(this.lblTitleGender);
@@ -519,6 +536,127 @@
             this.skinnedGroupBox1.TabIndex = 108;
             this.skinnedGroupBox1.TabStop = false;
             this.skinnedGroupBox1.Text = "Demographics";
+            // 
+            // valPicScale
+            // 
+            this.valPicScale.BackColor = System.Drawing.Color.White;
+            this.valPicScale.DecimalPlaces = 1;
+            this.valPicScale.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.valPicScale.ForeColor = System.Drawing.Color.Black;
+            this.valPicScale.Location = new System.Drawing.Point(627, 76);
+            this.valPicScale.Maximum = new decimal(new int[] {
+            200,
+            0,
+            0,
+            0});
+            this.valPicScale.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.valPicScale.Name = "valPicScale";
+            this.valPicScale.Size = new System.Drawing.Size(61, 20);
+            this.valPicScale.TabIndex = 115;
+            this.toolTip1.SetToolTip(this.valPicScale, "Scaling factor for the character\'s image on the selection screen.");
+            this.valPicScale.Value = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            this.valPicScale.Visible = false;
+            // 
+            // lblPicScale
+            // 
+            this.lblPicScale.AutoSize = true;
+            this.lblPicScale.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.lblPicScale.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.lblPicScale.Highlight = Desktop.Skinning.SkinnedHighlight.Normal;
+            this.lblPicScale.Level = Desktop.Skinning.SkinnedLabelLevel.Normal;
+            this.lblPicScale.Location = new System.Drawing.Point(567, 80);
+            this.lblPicScale.Name = "lblPicScale";
+            this.lblPicScale.Size = new System.Drawing.Size(54, 13);
+            this.lblPicScale.TabIndex = 114;
+            this.lblPicScale.Text = "Scale (%):";
+            this.lblPicScale.Visible = false;
+            // 
+            // valPicY
+            // 
+            this.valPicY.BackColor = System.Drawing.Color.White;
+            this.valPicY.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.valPicY.ForeColor = System.Drawing.Color.Black;
+            this.valPicY.Location = new System.Drawing.Point(500, 76);
+            this.valPicY.Minimum = new decimal(new int[] {
+            100,
+            0,
+            0,
+            -2147483648});
+            this.valPicY.Name = "valPicY";
+            this.valPicY.Size = new System.Drawing.Size(61, 20);
+            this.valPicY.TabIndex = 113;
+            this.toolTip1.SetToolTip(this.valPicY, "Offset for the character\'s image on the selection screen. Positive values move th" +
+        "e image up.");
+            this.valPicY.Visible = false;
+            // 
+            // lblPicY
+            // 
+            this.lblPicY.AutoSize = true;
+            this.lblPicY.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.lblPicY.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.lblPicY.Highlight = Desktop.Skinning.SkinnedHighlight.Normal;
+            this.lblPicY.Level = Desktop.Skinning.SkinnedLabelLevel.Normal;
+            this.lblPicY.Location = new System.Drawing.Point(477, 80);
+            this.lblPicY.Name = "lblPicY";
+            this.lblPicY.Size = new System.Drawing.Size(17, 13);
+            this.lblPicY.TabIndex = 112;
+            this.lblPicY.Text = "Y:";
+            this.lblPicY.Visible = false;
+            // 
+            // valPicX
+            // 
+            this.valPicX.BackColor = System.Drawing.Color.White;
+            this.valPicX.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.valPicX.ForeColor = System.Drawing.Color.Black;
+            this.valPicX.Location = new System.Drawing.Point(410, 76);
+            this.valPicX.Minimum = new decimal(new int[] {
+            100,
+            0,
+            0,
+            -2147483648});
+            this.valPicX.Name = "valPicX";
+            this.valPicX.Size = new System.Drawing.Size(61, 20);
+            this.valPicX.TabIndex = 111;
+            this.toolTip1.SetToolTip(this.valPicX, "Offset for the character\'s image on the selection screen. Positive values move th" +
+        "e image to the right.");
+            this.valPicX.Visible = false;
+            // 
+            // cmdExpandPicOptions
+            // 
+            this.cmdExpandPicOptions.Background = Desktop.Skinning.SkinnedBackgroundType.Surface;
+            this.cmdExpandPicOptions.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
+            this.cmdExpandPicOptions.Flat = false;
+            this.cmdExpandPicOptions.Image = global::SPNATI_Character_Editor.Properties.Resources.Expand;
+            this.cmdExpandPicOptions.Location = new System.Drawing.Point(365, 78);
+            this.cmdExpandPicOptions.Name = "cmdExpandPicOptions";
+            this.cmdExpandPicOptions.Size = new System.Drawing.Size(16, 16);
+            this.cmdExpandPicOptions.TabIndex = 110;
+            this.cmdExpandPicOptions.Text = "skinnedIcon1";
+            this.toolTip1.SetToolTip(this.cmdExpandPicOptions, "Show advanced select screen options");
+            this.cmdExpandPicOptions.UseVisualStyleBackColor = true;
+            this.cmdExpandPicOptions.Click += new System.EventHandler(this.cmdExpandPicOptions_Click);
+            // 
+            // lblPicX
+            // 
+            this.lblPicX.AutoSize = true;
+            this.lblPicX.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.lblPicX.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.lblPicX.Highlight = Desktop.Skinning.SkinnedHighlight.Normal;
+            this.lblPicX.Level = Desktop.Skinning.SkinnedLabelLevel.Normal;
+            this.lblPicX.Location = new System.Drawing.Point(387, 80);
+            this.lblPicX.Name = "lblPicX";
+            this.lblPicX.Size = new System.Drawing.Size(17, 13);
+            this.lblPicX.TabIndex = 109;
+            this.lblPicX.Text = "X:";
+            this.lblPicX.Visible = false;
             // 
             // cmdExpandGender
             // 
@@ -762,6 +900,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.valRounds)).EndInit();
             this.skinnedGroupBox1.ResumeLayout(false);
             this.skinnedGroupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.valPicScale)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.valPicY)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.valPicX)).EndInit();
             this.skinnedGroupBox2.ResumeLayout(false);
             this.skinnedGroupBox2.PerformLayout();
             this.skinnedGroupBox3.ResumeLayout(false);
@@ -822,5 +963,12 @@
         private Desktop.Skinning.SkinnedGroupBox skinnedGroupBox4;
         private Desktop.Skinning.SkinnedGroupBox skinnedGroupBox5;
         private Desktop.Skinning.SkinnedTextBox txtOtherNotes;
+        private Desktop.Skinning.SkinnedNumericUpDown valPicX;
+        private Desktop.Skinning.SkinnedIcon cmdExpandPicOptions;
+        private Desktop.Skinning.SkinnedLabel lblPicX;
+        private Desktop.Skinning.SkinnedLabel lblPicY;
+        private Desktop.Skinning.SkinnedLabel lblPicScale;
+        private Desktop.Skinning.SkinnedNumericUpDown valPicY;
+        private Desktop.Skinning.SkinnedNumericUpDown valPicScale;
     }
 }
