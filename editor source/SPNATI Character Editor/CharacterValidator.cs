@@ -63,6 +63,21 @@ namespace SPNATI_Character_Editor
 
 			Dictionary<int, bool> stageHasTieLines = new Dictionary<int, bool>();
 			bool hasAfterFinished = false;
+			bool hasCustomSmall = false;
+
+			// put this here so it only needs to be checked once
+			if (character.Styles != null)
+			{
+				foreach (StyleRule rule in character.Styles.Rules)
+				{
+					if (rule.ClassName == "small")
+					{
+						hasCustomSmall = true;
+						break;
+					}
+				}
+			}
+
 
 			//dialogue
 			foreach (Case stageCase in character.Behavior.GetWorkingCases())
@@ -159,12 +174,15 @@ namespace SPNATI_Character_Editor
 						}
 
 						// check if line is entirely covered by {small}
-						var trimLine = line.Text.Trim();
-						if (trimLine.StartsWith("{small}"))
-                        {
-							if (!trimLine.Substring(1).Contains("{") || (trimLine.EndsWith("{!reset}") && !trimLine.Substring(1, trimLine.Length - 9).Contains("{")))
-                            {
-								warnings.Add(new ValidationError(ValidationFilterLevel.Lines, "Line uses \"{small}\" " + string.Format("to shrink the entire line. Instead, please use the built-in \"Text size\" option. {0}", caseLabel), context));
+						if (!hasCustomSmall)
+						{
+							var trimLine = line.Text.Trim();
+							if (trimLine.StartsWith("{small}"))
+							{
+								if (!trimLine.Substring(1).Contains("{") || (trimLine.EndsWith("{!reset}") && !trimLine.Substring(1, trimLine.Length - 9).Contains("{")))
+								{
+									warnings.Add(new ValidationError(ValidationFilterLevel.Lines, "Line uses \"{small}\" " + string.Format("to shrink the entire line. Instead, please use the built-in \"Text size\" option. {0}", caseLabel), context));
+								}
 							}
 						}
 
