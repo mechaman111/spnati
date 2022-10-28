@@ -21,7 +21,7 @@ namespace SPNATI_Character_Editor.Activities
 			cboStatus.Items.Add("offline");
 			cboStatus.Items.Add("unlisted");
 			cboGender.Items.AddRange(new string[] { "female", "male" });
-			cboEvent.Items.AddRange(new string[] { "", "none", "valentines", "april_fools", "easter", "summer", "oktoberfest", "halloween", "xmas" });
+			cboEvent.Items.AddRange(new string[] { "", "none", "valentines", "april_fools", "easter", "summer", "halloween", "xmas", "sleepover" });
 		}
 
 		public override string Caption
