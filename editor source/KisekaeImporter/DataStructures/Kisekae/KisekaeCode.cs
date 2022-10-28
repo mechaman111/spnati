@@ -322,24 +322,12 @@ namespace KisekaeImporter
 				{
 					if (Models[i] != null)
 					{
-						foreach (IAttachedText hasText in Models[i].GetSubCodesOfType<IAttachedText>())
-                        {
-							if (!String.IsNullOrEmpty(hasText.Text))
-                            {
-								count += 1;
-                            }
-                        }
+						count += Models[i].Assets.Count;
 					}
 				}
 				if (Scene != null)
 				{
-					foreach (IAttachedText hasText in Scene.GetSubCodesOfType<IAttachedText>())
-					{
-						if (!String.IsNullOrEmpty(hasText.Text))
-						{
-							count += 1;
-						}
-					}
+					count += Scene.Assets.Count;
 				}
 				return count;
 			}

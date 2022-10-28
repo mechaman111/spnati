@@ -101,7 +101,7 @@ namespace SPNATI_Character_Editor
 			KisekaeCode code = new KisekaeCode(metadata.Data);
 			if (code.Scene != null)
 			{
-				foreach (string asset in code.Scene.GetAssets())
+				foreach (string asset in code.Scene.Assets)
 				{
 					await UploadAttachment(asset);
 				}
@@ -111,7 +111,7 @@ namespace SPNATI_Character_Editor
 				KisekaeModel model = code.Models[i];
 				if (model != null)
 				{
-					foreach (string asset in model.GetAssets())
+					foreach (string asset in model.Assets)
 					{
 						await UploadAttachment(asset);
 					}

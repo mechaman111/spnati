@@ -100,8 +100,7 @@ namespace SPNATI_Character_Editor
 			foreach (KisekaeChunk chunk in chunks)
 			{
 				unknownUrls.Clear();
-				int nAssets = 0;
-				foreach (string url in chunk.GetAssets())
+				foreach (string url in chunk.Assets)
 				{
 					//search for any images that aren't in the character's images folder
 					string filename = Path.GetFileName(url);
@@ -118,8 +117,6 @@ namespace SPNATI_Character_Editor
 					{
 						unknownUrls.Add(filename);
 					}
-
-					nAssets += 1;
 				}
 
 				if (unknownUrls.Count > 0)
@@ -128,7 +125,7 @@ namespace SPNATI_Character_Editor
 					importer.SetData(unknownUrls, imagesDir);
 					cancelled = (importer.ShowDialog() == System.Windows.Forms.DialogResult.Cancel);
 				}
-				if (nAssets > 0)
+				if (chunk.Assets.Count > 0)
 				{
 					string kklDir = Path.GetDirectoryName(Config.KisekaeDirectory);
 					if (string.IsNullOrEmpty(kklDir))
