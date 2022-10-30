@@ -96,7 +96,7 @@ var DEBUG = false;
 var eGamePhase = {
     DEAL:      [ "Deal", function() { startDealPhase(); }, true ],
     AITURN:    [ "Next", function() { continueDealPhase(); } ],
-    EXCHANGE:  [ "Exchange", function() { completeExchangePhase(); }, true ],
+    EXCHANGE:  [ "Keep all", function() { completeExchangePhase(); }, true ],
     REVEAL:    [ "Reveal", function() { completeRevealPhase(); }, true ],
     PRESTRIP:  [ "Continue", function() { completeContinuePhase(); }, false ],
     STRIP:     [ "Strip", function() { completeStripPhase(); }, false ],
@@ -330,6 +330,7 @@ function advanceTurn () {
         } else {
             $gameScreen.addClass('prompt-exchange');
             allowProgression(eGamePhase.EXCHANGE);
+            updateMainButtonExchangeLabel();
         }
     } else if (!players[currentTurn]) {
         /* There is no player here, move on. */
@@ -706,6 +707,14 @@ function selectCard (card) {
         dullCard(HUMAN_PLAYER, card);
     } else {
         fillCard(HUMAN_PLAYER, card);
+    }
+    updateMainButtonExchangeLabel();
+}
+
+function updateMainButtonExchangeLabel() {
+    if (gamePhase === eGamePhase.EXCHANGE) {
+        const n = humanPlayer.hand.tradeIns.countTrue();
+        $mainButton.html(n == 0 ? 'Keep all' : 'Swap ' + n);
     }
 }
 

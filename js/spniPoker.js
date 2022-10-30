@@ -674,14 +674,14 @@ ActiveCardImages.prototype.preloadImages = function () {
  * Sets the given card to full opacity.
  ************************************************************/
 function fillCard (player, card) {
-    $cardCells[player][card].css({opacity: 1});
+    $cardCells[player][card].removeClass('tradein');
 }
 
 /************************************************************
  * Sets the given card to a lower opacity.
  ************************************************************/
 function dullCard (player, card) {
-    $cardCells[player][card].css({opacity: 0.4});
+    $cardCells[player][card].addClass('tradein');
 }
 
 /************************************************************
