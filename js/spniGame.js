@@ -475,13 +475,13 @@ function continueDealPhase () {
  ************************************************************/
 function completeExchangePhase () {
     detectCheat();
-    /* exchange the player's chosen cards */
-    exchangeCards(HUMAN_PLAYER);
-    
     /* disable player cards */
     for (var i = 0; i < $cardButtons.length; i++) {
        $cardButtons[i].attr('disabled', true);
     }
+    /* exchange the player's chosen cards */
+    exchangeCards(HUMAN_PLAYER);
+
     $gameLabels[HUMAN_PLAYER].removeClass("current");
     allowProgression(eGamePhase.REVEAL);
 }

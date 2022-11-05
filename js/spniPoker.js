@@ -688,8 +688,9 @@ function dullCard (player, card) {
  * Removes a card from display
  ************************************************************/
 function clearCard (player, i) {
-    $cardCells[player][i].css('visibility', 'hidden');
-    $cardCells[player][i].attr({src: BLANK_CARD_IMAGE, alt: '-'});
+    $cardCells[player][i].css('visibility', 'hidden')
+        .removeClass('tradein')
+        .attr({src: BLANK_CARD_IMAGE, alt: '-'});
 }
 
 /************************************************************
