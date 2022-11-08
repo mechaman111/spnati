@@ -64,7 +64,7 @@ namespace SPNATI_Character_Editor.Activities
 			txtWriter.Text = _character.Metadata.Writer;
 			txtArtist.Text = _character.Metadata.Artist;
 			PopulatePortraitDropdown();
-			if (_character.Metadata.Portrait.Image != null)
+			if (_character.Metadata.Portrait != null && _character.Metadata.Portrait.Image != null)
 			{
 				string portrait = _character.Metadata.Portrait.Image;
 				PoseMapping pose = _character.PoseLibrary.GetPose(portrait);
