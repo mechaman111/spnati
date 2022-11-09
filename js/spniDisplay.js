@@ -1000,6 +1000,9 @@ MainSelectScreenDisplay.prototype.updateTargetSuggestionDisplay = function (quad
         'src': opponent.selection_image,
         'alt': opponent.label,
         'data-original-title': tooltip || null
+    }).one('load', function() {
+        img_elem.css("transform", opponent.scale != 100 || img_elem[0].naturalHeight > 1400 ?
+                     "translate(-50%) scale(" + (Math.max(1.0, img_elem[0].naturalHeight / 1400) * opponent.scale) + "%)" : "");
     }).show();
     label_elem.text(opponent.label);
 }
