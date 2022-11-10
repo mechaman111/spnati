@@ -1491,16 +1491,29 @@ ul.dropdown-menu>li {
 }
 
 .title-content-button {
-    background: #F0F0F0;
-    opacity: 0.4;
+    background: rgba(240, 240, 240, 0.95);
+    opacity: 0.8;
+    width: 7rem;
+    height: 7rem;
+    object-fit: cover;
+    filter: contrast(0.8) brightness(0.95);
 }
 
-.title-content-button :hover {
-    background: #FFFFFF;
+.title-content-button:hover,
+.focus-indicators-enabled .title-content-button:focus {
+    opacity: 0.87;
+    filter: contrast(0.95);
 }
 
-.title-content-button :active {
-    background: #F0F0F0;
+.title-content-button.selected {
+    opacity: 1;
+    background-color: white;
+    filter: none;
+}
+
+.title-content-button:active {
+    opacity: 0.93;
+    filter: none;
 }
 
 /* Main title screen blocks: */
@@ -1512,28 +1525,25 @@ ul.dropdown-menu>li {
 
 .title-gender-size-container {
     width: 80%;
-    height: 10.92%;
     display: flex;
+    gap: 0.4rem;
 }
 
 .title-size-block {
-    width: 60%;
+    width: 54%;
     margin-left: auto;
 
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
+    gap: 0.2rem;
 }
 
 #title-wardrobe-block {
     width: 90%;
-    margin-top: 2.5%;
+    margin-top: 1.5%;
 }
 
 /* Name / Gender / Size block elements: */
-
-.title-gender-button {
-    width: 16.875%;
-}
 
 .title-label {
     padding: 0;
@@ -1562,61 +1572,28 @@ ul.dropdown-menu>li {
     background: rgba(240, 240, 240, 1);
 }
 
-#female-gender-button {
-    margin-left: 1%;
-}
-
-#main-title-container.male #male-gender-button {
-    opacity: 1;
-}
-
-#main-title-container.female #female-gender-button {
-    opacity: 1;
-}
-
-.title-gender-image {
-    display: block;
-    width: 6rem;
-    height: 6rem;
-    margin: 0.5rem auto;
-    background-color: white;
-}
-
-#main-title-container.male #female-size-container {
-    display: none;
-}
-
+#main-title-container.male #female-size-container,
 #main-title-container.female #male-size-container {
     display: none;
-}
-
-.small>.title-small-button {
-    opacity: 1;
-}
-
-.medium>.title-medium-button {
-    opacity: 1;
-}
-
-.large>.title-large-button {
-    opacity: 1;
-}
-
-.title-size-button {
-    width: 30%;
 }
 
 /* Title clothing block elements: */
 
 #title-clothing-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.1rem 0.5rem;
-    
-    width: 47rem;
+    display: grid;
+    grid-template-columns: repeat(6, max-content);
+    row-gap: 0.3rem;
+    column-gap: 0.6rem;
+    padding-right: 0.6rem;
     height: 23rem;
+    width: max-content;
     overflow-y: auto;
-    margin-left: 0.1rem;
+    overflow-x: hidden;
+    scroll-snap-type: y mandatory;
+}
+
+.player-clothing-select {
+    scroll-snap-align: start;
 }
 
 .custom-clothing-img {
@@ -1628,35 +1605,22 @@ ul.dropdown-menu>li {
     object-fit: contain;
 }
 
-#title-clothing-container .player-clothing-select {
-    width: 7rem;
-    height: 7rem;
-    opacity: 0.6;
-    background: repeating-linear-gradient(-45deg, #333 0px, #333 5px, #888 6px, #888 11px, #333 12px);
+#title-clothing-container .player-clothing-select.locked {
+    background: repeating-linear-gradient(-45deg, #333 0, #333 0.5rem, #888 0.6rem, #888 1.1rem, #333 1.2rem);
 }
 
-#title-clothing-container .player-clothing-select.available {
-    opacity: 0.6;
-    background: white;
+#main-title-container.female .title-content-button.selected {
+  border-color: rgb(239, 131, 152);
 }
-
-#title-clothing-container .player-clothing-select.selected {
-    opacity: 1;
+#main-title-container.male .title-content-button.selected {
+  border-color: rgb(123, 161, 228);
 }
-
-#title-clothing-container .player-clothing-select.available:hover {
-    opacity: 0.8;
-}
-
-#title-clothing-container .player-clothing-select.selected:hover {
-    opacity: 1;
-}
-
 #title-clothing-container .clothing-separator {
     border-top: 0.2rem solid gray;
     margin-top: 1rem;
     margin-bottom: 1rem;
-    width: 99%;
+    width: 100%;
+    grid-column: 1 / span 6;
 }
 
 #title-warning-label {
@@ -4826,8 +4790,16 @@ ul.dropdown-menu>li {
 .focus-indicators-enabled a:focus,
 .focus-indicators-enabled input[type=image]:focus,
 .focus-indicators-enabled button:focus {
-    outline: 1px dotted #fff;
-    outline-offset: -1px;
+    outline: 0.18rem dotted white;
+}
+.focus-indicators-enabled input[type=image]:not(.locked),
+.focus-indicators-enabled button.title-content-button:not(.locked)
+{
+    outline-color: black;
+}
+.focus-indicators-enabled input[type=image]:focus,
+.focus-indicators-enabled button:focus {
+    outline-offset: -0.4rem;
 }
 :focus {
     outline: none;

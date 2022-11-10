@@ -12,7 +12,7 @@ $titlePanels = [$("#title-panel-1"), $("#title-panel-2")];
 $nameField = $("#player-name-field");
 $warningContainer = $('#initial-warning');
 $titleContainer = $('#main-title-container');
-$sizeBlocks = $('.title-size-block');
+$sizeBlocks = { male: $('#male-size-container'), female: $('#female-size-container') };
 $clothingTable = $("#title-clothing-table");
 $warningLabel = $("#title-warning-label");
 $titleCandy = [$("#left-title-candy"), $("#right-title-candy")];
@@ -665,15 +665,12 @@ TitleClothingSelectionIcon.prototype.tooltip = function () {
 }
 
 TitleClothingSelectionIcon.prototype.update = function () {
-    $(this.elem).removeClass("available selected");
-    if (this.clothing.isAvailable()) {
-        $(this.elem).addClass("available");
-		updateClothingCount();
+    $(this.elem).removeClass("locked selected");
+    if (!this.clothing.isAvailable()) {
+        $(this.elem).addClass("locked");
     }
-
     if (this.clothing.isSelected()) {
         $(this.elem).addClass("selected");
-		updateClothingCount();
     }
 }
 
@@ -681,6 +678,7 @@ TitleClothingSelectionIcon.prototype.onClick = function () {
     if (this.clothing.isAvailable()) {
         this.clothing.setSelected(!this.clothing.isSelected());
         this.update();
+        updateClothingCount();
     }
 }
 
@@ -706,6 +704,8 @@ function setupTitleClothing () {
         var selector = new TitleClothingSelectionIcon(clothing);
         titleClothingSelectors.push(selector);
     });
+
+    updateClothingCount();
 }
 
 /**********************************************************************
@@ -724,6 +724,10 @@ function changePlayerGender (gender) {
     updateSelectionVisuals(); // To update epilogue availability status
 }
 
+$('.title-gender-button').on('click', function(ev) {
+    changePlayerGender($(ev.target).data('gender'));
+});
+
 function createClothingSeparator () {
     var separator = document.createElement("hr");
     separator.className = "clothing-separator";
@@ -736,6 +740,9 @@ function createClothingSeparator () {
 function updateTitleScreen () {
     $titleContainer.removeClass('male female').addClass(humanPlayer.gender);
     $playerTagsModal.removeClass('male female').addClass(humanPlayer.gender);
+    $('.title-gender-button').each(function() {
+        $(this).toggleClass('selected', $(this).data('gender') == humanPlayer.gender);
+    });
 
     var availableSelectors = [];
     var defaultSelectors = [];
@@ -781,6 +788,7 @@ function updateTitleScreen () {
             })
         );
     }
+    updateClothingCount();
 }
 
 /************************************************************
@@ -789,9 +797,14 @@ function updateTitleScreen () {
  ************************************************************/
 function changePlayerSize (size) {
     humanPlayer.size = size;
-
-    $sizeBlocks.removeClass(eSize.SMALL + ' ' + eSize.MEDIUM + ' ' + eSize.LARGE).addClass(size).attr('data-size', size);
+    $sizeBlocks[humanPlayer.gender].find('.title-size-button').each(function() {
+        $(this).toggleClass('selected', $(this).data('size') == size);
+    });
 }
+
+$('.title-size-block').on('click', '.title-size-button', function(ev) {
+    changePlayerSize($(ev.target).data('size'));
+});
 
 /**************************************************************
  * Add tags to the human player based on the selections in the tag
