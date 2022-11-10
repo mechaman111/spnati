@@ -1329,9 +1329,9 @@ function expandPlayerVariable(split_fn, args, player, self, target, bindings) {
         var n = player.hand.tradeIns.countTrue();
         if (split_fn.length == 1) {
             return String(n);
-        } else if (split_fn[1] == 'ifplural') {
+        } else if (split_fn[1].toLowerCase() == 'ifplural') {
             return expandDialogue(args.split('|')[n == 1 ? 1 : 0], player, target, bindings);
-        } else if (split_fn[1] == 'text' && args === undefined) {
+        } else if (split_fn[1].toLowerCase() == 'text' && args === undefined) {
             return [ 'zero', 'one', 'two', 'three', 'four', 'five' ][n];
         }
         throw new Error('Incorrect use of .cards');
