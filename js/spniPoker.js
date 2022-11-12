@@ -674,22 +674,23 @@ ActiveCardImages.prototype.preloadImages = function () {
  * Sets the given card to full opacity.
  ************************************************************/
 function fillCard (player, card) {
-    $cardCells[player][card].css({opacity: 1});
+    $cardCells[player][card].removeClass('tradein');
 }
 
 /************************************************************
  * Sets the given card to a lower opacity.
  ************************************************************/
 function dullCard (player, card) {
-    $cardCells[player][card].css({opacity: 0.4});
+    $cardCells[player][card].addClass('tradein');
 }
 
 /************************************************************
  * Removes a card from display
  ************************************************************/
 function clearCard (player, i) {
-    $cardCells[player][i].css('visibility', 'hidden');
-    $cardCells[player][i].attr({src: BLANK_CARD_IMAGE, alt: '-'});
+    $cardCells[player][i].css('visibility', 'hidden')
+        .removeClass('tradein')
+        .attr({src: BLANK_CARD_IMAGE, alt: '-'});
 }
 
 /************************************************************

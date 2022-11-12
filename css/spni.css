@@ -3560,6 +3560,10 @@ ul.dropdown-menu>li {
     background-color: white;
 }
 
+.large-card-image.tradein {
+    opacity: 0.4;
+}
+
 .large-card-image+.large-card-image {
     margin-left: 0.4rem;
 }
@@ -3708,19 +3712,14 @@ ul.dropdown-menu>li {
     justify-content: center;
     align-items: flex-end;
 
-    opacity: 0.50;
     transition-property: opacity;
     transition-delay: 1s;
     transition-duration: 0.5s;
-}
 
-.ui-minimal .player-card-area:hover,
-.ui-minimal .player-card-area:active,
-.ui-minimal.prompt-exchange .player-card-area {
-    opacity: 1.0;
-    transition-property: opacity;
-    transition-delay: 0s;
-    transition-duration: 0.25s;
+    transform-style: preserve-3d;
+    transform-origin: 35% bottom; /* Intentionally not using bottom center because the cards are to the right. */
+    transform: perspective(20em);
+    pointer-events: none;
 }
 
 .ui-minimal .large-card-image {
@@ -3729,23 +3728,36 @@ ul.dropdown-menu>li {
     margin: 0 0.1rem;
     border-width: 0.15rem;
     border-radius: 0.4rem;
-
-    transition-property: width, height, margin, border-radius, border-width;
-    transition-duration: 0.5s;
-    transition-delay: 1s;
 }
 
-.ui-minimal .player-card-area:hover .large-card-image,
-.ui-minimal .player-card-area:active .large-card-image,
-.ui-minimal.prompt-exchange .player-card-area .large-card-image {
+.ui-minimal #player-game-card-area .large-card-image
+{
+    filter: none;
+    opacity: 0.5;
+    transition-property: width, height, margin, border-radius, border-width, opacity;
+    transition-duration: 0.5s;
+    transition-delay: 1s;
+    transform-origin: bottom;
+}
+
+.ui-minimal #player-game-card-area:hover .large-card-image,
+.ui-minimal.prompt-exchange #player-game-card-area .large-card-image {
     height: 10rem;
     width: calc(10rem * (5 / 7));
     border-radius: 0.65rem;
     border-width: 0.2rem;
     margin: 0 0.2rem;
-
+    opacity: 1.0;
     transition-duration: 0.25s;
     transition-delay: 0s;
+}
+.ui-minimal #player-game-card-area .large-card-image:not([disabled]) {
+    transition-property: width, height, margin, border-radius, border-width, opacity, transform, filter;
+}
+
+.ui-minimal #player-game-card-area .large-card-image.tradein {
+    filter: opacity(0.75) contrast(0.75);
+    transform: translateY(-25%) translateZ(-0.5em);
 }
 
 #player-game-clothing-area-minimal {
