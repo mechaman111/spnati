@@ -151,9 +151,13 @@ namespace SPNATI_Character_Editor.Activities
 			_character.Metadata.Artist = txtArtist.Text;
 			gridAI.Save(ColAIStage);
 			CharacterDatabase.GetEditorData(_character).OtherNotes = txtOtherNotes.Text.Replace(Environment.NewLine,"<br>");
-			_character.Metadata.Portrait.X = (int)valPicX.Value;
-			_character.Metadata.Portrait.Y = (int)valPicY.Value;
-			_character.Metadata.Portrait.Scale = (float)valPicScale.Value;
+			if (_character.Metadata.Portrait != null)
+			{
+				_character.Metadata.Portrait.X = (int)valPicX.Value;
+				_character.Metadata.Portrait.Y = (int)valPicY.Value;
+				_character.Metadata.Portrait.Scale = (float)valPicScale.Value;
+			}
+
 		}
 
 		private void cboDefaultPic_SelectedIndexChanged(object sender, EventArgs e)
