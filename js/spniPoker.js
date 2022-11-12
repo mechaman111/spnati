@@ -833,7 +833,7 @@ function animateDealtCard (player, card, n) {
     } else {
         // Set card speed according to desired time to deal card to farthest position
         var speed = getFarthestDealDistance() / ANIM_TIME;
-        var distance = offsetDistance($clonedCard.offset(), {left: left, top: top});
+        var distance = offsetDistance($clonedCard.offset(), offset);
         var animTime = distance / speed;
     }
 
