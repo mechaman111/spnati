@@ -3703,7 +3703,7 @@ ul.dropdown-menu>li {
     white-space: nowrap;
 }
 
-.ui-minimal .player-card-area {
+.ui-minimal #player-game-card-area {
     background: none;
     left: 57%;
     bottom: 1%;
@@ -3740,6 +3740,16 @@ ul.dropdown-menu>li {
     transform-origin: bottom;
 }
 
+.ui-minimal #player-game-card-area .large-card-image:not([disabled]) {
+    /* Make sure that cards are animated without delay when (de)selecting them using the keyboard.
+       Note that we don't want transform and filter to be transitioned when the player hitss Swap and
+       the replacement cards are to be animated.
+       Unfortunately we need to repeat the other properties as well. */
+    transition-property: width, height, margin, border-radius, border-width, opacity, transform, filter;
+    transition-duration:  0.5s,   0.5s,   0.5s,          0.5s,         0.5s,    0.5s,     0.25s,  0.25s;
+    transition-delay:       1s,     1s,     1s,            1s,           1s,      1s,        0s,     0s;
+}
+
 .ui-minimal #player-game-card-area:hover .large-card-image,
 .ui-minimal.prompt-exchange #player-game-card-area .large-card-image {
     height: 10rem;
@@ -3748,13 +3758,10 @@ ul.dropdown-menu>li {
     border-width: 0.2rem;
     margin: 0 0.2rem;
     opacity: 1.0;
+    /* Quicker animation when hovering over the cards and when it becomes the player's turn. */
     transition-duration: 0.25s;
     transition-delay: 0s;
 }
-.ui-minimal #player-game-card-area .large-card-image:not([disabled]) {
-    transition-property: width, height, margin, border-radius, border-width, opacity, transform, filter;
-}
-
 .ui-minimal #player-game-card-area .large-card-image.tradein {
     filter: opacity(0.75) contrast(0.75);
     transform: translateY(-25%) translateZ(-0.5em);
