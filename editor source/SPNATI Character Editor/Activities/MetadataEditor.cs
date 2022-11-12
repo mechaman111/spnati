@@ -64,15 +64,18 @@ namespace SPNATI_Character_Editor.Activities
 			txtWriter.Text = _character.Metadata.Writer;
 			txtArtist.Text = _character.Metadata.Artist;
 			PopulatePortraitDropdown();
-			if (_character.Metadata.Portrait != null && _character.Metadata.Portrait.Image != null)
-			{
-				string portrait = _character.Metadata.Portrait.Image;
-				PoseMapping pose = _character.PoseLibrary.GetPose(portrait);
-				cboDefaultPic.SelectedItem = pose;
+			if (_character.Metadata.Portrait != null)
+            {
+				if (_character.Metadata.Portrait.Image != null)
+				{
+					string portrait = _character.Metadata.Portrait.Image;
+					PoseMapping pose = _character.PoseLibrary.GetPose(portrait);
+					cboDefaultPic.SelectedItem = pose;
+				}
+				valPicX.Value = Math.Max(valPicX.Minimum, Math.Min((decimal)_character.Metadata.Portrait.X, valPicX.Maximum));
+				valPicY.Value = Math.Max(valPicY.Minimum, Math.Min((decimal)_character.Metadata.Portrait.Y, valPicY.Maximum));
+				valPicScale.Value = Math.Max(valPicScale.Minimum, Math.Min((decimal)_character.Metadata.Portrait.Scale, valPicScale.Maximum));
 			}
-			valPicX.Value = Math.Max(valPicX.Minimum, Math.Min((decimal)_character.Metadata.Portrait.X, valPicX.Maximum));
-			valPicY.Value = Math.Max(valPicY.Minimum, Math.Min((decimal)_character.Metadata.Portrait.Y, valPicY.Maximum));
-			valPicScale.Value = Math.Max(valPicScale.Minimum, Math.Min((decimal)_character.Metadata.Portrait.Scale, valPicScale.Maximum));
 			gridAI.Data = _character.Intelligence;
 
 			string othernotes = CharacterDatabase.GetEditorData(_character).OtherNotes;
@@ -113,6 +116,9 @@ namespace SPNATI_Character_Editor.Activities
 				txtTitleLabel.Text = _character.Metadata.Label;
 				ExpandLabel();
 			}
+
+			if (_character.Metadata.Portrait == null)
+				return;
 
 			PoseMapping image = _character.PoseLibrary.GetPose(_character.Metadata.Portrait.Image);
 			if (image == null)

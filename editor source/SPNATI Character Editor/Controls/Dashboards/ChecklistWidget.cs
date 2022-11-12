@@ -133,7 +133,7 @@ namespace SPNATI_Character_Editor.Controls.Dashboards
 			{
 				AddMetadataTask("Character has no label", "The label is what other characters call yours.");
 			}
-			if (string.IsNullOrEmpty(_character.Metadata.Portrait.Image))
+			if (_character.Metadata.Portrait == null || string.IsNullOrEmpty(_character.Metadata.Portrait.Image))
 			{
 				AddMetadataTask("Assign a starting portrait", "The portrait is the image that appears on the character selection screen.");
 			}

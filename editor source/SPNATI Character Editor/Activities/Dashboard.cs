@@ -65,7 +65,13 @@ namespace SPNATI_Character_Editor.Activities
 		{
 			_canRunTasks = true;
 			_currentTaskIndex = -1;
-			string portrait = _character.Metadata.Portrait.Image;
+			string portrait = null;
+
+			if (_character.Metadata.Portrait != null)
+			{
+				portrait = _character.Metadata.Portrait.Image;
+			}
+
 			if (!string.IsNullOrEmpty(portrait))
 			{
 				PoseMapping pose = _character.PoseLibrary.GetPose(portrait);
