@@ -3232,17 +3232,18 @@ $('#epilogue-container').click(function(ev) {
 
 function epilogue_keyUp(ev) {
     if (epiloguePlayer && epiloguePlayer.loaded && $('.modal:visible').length == 0) {
-        switch (ev.keyCode) {
-        case 81:
+        switch (ev.key) {
+        case 'q':
+        case 'Q':
             if (DEBUG) {
                 $epilogueButtons.toggleClass('debug-active');
             }
             break;
-        case 37:
+        case 'ArrowLeft':
             moveEpilogueBack(); break;
-        case 32:
+        case ' ':
             moveEpilogueForward(true); break;
-        case 39:
+        case 'ArrowRight':
             moveEpilogueForward(); break;
         }
         ev.preventDefault();

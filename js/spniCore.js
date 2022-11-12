@@ -213,7 +213,7 @@ function initialSetup () {
 
     /* show the title screen */
     $titleScreen.show();
-    $('#warning-start-button').focus();
+    $('.warning-container').focus();
     autoResizeFont();
     /* set up future resizing */
     window.onresize = autoResizeFont;
@@ -237,16 +237,19 @@ function initialSetup () {
         bubbleArrowOffsetRules.push(pair);
     }
     $(document).keydown(function(ev) {
-        if (ev.keyCode == 9) {  // Tab
+        if (ev.key == "Tab") {  // Tab
             $("body").addClass('focus-indicators-enabled');
         }
     });
     $(document).keyup(function(ev) {
-        if ((ev.key == 'f' || (ev.key == 'F' && !ev.shiftKey))
+        if (ev.key.toLowerCase() == 'f' && !ev.shiftKey
             && !$(document.activeElement).is('input, select, textarea')) {
             toggleFullscreen();
-        } else if (ev.keyCode == 112) { // F1
+        } else if (ev.key == "F1") {
             showHelpModal();
+            ev.preventDefault();
+        } else if (ev.key == "Escape") {
+            $("body").removeClass('focus-indicators-enabled');
         }
     });
     $(document).mousedown(function(ev) {
@@ -525,7 +528,7 @@ function enterTitleScreen() {
     $warningContainer.hide();
     $titleContainer.show();
     $('.title-candy').show();
-    $('#title-start-button').focus();
+    $('#player-name-field').focus().select();
     Sentry.setTag("screen", "title");
 }
 
@@ -1331,10 +1334,20 @@ function autoResizeFont ()
     activeBackground.update();
 }
 
+$('button[tabindex], input[tabindex], select[tabindex]').each(function() {
+    $(this).data('tabindex', $(this).attr('tabindex'));
+});
+
 $('.modal').on('show.bs.modal', function() {
-    $('.screen:visible').find('button, input').attr('tabIndex', -1);
+    $('.screen:visible').find('button, input, select').attr('tabindex', -1);
 });
 
 $('.modal').on('hidden.bs.modal', function() {
-    $('.screen:visible').find('button, input').removeAttr('tabIndex');
+    $('.screen:visible').find('button, input, select').each(function() {
+        if ($(this).data('tabindex')) {
+            $(this).attr('tabindex', $(this).data('tabindex'));
+        } else {
+            $(this).removeAttr('tabindex');
+        }
+    });
 });

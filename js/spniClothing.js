@@ -528,7 +528,7 @@ function showStrippingModal () {
     /* display the stripping modal */
     $stripModal.modal({show: true, keyboard: false, backdrop: 'static'});
     $stripModal.one('shown.bs.modal', function() {
-        $stripClothing.find('input').last().focus();
+        $stripClothing.find('button').last().focus();
     });
     $stripModal.on('hidden.bs.modal', function () {
         if (gamePhase === eGamePhase.STRIP) {
@@ -551,12 +551,13 @@ function clothing_keyUp(e) {
         return selector.canSelect();
     });
 
-    if (e.keyCode == 32 && !$stripButton.prop('disabled')  // Space
+    if (e.key == ' ' && !$stripButton.prop('disabled')  // Space
+        && !($('body').hasClass('focus-indicators-enabled') && $(document.activeElement).is('button:not(.selected)'))
         && availableSelectors.some(function (selector) { return selector.selected; })) {
         $stripButton.click();
         e.preventDefault();
-    } else if (e.keyCode >= 49 && e.keyCode < 49 + availableSelectors.length) { // A number key
-        availableSelectors[e.keyCode - 49].select();
+    } else if (e.key >= '1' && e.key <= 1 + availableSelectors.length) { // A number key
+        availableSelectors[e.key - 1].select();
     }
 }
 

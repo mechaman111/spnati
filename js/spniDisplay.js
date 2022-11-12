@@ -1202,6 +1202,7 @@ function OpponentSelectionCard (opponent) {
     this.opponent = opponent;
     
     this.mainElem = createElementWithClass('div', 'selection-card');
+    this.mainElem.tabIndex = 0;
 
     if (opponent.highlightStatus)
         this.mainElem.dataset.highlight = opponent.highlightStatus;
@@ -1255,6 +1256,12 @@ function OpponentSelectionCard (opponent) {
     this.update();
 
     this.mainElem.addEventListener('click', this.handleClick.bind(this));
+    this.mainElem.addEventListener('keydown', function(ev) {
+        if (ev.target == this.mainElem && (ev.key == ' ' || ev.key == 'Enter') && !ev.repeat) {
+            this.handleClick();
+            ev.preventDefault();
+        }
+    }.bind(this));
 }
 
 OpponentSelectionCard.prototype = Object.create(OpponentDisplay.prototype);

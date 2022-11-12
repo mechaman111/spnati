@@ -117,11 +117,6 @@ var $indivSelectionCardContainer = $('#individual-select-screen .selection-cards
  *****                  Select Screen Variables                   *****
  **********************************************************************/
 
-/* hidden variables */
-var mainSelectHidden = false;
-var singleSelectHidden = false;
-var groupSelectHidden = false;
-
 /* opponent listing file */
 var metaFiles = ["meta.xml", "tags.xml"];
 
@@ -884,6 +879,13 @@ function showIndividualSelectionScreen() {
     screenTransition($selectScreen, $individualSelectScreen);
 }
 
+function individualSelectScreen_keyUp(e) {
+    if (e.key == "Backspace") {
+        backFromIndividualSelect();
+    }
+}
+$individualSelectScreen.data('keyhandler', individualSelectScreen_keyUp);
+
 function toggleIndividualSelectView() {
     individualSelectTesting = !individualSelectTesting;
 
@@ -1276,6 +1278,21 @@ function clickedRemoveAllButton (alsoRemoveSuggestions)
     updateSelectionVisuals();
 }
 
+
+/************************************************************
+ * Adds hotkey functionality to the main selection screen.
+ ************************************************************/
+function mainSelectScreen_keyUp(e) {
+    if (e.key == "Backspace") {
+        backSelectScreen();
+    }
+    else if (e.key.toLowerCase() == 't') {
+        hideSelectionTable();
+    }
+}
+
+$selectScreen.data('keyhandler', mainSelectScreen_keyUp);
+
 /************************************************************
  * The player clicked on a change stats card button on the
  * group select screen.
@@ -1352,36 +1369,47 @@ function changeGroupPage (skip, page) {
  * Adds hotkey functionality to the group selection screen.
  ************************************************************/
 
-
 function groupSelectScreen_keyUp(e)
 {
     console.log(e)
-    if ($('#group-select-screen').is(':visible')
-        && !$groupButton.prop('disabled')) {
-        if (e.keyCode == 37) { // left arrow
-            changeGroupPage(false, -1);
-        }
-        else if (e.keyCode == 39) { // right arrow
-            changeGroupPage(false, 1);
-        }
-        else if (e.keyCode == 13) { // enter key
-            selectGroup();
-        }
+    if (e.key == "ArrowLeft" && !$groupButton.prop('disabled')) {
+        changeGroupPage(false, -1);
+    }
+    else if (e.key == "ArrowRight" && !$groupButton.prop('disabled')) {
+        changeGroupPage(false, 1);
+    }
+    else if (e.key == "Enter") { // enter key
+        selectGroup();
+    }
+    else if (e.key == "Backspace") {
+        backFromGroupSelect();
+    }
+    else if (e.key.toLowerCase() == 't') {
+        hideGroupSelectionTable();
     }
 }
 $groupSelectScreen.data('keyhandler', groupSelectScreen_keyUp);
 
 /************************************************************
- * The player clicked on the back button on the individual or
- * group select screen.
+ * The player clicked on the back button on the individual 
+ * select screen.
  ************************************************************/
-function backToSelect () {
+function backFromIndividualSelect () {
+    /* switch screens */
+    Sentry.setTag("screen", "select-main");
+    screenTransition($individualSelectScreen, $selectScreen);
+}
+
+/************************************************************
+ * The player clicked on the back button on the group
+ * select screen.
+ ************************************************************/
+function backFromGroupSelect () {
     /* switch screens */
     Sentry.setTag("screen", "select-main");
 
     if (useGroupBackgrounds) optionsBackground.activateBackground();
 
-    screenTransition($individualSelectScreen, $selectScreen);
     screenTransition($groupSelectScreen, $selectScreen);
 }
 
@@ -1556,39 +1584,15 @@ function updateSelectionVisuals () {
  * Hides the table on the single selection screen.
  ************************************************************/
 function hideSelectionTable() {
-    mainSelectHidden = !mainSelectHidden;
-    if (mainSelectHidden) {
-        $selectTable.hide();
-    }
-    else {
-        $selectTable.show();
-    }
-}
-
-/************************************************************
- * Hides the table on the single selection screen.
- ************************************************************/
-function hideSingleSelectionTable() {
-    singleSelectHidden = !singleSelectHidden;
-    if (singleSelectHidden) {
-        $individualSelectTable.hide();
-    }
-    else {
-        $individualSelectTable.show();
-    }
+    $selectTable.fadeToggle(100);
 }
 
 /************************************************************
  * Hides the table on the single group screen.
  ************************************************************/
 function hideGroupSelectionTable() {
-    groupSelectHidden = !groupSelectHidden;
-    if (groupSelectHidden) {
-        $groupSelectTable.hide();
-    }
-    else {
-        $groupSelectTable.show();
-    }
+    $('#group-hide-button').fadeToggle(100);
+    $groupSelectTable.fadeToggle(100);
 }
 
 function openSearchModal() {

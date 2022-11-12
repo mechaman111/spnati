@@ -30,7 +30,7 @@
 
             <!-- Content -->
             <div id="initial-warning">
-                <div class="warning-container">
+                <div class="warning-container" tabindex="1" onKeyUp="if (arguments[0].key = ' ' && this.scrollTop + this.clientHeight == this.scrollHeight && $('#warning-start-container').is(':visible')) enterTitleScreen();">
                     <div class="warning-start-text">
                         <p>This game contains material that is only suitable for adults.<br /><b style="color:#DD3333">If
                                 you are under the age of 18, please leave now.</b></p>
@@ -97,7 +97,7 @@
                 <!-- Player Name -->
                 <div id="title-name-block">
                     <div class="title-label">Who are you?</div>
-                    <input type="text" class='bordered' id='player-name-field' />
+                    <input type="text" class='bordered' id='player-name-field' onKeyDown="if (arguments[0].key == 'Enter') validateTitleScreen();"/>
                 </div>
 
                 <div class="title-gender-size-container">
@@ -454,14 +454,6 @@
                 </div>
             </div>
 
-            <!-- Hide Button -->
-            <button class='bordered hide-table-button' onclick="hideSelectionTable()">
-                <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
-            </button>
-            <button class='bordered table-bug-report-button' onclick="showBugReportModal()">
-                <span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
-            </button>
-
             <div id="select-table" class="select-table">
 
                 <!-- Opponent Selections -->
@@ -558,37 +550,21 @@
                 </div>
             </div>
 
+            <!-- Hide Button -->
+            <button class='bordered hide-table-button' onclick="hideSelectionTable()">
+                <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
+            </button>
+            <button class='bordered table-bug-report-button' onclick="showBugReportModal()">
+                <span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
+            </button>
         </div>
     </div>
 
     <div id="individual-select-screen" class="wide-screen-container" hidden>
         <div class="screen">
-            <div class="selection-cards-container">
-                <!--
-    (example opponent card element)
-      <div class="selection-card">
-        <div class="selection-card-image-clip">
-          <div class="selection-card-image-area">
-            <img class="opponent-card-image-simple" src="opponents/sayori/0-calm.png">
-          </div>
-        </div>
-
-        <img class="epilogue-badge-icon" src="img/epilogue_icon.png"/>
-        <div class="selection-card-sidebar">
-          <img class="layer-icon" src="img/badge-testing.png"/>
-          <img class="status-icon" src="img/badge-testing.png"/>
-          <img class="gender-icon" src="img/female.svg"/>
-        </div>
-        <div class="selection-card-footer">
-          <div class="selection-card-label selection-card-name">Sayori</div>
-          <div class="selection-card-label selection-card-source">Doki Doki Literature Club!</div>
-        </div>
-      </div>
-      -->
-            </div>
             <div class="bordered selection-options-row">
                 <button type="button" class="bordered smooth-button red select-back-btn"
-                    onclick="backToSelect()">Back</button>
+                    onclick="backFromIndividualSelect()">Back</button>
                 <div id="gender-sort-column" class="column-component">
                     <div class="gender-component">
                         <nav>
@@ -642,6 +618,30 @@
                             class='bordered wide-textbox sort-filter-field' placeholder="Search by Tag" />
                     </div>
                 </div>
+            </div>
+
+            <div class="selection-cards-container">
+                <!--
+    (example opponent card element)
+      <div class="selection-card">
+        <div class="selection-card-image-clip">
+          <div class="selection-card-image-area">
+            <img class="opponent-card-image-simple" src="opponents/sayori/0-calm.png">
+          </div>
+        </div>
+
+        <img class="epilogue-badge-icon" src="img/epilogue_icon.png"/>
+        <div class="selection-card-sidebar">
+          <img class="layer-icon" src="img/badge-testing.png"/>
+          <img class="status-icon" src="img/badge-testing.png"/>
+          <img class="gender-icon" src="img/female.svg"/>
+        </div>
+        <div class="selection-card-footer">
+          <div class="selection-card-label selection-card-name">Sayori</div>
+          <div class="selection-card-label selection-card-source">Doki Doki Literature Club!</div>
+        </div>
+      </div>
+      -->
             </div>
 
             <div class="opponent-details-container">
@@ -946,7 +946,7 @@
                 <img id="group-gender-4" class="gender-icon" src="img/female.svg" alt="Female" hidden />
             </div>
 
-            <button id="group-hide-button" class="bordered hide-table-button" onclick="hideGroupSelectionTable()">
+            <button id="group-hide-button" class="bordered hide-table-button" onclick="hideGroupSelectionTable()" style="display: none;">
                 <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
             </button>
 
@@ -965,7 +965,7 @@
                 <!-- Opponent Selections -->
                 <div id="group-select-area" class="bordered opponent-area">
                     <div class="group-dock-button-row">
-                        <button id="group-hide-button" class="bordered hide-table-button"
+                        <button class="bordered hide-table-button"
                             onclick="hideGroupSelectionTable()">
                             <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
                         </button>
@@ -990,7 +990,7 @@
                     <!-- Buttons -->
                     <button id='group-back-button'
                         class='bordered main-select-button select-back-button smooth-button red'
-                        onclick="backToSelect()">
+                        onclick="backFromGroupSelect()">
                         Back
                     </button>
 
@@ -3107,10 +3107,10 @@
             </div>
 
             <!-- Hide and bug report buttons -->
-            <button class='bordered hide-table-button' onclick="toggleTableVisibility()">
+            <button class='bordered hide-table-button' onclick="toggleTableVisibility()" tabindex="3">
                 <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
             </button>
-            <button class='bordered table-bug-report-button' onclick="showBugReportModal()">
+            <button class='bordered table-bug-report-button' onclick="showBugReportModal()" tabindex="4">
                 <span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
             </button>
 
@@ -3293,43 +3293,43 @@
                 <div class="btn-group dropup game-menu-dropup" data-toggle="tooltip" data-placement="right"
                     title="Game Menu" onclick="$(this).tooltip('hide')">
                     <button type="button" class="bordered smooth-button red dropdown-toggle menu-dropdown-button"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" tabindex="1"><span
                             class="glyphicon glyphicon-th-list" aria-hidden="true"></span></button>
                     <ul class="dropdown-menu">
                         <li><button id="game-dev-export-button" class="dropdown-button-item bordered smooth-button red"
-                                onclick="showDevExportModal()">
+                                onclick="showDevExportModal()" tabindex="1">
                                 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                                 <span class="game-menu-label">Export Dialogue Edits</span>
                             </button></li>
                         <li><button id="game-faq-button" class="dropdown-button-item bordered smooth-button red"
-                                onclick="showHelpModal()">
+                                onclick="showHelpModal()" tabindex="1">
                                 <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
                                 <span class="game-menu-label">Help and FAQ</span>
                             </button></li>
                         <li><button id="game-feedback-button" class="dropdown-button-item bordered smooth-button red"
-                                onclick="showFeedbackReportModal()">
+                                onclick="showFeedbackReportModal()" tabindex="1">
                                 <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
                                 <span class="game-menu-label">Character Feedback</span>
                             </button></li>
                         <li><button id="game-log-button" class="dropdown-button-item bordered smooth-button red"
-                                onclick="showLogModal()">
+                                onclick="showLogModal()" tabindex="1">
                                 <span class="glyphicon glyphicon-comment" aria-hidden="true"></span>
                                 <span class="game-menu-label">Dialogue Log</span>
                             </button></li>
                         <li><button id="game-home-button" class="dropdown-button-item bordered smooth-button red"
-                                onclick="showRestartModal()">
+                                onclick="showRestartModal()" tabindex="1">
                                 <!-- doEpilogueModal -->
                                 <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
                                 <span class="game-menu-label">Return to Title</span>
                             </button>
                         <li>
                         <li><button id="game-settings-button" class="dropdown-button-item bordered smooth-button red"
-                                onclick="showOptionsModal()">
+                                onclick="showOptionsModal()" tabindex="1">
                                 <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
                                 <span class="game-menu-label">Options</span>
                             </button></li>
                         <li><button id="game-fullscreen-button" class="dropdown-button-item bordered smooth-button red"
-                                onclick="toggleFullscreen()">
+                                onclick="toggleFullscreen()" tabindex="1">
                                 <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
                                 <span class="game-menu-label">Toggle full screen mode</span>
                             </button></li>
@@ -3337,7 +3337,7 @@
                 </div>
 
                 <!-- Main Game Button -->
-                <button id="main-game-button" class="bordered smooth-button red" onclick="advanceGame()">Deal</button>
+                <button id="main-game-button" class="bordered smooth-button red" onclick="advanceGame()" tabindex="5">Deal</button>
 
                 <!-- Minimal UI Player name label -->
                 <div id="player-name-label-minimal" class="game-name-label-0 bordered name-label">Player</div>

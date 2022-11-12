@@ -769,6 +769,9 @@ function allowProgression (nextPhase) {
     }
     timeoutID = autoForfeitTimeoutID = undefined;
     $mainButton.attr('disabled', false);
+    if (!$(document.activeElement).is(':input')) {
+        $mainButton.focus();
+    }
 }
 
 /************************************************************
@@ -777,6 +780,9 @@ function allowProgression (nextPhase) {
 function advanceGame () {    
     /* disable the button to prevent double clicking */
     $mainButton.attr('disabled', actualMainButtonState = true);
+    if ($(document.activeElement).attr('disabled')) {
+        $(document.activeElement).blur();
+    }
     autoForfeitTimeoutID = undefined;
     
     /* lower the timers of everyone who is forfeiting */
@@ -1041,31 +1047,20 @@ function game_keyUp(e)
 {
     console.log(e);
     if ($('.modal:visible').length == 0 && $('#game-screen .dialogue-edit:visible').length == 0) {
-        if (e.keyCode == 32 && !$mainButton.prop('disabled')) { // Space
+        if (e.key == ' ' && !$mainButton.prop('disabled')
+            && !($('body').hasClass('focus-indicators-enabled') && $(document.activeElement).is('button, input'))) {
             e.preventDefault();
             advanceGame();
         }
-        else if (e.keyCode == 49 && !$cardButtons[0].prop('disabled')) { // 1
-            selectCard(0);
+        else if (e.key >= '1' && e.key <= '5' && !$cardButtons[e.key - 1].prop('disabled')) {
+            selectCard(e.key - 1);
         }
-        else if (e.keyCode == 50 && !$cardButtons[1].prop('disabled')) { // 2
-            selectCard(1);
-        }
-        else if (e.keyCode == 51 && !$cardButtons[2].prop('disabled')) { // 3
-            selectCard(2);
-        }
-        else if (e.keyCode == 52 && !$cardButtons[3].prop('disabled')) { // 4
-            selectCard(3);
-        }
-        else if (e.keyCode == 53 && !$cardButtons[4].prop('disabled')) { // 5
-            selectCard(4);
-        }
-        else if (e.keyCode == 81 && DEBUG) { // Q
+        else if (e.key.toLowerCase() == 'q' && DEBUG) {
             showDebug = !showDebug;
             updateDebugState(showDebug);
             setDevSelectorVisibility(showDebug);
         }
-        else if (e.keyCode == 84) { // T
+        else if (e.key.toLowerCase() == 't') {
             toggleTableVisibility();
         }
     }
