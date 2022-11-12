@@ -96,7 +96,7 @@ var DEBUG = false;
 var eGamePhase = {
     DEAL:      [ "Deal", function() { startDealPhase(); }, true ],
     AITURN:    [ "Next", function() { continueDealPhase(); } ],
-    EXCHANGE:  [ "Keep all", function() { completeExchangePhase(); }, true ],
+    EXCHANGE:  [ undefined, function() { completeExchangePhase(); }, true ],
     REVEAL:    [ "Reveal", function() { completeRevealPhase(); }, true ],
     PRESTRIP:  [ "Continue", function() { completeContinuePhase(); }, false ],
     STRIP:     [ "Strip", function() { completeStripPhase(); }, false ],
@@ -330,7 +330,6 @@ function advanceTurn () {
         } else {
             $gameScreen.addClass('prompt-exchange');
             allowProgression(eGamePhase.EXCHANGE);
-            updateMainButtonExchangeLabel();
         }
     } else if (!players[currentTurn]) {
         /* There is no player here, move on. */
@@ -740,6 +739,8 @@ function allowProgression (nextPhase) {
         $mainButton.html("Cum!");
     } else if (nextPhase[0]) {
         $mainButton.html(nextPhase[0]);
+    } else if (nextPhase === eGamePhase.EXCHANGE) {
+        updateMainButtonExchangeLabel();
     } else if (nextPhase === eGamePhase.END_LOOP) { // Special case
         /* someone is still forfeiting */
         var dots = '.'.repeat(endWaitDisplay);
