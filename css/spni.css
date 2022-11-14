@@ -37,7 +37,6 @@ body {
     background-color: #050505;
     font-size: 1.4em;
     font-family: 'Open Sans', "Trebuchet MS", Helvetica, sans-serif;
-    background-image: url("../img/backgrounds/inventory.png");
     background-size: contain;
     /* Sensible initial value */
     background-position: center center;
@@ -238,6 +237,93 @@ h6,
 .hide-table-button {
     z-index: 1000;
 }
+
+/**************************************************
+ * Background / foreground positioning.
+ **************************************************/
+
+.bg-image-container {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    pointer-events: none;
+}
+
+.bg-image {
+    position: absolute;
+    height: 75vw;
+    max-height: 100vh;
+    width: calc((100% - 133.33vh) / 2);
+    background-repeat: repeat-x;
+}
+
+.bg-image.center {
+    width: 100vw;
+    max-width: 133.33vh;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    background-position-x: center;
+}
+
+.bg-image.left {
+    left: 0;
+    background-position-x: right;
+}
+
+.bg-image.right {
+    right: 0;
+    background-position-x: left;
+}
+
+.bg-image.whole {
+    max-height: none;
+    max-width: none;
+    height: 100%;
+    width: 100%;
+    background-position: center center;
+}
+
+/* Default background image prior to loading backgrounds.xml */
+#bg-back .whole {
+    background-image: url("../img/backgrounds/inventory.png");
+}
+
+/* Hide left- and right-anchored background layers on narrow screens. */
+@media (max-aspect-ratio: 3/2) {
+    .bg-image.left, .bg-image.right {
+        display: none;
+    }
+}
+
+/* From bottom to top:
+ * - Background layers
+ * - Screens with characters (title screen, game screen, main select screen, group select screen)
+ * - Foreground layers
+ * - Other screens
+ * - Modals
+ */
+
+.screen-container, .wide-screen-container, #epilogue-screen {
+    z-index: 3;
+}
+
+#title-screen, #main-select-screen, #group-select-screen, #game-screen {
+    z-index: 1;
+}
+
+#bg-back {
+    z-index: 0;
+}
+
+#bg-front {
+    z-index: 2;
+}
+
 
 /**************************************************
  * Positions

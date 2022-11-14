@@ -49,10 +49,12 @@ var UI_THEMES = {
  * 
  * @param {string} src 
  * @param {boolean} repeat 
+ * @param {"left" | "center" | "right" | null} anchor 
+ * @param {boolean} isOverlay 
  * @param {number} [viewportTop] 
  * @param {number} [viewportBottom] 
  */
-function BackgroundLayer(src, repeat, viewportTop, viewportBottom) {
+function BackgroundLayer(src, repeat, anchor, isOverlay, viewportTop, viewportBottom) {
     /**
      * The path to this layer's image.
      * @type {string}
@@ -64,6 +66,21 @@ function BackgroundLayer(src, repeat, viewportTop, viewportBottom) {
      * @type {boolean}
      */
     this.repeat = repeat;
+
+    /**
+     * The anchoring mode for the layer:
+     * - Default: the background is centered on the play area, but fills the screen.
+     * - "center": the background is anchored and constrained to fit within the 4:3 central area.
+     * - "left" / "right": the background is anchored to the left or right-hand edge of the central area, and fills its respective side of the screen.
+     * @type {"left" | "center" | "right" | null}
+     */
+    this.anchor = anchor;
+
+    /**
+     * Whether to repeat this layer's image horizontally.
+     * @type {boolean}
+     */
+    this.isOverlay = isOverlay;
 
     /**
      * The top image coordinate to match with the top of the play area.
@@ -143,10 +160,8 @@ BackgroundLayer.prototype.waitForLoad = function () {
  * @param {number} w The width of the display area.
  * @param {number} h The height of the display area.
  * @returns {Promise<{
- *  "background-image": string,
- *  "background-size": string,
- *  "background-position-y": string,
- *  "background-repeat": string,
+ *   "container": string,
+ *   "elem": HTMLDivElement
  * }>}
  */
 BackgroundLayer.prototype.computeDisplayProperties = function (w, h) {
@@ -165,6 +180,8 @@ BackgroundLayer.prototype.computeDisplayProperties = function (w, h) {
             let offset = ((this.height - this.viewportBottom) - this.viewportTop) / 2;
             bgSize = "auto " + Math.round(scale * h) + "px";
             bgPositionY = "calc(50% + " + h * offset / this.height + "px)";
+        } else if (this.anchor) {
+            bgSize = "auto 100%";
         } else {
             let ar = this.width / this.height;
             if (ar > 4/3) {
@@ -177,11 +194,17 @@ BackgroundLayer.prototype.computeDisplayProperties = function (w, h) {
             }
         }
 
-        return {
+        var bgElem = document.createElement("div");
+        $(bgElem).css({
             "background-image": "url(" + this.src + ")",
             "background-size": bgSize,
             "background-position-y": bgPositionY,
             "background-repeat": (this.repeat ? "repeat-x" : "no-repeat")
+        }).addClass("bg-image " + (this.anchor || "whole"));
+
+        return {
+            "container": this.isOverlay ? "#bg-front" : "#bg-back",
+            "elem": bgElem
         };
     });
 }
@@ -252,24 +275,13 @@ function Background (id, layers, metadata) {
 Background.prototype.update = function () {
     return Promise.all(this.layers.map(
         (layer) => layer.computeDisplayProperties(window.innerWidth, window.innerHeight)
-    )).then((layerProps) => {
-        /* Combine the properties from each layer into a single set of properties with comma-separated values. */
-        var combinedProps = layerProps.reduce(function (acc, props) {
-            Object.entries(props).forEach(function (pair) {
-                var key = pair[0];
-                var val = pair[1];
+    )).then((layerElems) => {
+        $("#bg-back").empty();
+        $("#bg-front").empty();
+        layerElems.forEach(function (layer) {
+            $(layer.container).append(layer.elem);
+        });
 
-                if (acc[key]) {
-                    acc[key] += ", " + val;
-                } else {
-                    acc[key] = val;
-                }
-            });
-
-            return acc;
-        }, {});
-
-        $("body").css(combinedProps);
         $('.screen').css('filter', this.filter || '');
     });
 }
@@ -316,10 +328,11 @@ function loadBackgroundFromXml($xml, auto_tag_values) {
         var tagName = $elem.prop('tagName').toLowerCase();
 
         if (tagName == 'src') {
-            /* Use unshift() instead of push() so that the last defined layer appears on top. */
-            layers.unshift(new BackgroundLayer(
+            layers.push(new BackgroundLayer(
                 $elem.text(),
                 ($elem.attr("repeat") !== "false"),
+                $elem.attr("anchor"),
+                ($elem.attr("overlay") === "true"),
                 parseInt($elem.attr("top"), 10),
                 parseInt($elem.attr("bottom"), 10),
             ));
@@ -572,7 +585,9 @@ function pushBackgroundOption (background) {
         "class": "background-option",
         "data-background": background.id,
         "css": {
-            "background-image": background.layers.map((layer) => "url(" + layer.src + ")").join(", ")
+            "background-image": background.layers.filter((layer) => {
+                return (layer.anchor !== "left" && layer.anchor !== "right");
+            }).sort((a, b) => a.isOverlay - b.isOverlay).reverse().map((layer) => "url(" + layer.src + ")").join(", ")
         },
         "click": function() {
             optionsBackground = background;
