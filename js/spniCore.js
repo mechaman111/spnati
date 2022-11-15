@@ -242,7 +242,7 @@ function initialSetup () {
         }
     });
     $(document).keyup(function(ev) {
-        if (ev.key && ev.key.toLowerCase() == 'f' && !ev.shiftKey
+        if (ev?.key?.toLowerCase() == 'f' && !ev.shiftKey
             && !$(document.activeElement).is('input, select, textarea')) {
             toggleFullscreen();
         } else if (ev.key == "F1") {

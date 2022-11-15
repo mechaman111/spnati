@@ -1368,7 +1368,7 @@ Opponent.prototype.loadXMLTriggers = function () {
             }
 
             this.loadProgress = loadItemsCompleted / loadItemsTotal;
-            mainSelectDisplays[this.slot - 1].updateLoadPercentage(this);
+            mainSelectDisplays[this.slot - 1]?.updateLoadPercentage(this);
 
             setTimeout(process.bind(this), 10);
         }
