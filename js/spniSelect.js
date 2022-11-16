@@ -880,7 +880,7 @@ function showIndividualSelectionScreen() {
 }
 
 function individualSelectScreen_keyUp(e) {
-    if (e.key == "Backspace") {
+    if (e.key == "Backspace" && !$(document.activeElement).is('input, select, textarea')) {
         backFromIndividualSelect();
     }
 }
@@ -1372,16 +1372,19 @@ function changeGroupPage (skip, page) {
 function groupSelectScreen_keyUp(e)
 {
     console.log(e)
-    if (e.key == "ArrowLeft" && !$groupButton.prop('disabled')) {
+    if (e.key == "ArrowLeft" && !$groupButton.prop('disabled') && !$(document.activeElement).is('input, select')) {
         changeGroupPage(false, -1);
     }
-    else if (e.key == "ArrowRight" && !$groupButton.prop('disabled')) {
+    else if (e.key == "ArrowRight" && !$groupButton.prop('disabled') && !$(document.activeElement).is('input, select')) {
         changeGroupPage(false, 1);
     }
-    else if (e.key == "Enter") { // enter key
+    else if (e.key == "Enter" && !$(document.activeElement).is('input, select, .focus-indicators-enabled button')) { // enter key
         selectGroup();
     }
-    else if (e.key == "Backspace") {
+    else if (e.key == "Enter" && $(document.activeElement).is('#group-page-indicator')) {
+        changeGroupPage(true, 0)
+    }
+    else if (e.key == "Backspace" && !$(document.activeElement).is('input, select')) {
         backFromGroupSelect();
     }
     else if (e.key.toLowerCase() == 't') {
