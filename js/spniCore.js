@@ -528,7 +528,6 @@ function enterTitleScreen() {
     $warningContainer.hide();
     $titleContainer.show();
     $('.title-candy').show();
-    $('#player-name-field').focus().select();
     Sentry.setTag("screen", "title");
 }
 
