@@ -547,89 +547,12 @@ function finishStartupLoading () {
 }
 
 /**
- * Schedule a function to be called when a swipe happens (on a touchscreen).
- * @param {HTMLElement} elem 
- * @param {(touch: Touch, lastPos: [number, number], startPos: [number, number]) => void} onSwipe 
- */
- function handleSwipe (elem, onSwipe) {
-    var curTouchIdentifier = null;
-    var startPos = [0, 0];
-    var lastPos = [0, 0];
-
-    $(elem).on("touchstart", function (ev) {
-        if (curTouchIdentifier === null) {
-            let touch = null;
-            if (ev.targetTouches.length >= 1) {
-                touch = ev.targetTouches.item(0);
-            } else {
-                touch = ev.touches.item(0);
-            }
-
-            curTouchIdentifier = touch.identifier;
-            startPos = [touch.clientX, touch.clientY];
-            lastPos = [touch.clientX, touch.clientY];
-        }
-    }).on("touchmove", function (ev) {
-        if (curTouchIdentifier !== null) {
-            let touch = null;
-            for (let i = 0; i < ev.touches.length; i++) {
-                if (ev.touches.item(i).identifier === curTouchIdentifier) {
-                    touch = ev.touches.item(i);
-                }
-            }
-
-            if (!touch) {
-                curTouchIdentifier = null;
-                return;
-            }
-
-            onSwipe(touch, lastPos, startPos);
-            lastPos = [touch.clientX, touch.clientY];
-        }
-    }).on("touchend", function (ev) {
-        if (curTouchIdentifier !== null) {
-            let touch = null;
-            for (let i = 0; i < ev.touches.length; i++) {
-                if (ev.touches.item(i).identifier === curTouchIdentifier) {
-                    touch = ev.touches.item(i);
-                }
-            }
-
-            if (!touch) {
-                curTouchIdentifier = null;
-            }
-        }
-    });
-}
-
-/**
  * @param {PlayerClothing} clothing 
  */
 function TitleClothingSelectionIcon (clothing) {
     this.clothing = clothing;
-    this.elem = clothing.createSelectionElement();
-
-    $(this.elem).on("click", this.onClick.bind(this)).addClass("title-content-button");
-
-    /* Selectors block default touch-scrolling behavior, so manually handle that */
-    handleSwipe(this.elem, function (touch, lastPos, startPos) {
-        var listElem = document.getElementById("title-clothing-container");
-        listElem.scrollTop -= touch.clientY - lastPos[1];
-
-        /* Hide tooltips when the user is scrolling */
-        if (Math.abs(touch.clientY - startPos[1]) >= 25) {
-            $(this.elem).tooltip("hide");
-        }
-    }.bind(this));
-
-    if (this.clothing.collectible) {
-        $(this.elem).attr("title", null).tooltip({
-            delay: { show: 50 },
-            title: this.tooltip.bind(this)
-        }).on("touchstart", function () {
-            $(this.elem).tooltip("show");
-        }.bind(this));
-    }
+    $(this.elem = clothing.createSelectionElement())
+        .addClass("title-content-button").data('TitleClothingSelectionIcon', this);
 }
 
 TitleClothingSelectionIcon.prototype.visible = function () {
@@ -646,22 +569,6 @@ TitleClothingSelectionIcon.prototype.visible = function () {
     }
 
     return false;
-}
-
-TitleClothingSelectionIcon.prototype.tooltip = function () {
-    var collectible = this.clothing.collectible;
-    if (!collectible) return "";
-
-    if (this.clothing.isAvailable()) {
-        let tooltip = collectible.title;
-        if (collectible.player && tooltip.indexOf(collectible.player.metaLabel) < 0) {
-            tooltip += " - from " + collectible.player.metaLabel;
-        }
-
-        return tooltip;
-    } else {
-        return "To unlock: " + collectible.unlock_hint;
-    }
 }
 
 TitleClothingSelectionIcon.prototype.update = function () {
@@ -683,6 +590,27 @@ TitleClothingSelectionIcon.prototype.onClick = function () {
 }
 
 function setupTitleClothing () {
+    var prevScroll = 0;
+    $('#title-clothing-container').on('click', '.player-clothing-select', function(ev) {
+        $(ev.target).data('TitleClothingSelectionIcon').onClick();
+    }).on('touchstart', '.player-clothing-select', function(ev) {
+        $(ev.target).focus();
+    }).on('scroll', function() {
+        if (Math.abs(this.scrollTop - prevScroll) > this.clientHeight / 4) {
+            $("#title-clothing-container .player-clothing-select").tooltip('hide');
+            prevScroll = this.scrollTop;
+        }
+    }).tooltip({
+        selector: '.player-clothing-select',
+        delay: 50,
+        title: function() {
+            return $(this).data('TitleClothingSelectionIcon').clothing.tooltip();
+        }
+    }).on('show.bs.tooltip', function(ev) {
+        $("#title-clothing-container .player-clothing-select").not(ev.target).tooltip('hide');
+        prevScroll = this.scrollTop;
+    });
+
     loadedOpponents.forEach(function (opp) {
         if (!opp.has_collectibles || !opp.collectibles) return;
 

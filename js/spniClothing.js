@@ -141,27 +141,35 @@ PlayerClothing.prototype.isAvailable = function () {
 }
 
 /**
- * Create a basic HTML <input> element for this clothing.
- * @returns {HTMLInputElement}
+ * Create an HTML <button> element for this clothing.
+ * @returns {HTMLButtonElement}
  */
 PlayerClothing.prototype.createSelectionElement = function () {
-    var title = this.name.initCap();
-    if (this.collectible && this.collectible.player) {
-        title += " (from " + this.collectible.player.metaLabel + ")";
-    }
-
     var img = document.createElement("img");
     img.setAttribute("src", this.image);
-    img.setAttribute("alt", title);
+    img.setAttribute("alt", this.name.initCap());
     img.className = "custom-clothing-img";
 
     var elem = document.createElement("button");
-    elem.setAttribute("title", title);
     elem.className = "bordered player-clothing-select";
     elem.appendChild(img);
 
     return elem;
 }
+
+PlayerClothing.prototype.tooltip = function () {
+    if (!this.collectible) return this.name.initCap();
+
+    if (this.isAvailable()) {
+        let tooltip = this.collectible.title;
+        if (this.collectible.player && tooltip.indexOf(this.collectible.player.metaLabel) < 0) {
+            tooltip += " - from " + this.collectible.player.metaLabel;
+        }
+        return tooltip;
+    } else {
+        return "To unlock: " + this.collectible.unlock_hint;
+    }
+};
 
 /**
  * Get whether this clothing has been selected for the current player gender.
@@ -462,12 +470,14 @@ function prepareToStripPlayer (player) {
 /**
  * @param {PlayerClothing} clothing 
  */
- function StripClothingSelectionIcon (clothing) {
+function StripClothingSelectionIcon (clothing) {
     this.clothing = clothing;
     this.elem = clothing.createSelectionElement();
     this.selected = false;
 
-    $(this.elem).on("click", this.select.bind(this)).addClass("player-strip-selector");
+    $(this.elem).on("click", this.select.bind(this)).addClass("player-strip-selector").tooltip({
+        title: this.clothing.tooltip(),
+    });
 }
 
 StripClothingSelectionIcon.prototype.canSelect = function () {
@@ -521,6 +531,9 @@ function showStrippingModal () {
         selector.selected = false;
         selector.update();
     }.bind(this));
+    $stripClothing.on('show.bs.tooltip', function(ev) {
+        $stripClothing.find('.player-strip-selector').not(ev.target).tooltip('hide');
+    });
 
     /* disable the strip button */
     $stripButton.attr('disabled', true);
@@ -528,7 +541,7 @@ function showStrippingModal () {
     /* display the stripping modal */
     $stripModal.modal({show: true, keyboard: false, backdrop: 'static'});
     $stripModal.one('shown.bs.modal', function() {
-        $stripClothing.find('button').last().focus();
+        $stripClothing.find('.player-strip-selector').last().focus();
     });
     $stripModal.on('hidden.bs.modal', function () {
         if (gamePhase === eGamePhase.STRIP) {
