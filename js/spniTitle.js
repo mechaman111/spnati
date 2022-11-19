@@ -552,7 +552,13 @@ function finishStartupLoading () {
 function TitleClothingSelectionIcon (clothing) {
     this.clothing = clothing;
     $(this.elem = clothing.createSelectionElement())
-        .addClass("title-content-button").data('TitleClothingSelectionIcon', this);
+        .addClass("title-content-button").click(this.onClick.bind(this))
+        .on('touchstart', function() {
+            $(this.elem).tooltip('show');
+        }.bind(this)).tooltip({
+            delay: 50,
+            title: function() { return clothing.tooltip(); }
+        });
 }
 
 TitleClothingSelectionIcon.prototype.visible = function () {
@@ -591,20 +597,10 @@ TitleClothingSelectionIcon.prototype.onClick = function () {
 
 function setupTitleClothing () {
     var prevScroll = 0;
-    $('#title-clothing-container').on('click', '.player-clothing-select', function(ev) {
-        $(ev.target).data('TitleClothingSelectionIcon').onClick();
-    }).on('touchstart', '.player-clothing-select', function(ev) {
-        $(ev.target).focus();
-    }).on('scroll', function() {
+    $('#title-clothing-container').on('scroll', function() {
         if (Math.abs(this.scrollTop - prevScroll) > this.clientHeight / 4) {
             $("#title-clothing-container .player-clothing-select").tooltip('hide');
             prevScroll = this.scrollTop;
-        }
-    }).tooltip({
-        selector: '.player-clothing-select',
-        delay: 50,
-        title: function() {
-            return $(this).data('TitleClothingSelectionIcon').clothing.tooltip();
         }
     }).on('show.bs.tooltip', function(ev) {
         $("#title-clothing-container .player-clothing-select").not(ev.target).tooltip('hide');
