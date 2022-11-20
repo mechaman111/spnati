@@ -286,6 +286,10 @@
                 <condition role="target" character="erza" />
                 <state img="#-shocked_goofy.png">Wait, you're here too Erza?</state>
             </case>
+            <case stage="0" id="852">
+                <condition role="other" character="estelle" sayingMarker="EstelleGreeting" />
+                <state img="#-happy.png" marker="EstelleGreeting">Nice to meet you, Estelle. I'm Lucy!</state>
+            </case>
         </trigger>
 
         <trigger id="game_start">
@@ -507,7 +511,7 @@
                 <state img="#-angry.png">Why do I always get stuck with these kinds of jobs?</state>
                 <state img="#-annoyed.png">Well, so much for playing a perfect game.</state>
                 <state img="#-annoyed.png">I thought beginner's luck was supposed to be a thing in poker. Guess I was wrong.</state>
-                <state img="#-angry.png">Ugh, I had just got the guild to stop teasing me about the last time I lost my clothes on a job too.</state>
+                <state img="#-angry.png">Ugh, I had just got the guild to stop teasing me about the &lt;i&gt;last&lt;/i&gt; time I lost my clothes on a job, too.</state>
             </case>
             <case stage="1-3">
                 <state img="#-angry.png">The only thing that annoys me more than these cards is Natsu and Happy breaking into my apartment. </state>
@@ -515,7 +519,7 @@
                 <state img="#-annoyed.png">Well these cards aren't going to help me shed my unwanted reputation as "Fairy Tail's resident streaker".</state>
                 <state img="#-angry.png">When I get back to the guild hall, I'm going to make Mira stop serving Cana alcohol for a week!</state>
                 <state img="#-afraid.png">Not that I'm worried, but if I lose I won't have to streak home, will I?</state>
-                <state img="#-nervous.png">Well at least if I strip my clothes won't be destroyed like the time Erza cut them off or the time Natsu burnt them off.</state>
+                <state img="#-nervous.png">Well, at least if I strip my clothes won't be destroyed, like the time Erza cut them off or the time Natsu burnt them off.</state>
                 <state img="#-nervous.png">Am I having a bad hair day? First, the train station attendant made me pay for my ticket even though I flirted with him and now no one here's distracted by my good looks.</state>
                 <state img="#-embarrassed.png">I get the feeling that this is going to end up like last Christmas when Erza made us all strip after she got drunk.</state>
                 <state img="#-pout.png">Uh, dealer, aren't you supposed to give me the best cards because I'm so beautiful?</state>
@@ -531,7 +535,7 @@
             </case>
             <case stage="5">
                 <state img="#-determined.png">Okay, I'll just treat this as training for the next time I end up naked on a job. That way I can keep fighting...even if I'm embarrassed.</state>
-                <state img="#-angry_goofy.png">Why am I the one who always ends up naked on guild jobs?</state>
+                <state img="#-angry_goofy.png">Why am I the one who always ends up half-naked on guild jobs?</state>
                 <state img="#-nervous.png">So, uh, any stripping that happens here stays between us, right?</state>
             </case>
         </trigger>
@@ -609,6 +613,7 @@
             </case>
             <case stage="1" oneShotId="54" priority="302">
                 <state img="#-happy.png">I wasn't expecting strip poker, but this does give me an idea for a romance scene in my next novel, so I'll stick around for a while to get some ideas.</state>
+                <state img="#-inquisitive.png">I've been struggling with writer's block about a romance scene for the protagonist in my next novel...maybe she could play strip poker with the guy she likes?</state>
             </case>
             <case stage="0-7" id="448">
                 <condition count="0" status="naked" />
@@ -845,6 +850,11 @@
                 <condition role="other" character="nagisa" stage="0-2" sayingMarker="nagisa_food_prompt" />
                 <test expr="~nagisa.slot~" value="1" />
                 <state img="#-calm.png">That sounds like something Natsu would say. He eats fire though.</state>
+            </case>
+            <case stage="0-9" id="851">
+                <condition role="other" character="moon" stage="1-5" sayingMarker="moon_prompt_age" />
+                <test expr="~moon.slot~" cmp="!=" value="4" />
+                <state img="#-inquisitive.png">Uh, depends on if you count the incident with the time bubble. In any case, I'm at least 20 counting normal time.</state>
             </case>
             <case stage="0-9" id="818">
                 <condition role="other" character="hatsune_miku" stage="0-8" />
@@ -1264,6 +1274,10 @@
                 <condition role="other" character="beatrix" stage="0-3" saidMarker="BeatrixAge" sayingMarker="ConfirmAge" />
                 <state img="#-inquisitive.png">Are you counting time skips? Let me tell you, those can be a pain.</state>
             </case>
+            <case stage="0-9" id="849">
+                <condition role="other" character="beatrix" stage="0-3" saidMarker="Prompt_HomePlanets" sayingMarker="Prompt_VarelsiThreat" />
+                <state img="#-inquisitive.png">Uh, I don't think I've ever heard of the, uh, Varelsi?</state>
+            </case>
             <case stage="0-7" id="290" priority="141">
                 <condition role="other" character="lyralei" stage="0-7" sayingMarker="lyralei_piercing_question" />
                 <state img="#-calm.png">I just have my ears pierced.</state>
@@ -1552,6 +1566,14 @@
             <case stage="0-9" id="824">
                 <condition role="other" character="hatsune_miku" stage="0-4" sayingMarker="Vocaloid" />
                 <state img="#-inquisitive.png">Um, I'm not really sure what digital is. Do you mean you use lacrima to enhance your singing?</state>
+            </case>
+            <case stage="0-9" id="848">
+                <condition role="other" character="gwen" stage="2-4" sayingMarker="Gwen's_music_tastes" />
+                <state img="#-excited.png">Do you know any ballads? I love when Mirajane sings those to welcome us back to the guild hall!</state>
+            </case>
+            <case stage="0-9" id="850">
+                <condition role="other" character="cynthia" stage="0-8" sayingMarker="CynthiaVerity" />
+                <state img="#-inquisitive.png">I did hear a rumor about a girl named Makoto looking for her mom, Cynthia. Wonder if they're connected.</state>
             </case>
             <case stage="0-7" id="248" priority="140">
                 <condition role="other" character="sayaka" stage="7" />
@@ -2060,7 +2082,6 @@
                 <state img="#-sympathetic.png">I was trying to relax after a mission, but Erza broke in because she wanted to talk about boy troubles. I love her like a sister, but it was terrible timing.</state>
             </case>
             <case stage="1">
-                <state img="#-inquisitive.png">I've been struggling with writer's block about a romance scene for the protagonist in my next novel...maybe she could play strip poker with the guy she likes?</state>
                 <state img="#-happy.png">I always used to hide my writing from people. Sometimes, it still doesn't feel real that I'm a published novelist!</state>
                 <state img="#-sad.png">I actually started writing as a way to deal with grief over losing my mom. I'd write letters about my life to her, and eventually I made a book about my adventures.</state>
                 <state img="#-happy.png">I finally got a chance to publish my writing when I worked for Weekly Sorcerer Magazine for a year. I started as a model, but I decided to focus on writing instead.</state>
@@ -2363,7 +2384,6 @@
             </case>
             <case stage="6-7">
                 <condition count="0" role="target" character="gray" />
-                <state img="#-embarrassed.png">I can't believe I'm watching a guy I just met strip while I'm indecent.</state>
                 <state img="#-embarrassed.png">I-I'm sorry I stared. It's just, I'm nervous, and um, uh, yeah.</state>
             </case>
             <case stage="0-9">
@@ -2392,12 +2412,12 @@
                 <state img="#-happy.png">It's very gentlemanly of you to let me keep my clothes on! Thanks!</state>
                 <state img="#-smug.png">I bet this isn't how you imagined this game would go.</state>
                 <state img="#-determined.png">I am going to show all of you why Fairy Tail is the best guild in Fiore!</state>
-                <state img="#-happy.png">Usually, I'm the one who ends up losing her clothes on a job so this is pretty nice.</state>
+                <state img="#-happy.png">Usually, I'm the one who ends up losing her clothes on a job, so this is pretty nice.</state>
                 <state img="#-smug.png">Can't focus with a beautiful girl like me here, huh?</state>
                 <state img="#-smug.png">Beautiful, smart, and lucky. I'm pretty amazing, aren't I?</state>
             </case>
             <case stage="4">
-                <state img="#-annoyed.png">I'd feel bad for ~name~ but I'm still annoyed about losing my keys.</state>
+                <state img="#-annoyed.png">I'd feel bad for ~name~, but I'm still annoyed about losing my keys.</state>
                 <state img="#-angry.png">Hey, I saw you staring when my skirt fell down earlier, so don't expect mercy now.</state>
                 <state img="#-sad.png">Sorry, but I'd rather not take anything else off just yet.</state>
                 <state img="#-angry.png">After ogling my panties, this is the least you could do for me.</state>
@@ -2870,7 +2890,6 @@
                 <state img="#-calm.png">The Fairy Tail guild hall has communal baths so seeing other girls strip isn't too unusual for me.</state>
                 <state img="#-determined.png">Don't worry, I'll protect you if anyone tries to bother you after you strip!</state>
                 <state img="#-happy.png">A lot of my teammates are more powerful than me, so it's nice to score a win sometimes!</state>
-                <state img="#-pout.png">Normally I'd feel bad for you, but I tend not to like people who try to take my clothes.</state>
                 <state img="#-excited.png">Oh, if you want, I could summon my spirit Lyra to sing a song and distract everyone!</state>
                 <state img="#-calm.png">It's always impressed me how my friend Erza never gets embarrassed when she has to strip in public to requip her armor.</state>
                 <state img="#-happy.png">I'm more than happy to let someone else strip for once.</state>
@@ -3506,7 +3525,7 @@
                 <state img="#-calm.png">This is definitely going better than my last time gambling. That time, my friend Erza got kidnapped.</state>
                 <state img="#-smug.png">I won't even need my celestial spirit keys and fleuve d'étoiles to beat you!</state>
                 <state img="#-excited.png">For once, I get to be the most powerful mage in the room!</state>
-                <state img="#-determined.png">You are never going to get me naked, count on it!</state>
+                <state img="#-determined.png">You're never going to get me naked. Count on it!</state>
                 <state img="#-annoyed.png">That dumb cat's going to start bugging me to play strip poker with him and Natsu again if he finds out I did this.</state>
                 <state img="#-sad.png">Spetto and the other servants would be so disappointed if they knew I was playing strip poker.</state>
             </case>
@@ -3582,7 +3601,6 @@
                 <state img="#-embarrassed.png">It's really embarrassing to think about the fact that winning means I'll see you...naked.</state>
                 <state img="#-smug.png">I've got beauty and brains, ~name~!</state>
                 <state img="#-calm.png">I never thought this would be the kind of job I'd end up on when I first dreamt of being a wizard. Then again, the first guild wizard I met was wearing a bunny suit.</state>
-                <state img="#-inquisitive.png">So, uh, why do you come here, ~name~? Please don't make me regret asking that with some perverted comment.</state>
             </case>
             <case stage="4-5">
                 <state img="#-relieved.png">Look on the bright side, Lucy-at least you're not playing against Ichiya from Blue Pegasus.</state>
@@ -4321,6 +4339,10 @@
                 <condition role="target" character="mulan" stage="2" />
                 <state img="#-happy.png">You know, you didn't need to hide being a woman! Some of the strongest wizards in my guild are women. </state>
             </case>
+            <case stage="0-9" id="847">
+                <condition role="target" character="ayano" stage="5" />
+                <state img="#-sympathetic.png">You've got nothing to feel bad about. Several of my friends have scars, and besides it's the person's heart that matters not their looks.</state>
+            </case>
             <case stage="0-9" id="339">
                 <condition filter="school_uniform" role="target" />
                 <condition role="other" character="sayaka" sayingMarker="gymclass" />
@@ -4493,7 +4515,7 @@
             <case stage="0-6">
                 <state img="#-naked_boy.png">Ah, I'm sorry! I'll try not to look!</state>
                 <state img="#-shocked_goofy.png">You're getting naked?!</state>
-                <state img="#-embarrassed.png">Whoa, uh, can't we just say ~name~ loses? He doesn't have to get naked!</state>
+                <state img="#-embarrassed.png">Actually, can't we just say ~name~ loses without stripping? He doesn't have to get naked!</state>
             </case>
             <case stage="7-9">
                 <state img="#-smug.png">I bet it's not so fun when you're the one getting naked!</state>
@@ -4512,7 +4534,7 @@
             </case>
             <case stage="0-6">
                 <state img="#-naked_boy.png">I'm sorry, I didn't mean to look! I didn't see anything!</state>
-                <state img="#-embarrassed.png">Wait, are you old enough to be playing this game? You're um...kind of small.</state>
+                <state img="#-relieved.png">Oh, I guess there was barely anything to worry about seeing.</state>
                 <state img="#-naked_boy.png">I won't tell anyone about your size problem if you don't tell anyone I was here!</state>
             </case>
             <case stage="7-9">
@@ -4571,7 +4593,7 @@
             <case stage="0-6">
                 <state img="#-shocked_goofy.png">Whoa! That's as big as Natsu! I only know that because Happy tricked me into looking at him naked once!</state>
                 <state img="#-naked_boy.png">I'm sorry! I didn't mean to stare at you. It's just big...um, did I say I was sorry!</state>
-                <state img="#-excited.png">Now I see why Cana took this job posting!</state>
+                <state img="#-annoyed.png">Now I see why Cana took this job posting! She was just going on about wanting a man while drinking.</state>
             </case>
             <case stage="7-9">
                 <state img="#-naked_boy.png">Don't comment on the size of my breasts and I won't comment on the size of your penis!</state>
@@ -5376,15 +5398,6 @@
                 <test expr="~target.diff(self)~" value="0" />
                 <state img="#-smug.png">Fairy Tail wizards never give up! Looks like I'm right back in this.</state>
             </case>
-            <case stage="0-6" id="157" oneShotId="16" priority="5">
-                <condition count="1" status="exposed" />
-                <state img="#-shocked_goofy.png">Wait, we really have to get completely naked? In front of everyone?!</state>
-            </case>
-            <case stage="0-9" id="564" oneShotId="45" priority="5">
-                <condition status="exposed" role="target" />
-                <condition count="1" status="exposed" />
-                <state img="#-shocked_goofy.png">~Name~ actually did it. We're really gonna get naked here?!</state>
-            </case>
         </trigger>
 
         <trigger id="opponent_chest_will_be_visible">
@@ -5949,7 +5962,7 @@
             </case>
             <case stage="8">
                 <state img="#-relieved.png">At least I don't have to worry about being quiet if another girl is moaning too.</state>
-                <state img="#-embarrassed.png">W-we have to touch ourselves at the same time?!</state>
+                <state img="#-embarrassed.png">I've never done this at the same time as another girl before!</state>
                 <state img="#-sympathetic.png">How are you holding up, ~name~?</state>
             </case>
             <case stage="9">
@@ -6180,14 +6193,13 @@
                 <state img="#-horny1.png">I should be humiliated to do this in front of people, so what is this feeling?</state>
                 <state img="#-horny2.png">W-what? I-it's not like I enjoy you watching this.</state>
                 <state img="#-horny3.png">This is kind of relaxing when you imagine you're alone.</state>
-                <state img="#-embarrassed.png">This is the most humiliated I've ever been and an entire stadium of people saw me in nothing but a bath towel once.</state>
                 <state img="#-happy.png">Alright...I owe Cana a drink for giving me this job.</state>
                 <state img="#-annoyed.png">I may have been an heiress once, but now I can barely pay my rent so don't bother trying to blackmail me with pics of this.</state>
                 <state img="#-horny1.png">It's not alone time, but I've been waiting so long to take care of this!</state>
                 <state img="#-seduce.png">I challenge anyone to say I can't pull off a sexy distraction now!</state>
                 <state img="#-horny1.png">When Cana said I needed some alone time, I thought she meant going on a solo job, but this is way more relaxing.</state>
                 <state img="#-horny2.png">Every. Single. Time. I try to do this, one of my teammates breaks into my apartment! I really needed this.</state>
-                <state img="#-horny3.png">This is like the time I ended up invisible and had to streak to the guild hall. Wow, maybe the exhibitionists really are onto something.</state>
+                <state img="#-horny3.png">This kind of reminds me of the time I accidentally ended up invisible and had to streak to the guild hall. Wow, maybe the exhibitionists really are onto something.</state>
                 <state img="#-nervous.png">Um, I'm not doing anything weird, right? This is nice, but having audience is embarrassing.</state>
                 <state img="#-smug.png">I have to admit the part of me that hated constantly being told to behave like a proper society lady growing up is loving this.</state>
                 <state img="#-nervous.png">You have to bare your soul when you're a writer, but this is a bit more literal than that.</state>
