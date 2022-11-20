@@ -1415,7 +1415,10 @@ OpponentDetailsDisplay = function () {
     this.showMoreButton.click(function () {
         this.mainView.toggleClass('show-more');
     }.bind(this));
-    
+    this.mainView.on('click', '.opponent-details-value>a', function(ev) {
+        $(ev.target).data('search-field').val(ev.target.innerText).trigger('input');
+    });
+
     this.epiloguesView.hide();
     this.collectiblesView.hide();
     
@@ -1640,10 +1643,23 @@ OpponentDetailsDisplay.prototype.update = function (opponent) {
     this.opponent = opponent;
     
     this.displayContainer.show();
-    this.nameLabel.html(opponent.first + " " + opponent.last);
-    this.sourceLabel.html(opponent.source);
-    this.writerLabel.html(opponent.writer);
-    this.artistLabel.html(opponent.artist);
+    this.nameLabel.text(opponent.first + " " + opponent.last);
+    if (loadedOpponents.countTrue(opp => filterOpponent(opp, '', opponent.source, '')) > 1) {
+        this.sourceLabel.empty().append($('<a>', { href: '#', text: opponent.source }).data('search-field', $searchSource));
+    } else {
+        this.sourceLabel.text(opponent.source);
+    }
+    [[this.writerLabel, opponent.writer], [this.artistLabel, opponent.artist]].forEach(function ([label, data]) {
+        const interesting = splitCreatorField(data).filter(s => loadedOpponents.countTrue(opp => filterOpponent(opp, '', '', s)) > 1);
+        if (interesting.length) {
+            const re = new RegExp('(' + interesting.map(escapeRegExp).join('|') + ')');
+            label.empty().append(data.split(re).map(function(part, ix) {
+                return (ix % 2) ? $('<a>', { href: '#', text: part }).data('search-field', $searchCreator) : part;
+            }));
+        } else {
+            label.text(data);
+        }
+    });
     if (this.opponent.lastUpdated) {
         var timeStyle = Date.now() - this.opponent.lastUpdated > TESTING_MAX_AGE ? undefined : 'short';
         this.lastUpdateLabel.text(new Intl.DateTimeFormat([], { dateStyle: 'short', timeStyle: timeStyle })
