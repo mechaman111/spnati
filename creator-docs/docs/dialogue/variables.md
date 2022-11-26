@@ -45,6 +45,7 @@ see the page on backgrounds for more details.
 | `~clothing.type~` | The `type` of the current article – `extra`, `minor`, `major`, or `important` |
 | `~clothing.position~` | The `position` of the current article – `upper`, `lower`, `both`, `feet`, `hands`, `arms`, `legs`, `waist`, `neck`, `head`, or `other`.
 | `~clothing.id~` | Expands to the ID of the collectible associated with this piece of clothing, if any. For player clothing options that are available by default, this will instead expand to something starting with `_default.`. Note that this is only defined for clothing worn by the human player: this variable will always expand to an empty string for clothing worn by NPCs. |
+| `~revealed~`  | Refers to the article of clothing revealed by removing `~clothing~`, if that clothing has position `upper`, `lower`, or `both`, meaning that it typically has to be a minor or major article; accessories don't reveal anything. It is assumed that the next article in the same position was previously hidden and is now revealed. If `~clothing.position~ == both` and more than one article is revealed, one of them will be chosen randomly. The same subvariables can be used as with `~clothing~`.
 
 ## Collectibles ##
 
@@ -107,6 +108,8 @@ Note that you _don't_ have to define a custom variable to reference a specific c
 | `.collectible`, `.marker`, `.targetmarker` | Lets you access collectible and marker data of a different character. See the corresponding general variable descriptions above for details. |
 | `.tag.tag_name` | `true` if the player has the tag `tag_name`, `false` otherwise. |
 | `.costume`      | The ID of the player's alternate costume/skin, or `default` if no alternate costume is worn. |
+| `.wearing()`    | This is an advanced function that lets your character "see" what other players are wearing, not just what they're currently stripping. See below for details. |
+| `.numstripped(types)` | The total number of layers stripped of the given types, for example `extra|minor`. Like `~clothing.type~`, this counts layers by their declared type, i.e. a shirt (major) with no important article underneath will still be counted as major. |
 | `.size`         | The player's breast or penis size depending on the gender (`small`, `medium`, or `large`). |
 | `.intelligence` | The player's AI intelligence. For the human player, this always expands to `average`. |
 | `.gender`       | The player's (current) gender, `male` or `female`. |
@@ -127,7 +130,7 @@ Note that you _don't_ have to define a custom variable to reference a specific c
 | `.ticksinstage` | Counts how many ticks has spent in the same stage; this is similar to Time in Stage, but is incremented whenever forfeit timers are ticked (or whenever they would otherwise be ticked, for players that are not masturbating). The loser of a round's Ticks in Stage is 0 when their Stripped or Start Masturbating cases are played; in general, when a player is masturbating, the sum of their current forfeit timer and ticks in stage values should equal their stamina. Like Time in Stage, when a player finishes, this is not reset to 0 until immediately _after_ the Finished cases have played.
 | `.heavy` | Expands to `true` if the player is currently heavily masturbating, and `false` otherwise. Note that this expands to `false` when a character is finishing. |
 
-### `.ifplural` 
+### `.ifplural()`
 
 The `.ifplural` variables, available as `~cards.ifplural(|)~` and `~clothing.ifplural(|)~`
 allow you to make your dialogue gramatically correct, according to whether or not
@@ -142,9 +145,23 @@ For example, the dialogue `I have ~cards.ifplural(several cards|one card)~.` wil
 However, if you're trying to do something like `~clothing~` followed by `~clothing.ifplural(s|)~`,
 you should use `~clothing.toplural~` instead.
 
-### `.ifmale` 
+### `.ifmale()`
 
 `~player.ifmale(|)~` works similarly to `.ifplural` (described above), but works
 based on the referenced player's gender.
 
 The syntax for this variable is: `~player.ifmale(dialogue if male|dialogue if female)~`.
+
+### `.wearing()`
+
+This function looks for a *visible* article of clothing matching the arguments. Note that minor and major articles are assumed to cover articles beneath them in the
+wardrobe, because the game doesn't know exactly how the clothes look. If there are no matches, it returns the empty string, so if using it in dialogue, you also need
+to add a variable test with the same expression to ensure that it returns something.
+
+The argument is a `|`-separated list of clothing positions, types, generic designations, or names. Valid positions (including `both`) and types are interpreted as such;
+other arguments are searched for in the `generic` and `name` attributes. Multiple positions or types are taken as alternatives, but otherwise all arguments have to match,
+so for example, `extra|minor` (two types) means extra **or** minor, while `upper|major` (type and position) means upper **and** major.
+
+Example: In Removed Major or Is Visible, test `~target.wearing(extra|minor)~` to see if it's non-empty; if so, you can use the same expression in dialogue like "Didn't
+you forget your ~target.wearing(extra|minor)~?" (it only returns a matching clothing name; you can't put `.position` etc. after it yet). Conversely, when the target is
+stripping a small article, `~target.wearing(upper|major)~` can be used to give a concrete better suggestion...
