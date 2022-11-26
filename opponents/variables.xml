@@ -5,22 +5,25 @@
       <param name="true" label="When male:" description="Text when male (ex. his)." example="Hector"/>
       <param name="false" label="When female:" description="Text when not male (ex. her)." example="Florina"/>
     </function>
-	<function name="toStutter" description="Returns the character's name, prefixed with the first letter and a dash to indicate a stutter." example="F-Florina">
-		<param name="count" label="Stutter count:" description="How many times to stutter the letter. Min 1, Max 10." example="2" />
-	</function>
+    <function name="toStutter" description="Returns the character's name, prefixed with the first letter and a dash to indicate a stutter." example="F-Florina">
+      <param name="count" label="Stutter count:" description="How many times to stutter the letter. Min 1, Max 10." example="2" />
+    </function>
+    <function name="wearing" description="Returns the name of a visible article of clothing on target matching the search parameters">
+      <param name="parameters" label="Parameters:" description="List of clothing types, positions, classifications, and names to search for" example="major|lower"/>
+    </function>
   </variable>
   <variable name="human" description="Displays the human player's name." global="true" example="Florina">
     <function name="ifMale" description="Displays text conditionally based on whether the human player is male or not.">
       <param name="true" label="When male:" description="Text when male (ex. his)." example="Hector"/>
       <param name="false" label="When female:" description="Text when not male (ex. her)." example="Florina"/>
     </function>
-	<function name="toStutter" description="Returns the character's name, prefixed with the first letter and a dash to indicate a stutter." example="F-Florina">
-		<param name="count" label="Stutter count:" description="How many times to stutter the letter. Min 1, Max 10." example="2" />
-	</function>	
+    <function name="toStutter" description="Returns the character's name, prefixed with the first letter and a dash to indicate a stutter." example="F-Florina">
+      <param name="count" label="Stutter count:" description="How many times to stutter the letter. Min 1, Max 10." example="2" />
+    </function>
   </variable>
   <variable name="name" description="Displays the target's name." example="Florina" />
   <variable name="cards" description="Displays the number of cards being exchanged." example="4">
-    <function name="ifPlural" description="Displays text conditionally based on whether the clothing is singular or plural.">
+    <function name="ifPlural" description="Displays text conditionally based on whether the number is singular or plural.">
       <param name="true" label="When plural:" description="Text when cards being exchanged is plural (ex. 3)." example="1"/>
       <param name="false" label="When singular:" description="Text when cards exchanged are not plural (ex. 1)." example="2"/>
     </function>
@@ -36,6 +39,7 @@
     <function name="position" example="upper" description="Displays the clothing's position (upper, lower, etc.)."/>
     <function name="toPlural" example="shirts" description="Pluralizes the clothing name."/>
     <function name="a" example="a" description="Returns the correct indefinite article for the clothing (a, an, or nothing at all)."/> 
+    <function name="withart" example="a shirt" description="Returns the name of the piece of clothing with the correct indefinite article (a, an, or nothing at all) in front."/> 
   </variable>
   <variable name="revealed" description="Displays the name of the clothing that was just revealed.">
     <function name="ifPlural" description="Displays text conditionally based on whether the clothing is singular or plural.">
@@ -47,6 +51,7 @@
     <function name="position" example="upper" description="Displays the clothing's position (upper, lower, etc.)."/>
     <function name="toPlural" example="shirts" description="Pluralizes the clothing name."/>
     <function name="a" example="a" description="Returns the correct indefinite article for the clothing (a, an, or nothing at all)."/>
+    <function name="withart" example="a shirt" description="Returns the name of the piece of clothing with the correct indefinite article (a, an, or nothing at all) in front."/> 
   </variable>
   <variable name="marker" description="Displays the value of a marker." global="true" useMarkers="true" example="MARKER_VALUE" />
   <variable name="weekday" description="Displays the current day of the week." global="true" example="Tuesday">
@@ -83,9 +88,12 @@
     <function name="diff" description="Difference between the number of layers of this player and other.">
       <param name="other" label="Other character:" description="ID of the character to compare to." example="florina" />
     </function>
-	<function name="toStutter" description="Returns the character's name, prefixed with the first letter and a dash to indicate a stutter." example="F-Florina">
-		<param name="count" label="Stutter count:" description="How many times to stutter the letter. Min 1, Max 10." example="2" />
-	</function>
+    <function name="toStutter" description="Returns the character's name, prefixed with the first letter and a dash to indicate a stutter." example="F-Florina">
+      <param name="count" label="Stutter count:" description="How many times to stutter the letter. Min 1, Max 10." example="2" />
+    </function>
+    <function name="wearing" description="Returns the name of a visible article of clothing on target matching the search parameters">
+      <param name="parameters" label="Parameters:" description="List of clothing types, positions, classifications, and names to search for" example="major|lower"/>
+    </function>
   </variable>
   <variable name="self" description="Displays the character's name, same as ~name~." global="true" example="Florina">
     <function name="costume" description="Expands to the ID of the current skin the character is using, or 'default' by default." example="florina_easter" />
@@ -101,9 +109,9 @@
     <function name="diff" description="Difference between the number of layers of this player and other.">
       <param name="other" label="Other character:" description="ID of the character to compare to." example="florina" />
     </function>
-	<function name="toStutter" description="Returns the character's name, prefixed with the first letter and a dash to indicate a stutter." example="F-Florina">
-		<param name="count" label="Stutter count:" description="How many times to stutter the letter. Min 1, Max 10." example="2" />
-	</function>	
+    <function name="toStutter" description="Returns the character's name, prefixed with the first letter and a dash to indicate a stutter." example="F-Florina">
+      <param name="count" label="Stutter count:" description="How many times to stutter the letter. Min 1, Max 10." example="2" />
+    </function>
   </variable>
   <variable name="winner" description="Displays the name of the player who had the best hand of the most recent round (including this one)." global="true" example="Florina" />
   <variable name="rng" description="Expands to a random number within a provided range (ex. ~rng(1-5)~" global="true">
