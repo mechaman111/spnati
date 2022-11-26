@@ -1339,6 +1339,7 @@ $('button[tabindex], input[tabindex], select[tabindex]').each(function() {
 
 $('.modal').on('show.bs.modal', function() {
     $('.screen:visible').find('button, input, select').attr('tabindex', -1);
+    $(document.activeElement).blur();
 });
 
 $('.modal').on('hidden.bs.modal', function() {

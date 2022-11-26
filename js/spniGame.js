@@ -781,6 +781,9 @@ function advanceGame () {
     /* disable the button to prevent double clicking */
     $mainButton.attr('disabled', actualMainButtonState = true);
     if ($(document.activeElement).attr('disabled')) {
+        /* It appears that in Firefox, if the active element gets
+         * disabled, it can stop keyboard events from being emitted
+         * altogether. So remove that focus. */
         $(document.activeElement).blur();
     }
     autoForfeitTimeoutID = undefined;
@@ -1048,7 +1051,7 @@ function game_keyUp(e)
     console.log(e);
     if ($('.modal:visible').length == 0 && $('#game-screen .dialogue-edit:visible').length == 0) {
         if (e.key == ' ' && !$mainButton.prop('disabled')
-            && !($('body').hasClass('focus-indicators-enabled') && $(document.activeElement).is('button, input'))) {
+            && !($('body').hasClass('focus-indicators-enabled') && $(document.activeElement).is('button:visible:enabled, input:visible:enabled'))) {
             e.preventDefault();
             advanceGame();
         }

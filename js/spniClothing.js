@@ -519,6 +519,15 @@ function setupStrippingModal () {
     }));
 }
 
+$stripModal.on('hidden.bs.modal', function () {
+    if (gamePhase === eGamePhase.STRIP) {
+        console.error("Possible softlock: player strip modal hidden with game phase still at STRIP");
+
+        Sentry.captureException(new Error("Possible softlock: player strip modal hidden with phase still at STRIP"));
+
+        allowProgression();
+    }
+});
 
 /************************************************************
  * Sets up and displays the stripping modal, so that the human
@@ -540,18 +549,6 @@ function showStrippingModal () {
 
     /* display the stripping modal */
     $stripModal.modal({show: true, keyboard: false, backdrop: 'static'});
-    $stripModal.one('shown.bs.modal', function() {
-        $stripClothing.find('.player-strip-selector').last().focus();
-    });
-    $stripModal.on('hidden.bs.modal', function () {
-        if (gamePhase === eGamePhase.STRIP) {
-            console.error("Possible softlock: player strip modal hidden with game phase still at STRIP");
-            
-            Sentry.captureException(new Error("Possible softlock: player strip modal hidden with phase still at STRIP"));
-
-            allowProgression();
-        }
-    });
 
     $(document).keyup(clothing_keyUp);
 }
@@ -652,8 +649,7 @@ function closeStrippingModal () {
     updateAllBehaviours(HUMAN_PLAYER, null, [dialogueTrigger]);
 
     /* allow progression */
-    $('#stripping-modal').modal('hide');
-    $stripModal.off("hidden.bs.modal");
+    $stripModal.modal('hide');
     $(document).off('keyup', clothing_keyUp);
     endRound();
 }
