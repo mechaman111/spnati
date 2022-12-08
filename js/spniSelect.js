@@ -1283,7 +1283,7 @@ function clickedRemoveAllButton (alsoRemoveSuggestions)
  * Adds hotkey functionality to the main selection screen.
  ************************************************************/
 function mainSelectScreen_keyUp(e) {
-    if (e.key == "Backspace") {
+    if (e.key == "Backspace" && $('.modal:visible').length == 0) {
         backSelectScreen();
     }
     else if (e.key.toLowerCase() == 't') {
@@ -1384,7 +1384,7 @@ function groupSelectScreen_keyUp(e)
     else if (e.key == "Enter" && $(document.activeElement).is('#group-page-indicator')) {
         changeGroupPage(true, 0)
     }
-    else if (e.key == "Backspace" && !$(document.activeElement).is('input, select')) {
+    else if (e.key == "Backspace" && !$(document.activeElement).is('input, select') && $('.modal:visible').length == 0) {
         backFromGroupSelect();
     }
     else if (e.key.toLowerCase() == 't') {
