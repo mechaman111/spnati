@@ -146,6 +146,8 @@ Player.prototype.resetState = function () {
         this.gender = appearance.gender;
         this.size = appearance.size;
 
+        this.stamina = Number(this.xml.children('timer').text());
+
         /* Clear the repeat log between games. */
         this.repeatLog = {};
 
@@ -1190,7 +1192,6 @@ Opponent.prototype.loadBehaviour = function (slot, individual) {
             });
 
             this.xml = $xml;
-            this.stamina = Number($xml.children('timer').text());
             this.intelligences = $xml.children('intelligence');
 
             this.default_costume = {
