@@ -2131,7 +2131,7 @@ Case.prototype.getAlsoPlaying = function (opp) {
     return ap;
 }
 
-Case.prototype.checkConditions = function (self, opp) {
+Case.prototype.checkConditions = function (self, opp, postDialogue) {
     var volatileDependencies = new Set();
     
     // one-time use
@@ -2429,8 +2429,8 @@ Case.prototype.checkConditions = function (self, opp) {
         if (ctr.sayingMarker !== undefined || ctr.saying !== undefined || ctr.pose !== undefined) matches = matches.filter(function(p) {
             if (ctr.sayingMarker !== undefined) {
                 // The human player can't talk, and using
-                // saying/sayingMarker/pose on self would be circular.
-                if (p == self || p == humanPlayer) return false;
+                // saying/sayingMarker/pose on self would be circular (unless we're evaluating post-dialogue cases).
+                if ((p == self && !postDialogue) || p == humanPlayer) return false;
                 if (checkMarker(ctr.sayingMarker, p, opp, true)) {
                     volatileDependencies.add(p);
                 } else {
@@ -2445,7 +2445,7 @@ Case.prototype.checkConditions = function (self, opp) {
                 }
             }
             if (ctr.saying !== undefined) {
-                if (p == self || p == humanPlayer) return false;
+                if ((p == self && !postDialogue) || p == humanPlayer) return false;
                 if (!p.updatePending && p.chosenState && normalizeConditionText(p.chosenState.rawDialogue).indexOf(normalizeConditionText(ctr.saying)) >= 0) {
                     volatileDependencies.add(p);
                 } else {
@@ -2456,7 +2456,7 @@ Case.prototype.checkConditions = function (self, opp) {
                 }
             }
             if (ctr.pose !== undefined) {
-                if (p == self || p == humanPlayer) return false;
+                if ((p == self && !postDialogue) || p == humanPlayer) return false;
                 if (!p.updatePending && p.chosenState && poseNameMatches(ctr.pose, p.chosenState.image)) {
                     volatileDependencies.add(p);
                 } else {
@@ -2620,7 +2620,7 @@ Opponent.prototype.findBehaviour = function(triggers, opp, volatileOnly) {
 
         if ((curCase.priority >= bestMatchPriority) &&
             (!volatileOnly || curCase.isVolatile) &&
-            curCase.checkConditions(this, opp))
+            curCase.checkConditions(this, opp, false))
         {
             if (curCase.priority > bestMatchPriority) {
                 /* Cleanup all mutable state on previous best-match cases. */
@@ -2702,7 +2702,7 @@ Opponent.prototype.evaluateHiddenCases = function (triggers, opp, postDialogue) 
     hiddenGroups.forEach(function (group) {
         console.log("[" + this.id + "] Evaluating " + group.length + (postDialogue ? " post" : " pre") + "-dialogue hidden cases at priority " + group[0].priority);
         group.filter(function (curCase) {
-            return curCase.checkConditions(this, opp);
+            return curCase.checkConditions(this, opp, postDialogue);
         }, this).forEach(function (matchedCase) {
             this.applyHiddenStates(matchedCase, opp);
             matchedCase.cleanupMutableState();
