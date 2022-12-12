@@ -276,7 +276,6 @@ function randomizeRosterOrder(weekIdx, startStd, endStd) {
     startStd = (startStd !== undefined) ? startStd : 0.3;
     endStd = (endStd !== undefined) ? endStd : 0.15;
 
-    var rng = new ChaCha20RNG(0, weekIdx, weekIdx);
     var roster = loadedOpponents.slice().filter(function (opp) {
         return opp && !!opp.rosterScore;
     }).sort(function (a, b) {
@@ -285,7 +284,7 @@ function randomizeRosterOrder(weekIdx, startStd, endStd) {
 
     roster.forEach(function (opp, idx) {
         let curStd = ((idx / roster.length) * (endStd - startStd)) + startStd;
-        let multiplier = Math.exp(rng.randomNormal(0, curStd));
+        let multiplier = Math.exp(Math.random() * curStd);
         opp.effectiveScore = opp.rosterScore * multiplier;
     });
 }
