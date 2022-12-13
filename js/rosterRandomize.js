@@ -166,8 +166,10 @@ ChaCha20RNG.prototype.shuffle = function (arr) {
 /* The grouping epoch is midnight at Jan. 2, 2022.
  * (January 1, 2022 was a Saturday, but the week index calculation needs the epoch to lie on a Sunday.)
  */
-const GROUPING_EPOCH = 1641081600000;
-const MS_PER_WEEK = 7 * 24 * 3600 * 1000;
+//const GROUPING_EPOCH = 1641081600000;
+const GROUPING_EPOCH = 1672617600000; // Grouping epoch is midnight Jan 2 2023, FOR DEMONSTRATION PURPOSES ONLY (makes sure demo doesn't start in the middle of a cycle)
+//const MS_PER_WEEK = 7 * 24 * 3600 * 1000;
+const MS_PER_WEEK = 2 * 24 * 3600 * 1000; // A "week" is two days, FOR DEMONSTRATION PURPOSES ONLY
 
 /**
  * Partition characters into groups based on franchise magnetism rules.
