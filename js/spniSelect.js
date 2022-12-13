@@ -1286,7 +1286,7 @@ function mainSelectScreen_keyUp(e) {
     if (e.key == "Backspace" && $('.modal:visible').length == 0) {
         backSelectScreen();
     }
-    else if (e.key.toLowerCase() == 't') {
+    else if (e.key.toLowerCase() == 't' && $('.modal:visible').length == 0) {
         hideSelectionTable();
     }
 }
@@ -1387,7 +1387,7 @@ function groupSelectScreen_keyUp(e)
     else if (e.key == "Backspace" && !$(document.activeElement).is('input, select') && $('.modal:visible').length == 0) {
         backFromGroupSelect();
     }
-    else if (e.key.toLowerCase() == 't') {
+    else if (e.key.toLowerCase() == 't' && $('.modal:visible').length == 0) {
         hideGroupSelectionTable();
     }
 }
